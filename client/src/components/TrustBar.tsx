@@ -2,10 +2,10 @@ import { motion } from 'framer-motion';
 
 export function TrustBar() {
   const stats = [
-    { number: '50+', label: 'Expert Mechanics', color: 'text-primary-600' },
-    { number: '10k+', label: 'Services Completed', color: 'text-blue-600' },
-    { number: '3', label: 'Cities Covered', color: 'text-orange-600' },
-    { number: '4.8★', label: 'Average Rating', color: 'text-green-600' },
+    { number: '500+', label: 'Professional Mechanics', color: 'text-primary-600' },
+    { number: '25k+', label: 'Doorstep Services', color: 'text-blue-600' },
+    { number: '15+', label: 'Cities Covered', color: 'text-orange-600' },
+    { number: '4.9★', label: 'Customer Rating', color: 'text-green-600' },
   ];
 
   const containerVariants = {

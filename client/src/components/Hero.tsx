@@ -78,43 +78,45 @@ export function Hero() {
               variants={itemVariants}
               className="text-4xl lg:text-6xl font-bold leading-tight mb-6"
             >
-              Professional{' '}
+              India's First{' '}
               <span className="bg-gradient-to-r from-primary-600 to-blue-600 bg-clip-text text-transparent block">
-                Vehicle Service
+                Premium Doorstep
               </span>
-              at Your Doorstep
+              Vehicle Service
             </motion.h1>
 
             <motion.p
               variants={itemVariants}
               className="text-xl text-gray-600 mb-8 leading-relaxed"
             >
-              Expert mechanics come to you. Transparent pricing, real-time tracking, and
-              guaranteed quality service for bikes and cars.
+              Skip the garage visits! Professional mechanics come to your location with all tools & parts. 
+              <span className="font-semibold text-gray-800 block mt-2">Available in Mumbai, Delhi, Bangalore & 12 more cities</span>
+              <span className="text-lg text-primary-600 block mt-1">✓ Transparent pricing ✓ Real-time tracking ✓ Quality guarantee</span>
             </motion.p>
 
             <motion.div
               variants={itemVariants}
               className="flex flex-col sm:flex-row gap-4 mb-8 justify-center lg:justify-start"
             >
+              <Link href="/book">
+                <Button
+                  className="bg-gradient-to-r from-primary-500 to-blue-600 hover:from-primary-600 hover:to-blue-700 text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-xl hover:shadow-2xl transition-all duration-200 transform hover:scale-105"
+                  data-testid="button-book-now"
+                >
+                  <Wrench className="mr-2" />
+                  Book Service Now
+                </Button>
+              </Link>
+              
               <Button
                 onClick={handleUseLocation}
-                className="bg-gradient-to-r from-primary-500 to-blue-600 hover:from-primary-600 hover:to-blue-700 text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-xl hover:shadow-2xl transition-all duration-200 transform hover:scale-105"
+                variant="outline"
+                className="border-2 border-gray-300 text-gray-700 px-8 py-4 rounded-xl font-semibold text-lg hover:border-primary-500 hover:text-primary-600 transition-all duration-200"
                 data-testid="button-use-location"
               >
                 <MapPin className="mr-2" />
                 Use My Location
               </Button>
-              
-              <Link href="/services">
-                <Button
-                  variant="outline"
-                  className="border-2 border-gray-300 text-gray-700 px-8 py-4 rounded-xl font-semibold text-lg hover:border-primary-500 hover:text-primary-600 transition-all duration-200"
-                  data-testid="button-view-services"
-                >
-                  View Services
-                </Button>
-              </Link>
             </motion.div>
 
             {/* Trust Indicators */}
@@ -124,15 +126,15 @@ export function Hero() {
             >
               <div className="flex items-center space-x-2">
                 <Star className="text-yellow-400 w-4 h-4" />
-                <span data-testid="text-rating">4.8/5 Rating</span>
+                <span data-testid="text-rating">4.9/5 Rating</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Users className="text-primary-500 w-4 h-4" />
-                <span data-testid="text-customers">10,000+ Happy Customers</span>
+                <span data-testid="text-customers">25,000+ Services</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Clock className="text-blue-500 w-4 h-4" />
-                <span data-testid="text-service-time">Same Day Service</span>
+                <span data-testid="text-service-time">2 Hour Service</span>
               </div>
             </motion.div>
           </motion.div>
