@@ -1,0 +1,122 @@
+You are an expert full-stack web developer. Build a **production-ready Next.js 14 (App Router) website** for a doorstep vehicle service platform called **GarageWala**.
+
+# Tech
+- Next.js 14 (App Router, Server Components)
+- TypeScript
+- TailwindCSS
+- Framer Motion (animations)
+- Lucide-react (icons)
+- React Hook Form + Zod (forms + validation)
+- Axios (API client)
+- Zustand (lightweight client state)
+- next-seo (SEO helpers) or custom metadata
+- (Mock) JSON REST endpoints via Next.js route handlers (no DB for now)
+
+# Business rules
+- **No customer accounts**. Guest booking only.
+- Users select vehicle + service, share name/phone/address, pick time slot.
+- Site detects/accepts **location** and lists **nearby mechanics** (mocked) by distance/rating/availability.
+- On “Share my details”, create a **lead** and show a success + tracking page.
+- City SEO pages (static): `/bike-service/[city]` with localized content and embedded quick-book form.
+
+# Sitemap / Pages
+- `/` Home: sticky animated header + compact hero, trust badges, quick “Use my location” CTA, featured services, city links, FAQ, footer.
+- `/services` list of services (Bike/Car categories).
+- `/book` stepper: Vehicle → Service → Location (search or detect) → Time slot → Details (name/phone) → Review → Submit.
+- `/track/[trackingId]` status timeline (Assigned → On the way → In progress → Done) using mocked polling.
+- `/contact` simple form (RHForm+Zod) + map placeholder.
+- `/bike-service/[city]` SEO landing (Ranchi, Patna, Jaipur seed) with localized copy, reviews, FAQ, quick book widget.
+- System pages: `/privacy`, `/terms`, `/refund`.
+- **Admin (mock)** `/admin` read-only table of leads & mechanics; `/mechanic` minimal view of assigned leads (no auth required, just UI).
+
+# Components (create in /components)
+- `Header.tsx` (transparent → blurred sticky on scroll; desktop nav + mobile sheet; CTA “Book Now”)
+- `Hero.tsx` (compact ~55–60vh; animated heading/subheading/buttons; floating icons on right; responsive)
+- `ServiceCard.tsx`, `Statistic.tsx`, `FAQ.tsx`, `TrustBar.tsx`
+- `Stepper.tsx` (step headers + progress)
+- Form inputs: `TextField`, `PhoneField` (basic + India pattern), `SelectField`, `AddressPicker` (text field with suggestions stub), `SlotPicker`
+- `MechanicCard.tsx` (name, rating, distance, earliest slot, CTA)
+- `Toast.tsx` (success/error)
+- `Footer.tsx`
+
+# State & logic
+- Zustand stores: 
+  - `useBookingStore` → vehicleType, brand, model, serviceSkill, address, lat/lng, slotStart/End, name, phone.
+  - `useUiStore` → mobile menu open, toasts.
+- Ranking: score = 0.45*(1/(distance+0.5)) + 0.25*(rating/5) + 0.15*(min(jobsDone/500,1)) + 0.15*(hasSlotOverlap).
+
+# Mock data & APIs (create under /app/api/*)
+- `GET /api/services` → list of skills & packages.
+- `POST /api/mechanics/search` → body {lat,lng,vehicleType,skill,slotStart,slotEnd} → return ranked mechanics (use Haversine on mock coords).
+- `POST /api/leads` → accept lead payload, return `{ trackingId }`.
+- `GET /api/track/[id]` → mocked status progression.
+- Seed 10 mechanics across 3 cities with lat/lng, skills, serviceRadiusKm, ratingAvg, jobsDone, nextSlots.
+
+# UX details
+- **Header**: glassmorphism on scroll, nav link underline grow animation, CTA gradient (green→blue) with glow hover; mobile hamburger → slide-in with staggered links.
+- **Hero**: small height, left text, right floating icons (car, bike, wrench) with slow parallax/float loop; buttons animated on load + hover.
+- **Book flow**: stepper with validation at each step; disabled “Next” until valid; inline errors; optimistic UI.
+- **Mechanics list**: cards with distance (“3.2 km”), rating, earliest slot; primary CTA “Share my details” → posts lead → success screen with tracking link.
+- **Track page**: status timeline with icons; auto-poll mock API every 5s; confetti on Done.
+- **City pages**: unique H1/meta, localized paragraphs, 3 city-specific reviews, internal links to nearby areas, embedded quick booking form.
+- **Footer**: links + mini NAP + social placeholders.
+
+# SEO
+- App-wide `Metadata` in layout.tsx (titleTemplate, default OG image).
+- Per-page metadata (title/description) esp. city pages.
+- JSON-LD on city pages: `AutomotiveBusiness` + `Service` + `AggregateRating`.
+- Generate `/sitemap.xml` with home, services, contact, city pages.
+- `/robots.txt`.
+- Accessible semantics (nav/ul/li, h1 per page, alt text).
+- Image alt names and filenames include city or service terms.
+
+# Styling & animations
+- Tailwind theme: rounded-2xl cards, soft shadows, 8/12/16/24 spacing scale.
+- Framer Motion: page fade-in, hero stagger, nav link hover, mobile menu slide-in, floating icons keyframes.
+- Dark mode supported via `class` strategy (basic colors).
+
+# Validation
+- Zod schemas:
+  - phone: India pattern `/^(\+91[-\s]?)?[6-9]\d{9}$/`
+  - name: 2–60 chars
+  - address required if lat/lng present
+  - slotStart < slotEnd
+- Prevent submit if invalid; show helpful messages.
+
+# Accessibility & performance
+- Focus states, ARIA for menu & dialogs, 44px hit areas.
+- Next/Image for images; lazy load non-critical art.
+- Lighthouse targets ≥90 (perf, a11y, best practices).
+
+# Project structure (create files with meaningful code)
+- `/app/layout.tsx` (font, metadata, Header/Footer)
+- `/app/page.tsx` (Home + Hero)
+- `/app/services/page.tsx`
+- `/app/book/page.tsx`
+- `/app/track/[trackingId]/page.tsx`
+- `/app/contact/page.tsx`
+- `/app/bike-service/[city]/page.tsx`
+- `/app/admin/page.tsx`, `/app/mechanic/page.tsx` (mock views)
+- `/app/api/services/route.ts`
+- `/app/api/mechanics/search/route.ts`
+- `/app/api/leads/route.ts`
+- `/app/api/track/[id]/route.ts`
+- `/components/*` per list above
+- `/lib/geo.ts` (Haversine), `/lib/slots.ts`, `/lib/validators.ts`
+- `/data/cities.ts`, `/data/mechanics.ts`, `/data/reviews.ts`
+- `/public/og.jpg` (placeholder)
+
+# Nice-to-have polish
+- Toasts on success/failure.
+- Skeleton loaders for mechanics list.
+- Sticky bottom action bar on mobile during booking (“Next / Submit”).
+- Cookie-less recent city memory (localStorage).
+- Simple error boundaries for API failures.
+
+# Deliverables
+- Running Next.js app with the above pages/routes.
+- All components implemented (no TODOs).
+- Mock APIs functional.
+- Instructions in README: install, dev run, where to change seed data, how to add new city page.
+
+Build it clean, readable, and visually premium like a modern SaaS landing.
