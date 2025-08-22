@@ -35,7 +35,7 @@ export default function Book() {
   });
 
   // Search mechanics
-  const { data: mechanics, refetch: searchMechanics } = useQuery({
+  const { data: mechanics = [], refetch: searchMechanics } = useQuery({
     queryKey: ['/api/mechanics/search'],
     enabled: false,
   });

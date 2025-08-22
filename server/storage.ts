@@ -220,6 +220,7 @@ export class MemStorage implements IStorage {
       ...leadData,
       lat: leadData.lat || null,
       lng: leadData.lng || null,
+      serviceId: leadData.serviceId || null,
       status: "pending",
       createdAt: new Date(),
       updatedAt: new Date(),

@@ -19,8 +19,8 @@ export default function Mechanic() {
     queryKey: ['/api/admin/mechanics'],
   });
 
-  const mechanic = mechanics?.find((m: any) => m.id === mechanicId);
-  const assignedLeads = leads?.filter((lead: any) => lead.mechanicId === mechanicId);
+  const mechanic = Array.isArray(mechanics) ? mechanics.find((m: any) => m.id === mechanicId) : null;
+  const assignedLeads = Array.isArray(leads) ? leads.filter((lead: any) => lead.mechanicId === mechanicId) : [];
 
   const todayLeads = assignedLeads?.filter((lead: any) => {
     const today = new Date().toDateString();

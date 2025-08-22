@@ -16,7 +16,7 @@ export default function Track() {
   const [searchTrackingId, setSearchTrackingId] = useState(urlTrackingId || '');
   const { addToast } = useUiStore();
 
-  const { data: trackingData = {}, isLoading, error } = useQuery({
+  const { data: trackingData = { lead: null, statusUpdates: [], mechanic: null }, isLoading, error } = useQuery({
     queryKey: searchTrackingId ? [`/api/track/${searchTrackingId}`] : [],
     enabled: !!searchTrackingId,
   });

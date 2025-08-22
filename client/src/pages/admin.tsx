@@ -35,28 +35,28 @@ export default function Admin() {
   const stats = [
     {
       title: 'Total Leads',
-      value: leads?.length || 0,
+      value: Array.isArray(leads) ? leads.length : 0,
       icon: Users,
       color: 'text-blue-600',
       change: '+12%'
     },
     {
       title: 'Completed',
-      value: leads?.filter((lead: any) => lead.status === 'completed').length || 0,
+      value: Array.isArray(leads) ? leads.filter((lead: any) => lead.status === 'completed').length : 0,
       icon: CheckCircle,
       color: 'text-green-600',
       change: '+8%'
     },
     {
       title: 'In Progress',
-      value: leads?.filter((lead: any) => ['in_progress', 'on_the_way', 'assigned'].includes(lead.status)).length || 0,
+      value: Array.isArray(leads) ? leads.filter((lead: any) => ['in_progress', 'on_the_way', 'assigned'].includes(lead.status)).length : 0,
       icon: Clock,
       color: 'text-orange-600',
       change: 'Active'
     },
     {
       title: 'Active Mechanics',
-      value: mechanics?.filter((mechanic: any) => mechanic.isActive).length || 0,
+      value: Array.isArray(mechanics) ? mechanics.filter((mechanic: any) => mechanic.isActive).length : 0,
       icon: TrendingUp,
       color: 'text-primary-600',
       change: 'Online'
@@ -127,7 +127,7 @@ export default function Admin() {
                   </div>
                 ) : (
                   <div className="space-y-4 max-h-96 overflow-y-auto">
-                    {leads?.slice(0, 10).map((lead: any) => (
+                    {Array.isArray(leads) && leads.slice(0, 10).map((lead: any) => (
                       <div
                         key={lead.id}
                         className="flex items-center justify-between p-4 border border-gray-200 rounded-lg"
@@ -184,7 +184,7 @@ export default function Admin() {
                   </div>
                 ) : (
                   <div className="space-y-4 max-h-96 overflow-y-auto">
-                    {mechanics?.filter((mechanic: any) => mechanic.isActive).map((mechanic: any) => (
+                    {Array.isArray(mechanics) && mechanics.filter((mechanic: any) => mechanic.isActive).map((mechanic: any) => (
                       <div
                         key={mechanic.id}
                         className="flex items-center justify-between p-4 border border-gray-200 rounded-lg"
