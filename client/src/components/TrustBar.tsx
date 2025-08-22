@@ -24,28 +24,28 @@ export function TrustBar() {
   };
 
   return (
-    <section className="py-12 bg-white border-b border-gray-200">
+    <section className="py-8 sm:py-12 bg-white border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="grid grid-cols-2 lg:grid-cols-4 gap-8"
+          className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8"
         >
           {stats.map((stat, index) => (
             <motion.div
               key={index}
               variants={itemVariants}
-              className="text-center"
+              className="text-center bg-gray-50 rounded-xl p-3 sm:p-4 lg:p-6 hover:bg-gray-100 transition-colors duration-200"
             >
               <div
-                className={`text-3xl lg:text-4xl font-bold mb-2 ${stat.color}`}
+                className={`text-2xl sm:text-3xl lg:text-4xl font-bold mb-1 sm:mb-2 ${stat.color}`}
                 data-testid={`stat-number-${index}`}
               >
                 {stat.number}
               </div>
-              <div className="text-gray-600" data-testid={`stat-label-${index}`}>
+              <div className="text-gray-600 text-xs sm:text-sm lg:text-base font-medium" data-testid={`stat-label-${index}`}>
                 {stat.label}
               </div>
             </motion.div>

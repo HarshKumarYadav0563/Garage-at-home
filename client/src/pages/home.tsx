@@ -17,21 +17,21 @@ export default function Home() {
       <TrustBar />
       
       {/* How It Works Section */}
-      <section className="py-16 lg:py-24 bg-white">
+      <section id="how-it-works" className="py-12 sm:py-16 lg:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
+            className="text-center mb-12 sm:mb-16"
           >
-            <h2 className="text-3xl lg:text-5xl font-bold mb-6">How GarageWala Works</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <h2 className="text-2xl sm:text-3xl lg:text-5xl font-bold mb-4 sm:mb-6">How GarageWala Works</h2>
+            <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto">
               Get premium vehicle service at your doorstep in 4 simple steps
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             {[
               {
                 step: "01",
@@ -70,12 +70,12 @@ export default function Home() {
                 transition={{ delay: index * 0.1 }}
                 className="text-center group"
               >
-                <div className={`w-20 h-20 mx-auto mb-6 bg-gradient-to-br ${step.color} rounded-2xl flex items-center justify-center text-3xl shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                <div className={`w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 sm:mb-6 bg-gradient-to-br ${step.color} rounded-2xl flex items-center justify-center text-2xl sm:text-3xl shadow-lg group-hover:scale-110 transition-transform duration-300`}>
                   {step.icon}
                 </div>
-                <div className="text-sm font-bold text-gray-400 mb-2">STEP {step.step}</div>
-                <h3 className="text-xl font-bold mb-3 text-gray-800">{step.title}</h3>
-                <p className="text-gray-600 leading-relaxed">{step.description}</p>
+                <div className="text-xs sm:text-sm font-bold text-gray-400 mb-2">STEP {step.step}</div>
+                <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3 text-gray-800">{step.title}</h3>
+                <p className="text-sm sm:text-base text-gray-600 leading-relaxed">{step.description}</p>
               </motion.div>
             ))}
           </div>
@@ -156,21 +156,21 @@ export default function Home() {
       </section>
       
       {/* Services Section */}
-      <section id="services" className="py-16 lg:py-24 bg-gray-50">
+      <section id="services" className="py-12 sm:py-16 lg:py-24 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
+            className="text-center mb-12 sm:mb-16"
           >
-            <h2 className="text-3xl lg:text-5xl font-bold mb-6">Our Services</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <h2 className="text-2xl sm:text-3xl lg:text-5xl font-bold mb-4 sm:mb-6">Our Services</h2>
+            <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto">
               Professional vehicle maintenance and repair services delivered right to your doorstep with transparent pricing.
             </p>
           </motion.div>
 
-          <div className="grid lg:grid-cols-2 gap-8 mb-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 mb-12 sm:mb-16">
             {/* Bike Services */}
             <ServiceCard
               id={bikeServices[0].id}
@@ -199,21 +199,21 @@ export default function Home() {
       </section>
 
       {/* Customer Testimonials */}
-      <section className="py-16 lg:py-24 bg-white">
+      <section className="py-12 sm:py-16 lg:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
+            className="text-center mb-12 sm:mb-16"
           >
-            <h2 className="text-3xl lg:text-5xl font-bold mb-6">What Our Customers Say</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <h2 className="text-2xl sm:text-3xl lg:text-5xl font-bold mb-4 sm:mb-6">What Our Customers Say</h2>
+            <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto">
               Real reviews from customers who chose GarageWala over traditional garages
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {[
               {
                 name: "Rajesh Kumar",
@@ -243,17 +243,17 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.2 }}
-                className="bg-gray-50 rounded-2xl p-8 hover:shadow-lg transition-all duration-300"
+                className="bg-gray-50 rounded-2xl p-4 sm:p-6 lg:p-8 hover:shadow-lg transition-all duration-300"
               >
-                <div className="flex items-center mb-4">
+                <div className="flex items-center mb-3 sm:mb-4">
                   {[...Array(testimonial.rating)].map((_, i) => (
-                    <span key={i} className="text-yellow-400 text-xl">⭐</span>
+                    <span key={i} className="text-yellow-400 text-lg sm:text-xl">⭐</span>
                   ))}
                 </div>
-                <p className="text-gray-700 mb-6 leading-relaxed italic">"{testimonial.review}"</p>
-                <div className="border-t pt-4">
-                  <h4 className="font-semibold text-gray-800">{testimonial.name}</h4>
-                  <p className="text-sm text-gray-600">{testimonial.location} • {testimonial.service}</p>
+                <p className="text-gray-700 mb-4 sm:mb-6 leading-relaxed italic text-sm sm:text-base">"{testimonial.review}"</p>
+                <div className="border-t pt-3 sm:pt-4">
+                  <h4 className="font-semibold text-gray-800 text-sm sm:text-base">{testimonial.name}</h4>
+                  <p className="text-xs sm:text-sm text-gray-600">{testimonial.location} • {testimonial.service}</p>
                 </div>
               </motion.div>
             ))}
@@ -263,10 +263,10 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mt-12"
+            className="text-center mt-8 sm:mt-12"
           >
-            <Link href="/book">
-              <Button className="bg-gradient-to-r from-primary-500 to-blue-600 hover:from-primary-600 hover:to-blue-700 text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-xl hover:shadow-2xl transition-all duration-200">
+            <Link href="/book" className="inline-block w-full sm:w-auto">
+              <Button className="w-full sm:w-auto bg-gradient-to-r from-primary-500 to-blue-600 hover:from-primary-600 hover:to-blue-700 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold text-base sm:text-lg shadow-xl hover:shadow-2xl transition-all duration-200 min-h-[48px] touch-manipulation">
                 Book Your Service Now
               </Button>
             </Link>
