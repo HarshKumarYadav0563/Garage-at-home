@@ -54,16 +54,10 @@ export function EnhancedTrustBar() {
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
-      
-      // Show badges when user has scrolled more than 100px
-      const shouldShow = scrollY > 100;
-      console.log('Scroll Y:', scrollY, 'Should show badges:', shouldShow);
-      setIsVisible(shouldShow);
+      setIsVisible(scrollY > 100);
     };
 
-    // Initial check
     handleScroll();
-    
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -154,7 +148,6 @@ export function EnhancedTrustBar() {
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 relative">
         {/* Desktop: Animated placeholder that transforms into badges */}
         <div className="hidden lg:block">
-          <div className="text-white text-sm mb-2">Debug: isVisible = {isVisible.toString()}</div>
           {!isVisible ? (
             // Placeholder animation before scroll
             <motion.div
@@ -224,86 +217,41 @@ export function EnhancedTrustBar() {
           ) : (
             // Actual badges after scroll
             <motion.div
-              variants={containerVariants}
-              initial="hidden"
-              animate="show"
               className="grid grid-cols-6 gap-6"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, staggerChildren: 0.1 }}
             >
               {trustItems.map((item, index) => {
                 const IconComponent = item.icon;
                 return (
                   <motion.div
                     key={index}
-                    variants={itemVariants}
-                    whileHover={shouldReduceMotion ? {} : {
-                      y: -5,
-                      scale: 1.05,
-                      transition: { type: "spring", stiffness: 400 }
-                    }}
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1, duration: 0.5 }}
                     className="group text-center"
                   >
                     <div className="relative">
                       {/* Icon container with glow effect */}
-                      <motion.div
+                      <div
                         className={`relative mx-auto w-20 h-20 rounded-2xl bg-gradient-to-br ${item.color} flex items-center justify-center shadow-xl mb-4 border border-white/20`}
-                        variants={shouldReduceMotion ? {} : iconFloat}
-                        animate="float"
-                        style={{ animationDelay: `${item.delay}s` }}
-                        whileHover={shouldReduceMotion ? {} : {
-                          rotate: [0, 5, -5, 0],
-                          scale: 1.1
-                        }}
                       >
                         <IconComponent className="w-8 h-8 text-white" />
-                        
-                        {/* Hover glow ring */}
-                        <motion.div 
-                          className="absolute inset-0 rounded-2xl bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-md scale-110"
-                          variants={shouldReduceMotion ? {} : pulseVariants}
-                          animate="pulse"
-                        />
-                        
-                        {/* Spinning ring on hover */}
-                        <motion.div
-                          className="absolute inset-0 rounded-2xl border-2 border-white/30 opacity-0 group-hover:opacity-100"
-                          animate={shouldReduceMotion ? {} : {
-                            rotate: [0, 360],
-                            transition: { duration: 3, repeat: Infinity, ease: "linear" }
-                          }}
-                        />
-                      </motion.div>
+                      </div>
 
-                      {/* Value with counter animation */}
-                      <motion.div
-                        className="text-3xl font-bold text-white mb-2"
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ 
-                          delay: item.delay + 0.3, 
-                          type: "spring", 
-                          stiffness: 200 
-                        }}
-                      >
+                      {/* Value */}
+                      <div className="text-3xl font-bold text-white mb-2">
                         {item.value}
-                      </motion.div>
+                      </div>
 
                       {/* Label */}
-                      <motion.p
-                        className="text-sm text-gray-300 font-medium"
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: item.delay + 0.5 }}
-                      >
+                      <p className="text-sm text-gray-300 font-medium">
                         {item.label}
-                      </motion.p>
+                      </p>
 
-                      {/* Animated underline */}
-                      <motion.div
-                        className={`mx-auto mt-2 h-0.5 bg-gradient-to-r ${item.color} rounded-full`}
-                        initial={{ width: 0 }}
-                        animate={{ width: "50%" }}
-                        transition={{ delay: item.delay + 0.7, duration: 0.8 }}
-                      />
+                      {/* Underline */}
+                      <div className={`mx-auto mt-2 h-0.5 w-1/2 bg-gradient-to-r ${item.color} rounded-full`} />
                     </div>
                   </motion.div>
                 );
