@@ -469,55 +469,148 @@ export function Header() {
                 </div>
 
                 {/* Quick Stats */}
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-emerald-500/10 rounded-xl p-4 text-center">
-                    <Star className="w-6 h-6 text-emerald-400 mx-auto mb-2" />
-                    <p className="text-lg font-bold text-emerald-400">4.9★</p>
-                    <p className="text-xs text-gray-300">Rating</p>
-                  </div>
-                  <div className="bg-green-500/10 rounded-xl p-4 text-center">
-                    <Shield className="w-6 h-6 text-green-400 mx-auto mb-2" />
-                    <p className="text-lg font-bold text-green-400">100%</p>
-                    <p className="text-xs text-gray-300">Quality</p>
-                  </div>
-                </div>
-
-                {navigation.map((item) => (
-                  <Link
-                    key={item.name}
-                    href={item.href}
-                    onClick={() => {
-                      setMobileMenuOpen(false);
-                      if (item.scrollTo) {
-                        setTimeout(() => {
-                          const element = document.getElementById(item.scrollTo);
-                          if (element) {
-                            element.scrollIntoView({ behavior: 'smooth' });
-                          }
-                        }, 100);
-                      }
+                <motion.div 
+                  className="grid grid-cols-2 gap-4"
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.1, type: "spring", stiffness: 300 }}
+                >
+                  <motion.div 
+                    className="bg-emerald-500/10 rounded-xl p-4 text-center"
+                    whileHover={{ 
+                      scale: 1.05,
+                      backgroundColor: "rgba(16, 185, 129, 0.15)"
                     }}
+                    whileTap={{ scale: 0.95 }}
+                    initial={{ x: -20, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ delay: 0.15, type: "spring", stiffness: 300 }}
                   >
                     <motion.div
-                      whileTap={{ scale: 0.95 }}
-                      className={`flex items-center justify-between p-4 rounded-xl transition-all duration-200 ${
-                        location === item.href
-                          ? 'bg-emerald-500/20 text-emerald-400'
-                          : 'text-gray-300 hover:bg-white/10'
-                      }`}
-                      data-testid={`nav-mobile-${item.name.toLowerCase().replace(/\s+/g, '-')}`}
+                      animate={{ rotate: [0, 360] }}
+                      transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
                     >
-                      <span className="text-lg font-medium">{item.name}</span>
-                      {item.badge && (
-                        <Badge className="bg-emerald-500 text-white text-xs px-2 py-1">
-                          {item.badge}
-                        </Badge>
-                      )}
+                      <Star className="w-6 h-6 text-emerald-400 mx-auto mb-2" />
                     </motion.div>
-                  </Link>
+                    <motion.p 
+                      className="text-lg font-bold text-emerald-400"
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ delay: 0.2, type: "spring", stiffness: 400 }}
+                    >
+                      4.9★
+                    </motion.p>
+                    <p className="text-xs text-gray-300">Rating</p>
+                  </motion.div>
+                  <motion.div 
+                    className="bg-green-500/10 rounded-xl p-4 text-center"
+                    whileHover={{ 
+                      scale: 1.05,
+                      backgroundColor: "rgba(34, 197, 94, 0.15)"
+                    }}
+                    whileTap={{ scale: 0.95 }}
+                    initial={{ x: 20, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ delay: 0.15, type: "spring", stiffness: 300 }}
+                  >
+                    <motion.div
+                      animate={{ scale: [1, 1.1, 1] }}
+                      transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                    >
+                      <Shield className="w-6 h-6 text-green-400 mx-auto mb-2" />
+                    </motion.div>
+                    <motion.p 
+                      className="text-lg font-bold text-green-400"
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ delay: 0.2, type: "spring", stiffness: 400 }}
+                    >
+                      100%
+                    </motion.p>
+                    <p className="text-xs text-gray-300">Quality</p>
+                  </motion.div>
+                </motion.div>
+
+                {navigation.map((item, index) => (
+                  <motion.div
+                    key={item.name}
+                    initial={{ x: -50, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ 
+                      delay: index * 0.1 + 0.2,
+                      type: "spring",
+                      stiffness: 300,
+                      damping: 25
+                    }}
+                  >
+                    <Link
+                      href={item.href}
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        if (item.scrollTo) {
+                          setTimeout(() => {
+                            const element = document.getElementById(item.scrollTo!);
+                            if (element) {
+                              element.scrollIntoView({ 
+                                behavior: 'smooth',
+                                block: 'start'
+                              });
+                            }
+                          }, 300);
+                        }
+                      }}
+                    >
+                      <motion.div
+                        whileHover={{ 
+                          scale: 1.02,
+                          x: 5,
+                          transition: { type: "spring", stiffness: 400 }
+                        }}
+                        whileTap={{ scale: 0.98 }}
+                        className={`flex items-center justify-between p-4 rounded-xl transition-all duration-300 ${
+                          location === item.href
+                            ? 'bg-emerald-500/20 text-emerald-400 shadow-lg'
+                            : 'text-gray-300 hover:bg-white/10 hover:shadow-md'
+                        }`}
+                        data-testid={`nav-mobile-${item.name.toLowerCase().replace(/\s+/g, '-')}`}
+                      >
+                        <motion.span 
+                          className="text-lg font-medium"
+                          whileHover={{ x: 5 }}
+                          transition={{ type: "spring", stiffness: 400 }}
+                        >
+                          {item.name}
+                        </motion.span>
+                        {item.badge && (
+                          <motion.div
+                            initial={{ scale: 0, rotate: -90 }}
+                            animate={{ scale: 1, rotate: 0 }}
+                            transition={{ 
+                              delay: index * 0.1 + 0.4,
+                              type: "spring",
+                              stiffness: 300
+                            }}
+                          >
+                            <Badge className="bg-emerald-500 text-white text-xs px-2 py-1">
+                              {item.badge}
+                            </Badge>
+                          </motion.div>
+                        )}
+                      </motion.div>
+                    </Link>
+                  </motion.div>
                 ))}
 
-                <div className="space-y-3 pt-4 border-t border-white/20">
+                <motion.div 
+                  className="space-y-3 pt-4 border-t border-white/20"
+                  initial={{ y: 30, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ 
+                    delay: navigation.length * 0.1 + 0.3,
+                    type: "spring",
+                    stiffness: 300
+                  }}
+                >
                   <Link href="/track" onClick={() => setMobileMenuOpen(false)}>
                     <Button
                       variant="outline"
@@ -529,21 +622,65 @@ export function Header() {
                   </Link>
                   
                   <Link href="/book" onClick={() => setMobileMenuOpen(false)}>
-                    <Button className="w-full bg-gradient-to-r from-emerald-500 to-sky-600 text-white py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300">
-                      <Zap className="mr-2 w-4 h-4" />
-                      Book Service Now
-                    </Button>
+                    <motion.div
+                      whileHover={{ 
+                        scale: 1.02,
+                        boxShadow: "0 20px 40px rgba(16, 185, 129, 0.3)"
+                      }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      <Button className="w-full bg-gradient-to-r from-emerald-500 to-sky-600 text-white py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300">
+                        <motion.div
+                          animate={{ rotate: [0, 360] }}
+                          transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                          className="mr-2"
+                        >
+                          <Zap className="w-4 h-4" />
+                        </motion.div>
+                        Book Service Now
+                      </Button>
+                    </motion.div>
                   </Link>
-                </div>
+                </motion.div>
 
                 {/* Help Section */}
-                <div className="bg-white/5 border border-white/10 rounded-xl p-4 mt-6">
-                  <p className="text-sm font-medium text-white mb-2">Need Help?</p>
-                  <div className="flex items-center space-x-2 text-emerald-400">
-                    <Phone className="w-4 h-4" />
+                <motion.div 
+                  className="bg-white/5 border border-white/10 rounded-xl p-4 mt-6"
+                  initial={{ y: 30, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ 
+                    delay: navigation.length * 0.1 + 0.5,
+                    type: "spring",
+                    stiffness: 300
+                  }}
+                  whileHover={{ 
+                    scale: 1.02,
+                    borderColor: "rgba(16, 185, 129, 0.3)"
+                  }}
+                >
+                  <motion.p 
+                    className="text-sm font-medium text-white mb-2"
+                    initial={{ x: -10, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ delay: navigation.length * 0.1 + 0.6 }}
+                  >
+                    Need Help?
+                  </motion.p>
+                  <motion.div 
+                    className="flex items-center space-x-2 text-emerald-400"
+                    initial={{ x: -10, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ delay: navigation.length * 0.1 + 0.7 }}
+                  >
+                    <motion.div
+                      animate={{ rotate: [0, 10, -10, 0] }}
+                      transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                    >
+                      <Phone className="w-4 h-4" />
+                    </motion.div>
                     <span className="font-medium">+91 98765 43210</span>
-                  </div>
-                </div>
+                  </motion.div>
+                </motion.div>
               </div>
             </SheetContent>
           </Sheet>
