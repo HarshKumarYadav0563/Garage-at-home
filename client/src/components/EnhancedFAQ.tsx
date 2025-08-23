@@ -1,6 +1,7 @@
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { ChevronDown, HelpCircle, Zap } from 'lucide-react';
 import { useState } from 'react';
+import { Link } from 'wouter';
 import {
   Accordion,
   AccordionContent,
@@ -274,14 +275,17 @@ export function EnhancedFAQ() {
           transition={{ delay: 0.8, duration: 0.6 }}
           className="text-center mt-12"
         >
-          <motion.div
-            className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
-            whileHover={{ scale: 1.05, rotate: 1 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <Zap className="w-4 h-4 mr-2" />
-            <span className="font-semibold">Still have questions? Contact us!</span>
-          </motion.div>
+          <Link href="/contact">
+            <motion.div
+              className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer"
+              whileHover={{ scale: 1.05, rotate: 1 }}
+              whileTap={{ scale: 0.95 }}
+              data-testid="contact-us-button"
+            >
+              <Zap className="w-4 h-4 mr-2" />
+              <span className="font-semibold">Still have questions? Contact us!</span>
+            </motion.div>
+          </Link>
         </motion.div>
       </div>
     </section>
