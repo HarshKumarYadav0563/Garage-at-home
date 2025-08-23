@@ -68,51 +68,55 @@ export function ServicesSection() {
       description: "Complete motorcycle and scooter maintenance with professional care",
       icon: Bike,
       gradient: "from-emerald-400 to-teal-500",
-      priceFrom: "₹299",
-      originalPrice: "₹450",
+      priceFrom: "₹499",
+      originalPrice: "₹699", 
       features: [
-        "Complete Engine Service",
-        "Chain & Sprocket Care", 
-        "Brake System Check",
-        "Oil Change & Filter",
-        "Tire Inspection",
-        "30-Day Warranty"
+        "Engine Oil & Filter Change",
+        "Chain Lubrication & Adjustment", 
+        "Brake System Inspection",
+        "Tire Pressure Check",
+        "Battery Terminal Cleaning",
+        "Basic Electrical Check",
+        "FREE Doorstep Service"
       ],
-      popular: false,
+      popular: true,
       glowColor: "emerald"
     },
     {
       title: "Premium Car Services", 
-      description: "Professional automotive care with certified mechanics",
+      description: "Professional automotive care with certified mechanics", 
       icon: Car,
       gradient: "from-blue-400 to-indigo-500",
-      priceFrom: "₹599",
-      originalPrice: "₹899",
+      priceFrom: "₹1,399",
+      originalPrice: "₹1,799",
       features: [
-        "Full Engine Diagnostics",
-        "AC Service & Repair",
-        "Brake System Service",
-        "Battery & Electrical",
-        "Suspension Check",
-        "90-Day Warranty"
+        "Engine Oil & Filter Change",
+        "Brake Fluid Check",
+        "Battery Inspection", 
+        "Tire Pressure & Tread Check",
+        "Lights & Indicators Test",
+        "Fluid Level Checks",
+        "FREE Doorstep Service"
       ],
-      popular: true,
+      popular: false,
       glowColor: "blue"
     },
     {
-      title: "Emergency Repairs",
-      description: "24/7 roadside assistance and emergency vehicle repairs",
+      title: "Roadside Assistance",
+      description: "24/7 emergency roadside help for bikes and cars",
       icon: Wrench,
       gradient: "from-orange-400 to-red-500", 
-      priceFrom: "₹199",
-      originalPrice: "₹350",
+      priceFrom: "₹499",
+      originalPrice: "₹799",
+      priceNote: "Cars: ₹1,099",
       features: [
-        "24/7 Availability",
-        "Roadside Assistance",
-        "Emergency Repairs",
-        "Flat Tire Service",
+        "24/7 Emergency Support",
+        "Flat Tire Assistance", 
         "Battery Jump Start",
-        "Instant Response"
+        "Emergency Towing",
+        "Fuel Delivery Service",
+        "On-Spot Minor Repairs",
+        "Instant Response Team"
       ],
       popular: false,
       glowColor: "orange"
@@ -220,14 +224,15 @@ export function ServicesSection() {
           </motion.p>
         </motion.div>
 
-        {/* Services Grid */}
-        <motion.div 
-          className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 mb-16"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.1 }}
-        >
+        {/* Services Grid - Desktop */}
+        <div className="hidden md:block mb-16">
+          <motion.div 
+            className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.1 }}
+          >
           {services.map((service, index) => {
             const IconComponent = service.icon;
             return (
@@ -311,9 +316,14 @@ export function ServicesSection() {
                         {service.originalPrice}
                       </span>
                       <span className="text-xs bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded-full">
-                        Save {Math.round((1 - parseInt(service.priceFrom.slice(1)) / parseInt(service.originalPrice.slice(1))) * 100)}%
+                        Save {Math.round((1 - parseInt(service.priceFrom.replace(/[₹,]/g, '')) / parseInt(service.originalPrice.replace(/[₹,]/g, ''))) * 100)}%
                       </span>
                     </div>
+                    {service.priceNote && (
+                      <p className="text-xs text-blue-400 mb-4">
+                        {service.priceNote}
+                      </p>
+                    )}
 
                     {/* Features List */}
                     <div className="space-y-3 mb-8">
@@ -349,7 +359,112 @@ export function ServicesSection() {
               </motion.div>
             );
           })}
-        </motion.div>
+          </motion.div>
+        </div>
+
+        {/* Mobile Horizontal Scroll */}
+        <div className="block md:hidden mb-16">
+          <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 -mx-4 px-4 scrollbar-hide">
+            {services.map((service, index) => {
+              const IconComponent = service.icon;
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, x: 50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.15, duration: 0.6 }}
+                  className="group relative min-w-[280px] snap-center"
+                  data-testid={`service-card-mobile-${index}`}
+                >
+                  {/* Popular Badge */}
+                  {service.popular && (
+                    <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 z-20">
+                      <div className="bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1">
+                        <Star className="w-3 h-3" />
+                        Popular
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Compact Glassmorphism Card */}
+                  <div className={`relative h-full rounded-2xl p-5 bg-white/5 backdrop-blur-xl border border-white/10 shadow-[0_12px_40px_rgba(0,0,0,0.4)] transition-all duration-300 flex flex-col overflow-hidden ${service.popular ? 'ring-2 ring-emerald-500/30' : ''}`}>
+                    
+                    <div className="relative z-10 flex-1">
+                      {/* Compact Floating Icon */}
+                      <div className="relative mb-4">
+                        <motion.div 
+                          className={`relative w-14 h-14 rounded-xl bg-gradient-to-br ${service.gradient} flex items-center justify-center shadow-lg`}
+                          animate={shouldReduceMotion ? {} : iconFloatAnimation}
+                          style={{ animationDelay: `${index * 0.3}s` }}
+                        >
+                          <IconComponent 
+                            className="w-7 h-7 text-white" 
+                            aria-hidden="true"
+                          />
+                        </motion.div>
+                      </div>
+                      
+                      {/* Title */}
+                      <h3 className="text-lg font-semibold text-white mb-2">
+                        {service.title}
+                      </h3>
+                      
+                      {/* Description */}
+                      <p className="text-sm text-gray-300 leading-relaxed mb-4 line-clamp-2">
+                        {service.description}
+                      </p>
+
+                      {/* Compact Pricing */}
+                      <div className="flex items-baseline gap-2 mb-4">
+                        <span className="text-xl font-bold text-white">
+                          {service.priceFrom}
+                        </span>
+                        <span className="text-xs text-gray-400 line-through">
+                          {service.originalPrice}
+                        </span>
+                      </div>
+                      
+                      {service.priceNote && (
+                        <p className="text-xs text-blue-400 mb-3">
+                          {service.priceNote}
+                        </p>
+                      )}
+
+                      {/* Compact Features List (first 4) */}
+                      <div className="space-y-2 mb-5">
+                        {service.features.slice(0, 4).map((feature, idx) => (
+                          <div key={idx} className="flex items-center gap-2">
+                            <div className="w-4 h-4 rounded-full bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
+                              <Check className="w-2.5 h-2.5 text-emerald-400" />
+                            </div>
+                            <span className="text-xs text-gray-300">{feature}</span>
+                          </div>
+                        ))}
+                        {service.features.length > 4 && (
+                          <p className="text-xs text-gray-400">+{service.features.length - 4} more features</p>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Compact CTA Button */}
+                    <Link href="/services" className="relative z-10 mt-auto">
+                      <motion.button
+                        className={`w-full bg-gradient-to-r ${service.gradient} text-white font-semibold py-2.5 px-4 rounded-lg transition-all duration-300 group/btn flex items-center justify-center gap-2 text-sm`}
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        data-testid={`book-${service.title.toLowerCase().replace(/\s+/g, '-')}-mobile`}
+                      >
+                        <span>Book Now</span>
+                        <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-200" />
+                      </motion.button>
+                    </Link>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
 
         {/* Enhanced CTA Section */}
         <motion.div
