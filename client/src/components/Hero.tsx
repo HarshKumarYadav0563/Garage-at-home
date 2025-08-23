@@ -53,7 +53,7 @@ export function Hero() {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-gray-50 to-blue-50 pt-28 sm:pt-32 lg:pt-36">
+    <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-900 dark:to-blue-950 pt-28 sm:pt-32 lg:pt-36">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div
@@ -87,11 +87,11 @@ export function Hero() {
 
             <motion.p
               variants={itemVariants}
-              className="text-lg sm:text-xl text-gray-600 mb-6 sm:mb-8 leading-relaxed"
+              className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 mb-6 sm:mb-8 leading-relaxed"
             >
               Skip the garage visits! Professional mechanics come to your location with all tools & parts. 
-              <span className="font-semibold text-gray-800 block mt-2 text-base sm:text-lg">Available in Mumbai, Delhi, Bangalore & 12 more cities</span>
-              <span className="text-sm sm:text-lg text-primary-600 block mt-2 space-x-1">
+              <span className="font-semibold text-gray-800 dark:text-gray-200 block mt-2 text-base sm:text-lg">Available in Mumbai, Delhi, Bangalore & 12 more cities</span>
+              <span className="text-sm sm:text-lg text-primary-600 dark:text-primary-400 block mt-2 space-x-1">
                 <span className="inline-block">✓ Transparent pricing</span>
                 <span className="inline-block">✓ Real-time tracking</span>
                 <span className="inline-block">✓ Quality guarantee</span>

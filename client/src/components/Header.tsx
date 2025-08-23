@@ -1,16 +1,18 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'wouter';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Wrench, Phone, MapPin, Zap, Shield, Star, ChevronDown, Check } from 'lucide-react';
+import { Menu, X, Wrench, Phone, MapPin, Zap, Shield, Star, ChevronDown, Check, Moon, Sun } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Badge } from '@/components/ui/badge';
 import { useUiStore } from '@/stores/useUiStore';
+import { useTheme } from '@/contexts/ThemeContext';
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [location] = useLocation();
   const { isMobileMenuOpen, setMobileMenuOpen } = useUiStore();
+  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,8 +41,8 @@ export function Header() {
       animate={{ y: 0 }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? 'bg-white/95 backdrop-blur-xl border-b border-gray-200/50 shadow-xl'
-          : 'bg-white/90 backdrop-blur-lg'
+          ? 'bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border-b border-gray-200/50 dark:border-gray-700/50 shadow-xl'
+          : 'bg-white/90 dark:bg-gray-900/90 backdrop-blur-lg'
       }`}
     >
       {/* Top Bar with City and Phone */}
@@ -213,10 +215,25 @@ export function Header() {
             ))}
             
             <div className="flex items-center space-x-4">
+              {/* Theme Toggle */}
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={toggleTheme}
+                className="p-2 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                data-testid="theme-toggle"
+              >
+                {theme === 'dark' ? (
+                  <Sun className="w-5 h-5 text-yellow-500" />
+                ) : (
+                  <Moon className="w-5 h-5 text-gray-600" />
+                )}
+              </motion.button>
+
               <Link href="/track">
                 <Button
                   variant="outline"
-                  className="border-primary-200 text-primary-600 hover:bg-primary-50 px-6 py-2.5 rounded-xl font-medium"
+                  className="border-primary-200 text-primary-600 hover:bg-primary-50 dark:border-primary-600 dark:text-primary-400 dark:hover:bg-primary-900/20 px-6 py-2.5 rounded-xl font-medium"
                   data-testid="button-track-order"
                 >
                   Track Order
