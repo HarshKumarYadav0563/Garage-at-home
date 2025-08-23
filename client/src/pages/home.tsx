@@ -4,6 +4,7 @@ import { ServiceCard } from '@/components/ServiceCard';
 import { FAQ } from '@/components/FAQ';
 import { HowItWorks } from '@/components/HowItWorks';
 import { WhyChooseGarageWala } from '@/components/WhyChooseGarageWala';
+import { ServicesSection } from '@/components/ServicesSection';
 import { motion } from 'framer-motion';
 import { servicePackages } from '@/data/services';
 import { Link } from 'wouter';
@@ -20,49 +21,7 @@ export default function Home() {
       <HowItWorks />
 
       <WhyChooseGarageWala />
-      
-      {/* Services Section */}
-      <section id="services" className="py-12 sm:py-16 lg:py-24 bg-gray-50 dark:bg-gray-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12 sm:mb-16"
-          >
-            <h2 className="text-2xl sm:text-3xl lg:text-5xl font-bold mb-4 sm:mb-6 dark:text-gray-100">Our Services</h2>
-            <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-              Professional vehicle maintenance and repair services delivered right to your doorstep with transparent pricing.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 mb-12 sm:mb-16">
-            {/* Bike Services */}
-            <ServiceCard
-              id={bikeServices[0].id}
-              name="Bike Services"
-              vehicleType="bike"
-              description="Complete bike maintenance and repair"
-              basePrice={299}
-              features={['Oil Change', 'Brake Service', 'Chain Cleaning', 'Tire Check']}
-              icon="fas fa-motorcycle"
-              gradient="bg-gradient-to-br from-primary-500 to-green-600"
-            />
-
-            {/* Car Services */}
-            <ServiceCard
-              id={carServices[0].id}
-              name="Car Services" 
-              vehicleType="car"
-              description="Professional car care and maintenance"
-              basePrice={599}
-              features={['Engine Service', 'AC Service', 'Brake Repair', 'Battery Check']}
-              icon="fas fa-car"
-              gradient="bg-gradient-to-br from-blue-500 to-purple-600"
-            />
-          </div>
-        </div>
-      </section>
+      <ServicesSection />
 
       {/* Customer Testimonials */}
       <section className="py-12 sm:py-16 lg:py-24 bg-white">
