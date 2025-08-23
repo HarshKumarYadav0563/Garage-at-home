@@ -36,6 +36,13 @@ const trustItems = [
     label: "Cities Covered",
     color: "from-rose-400 to-red-600",
     delay: 0.4
+  },
+  {
+    icon: Zap,
+    value: "500+",
+    label: "Expert Mechanics",
+    color: "from-cyan-400 to-blue-600",
+    delay: 0.5
   }
 ];
 
@@ -131,7 +138,7 @@ export function EnhancedTrustBar() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.3 }}
-          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 sm:gap-4 md:gap-6 lg:gap-8"
+          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 sm:gap-4 md:gap-4 lg:gap-6"
         >
           {trustItems.map((item, index) => {
             const IconComponent = item.icon;
