@@ -31,9 +31,9 @@ export function Footer() {
   ];
 
   return (
-    <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
+    <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 text-white">
       {/* Top Section */}
-      <div className="border-b border-gray-700">
+      <div className="border-b border-gray-700 dark:border-gray-600">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Brand Section */}

@@ -155,15 +155,15 @@ export default function Book() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-20 lg:pt-24">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pt-20 lg:pt-24">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-8"
         >
-          <h1 className="text-3xl lg:text-4xl font-bold mb-4">Book Your Service</h1>
-          <p className="text-gray-600">Simple 5-step process to get your vehicle serviced</p>
+          <h1 className="text-3xl lg:text-4xl font-bold mb-4 dark:text-gray-100">Book Your Service</h1>
+          <p className="text-gray-600 dark:text-gray-300">Simple 5-step process to get your vehicle serviced</p>
         </motion.div>
 
         <Stepper currentStep={currentStep} steps={steps} />

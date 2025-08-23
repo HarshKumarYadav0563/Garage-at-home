@@ -88,15 +88,15 @@ export default function Contact() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-20 lg:pt-24">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pt-20 lg:pt-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-12"
         >
-          <h1 className="text-4xl lg:text-6xl font-bold mb-6">Contact Us</h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <h1 className="text-4xl lg:text-6xl font-bold mb-6 dark:text-gray-100">Contact Us</h1>
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
             Have questions? We're here to help! Get in touch with our team for any queries about our services.
           </p>
         </motion.div>
@@ -108,24 +108,24 @@ export default function Contact() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.1 }}
           >
-            <h2 className="text-2xl font-bold mb-8">Get in Touch</h2>
+            <h2 className="text-2xl font-bold mb-8 dark:text-gray-100">Get in Touch</h2>
             
             <div className="grid gap-6 mb-8">
               {contactInfo.map((info, index) => (
-                <Card key={index} className="bg-white/90 backdrop-blur-lg border border-white/20">
+                <Card key={index} className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-lg border border-white/20 dark:border-gray-700/20">
                   <CardContent className="p-6">
                     <div className="flex items-start space-x-4">
                       <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-blue-600 rounded-xl flex items-center justify-center">
                         <info.icon className="w-6 h-6 text-white" />
                       </div>
                       <div>
-                        <h3 className="font-semibold text-lg mb-1" data-testid={`contact-title-${index}`}>
+                        <h3 className="font-semibold text-lg mb-1 dark:text-gray-100" data-testid={`contact-title-${index}`}>
                           {info.title}
                         </h3>
                         <p className="text-primary-600 font-medium mb-1" data-testid={`contact-value-${index}`}>
                           {info.value}
                         </p>
-                        <p className="text-gray-600 text-sm" data-testid={`contact-description-${index}`}>
+                        <p className="text-gray-600 dark:text-gray-300 text-sm" data-testid={`contact-description-${index}`}>
                           {info.description}
                         </p>
                       </div>
@@ -136,14 +136,14 @@ export default function Contact() {
             </div>
 
             {/* Map Placeholder */}
-            <Card className="bg-white/90 backdrop-blur-lg border border-white/20">
+            <Card className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-lg border border-white/20 dark:border-gray-700/20">
               <CardContent className="p-6">
-                <h3 className="font-semibold text-lg mb-4">Our Service Areas</h3>
-                <div className="aspect-video bg-gradient-to-br from-primary-100 to-blue-100 rounded-xl flex items-center justify-center">
+                <h3 className="font-semibold text-lg mb-4 dark:text-gray-100">Our Service Areas</h3>
+                <div className="aspect-video bg-gradient-to-br from-primary-100 to-blue-100 dark:from-primary-900/20 dark:to-blue-900/20 rounded-xl flex items-center justify-center">
                   <div className="text-center">
                     <MapPin className="w-16 h-16 text-primary-600 mx-auto mb-4" />
-                    <p className="text-gray-600">Interactive Map</p>
-                    <p className="text-sm text-gray-500">Ranchi • Patna • Jaipur</p>
+                    <p className="text-gray-600 dark:text-gray-300">Interactive Map</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">Ranchi • Patna • Jaipur</p>
                   </div>
                 </div>
               </CardContent>

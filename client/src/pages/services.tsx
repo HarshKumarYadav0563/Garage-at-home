@@ -17,7 +17,7 @@ export default function Services() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-20 lg:pt-24">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pt-20 lg:pt-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
@@ -25,8 +25,8 @@ export default function Services() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-12"
         >
-          <h1 className="text-4xl lg:text-6xl font-bold mb-6">Our Services</h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+          <h1 className="text-4xl lg:text-6xl font-bold mb-6 dark:text-gray-100">Our Services</h1>
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8">
             Professional vehicle maintenance and repair services with transparent pricing and quality guarantee.
           </p>
 
@@ -72,10 +72,10 @@ export default function Services() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center py-16 bg-white rounded-2xl mb-16"
+          className="text-center py-16 bg-white dark:bg-gray-800 rounded-2xl mb-16"
         >
-          <h2 className="text-3xl font-bold mb-4">Ready to Book?</h2>
-          <p className="text-gray-600 mb-8">Get expert vehicle service right at your doorstep</p>
+          <h2 className="text-3xl font-bold mb-4 dark:text-gray-100">Ready to Book?</h2>
+          <p className="text-gray-600 dark:text-gray-300 mb-8">Get expert vehicle service right at your doorstep</p>
           <Button
             className="bg-gradient-to-r from-primary-500 to-blue-600 hover:from-primary-600 hover:to-blue-700 text-white px-8 py-3 rounded-xl font-semibold text-lg"
             data-testid="button-start-booking"

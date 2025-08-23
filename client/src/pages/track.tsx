@@ -92,15 +92,15 @@ export default function Track() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-20 lg:pt-24">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pt-20 lg:pt-24">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-8"
         >
-          <h1 className="text-3xl lg:text-4xl font-bold mb-4">Track Your Service</h1>
-          <p className="text-gray-600">Enter your tracking ID to see real-time service updates</p>
+          <h1 className="text-3xl lg:text-4xl font-bold mb-4 dark:text-gray-100">Track Your Service</h1>
+          <p className="text-gray-600 dark:text-gray-300">Enter your tracking ID to see real-time service updates</p>
         </motion.div>
 
         {/* Search Section */}
@@ -108,7 +108,7 @@ export default function Track() {
           <CardContent className="p-6">
             <div className="flex gap-4">
               <div className="flex-1">
-                <Label htmlFor="trackingId" className="text-sm font-medium mb-2 block">
+                <Label htmlFor="trackingId" className="text-sm font-medium mb-2 block dark:text-gray-200">
                   Tracking ID
                 </Label>
                 <Input
@@ -138,16 +138,16 @@ export default function Track() {
         {isLoading && (
           <div className="text-center py-12">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto"></div>
-            <p className="mt-4 text-gray-600">Loading tracking information...</p>
+            <p className="mt-4 text-gray-600 dark:text-gray-300">Loading tracking information...</p>
           </div>
         )}
 
         {/* Error State */}
         {error && (
-          <Card className="border-red-200 bg-red-50">
+          <Card className="border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-900/20">
             <CardContent className="p-6 text-center">
-              <div className="text-red-600 mb-2">Tracking ID not found</div>
-              <p className="text-gray-600">Please check your tracking ID and try again</p>
+              <div className="text-red-600 dark:text-red-400 mb-2">Tracking ID not found</div>
+              <p className="text-gray-600 dark:text-gray-300">Please check your tracking ID and try again</p>
             </CardContent>
           </Card>
         )}

@@ -23,7 +23,7 @@ export function Stepper({ currentStep, steps }: StepperProps) {
                     ? 'bg-green-500 text-white'
                     : isActive
                     ? 'bg-primary-500 text-white'
-                    : 'bg-gray-300 text-gray-600'
+                    : 'bg-gray-300 dark:bg-gray-700 text-gray-600 dark:text-gray-300'
                 }`}
                 data-testid={`step-indicator-${stepNumber}`}
               >
@@ -31,7 +31,7 @@ export function Stepper({ currentStep, steps }: StepperProps) {
               </div>
               <span
                 className={`font-medium whitespace-nowrap ${
-                  isActive ? 'text-primary-600' : 'text-gray-500'
+                  isActive ? 'text-primary-600' : 'text-gray-500 dark:text-gray-400'
                 }`}
                 data-testid={`step-label-${stepNumber}`}
               >
@@ -42,7 +42,7 @@ export function Stepper({ currentStep, steps }: StepperProps) {
             {!isLast && (
               <div
                 className={`flex-1 h-px mx-4 min-w-[50px] ${
-                  isCompleted ? 'bg-green-500' : 'bg-gray-300'
+                  isCompleted ? 'bg-green-500' : 'bg-gray-300 dark:bg-gray-700'
                 }`}
               />
             )}
