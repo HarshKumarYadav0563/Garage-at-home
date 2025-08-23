@@ -37,7 +37,6 @@ export const BIKE_SERVICES: ServiceData[] = [
       'Battery terminal cleaning',
       'Basic electrical check'
     ],
-    savings: 'Save ₹200 vs individual services'
   },
   {
     id: 'bike-periodic',
@@ -57,7 +56,6 @@ export const BIKE_SERVICES: ServiceData[] = [
       'Carburetor cleaning',
       'All fluid level checks'
     ],
-    savings: 'Save ₹350 vs individual services'
   },
   {
     id: 'bike-full',
@@ -78,7 +76,6 @@ export const BIKE_SERVICES: ServiceData[] = [
       'Safety inspection',
       '30-day service warranty'
     ],
-    savings: 'Save ₹500 vs individual services'
   },
   {
     id: 'bike-oil',
@@ -210,7 +207,6 @@ export const CAR_SERVICES: ServiceData[] = [
       'Fluid level checks',
       'Basic diagnostic scan'
     ],
-    savings: 'Save ₹400 vs individual services'
   },
   {
     id: 'car-periodic',
@@ -231,7 +227,6 @@ export const CAR_SERVICES: ServiceData[] = [
       'Transmission service',
       'Computer diagnostic'
     ],
-    savings: 'Save ₹800 vs individual services'
   },
   {
     id: 'car-major',
@@ -253,7 +248,6 @@ export const CAR_SERVICES: ServiceData[] = [
       'Road test & final check',
       '90-day service warranty'
     ],
-    savings: 'Save ₹1200 vs individual services'
   },
   {
     id: 'car-oil',
