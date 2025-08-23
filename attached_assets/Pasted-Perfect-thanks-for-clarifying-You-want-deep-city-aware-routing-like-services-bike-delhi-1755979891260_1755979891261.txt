@@ -1,0 +1,124 @@
+Perfect ✅ thanks for clarifying.
+You want **deep city-aware routing** like:
+
+* `/services/bike/delhi`
+* `/services/car/noida`
+* `/services/bike/gurugram`
+  etc.
+
+This way, **vehicle type + city** is encoded in the URL → good for SEO and easy filtering.
+
+Here’s the **prompt you can drop in Replit** to implement this routing system in **Next.js App Router**:
+
+---
+
+````text
+You are a Next.js (App Router) + React + Tailwind + Framer Motion engineer.  
+Refactor the routing system for **Delhi-NCR only**, using URLs like `/services/{vehicle}/{city}`.
+
+--------------------------------
+1) Dynamic route structure
+--------------------------------
+- Create `/app/services/[vehicle]/[city]/page.tsx`.
+- Params:
+  - `vehicle` ∈ { "bike", "car" }
+  - `city` ∈ { delhi, gurugram, noida, ghaziabad, faridabad }
+- Validate both params; if not valid → redirect to `/services`.
+
+Example:
+- `/services/bike/delhi` → Bike services in Delhi.
+- `/services/car/gurugram` → Car services in Gurugram.
+
+--------------------------------
+2) ServiceAreas config
+--------------------------------
+Reuse config:
+```ts
+export const NCR_CITIES = ["delhi","gurugram","noida","ghaziabad","faridabad"];
+export const VEHICLES = ["bike","car"];
+export const isValidRoute = (vehicle:string, city:string) =>
+  VEHICLES.includes(vehicle) && NCR_CITIES.includes(city);
+````
+
+---
+
+3. Page logic
+
+---
+
+* Fetch the **service packages** based on vehicle type (bike/car).
+* Render them with current UI (cards, pricing, CTAs).
+* Header:
+  “🚗 Doorstep {Vehicle} Services in {City} (Delhi-NCR)”
+* Meta tags:
+
+  * Title: `Book {Vehicle} Service at Home in {City} | Garage At Home`
+  * Description: `Affordable doorstep {vehicle} servicing in {city}, Delhi-NCR. Certified mechanics, transparent pricing, fast service.`
+
+---
+
+4. Navigation
+
+---
+
+* Update the Services menu:
+
+  * Dropdown with Bike → {Delhi, Gurugram, Noida, Ghaziabad, Faridabad}
+  * Dropdown with Car → same
+* Link each option to `/services/{vehicle}/{city}`.
+* If no city selected → default to `/services/{vehicle}/delhi`.
+
+---
+
+5. Guards & Redirects
+
+---
+
+* If user manually visits `/services/bike/mumbai` → render Waitlist page (with modal to join).
+* Non-NCR city pages → `noindex`.
+
+---
+
+6. Mobile UX
+
+---
+
+* Add compact **city selector tabs** above packages:
+
+  * `<Bike | Car>` toggle
+  * `<Delhi | Gurugram | Noida | Ghaziabad | Faridabad>` horizontal scroll.
+* Selecting updates URL (router.push) without reload.
+
+---
+
+7. SEO benefits
+
+---
+
+* Each service/city combo gets its own URL.
+* Sitemap includes all 10 routes (5 cities × 2 vehicles).
+* Internal linking between them (Bike <-> Car) for crawlability.
+
+---
+
+## Deliverables
+
+* `app/services/[vehicle]/[city]/page.tsx` (dynamic page)
+* `src/config/serviceAreas.ts` with helpers
+* Updated Services navigation with links to new routes
+* City/Vehicle selector synced with router
+* Waitlist handling for non-NCR
+* SEO metadata per city/vehicle
+* Updated sitemap generator
+
+```
+
+---
+
+⚡ With this setup:  
+- **Bike + Car × 5 cities = 10 SEO-friendly pages**.  
+- Users can deep link directly to `/services/car/noida`.  
+- Non-NCR queries gracefully push users to the waitlist.  
+
+👉 Do you want me to also draft the **`page.tsx` template** for `/services/[vehicle]/[city]` with props (title, meta, service packages) so you can paste it directly?
+```
