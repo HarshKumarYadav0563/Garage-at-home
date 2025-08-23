@@ -53,7 +53,7 @@ export function Hero() {
   };
 
   return (
-    <section className="relative min-h-[70vh] sm:min-h-[65vh] lg:min-h-[55vh] flex items-center overflow-hidden bg-gradient-to-br from-gray-50 to-blue-50 pt-20 sm:pt-24 lg:pt-24">
+    <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-gray-50 to-blue-50 pt-28 sm:pt-32 lg:pt-36">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div
@@ -66,7 +66,7 @@ export function Hero() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 items-center">
+        <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 items-center min-h-[calc(100vh-7rem)] sm:min-h-[calc(100vh-8rem)] lg:min-h-[calc(100vh-9rem)]">
           {/* Left Content */}
           <motion.div
             variants={containerVariants}
