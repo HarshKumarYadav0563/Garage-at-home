@@ -83,12 +83,19 @@ export function WhyChooseGarageWala() {
   ];
 
   return (
-    <section className="relative py-12 md:py-16 lg:py-24 overflow-hidden bg-[radial-gradient(60%_50%_at_30%_20%,rgba(16,185,129,0.15),transparent),radial-gradient(50%_40%_at_80%_80%,rgba(56,189,248,0.12),transparent),radial-gradient(40%_30%_at_50%_50%,rgba(99,102,241,0.08),transparent)] bg-gray-50">
+    <section className="relative py-12 md:py-16 lg:py-24 overflow-hidden bg-gradient-to-br from-gray-950 via-slate-900 to-gray-950">
+      {/* Radial accent glows */}
+      <div className="absolute inset-0">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-sky-500/20 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 right-1/3 w-72 h-72 bg-indigo-500/15 rounded-full blur-3xl" />
+      </div>
+      
       {/* Background pattern overlay */}
       <div 
-        className="absolute inset-0 opacity-[0.02]"
+        className="absolute inset-0 opacity-[0.03]"
         style={{
-          backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(0,0,0,0.8) 1px, transparent 0)',
+          backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(255,255,255,0.1) 1px, transparent 0)',
           backgroundSize: '32px 32px'
         }}
       />
@@ -102,13 +109,13 @@ export function WhyChooseGarageWala() {
           viewport={{ once: true, amount: 0.2 }}
         >
           <motion.div variants={itemVariants}>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight">
               Why Choose GarageWala
             </h2>
             
             {/* Animated gradient underline */}
             <motion.div
-              className="h-1 bg-gradient-to-r from-emerald-500 via-sky-500 to-indigo-600 rounded-full mx-auto mt-4"
+              className="h-1 bg-gradient-to-r from-emerald-400 via-sky-400 to-indigo-500 rounded-full mx-auto mt-4"
               initial={{ width: 0 }}
               whileInView={{ width: 80 }}
               viewport={{ once: true }}
@@ -118,7 +125,7 @@ export function WhyChooseGarageWala() {
           
           <motion.p 
             variants={itemVariants}
-            className="text-lg md:text-xl text-gray-600 mt-6 mx-auto max-w-2xl leading-relaxed"
+            className="text-lg md:text-xl text-gray-300 mt-6 mx-auto max-w-2xl leading-relaxed"
           >
             Unlike traditional garage visits, we bring premium service to your doorstep
           </motion.p>
@@ -137,7 +144,7 @@ export function WhyChooseGarageWala() {
               <motion.div
                 key={index}
                 variants={itemVariants}
-                className={`group relative rounded-2xl p-4 sm:p-5 md:p-6 bg-white/60 backdrop-blur-xl border border-slate-200/60 shadow-[0_8px_30px_rgba(2,6,23,0.06)] transition-all duration-500 ${feature.hoverGlow}`}
+                className={`group relative rounded-2xl p-4 sm:p-5 md:p-6 bg-white/5 backdrop-blur-xl border border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.3)] transition-all duration-500 ${feature.hoverGlow}`}
                 whileHover={shouldReduceMotion ? {} : { 
                   y: -4, 
                   rotateX: 2, 
@@ -154,7 +161,7 @@ export function WhyChooseGarageWala() {
                   {/* Icon container with glow effect */}
                   <div className="relative mb-4">
                     <motion.div 
-                      className={`relative size-12 md:size-14 rounded-2xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center shadow-lg`}
+                      className={`relative size-12 md:size-14 rounded-2xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center shadow-lg shadow-${feature.gradient.split('-')[1]}-500/30`}
                       animate={shouldReduceMotion ? {} : floatAnimation}
                       style={{ animationDelay: `${index * 0.3}s` }}
                     >
@@ -168,17 +175,17 @@ export function WhyChooseGarageWala() {
                     </motion.div>
                   </div>
                   
-                  <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-3 group-hover:text-gray-800 transition-colors">
+                  <h3 className="text-lg md:text-xl font-bold text-white mb-3 group-hover:text-gray-200 transition-colors">
                     {feature.title}
                   </h3>
                   
-                  <p className="text-sm md:text-base text-gray-600 leading-relaxed line-clamp-3">
+                  <p className="text-sm md:text-base text-gray-300 leading-relaxed line-clamp-3">
                     {feature.description}
                   </p>
                 </div>
                 
                 {/* Subtle background glow on hover */}
-                <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-white/40 to-white/10 pointer-events-none" />
+                <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-white/10 to-white/5 pointer-events-none" />
               </motion.div>
             );
           })}

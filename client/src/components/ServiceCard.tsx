@@ -53,9 +53,9 @@ export function ServiceCard({
       }}
       className="h-full"
     >
-      <Card className="group relative h-full bg-white/70 backdrop-blur-xl border border-slate-200/60 rounded-2xl p-5 md:p-6 lg:p-8 shadow-[0_8px_30px_rgba(2,6,23,0.06)] hover:shadow-[0_20px_50px_rgba(2,6,23,0.12)] transition-all duration-500 overflow-hidden">
+      <Card className="group relative h-full bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-5 md:p-6 lg:p-8 shadow-[0_8px_30px_rgba(0,0,0,0.3)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.4)] transition-all duration-500 overflow-hidden">
         {/* Subtle background glow on hover */}
-        <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-white/40 to-white/10 pointer-events-none" />
+        <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-white/10 to-white/5 pointer-events-none" />
         
         <CardContent className="p-0 h-full flex flex-col relative z-10">
           <div className="flex flex-col sm:flex-row items-start sm:items-center mb-5 md:mb-6">
@@ -76,10 +76,10 @@ export function ServiceCard({
             </div>
             
             <div className="flex-1">
-              <h3 className="text-xl md:text-2xl font-bold mb-2 text-gray-900 group-hover:text-gray-800 transition-colors" data-testid={`service-name-${id}`}>
+              <h3 className="text-xl md:text-2xl font-bold mb-2 text-white group-hover:text-gray-200 transition-colors" data-testid={`service-name-${id}`}>
                 {name}
               </h3>
-              <p className="text-base text-gray-600 leading-relaxed" data-testid={`service-description-${id}`}>
+              <p className="text-base text-gray-300 leading-relaxed" data-testid={`service-description-${id}`}>
                 {description}
               </p>
             </div>
@@ -90,7 +90,7 @@ export function ServiceCard({
             {features.map((feature, index) => (
               <motion.div 
                 key={index} 
-                className="flex items-center space-x-3 py-1.5 px-2 rounded-lg hover:bg-gray-50/50 transition-colors"
+                className="flex items-center space-x-3 py-1.5 px-2 rounded-lg hover:bg-white/10 transition-colors"
                 whileHover={{ x: 2 }}
                 transition={{ duration: 0.2 }}
               >
@@ -101,7 +101,7 @@ export function ServiceCard({
                       : 'text-blue-500'
                   }`} 
                 />
-                <span className="text-sm md:text-base text-gray-700 font-medium" data-testid={`service-feature-${id}-${index}`}>
+                <span className="text-sm md:text-base text-gray-300 font-medium" data-testid={`service-feature-${id}-${index}`}>
                   {feature}
                 </span>
               </motion.div>
@@ -109,7 +109,7 @@ export function ServiceCard({
           </div>
 
           {/* Enhanced pricing and CTA */}
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-0 mt-auto pt-4 border-t border-gray-100">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-0 mt-auto pt-4 border-t border-white/20">
             <div>
               <span 
                 className={`text-2xl md:text-3xl font-bold bg-gradient-to-r ${
@@ -121,7 +121,7 @@ export function ServiceCard({
               >
                 ₹{basePrice}
               </span>
-              <span className="text-gray-500 ml-2 text-base">onwards</span>
+              <span className="text-gray-400 ml-2 text-base">onwards</span>
             </div>
             
             <Link 

@@ -34,13 +34,20 @@ export function ServicesSection() {
   return (
     <section 
       id="services" 
-      className="relative py-12 md:py-16 lg:py-24 overflow-hidden bg-[radial-gradient(60%_50%_at_20%_30%,rgba(59,130,246,0.15),transparent),radial-gradient(50%_40%_at_80%_70%,rgba(16,185,129,0.12),transparent),radial-gradient(40%_30%_at_50%_50%,rgba(147,51,234,0.08),transparent)] bg-white"
+      className="relative py-12 md:py-16 lg:py-24 overflow-hidden bg-gradient-to-br from-gray-950 via-slate-900 to-gray-950"
     >
+      {/* Radial accent glows */}
+      <div className="absolute inset-0">
+        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 left-1/3 w-80 h-80 bg-cyan-500/20 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/4 w-72 h-72 bg-emerald-500/15 rounded-full blur-3xl" />
+      </div>
+      
       {/* Background pattern overlay */}
       <div 
-        className="absolute inset-0 opacity-[0.015]"
+        className="absolute inset-0 opacity-[0.03]"
         style={{
-          backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(0,0,0,0.8) 1px, transparent 0)',
+          backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(255,255,255,0.1) 1px, transparent 0)',
           backgroundSize: '40px 40px'
         }}
       />
@@ -54,13 +61,13 @@ export function ServicesSection() {
           viewport={{ once: true, amount: 0.2 }}
         >
           <motion.div variants={itemVariants}>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight">
               Our Premium Services
             </h2>
             
             {/* Animated gradient underline */}
             <motion.div
-              className="h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-emerald-500 rounded-full mx-auto mt-4"
+              className="h-1 bg-gradient-to-r from-purple-400 via-cyan-400 to-emerald-500 rounded-full mx-auto mt-4"
               initial={{ width: 0 }}
               whileInView={{ width: 100 }}
               viewport={{ once: true }}
@@ -70,7 +77,7 @@ export function ServicesSection() {
           
           <motion.p 
             variants={itemVariants}
-            className="text-lg md:text-xl text-gray-600 mt-6 mx-auto max-w-3xl leading-relaxed"
+            className="text-lg md:text-xl text-gray-300 mt-6 mx-auto max-w-3xl leading-relaxed"
           >
             Professional vehicle maintenance and repair services delivered right to your doorstep with transparent pricing
           </motion.p>
@@ -118,7 +125,7 @@ export function ServicesSection() {
           viewport={{ once: true }}
           transition={{ delay: 0.6, duration: 0.4 }}
         >
-          <p className="text-gray-600 text-sm md:text-base">
+          <p className="text-gray-400 text-sm md:text-base">
             Need a different service? We offer custom maintenance packages for all vehicle types.
           </p>
         </motion.div>
