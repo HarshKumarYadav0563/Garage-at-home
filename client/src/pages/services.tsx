@@ -544,7 +544,7 @@ export default function Services() {
                 {/* Mobile: Horizontal scroll with snap */}
                 <div className="lg:hidden">
                   <motion.div
-                    className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 px-1 scrollbar-hide"
+                    className="flex gap-4 overflow-x-auto snap-x snap-mandatory py-2 px-1 scrollbar-hide"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.2, staggerChildren: 0.05 }}
