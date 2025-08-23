@@ -163,5 +163,21 @@ export const useBookingStore = create<BookingStore>((set, get) => ({
     });
     
     return total;
+  },
+
+  getDoortepCharge: () => {
+    const state = get();
+    const subtotal = state.getSubtotal();
+    
+    // If cart total is below ₹999, add ₹99 doorstep charge
+    return subtotal > 0 && subtotal < 999 ? 99 : 0;
+  },
+
+  getFinalTotal: () => {
+    const state = get();
+    const subtotal = state.getSubtotal();
+    const doorstepCharge = state.getDoortepCharge();
+    
+    return subtotal + doorstepCharge;
   }
 }));

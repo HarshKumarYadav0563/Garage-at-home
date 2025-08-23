@@ -16,6 +16,8 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
     selectedServices,
     selectedAddons,
     getSubtotal,
+    getDoortepCharge,
+    getFinalTotal,
     currentStep,
     setCurrentStep,
     toggleService,
@@ -26,6 +28,8 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
   
   const shouldReduceMotion = useReducedMotion();
   const subtotal = getSubtotal();
+  const doorstepCharge = getDoortepCharge();
+  const finalTotal = getFinalTotal();
   const hasItems = selectedServices.length > 0 || selectedAddons.length > 0;
 
 
@@ -141,12 +145,33 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
               {/* Pricing */}
               <div className="space-y-2 mb-6">
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-300 text-sm">Estimated Total</span>
-                  <span className="text-white font-bold text-lg">
+                  <span className="text-gray-300 text-sm">Services Total</span>
+                  <span className="text-white font-medium">
                     ₹{subtotal.toLocaleString()}
                   </span>
                 </div>
                 
+                {doorstepCharge > 0 && (
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-300 text-sm">Doorstep Charge</span>
+                    <span className="text-yellow-400 font-medium">
+                      ₹{doorstepCharge}
+                    </span>
+                  </div>
+                )}
+                
+                <div className="border-t border-gray-700 pt-2 flex justify-between items-center">
+                  <span className="text-gray-300 text-sm font-medium">Final Total</span>
+                  <span className="text-white font-bold text-lg">
+                    ₹{finalTotal.toLocaleString()}
+                  </span>
+                </div>
+                
+                {doorstepCharge > 0 && (
+                  <div className="text-xs text-yellow-400 bg-yellow-500/10 rounded p-2">
+                    ℹ️ Doorstep charge applies for orders below ₹999
+                  </div>
+                )}
                 
                 <div className="text-xs text-gray-400">
                   *Prices exclude GST. Final amount may vary based on actual work required.
