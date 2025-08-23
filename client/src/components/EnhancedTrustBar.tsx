@@ -56,7 +56,9 @@ export function EnhancedTrustBar() {
       const scrollY = window.scrollY;
       
       // Show badges when user has scrolled more than 100px
-      setIsVisible(scrollY > 100);
+      const shouldShow = scrollY > 100;
+      console.log('Scroll Y:', scrollY, 'Should show badges:', shouldShow);
+      setIsVisible(shouldShow);
     };
 
     // Initial check
@@ -152,6 +154,7 @@ export function EnhancedTrustBar() {
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 relative">
         {/* Desktop: Animated placeholder that transforms into badges */}
         <div className="hidden lg:block">
+          <div className="text-white text-sm mb-2">Debug: isVisible = {isVisible.toString()}</div>
           {!isVisible ? (
             // Placeholder animation before scroll
             <motion.div
