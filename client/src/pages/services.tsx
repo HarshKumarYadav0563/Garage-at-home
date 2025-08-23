@@ -129,12 +129,6 @@ export default function Services() {
   const comboServices = filteredServices.filter(service => service.type === 'combo');
   const individualServices = filteredServices.filter(service => service.type === 'individual' || !service.type);
   
-  // Debug logging
-  console.log('Debug - currentServices length:', currentServices.length);
-  console.log('Debug - filteredServices length:', filteredServices.length);
-  console.log('Debug - comboServices length:', comboServices.length);
-  console.log('Debug - individualServices length:', individualServices.length);
-  console.log('Debug - individualServices:', individualServices.map(s => ({ id: s.id, name: s.name, type: s.type })));
 
   // Handle customer details form submission
   const handleCustomerDetailsSubmit = (data: CustomerData) => {
@@ -1055,66 +1049,48 @@ export default function Services() {
                 )}
 
                 {/* Enhanced Individual Services with Scroll Animation */}
-                {console.log('Debug - Rendering check: individualServices.length =', individualServices.length)}
-                {individualServices.length > 0 && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 50 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.3 }}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
-                    className="mb-16"
-                  >
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
-                      <div>
-                        <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-                          Individual Services
-                        </h3>
-                        <p className="text-gray-300 text-base sm:text-lg">
-                          Precision services for specific maintenance needs
-                        </p>
-                      </div>
-                      <Badge variant="outline" className="text-emerald-400 border-emerald-500/30 self-start sm:self-auto">
-                        {individualServices.length} Services Available
-                      </Badge>
-                    </div>
-                    
-                    <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4 mb-8">
-                      <p className="text-blue-300 text-sm">
-                        <span className="font-medium">Mix & Match:</span> Individual services can be combined with each other. Don't forget to add "Doorstep Service" from add-ons for home service.
+                <motion.div
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ duration: 0.8, ease: "easeOut" }}
+                  className="mb-16"
+                >
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
+                    <div>
+                      <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+                        Individual Services
+                      </h3>
+                      <p className="text-gray-300 text-base sm:text-lg">
+                        Precision services for specific maintenance needs
                       </p>
                     </div>
-                    
-                    <motion.div
-                      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8"
-                      variants={{
-                        hidden: { opacity: 0 },
-                        show: {
-                          opacity: 1,
-                          transition: {
-                            staggerChildren: 0.15,
-                            delayChildren: 0.2
-                          }
-                        }
-                      }}
-                      initial="hidden"
-                      whileInView="show"
-                      viewport={{ once: true, amount: 0.2 }}
-                    >
-                      {individualServices.map((service) => {
-                        const isSelected = selectedServices.some(s => s.id === service.id);
-                        
-                        return (
-                          <BookingServiceCard
-                            key={service.id}
-                            service={service}
-                            isSelected={isSelected}
-                            onToggle={() => handleToggleService(service)}
-                          />
-                        );
-                      })}
-                    </motion.div>
-                  </motion.div>
-                )}
+                    <Badge variant="outline" className="text-emerald-400 border-emerald-500/30 self-start sm:self-auto">
+                      {individualServices.length} Services Available
+                    </Badge>
+                  </div>
+                  
+                  <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4 mb-8">
+                    <p className="text-blue-300 text-sm">
+                      <span className="font-medium">Mix & Match:</span> Individual services can be combined with each other. Don't forget to add "Doorstep Service" from add-ons for home service.
+                    </p>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+                    {individualServices.map((service) => {
+                      const isSelected = selectedServices.some(s => s.id === service.id);
+                      
+                      return (
+                        <BookingServiceCard
+                          key={service.id}
+                          service={service}
+                          isSelected={isSelected}
+                          onToggle={() => handleToggleService(service)}
+                        />
+                      );
+                    })}
+                  </div>
+                </motion.div>
 
                 {/* Enhanced Add-ons Section */}
                 <motion.div
