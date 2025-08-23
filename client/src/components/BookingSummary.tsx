@@ -28,8 +28,11 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
   
   const shouldReduceMotion = useReducedMotion();
   const subtotal = getSubtotal();
-  const doorstepCharge = getDoortepCharge ? getDoortepCharge() : 0;
-  const finalTotal = getFinalTotal ? getFinalTotal() : subtotal;
+  
+  // Calculate doorstep charge manually if function doesn't exist
+  const doorstepCharge = subtotal > 0 && subtotal < 999 ? 99 : 0;
+  const finalTotal = subtotal + doorstepCharge;
+  
   const hasItems = selectedServices.length > 0 || selectedAddons.length > 0;
 
   // Debug: log values
