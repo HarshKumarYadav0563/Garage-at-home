@@ -1,5 +1,5 @@
-import { motion, useReducedMotion, AnimatePresence } from 'framer-motion';
-import { useMemo } from 'react';
+import { motion, useReducedMotion, AnimatePresence, useScroll, useTransform, useSpring } from 'framer-motion';
+import { useMemo, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -51,6 +51,33 @@ export default function Services() {
 
   const shouldReduceMotion = useReducedMotion();
   const { toast } = useToast();
+  
+  // Scroll enhancements
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress, scrollY } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
+  });
+  
+  // Smooth scroll progress with spring
+  const smoothProgress = useSpring(scrollYProgress, { 
+    stiffness: 100, 
+    damping: 30, 
+    restDelta: 0.001 
+  });
+  
+  // Parallax transforms
+  const backgroundY = useTransform(scrollY, [0, 1000], [0, -300]);
+  const orbsY = useTransform(scrollY, [0, 1000], [0, -200]);
+  const heroY = useTransform(scrollY, [0, 500], [0, -100]);
+
+  // Add smooth scroll behavior to the entire page
+  useEffect(() => {
+    document.documentElement.style.scrollBehavior = 'smooth';
+    return () => {
+      document.documentElement.style.scrollBehavior = 'auto';
+    };
+  }, []);
 
   // Enhanced toggle service with user feedback
   const handleToggleService = (service: ServiceData) => {
@@ -152,9 +179,40 @@ export default function Services() {
 
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-black relative overflow-hidden">
-      {/* Enhanced Background Effects */}
-      <div className="absolute inset-0 overflow-hidden">
+    <div ref={containerRef} className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-black relative overflow-hidden">
+      
+      {/* Scroll Progress Indicator */}
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 via-sky-500 to-purple-500 z-50 origin-left"
+        style={{ scaleX: smoothProgress }}
+      />
+      
+      {/* Floating Scroll Indicator */}
+      <motion.div
+        className="fixed right-4 sm:right-8 top-1/2 transform -translate-y-1/2 z-40"
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 2 }}
+      >
+        <motion.div
+          className="w-1 h-20 sm:h-32 bg-white/10 rounded-full overflow-hidden backdrop-blur-sm"
+          whileHover={{ scale: 1.2, backgroundColor: 'rgba(255, 255, 255, 0.2)' }}
+        >
+          <motion.div
+            className="w-full bg-gradient-to-b from-emerald-400 to-sky-400 rounded-full"
+            style={{ 
+              height: smoothProgress,
+              boxShadow: '0 0 10px rgba(16, 185, 129, 0.5)'
+            }}
+          />
+        </motion.div>
+      </motion.div>
+      
+      {/* Enhanced Background Effects with Parallax */}
+      <motion.div 
+        className="absolute inset-0 overflow-hidden"
+        style={{ y: backgroundY }}
+      >
         {/* Dynamic gradient overlays */}
         <motion.div 
           className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-purple-900/40 via-transparent to-transparent"
@@ -192,9 +250,13 @@ export default function Services() {
           }}
         />
         
-        {/* Enhanced floating orbs with more complex animations */}
+        {/* Enhanced floating orbs with parallax and scroll effects */}
         <motion.div
           className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-emerald-500/30 to-sky-500/30 rounded-full blur-3xl"
+          style={{ 
+            y: orbsY,
+            scale: useTransform(scrollYProgress, [0, 0.5, 1], [1, 1.2, 0.8])
+          }}
           animate={{
             scale: [1, 1.4, 0.9, 1.2, 1],
             opacity: [0.4, 0.7, 0.3, 0.6, 0.4],
@@ -210,6 +272,10 @@ export default function Services() {
         />
         <motion.div
           className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-500/25 to-pink-500/25 rounded-full blur-3xl"
+          style={{ 
+            y: useTransform(orbsY, [0, -200], [0, 150]),
+            x: useTransform(scrollYProgress, [0, 1], [0, -100])
+          }}
           animate={{
             scale: [1.2, 0.8, 1.3, 1],
             opacity: [0.5, 0.8, 0.3, 0.5],
@@ -225,6 +291,10 @@ export default function Services() {
         />
         <motion.div
           className="absolute top-1/2 left-1/2 w-72 h-72 bg-gradient-to-r from-indigo-500/20 to-cyan-500/20 rounded-full blur-3xl"
+          style={{ 
+            y: useTransform(orbsY, [0, -200], [0, -80]),
+            opacity: useTransform(scrollYProgress, [0, 0.5, 1], [0.3, 0.7, 0.2])
+          }}
           animate={{
             scale: [0.8, 1.5, 0.9, 1.1, 0.8],
             opacity: [0.3, 0.6, 0.4, 0.7, 0.3],
@@ -284,7 +354,7 @@ export default function Services() {
             }}
           />
         ))}
-      </div>
+      </motion.div>
       
       {/* Enhanced Animated Grid Pattern */}
       <motion.div
@@ -329,11 +399,12 @@ export default function Services() {
       
       <div className="relative max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8 py-4 pt-16 sm:pt-20 lg:pt-24">
         
-        {/* Enhanced Hero Section - Mobile Responsive */}
+        {/* Enhanced Hero Section with Parallax - Mobile Responsive */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
+          style={{ y: heroY }}
           className="text-center mb-6 sm:mb-8 px-2 sm:px-4"
         >
           <motion.h1 
@@ -895,12 +966,13 @@ export default function Services() {
 
 
             <div className="w-full">
-                {/* Combo Services */}
+                {/* Combo Services with Scroll-triggered Animation */}
                 {comboServices.length > 0 && (
                   <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 1.0, duration: 0.8 }}
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
                     className="mb-16"
                   >
                     <div className="flex items-center justify-between mb-8">
@@ -975,12 +1047,13 @@ export default function Services() {
                   </motion.div>
                 )}
 
-                {/* Enhanced Individual Services */}
+                {/* Enhanced Individual Services with Scroll Animation */}
                 {individualServices.length > 0 && (
                   <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 1.2, duration: 0.8 }}
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
                     className="mb-16"
                   >
                     <div className="flex items-center justify-between mb-8">
