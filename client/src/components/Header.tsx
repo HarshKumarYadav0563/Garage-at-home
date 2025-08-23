@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'wouter';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Wrench, Phone, MapPin, Zap, Shield, Star } from 'lucide-react';
+import { Menu, X, Wrench, Phone, MapPin, Zap, Shield, Star, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { useUiStore } from '@/stores/useUiStore';
+import { NCR_CITIES, VEHICLES, CITY_DISPLAY_NAMES, VEHICLE_DISPLAY_NAMES } from '@shared/config/serviceAreas';
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -24,12 +25,35 @@ export function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const [showServicesDropdown, setShowServicesDropdown] = useState(false);
+
   const navigation = [
     { name: 'Home', href: '/' },
-    { name: 'Services', href: '/services' },
+    { 
+      name: 'Services', 
+      href: '/services', 
+      hasDropdown: true,
+      dropdownItems: [
+        { name: 'All Services', href: '/services' },
+        ...VEHICLES.flatMap(vehicle => 
+          NCR_CITIES.map(city => ({
+            name: `${VEHICLE_DISPLAY_NAMES[vehicle]} • ${CITY_DISPLAY_NAMES[city]}`,
+            href: `/services/${vehicle}/${city}`,
+            vehicle,
+            city
+          }))
+        )
+      ]
+    },
     { name: 'How It Works', href: '/how-it-works' },
     { name: 'Contact', href: '/contact' },
-  ] as Array<{ name: string; href: string; scrollTo?: string }>;
+  ] as Array<{ 
+    name: string; 
+    href: string; 
+    scrollTo?: string;
+    hasDropdown?: boolean;
+    dropdownItems?: Array<{name: string, href: string, vehicle?: string, city?: string}>
+  }>;
 
 
   return (
@@ -240,47 +264,122 @@ export function Header() {
             transition={{ delay: 0.4, type: "spring", stiffness: 200 }}
           >
             {navigation.map((item, index) => (
-              <Link key={item.name} href={item.href}>
-                <motion.div
-                  whileHover={{ 
-                    scale: 1.05,
-                    y: -2
-                  }}
-                  whileTap={{ scale: 0.95 }}
-                  className="relative cursor-pointer"
-                  data-testid={`nav-${item.name.toLowerCase().replace(/\s+/g, '-')}`}
-                  initial={{ y: -20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ 
-                    delay: 0.5 + index * 0.1,
-                    type: "spring",
-                    stiffness: 200
-                  }}
-                  onClick={(e) => {
-                    if (item.scrollTo) {
-                      e.preventDefault();
-                      const element = document.getElementById(item.scrollTo);
-                      if (element) {
-                        element.scrollIntoView({ behavior: 'smooth' });
-                      }
-                    }
-                  }}
-                >
-                  <span className={`font-medium transition-colors ${
-                    location === item.href
-                      ? 'text-emerald-400'
-                      : 'text-gray-300 hover:text-emerald-400'
-                  }`}>
-                    {item.name}
-                  </span>
-                  {location === item.href && (
+              <div key={item.name} className="relative">
+                {item.hasDropdown ? (
+                  <motion.div
+                    className="relative"
+                    initial={{ y: -20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ 
+                      delay: 0.5 + index * 0.1,
+                      type: "spring",
+                      stiffness: 200
+                    }}
+                    onMouseEnter={() => setShowServicesDropdown(true)}
+                    onMouseLeave={() => setShowServicesDropdown(false)}
+                  >
                     <motion.div
-                      layoutId="activeTab"
-                      className="absolute -bottom-1 left-0 right-0 h-0.5 bg-emerald-400 rounded-full"
-                    />
-                  )}
-                </motion.div>
-              </Link>
+                      whileHover={{ 
+                        scale: 1.05,
+                        y: -2
+                      }}
+                      className="relative cursor-pointer"
+                      data-testid={`nav-${item.name.toLowerCase().replace(/\s+/g, '-')}`}
+                    >
+                      <span className="font-medium text-gray-300 hover:text-emerald-400 transition-colors flex items-center space-x-1">
+                        <span>{item.name}</span>
+                        <ChevronDown className="w-4 h-4" />
+                      </span>
+                    </motion.div>
+                    
+                    <AnimatePresence>
+                      {showServicesDropdown && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                          className="absolute top-8 left-0 w-80 bg-gray-900 rounded-2xl shadow-2xl border border-white/10 overflow-hidden z-50"
+                        >
+                          <div className="p-4 bg-gradient-to-r from-emerald-500/10 to-sky-500/10 border-b border-white/10">
+                            <h3 className="font-semibold text-white">Service Areas</h3>
+                            <p className="text-sm text-gray-300 mt-1">Choose your vehicle and location</p>
+                          </div>
+                          <div className="max-h-80 overflow-y-auto p-2">
+                            <Link href="/services">
+                              <motion.div
+                                whileHover={{ backgroundColor: 'rgba(255,255,255,0.1)' }}
+                                className="p-3 rounded-lg text-emerald-400 font-medium border-b border-white/10 mb-2"
+                              >
+                                All Services
+                              </motion.div>
+                            </Link>
+                            
+                            {VEHICLES.map(vehicle => (
+                              <div key={vehicle} className="mb-3">
+                                <div className="text-xs font-semibold text-gray-400 uppercase tracking-wide px-3 py-1">
+                                  {VEHICLE_DISPLAY_NAMES[vehicle]} Services
+                                </div>
+                                {NCR_CITIES.map(city => (
+                                  <Link key={`${vehicle}-${city}`} href={`/services/${vehicle}/${city}`}>
+                                    <motion.div
+                                      whileHover={{ backgroundColor: 'rgba(16, 185, 129, 0.1)' }}
+                                      className="px-3 py-2 text-sm text-gray-300 hover:text-emerald-400 transition-colors rounded-lg mx-1"
+                                    >
+                                      {CITY_DISPLAY_NAMES[city]}
+                                    </motion.div>
+                                  </Link>
+                                ))}
+                              </div>
+                            ))}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
+                ) : (
+                  <Link href={item.href}>
+                    <motion.div
+                      whileHover={{ 
+                        scale: 1.05,
+                        y: -2
+                      }}
+                      whileTap={{ scale: 0.95 }}
+                      className="relative cursor-pointer"
+                      data-testid={`nav-${item.name.toLowerCase().replace(/\s+/g, '-')}`}
+                      initial={{ y: -20, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      transition={{ 
+                        delay: 0.5 + index * 0.1,
+                        type: "spring",
+                        stiffness: 200
+                      }}
+                      onClick={(e) => {
+                        if (item.scrollTo) {
+                          e.preventDefault();
+                          const element = document.getElementById(item.scrollTo);
+                          if (element) {
+                            element.scrollIntoView({ behavior: 'smooth' });
+                          }
+                        }
+                      }}
+                    >
+                      <span className={`font-medium transition-colors ${
+                        location === item.href
+                          ? 'text-emerald-400'
+                          : 'text-gray-300 hover:text-emerald-400'
+                      }`}>
+                        {item.name}
+                      </span>
+                      {location === item.href && (
+                        <motion.div
+                          layoutId="activeTab"
+                          className="absolute -bottom-1 left-0 right-0 h-0.5 bg-emerald-400 rounded-full"
+                        />
+                      )}
+                    </motion.div>
+                  </Link>
+                )}
+              </div>
             ))}
             
             <div className="flex items-center space-x-4">

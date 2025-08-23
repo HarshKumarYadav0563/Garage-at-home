@@ -11,6 +11,7 @@ import { Toast } from "@/components/Toast";
 // Pages
 import Home from "@/pages/home";
 import Services from "@/pages/services";
+import ServicesDynamic from "@/pages/services-dynamic";
 import Book from "@/pages/book";
 import Track from "@/pages/track";
 import Contact from "@/pages/contact";
@@ -38,6 +39,7 @@ function Router() {
       <main className="flex-1 pt-24 lg:pt-28">
         <Switch>
           <Route path="/" component={Home} />
+          <Route path="/services/:vehicle/:city" component={ServicesDynamic} />
           <Route path="/services" component={Services} />
           <Route path="/pricing" component={Pricing} />
           <Route path="/book" component={Book} />
