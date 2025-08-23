@@ -128,6 +128,13 @@ export default function Services() {
 
   const comboServices = filteredServices.filter(service => service.type === 'combo');
   const individualServices = filteredServices.filter(service => service.type === 'individual' || !service.type);
+  
+  // Debug logging
+  console.log('Debug - currentServices length:', currentServices.length);
+  console.log('Debug - filteredServices length:', filteredServices.length);
+  console.log('Debug - comboServices length:', comboServices.length);
+  console.log('Debug - individualServices length:', individualServices.length);
+  console.log('Debug - individualServices:', individualServices.map(s => ({ id: s.id, name: s.name, type: s.type })));
 
   // Handle customer details form submission
   const handleCustomerDetailsSubmit = (data: CustomerData) => {
@@ -1048,6 +1055,7 @@ export default function Services() {
                 )}
 
                 {/* Enhanced Individual Services with Scroll Animation */}
+                {console.log('Debug - Rendering check: individualServices.length =', individualServices.length)}
                 {individualServices.length > 0 && (
                   <motion.div
                     initial={{ opacity: 0, y: 50 }}
