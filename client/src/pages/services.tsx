@@ -1048,14 +1048,16 @@ export default function Services() {
                   </motion.div>
                 )}
 
-                {/* Enhanced Individual Services with Scroll Animation */}
-                <motion.div
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.3 }}
-                  transition={{ duration: 0.8, ease: "easeOut" }}
-                  className="mb-16"
-                >
+                {/* INDIVIDUAL SERVICES DEBUG SECTION */}
+                <div className="mb-16 bg-green-500/20 border-2 border-green-500 p-4 rounded-xl">
+                  <div className="text-green-400 font-bold mb-4">DEBUG: Individual Services Section</div>
+                  <div className="text-white text-sm mb-4">
+                    Services count: {individualServices?.length || 0}
+                  </div>
+                  <div className="text-white text-sm mb-4">
+                    Current step: {currentStep}
+                  </div>
+                  
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
                     <div>
                       <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2">
@@ -1076,27 +1078,21 @@ export default function Services() {
                     </p>
                   </div>
                   
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 min-h-[200px]">
-                    {individualServices.map((service, index) => {
-                      const isSelected = selectedServices.some(s => s.id === service.id);
-                      
-                      return (
-                        <div key={service.id} className="bg-red-500/20 border border-red-500 p-2 rounded" style={{ minHeight: '200px' }}>
-                          <div className="text-white text-xs">Debug Card {index + 1}</div>
-                          <div className="text-white text-xs">ID: {service.id}</div>
-                          <div className="text-white text-xs">Name: {service.name}</div>
-                          <div className="text-white text-xs">Type: {service.type}</div>
-                          <BookingServiceCard
-                            key={`card-${service.id}`}
-                            service={service}
-                            isSelected={isSelected}
-                            onToggle={() => handleToggleService(service)}
-                          />
+                  {individualServices && individualServices.length > 0 ? (
+                    <div className="grid grid-cols-1 gap-4">
+                      {individualServices.slice(0, 3).map((service, index) => (
+                        <div key={service.id} className="bg-red-500/50 border-2 border-red-500 p-4 rounded-xl">
+                          <div className="text-white font-bold">Test Card {index + 1}</div>
+                          <div className="text-white">Name: {service.name}</div>
+                          <div className="text-white">ID: {service.id}</div>
+                          <div className="text-white">Price: ₹{service.price}</div>
                         </div>
-                      );
-                    })}
-                  </div>
-                </motion.div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="text-red-400 font-bold">NO INDIVIDUAL SERVICES FOUND!</div>
+                  )}
+                </div>
 
                 {/* Enhanced Add-ons Section */}
                 <motion.div
