@@ -1,25 +1,39 @@
 import { motion } from 'framer-motion';
-import { Wrench, Facebook, Twitter, Instagram, Linkedin, Phone, Mail, Clock, MapPin, Star, Shield } from 'lucide-react';
+import { Wrench, Facebook, Twitter, Instagram, Linkedin, Phone, Mail, Clock, MapPin, Star, Shield, Car, Bike } from 'lucide-react';
 import { Link } from 'wouter';
+import { NCR_CITIES, VEHICLES, CITY_DISPLAY_NAMES, VEHICLE_DISPLAY_NAMES } from '@shared/config/serviceAreas';
 
 export function Footer() {
-  const services = [
-    'Bike Service',
-    'Car Service', 
-    'Oil Change',
-    'Brake Repair',
-    'AC Service',
-    'Emergency Repair'
+  // SEO-optimized service categories
+  const bikeServices = [
+    'Bike Oil Change',
+    'Bike Battery Repair', 
+    'Bike Chain Service',
+    'Bike Brake Check',
+    'Bike General Service',
+    'Bike Emergency Repair'
   ];
 
-  const cities = [
-    'Mumbai',
-    'Delhi',
-    'Bangalore',
-    'Pune',
-    'Chennai',
-    'Hyderabad'
+  const carServices = [
+    'Car Oil Change',
+    'Car AC Service',
+    'Car Battery Repair',
+    'Car Brake Service', 
+    'Car General Service',
+    'Car Wash & Detailing'
   ];
+
+  // City-specific SEO keywords
+  const cityServiceKeywords = NCR_CITIES.map(city => ({
+    city,
+    displayName: CITY_DISPLAY_NAMES[city],
+    services: [
+      `Doorstep Vehicle Service ${CITY_DISPLAY_NAMES[city]}`,
+      `${CITY_DISPLAY_NAMES[city]} Mobile Mechanic`,
+      `Car Bike Repair ${CITY_DISPLAY_NAMES[city]}`,
+      `Home Service ${CITY_DISPLAY_NAMES[city]}`
+    ]
+  }));
 
   const company = [
     'About Us',
@@ -150,25 +164,28 @@ export function Footer() {
               </motion.div>
             </div>
 
-            {/* Three Sections Together */}
-            <div className="grid grid-cols-3 gap-4 md:gap-8">
-              {/* Services */}
+            {/* Four SEO-Optimized Sections */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+              {/* Bike Services */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.1 }}
               >
-                <h3 className="text-sm md:text-lg font-semibold mb-3 md:mb-4 text-white dark:text-gray-100">Our Services</h3>
+                <h3 className="text-sm md:text-lg font-semibold mb-3 md:mb-4 text-white dark:text-gray-100 flex items-center space-x-2">
+                  <Bike className="w-4 h-4 text-emerald-400" />
+                  <span>Bike Services</span>
+                </h3>
                 <ul className="space-y-1 md:space-y-2">
-                  {services.map((service, index) => (
+                  {bikeServices.map((service, index) => (
                     <li key={index}>
-                      <Link href="/services">
+                      <Link href="/services/bike/delhi">
                         <span
-                          className="text-xs md:text-sm text-gray-300 dark:text-gray-300 hover:text-primary-400 dark:hover:text-primary-300 transition-colors cursor-pointer flex items-center space-x-1 md:space-x-2 group"
-                          data-testid={`footer-service-${index}`}
+                          className="text-xs md:text-sm text-gray-300 dark:text-gray-300 hover:text-emerald-400 dark:hover:text-emerald-300 transition-colors cursor-pointer flex items-center space-x-1 md:space-x-2 group"
+                          data-testid={`footer-bike-service-${index}`}
                         >
-                          <span className="w-1 h-1 md:w-1.5 md:h-1.5 bg-primary-500 dark:bg-primary-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                          <span className="w-1 h-1 md:w-1.5 md:h-1.5 bg-emerald-500 dark:bg-emerald-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
                           <span className="leading-tight">{service}</span>
                         </span>
                       </Link>
@@ -177,32 +194,63 @@ export function Footer() {
                 </ul>
               </motion.div>
 
-              {/* Cities */}
+              {/* Car Services */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.15 }}
+              >
+                <h3 className="text-sm md:text-lg font-semibold mb-3 md:mb-4 text-white dark:text-gray-100 flex items-center space-x-2">
+                  <Car className="w-4 h-4 text-sky-400" />
+                  <span>Car Services</span>
+                </h3>
+                <ul className="space-y-1 md:space-y-2">
+                  {carServices.map((service, index) => (
+                    <li key={index}>
+                      <Link href="/services/car/delhi">
+                        <span
+                          className="text-xs md:text-sm text-gray-300 dark:text-gray-300 hover:text-sky-400 dark:hover:text-sky-300 transition-colors cursor-pointer flex items-center space-x-1 md:space-x-2 group"
+                          data-testid={`footer-car-service-${index}`}
+                        >
+                          <span className="w-1 h-1 md:w-1.5 md:h-1.5 bg-sky-500 dark:bg-sky-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                          <span className="leading-tight">{service}</span>
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+
+              {/* Delhi-NCR Cities */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.2 }}
               >
-                <h3 className="text-sm md:text-lg font-semibold mb-3 md:mb-4 text-white dark:text-gray-100">Service Cities</h3>
+                <h3 className="text-sm md:text-lg font-semibold mb-3 md:mb-4 text-white dark:text-gray-100 flex items-center space-x-2">
+                  <MapPin className="w-4 h-4 text-orange-400" />
+                  <span>Delhi-NCR</span>
+                </h3>
                 <ul className="space-y-1 md:space-y-2">
-                  {cities.map((city, index) => (
+                  {NCR_CITIES.map((city, index) => (
                     <li key={index}>
-                      <Link href={`/${city.toLowerCase()}`}>
+                      <Link href={`/services/bike/${city}`}>
                         <span
-                          className="text-xs md:text-sm text-gray-300 dark:text-gray-300 hover:text-primary-400 dark:hover:text-primary-300 transition-colors cursor-pointer flex items-center space-x-1 md:space-x-2 group"
-                          data-testid={`footer-city-${index}`}
+                          className="text-xs md:text-sm text-gray-300 dark:text-gray-300 hover:text-orange-400 dark:hover:text-orange-300 transition-colors cursor-pointer flex items-center space-x-1 md:space-x-2 group"
+                          data-testid={`footer-ncr-city-${index}`}
                         >
-                          <MapPin className="w-2 h-2 md:w-3 md:h-3 text-primary-500 dark:text-primary-400 opacity-0 group-hover:opacity-100 transition-opacity" />
-                          <span className="leading-tight">{city}</span>
+                          <span className="w-1 h-1 md:w-1.5 md:h-1.5 bg-orange-500 dark:bg-orange-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                          <span className="leading-tight">{CITY_DISPLAY_NAMES[city]}</span>
                         </span>
                       </Link>
                     </li>
                   ))}
                   <li className="pt-1 md:pt-2 border-t border-gray-700 dark:border-gray-600">
-                    <Link href="/cities">
-                      <span className="text-xs md:text-sm text-primary-400 dark:text-primary-300 hover:text-primary-300 dark:hover:text-primary-200 transition-colors cursor-pointer font-medium">
-                        View All Cities →
+                    <Link href="/services">
+                      <span className="text-xs md:text-sm text-orange-400 dark:text-orange-300 hover:text-orange-300 dark:hover:text-orange-200 transition-colors cursor-pointer font-medium">
+                        View All Services →
                       </span>
                     </Link>
                   </li>
@@ -214,7 +262,7 @@ export function Footer() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: 0.3 }}
+                transition={{ delay: 0.25 }}
               >
                 <h3 className="text-sm md:text-lg font-semibold mb-3 md:mb-4 text-white dark:text-gray-100">Company</h3>
                 <ul className="space-y-1 md:space-y-2">
@@ -291,13 +339,75 @@ export function Footer() {
         </div>
       </div>
 
+      {/* SEO Keywords Section */}
+      <div className="border-b border-gray-700 dark:border-gray-600">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.5 }}
+          >
+            <h3 className="text-lg font-semibold text-white mb-4 text-center">Popular Services by City</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {cityServiceKeywords.slice(0, 3).map((cityData, index) => (
+                <div key={cityData.city} className="bg-gray-800/30 rounded-xl p-4 border border-gray-700/30">
+                  <h4 className="font-semibold text-emerald-400 mb-2 flex items-center space-x-2">
+                    <MapPin className="w-4 h-4" />
+                    <span>{cityData.displayName}</span>
+                  </h4>
+                  <ul className="space-y-1">
+                    {cityData.services.map((service, serviceIndex) => (
+                      <li key={serviceIndex}>
+                        <Link href={`/services/bike/${cityData.city}`}>
+                          <span className="text-xs text-gray-300 hover:text-emerald-400 transition-colors cursor-pointer">
+                            {service}
+                          </span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </div>
+
+      {/* Vehicle + City Combinations for SEO */}
+      <div className="border-b border-gray-700 dark:border-gray-600">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.6 }}
+          >
+            <div className="text-center">
+              <p className="text-sm text-gray-400 mb-3">Quick Access:</p>
+              <div className="flex flex-wrap justify-center gap-2">
+                {VEHICLES.flatMap(vehicle => 
+                  NCR_CITIES.map(city => (
+                    <Link key={`${vehicle}-${city}`} href={`/services/${vehicle}/${city}`}>
+                      <span className="inline-block px-3 py-1 bg-gray-800/50 rounded-full text-xs text-gray-300 hover:text-emerald-400 hover:bg-emerald-500/10 transition-all cursor-pointer border border-gray-700/50 hover:border-emerald-500/30">
+                        {VEHICLE_DISPLAY_NAMES[vehicle]} {CITY_DISPLAY_NAMES[city]}
+                      </span>
+                    </Link>
+                  ))
+                )}
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+
       {/* Bottom Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.5 }}
+          transition={{ delay: 0.7 }}
           className="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0"
         >
           <div className="flex items-center space-x-4 text-gray-400 dark:text-gray-400 text-sm">
@@ -306,9 +416,8 @@ export function Footer() {
             </p>
             <span className="hidden sm:inline">•</span>
             <p className="flex items-center space-x-1">
-              <span>Made with</span>
-              <span className="text-red-400 animate-pulse">❤️</span>
-              <span>in India</span>
+              <span>Delhi-NCR's Premier</span>
+              <span className="text-emerald-400 font-semibold">Doorstep Service</span>
             </p>
           </div>
           
@@ -322,6 +431,57 @@ export function Footer() {
           </div>
         </motion.div>
       </div>
+
+      {/* Schema.org Structured Data */}
+      <script 
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "LocalBusiness",
+            "name": "Garage At Home",
+            "description": "Delhi-NCR's premium doorstep vehicle service platform. Professional bike and car repair services at your location.",
+            "url": "https://garagewala.com",
+            "telephone": "+91-98765-43210",
+            "email": "support@garagewala.com",
+            "address": {
+              "@type": "PostalAddress",
+              "addressRegion": "Delhi-NCR",
+              "addressCountry": "IN"
+            },
+            "areaServed": NCR_CITIES.map(city => CITY_DISPLAY_NAMES[city]),
+            "serviceType": ["Vehicle Repair", "Bike Service", "Car Service", "Doorstep Service", "Mobile Mechanic"],
+            "hasOfferCatalog": {
+              "@type": "OfferCatalog",
+              "name": "Vehicle Services",
+              "itemListElement": [
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Doorstep Bike Service",
+                    "description": "Professional bike repair and maintenance services at your location"
+                  }
+                },
+                {
+                  "@type": "Offer", 
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Doorstep Car Service",
+                    "description": "Expert car repair and maintenance services at your home or office"
+                  }
+                }
+              ]
+            },
+            "aggregateRating": {
+              "@type": "AggregateRating",
+              "ratingValue": "4.9",
+              "reviewCount": "2500"
+            },
+            "openingHours": "Mo-Su 00:00-23:59"
+          })
+        }}
+      />
     </footer>
   );
 }
