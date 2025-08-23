@@ -1,4 +1,4 @@
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion, useReducedMotion, AnimatePresence } from 'framer-motion';
 import { useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -11,7 +11,8 @@ import { useToast } from '@/hooks/use-toast';
 import { 
   Wrench, Car, Bike, ArrowRight, Shield, Clock, 
   Search, MapPin, Calendar, CheckCircle, ArrowLeft,
-  User, Hash, Globe, ToggleLeft, ToggleRight, Star
+  User, Hash, Globe, ToggleLeft, ToggleRight, Star,
+  ShoppingCart, X
 } from 'lucide-react';
 
 // Components  
@@ -47,7 +48,10 @@ export default function Services() {
     selectedSlot,
     customer,
     getAdjustedPrice,
-    clearBooking
+    clearBooking,
+    getSubtotal,
+    showSummary,
+    setShowSummary
   } = useBookingStore();
 
   const shouldReduceMotion = useReducedMotion();
@@ -443,9 +447,7 @@ export default function Services() {
           <>
 
 
-            <div className="grid lg:grid-cols-4 gap-8">
-              {/* Services Section */}
-              <div className="lg:col-span-3">
+            <div className="w-full">
                 {/* Combo Services */}
                 {comboServices.length > 0 && (
                   <motion.div
@@ -651,11 +653,171 @@ export default function Services() {
                 </motion.div>
               </div>
 
-              {/* Summary Sidebar */}
-              <div className="lg:col-span-1">
-                <BookingSummary />
-              </div>
-            </div>
+            {/* Floating Cart Button */}
+            <AnimatePresence>
+              {(selectedServices.length > 0 || selectedAddons.length > 0) && (
+                <motion.div
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0, opacity: 0 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                  className="fixed bottom-6 right-6 z-50"
+                >
+                  <motion.button
+                    onClick={() => setShowSummary(!showSummary)}
+                    className="bg-gradient-to-r from-emerald-500 to-emerald-600 text-white p-4 rounded-full shadow-2xl hover:shadow-emerald-500/25 transition-all duration-300 border border-white/20 backdrop-blur-xl"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                    data-testid="cart-button"
+                  >
+                    <div className="flex items-center space-x-3">
+                      <div className="relative">
+                        <ShoppingCart className="w-6 h-6" />
+                        <motion.div
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          className="absolute -top-2 -right-2 bg-white text-emerald-600 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center"
+                        >
+                          {selectedServices.length + selectedAddons.length}
+                        </motion.div>
+                      </div>
+                      <div className="text-left">
+                        <div className="text-sm font-medium">Cart Total</div>
+                        <div className="text-lg font-bold">₹{getSubtotal().min}</div>
+                      </div>
+                    </div>
+                  </motion.button>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Cart Popup */}
+            <AnimatePresence>
+              {showSummary && (selectedServices.length > 0 || selectedAddons.length > 0) && (
+                <>
+                  {/* Backdrop */}
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
+                    onClick={() => setShowSummary(false)}
+                  />
+                  
+                  {/* Cart Modal */}
+                  <motion.div
+                    initial={{ x: "100%", opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    exit={{ x: "100%", opacity: 0 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    className="fixed right-0 top-0 h-full w-full max-w-md bg-gray-900/95 backdrop-blur-xl border-l border-white/20 z-50 overflow-y-auto"
+                  >
+                    <div className="p-6">
+                      <div className="flex items-center justify-between mb-6">
+                        <h3 className="text-white font-bold text-xl flex items-center space-x-2">
+                          <ShoppingCart className="w-5 h-5" />
+                          <span>Your Cart</span>
+                        </h3>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => setShowSummary(false)}
+                          className="text-gray-400 hover:text-white"
+                        >
+                          <X className="w-5 h-5" />
+                        </Button>
+                      </div>
+
+                      {/* Selected Services */}
+                      {selectedServices.length > 0 && (
+                        <div className="mb-6">
+                          <h4 className="text-gray-300 font-medium text-sm mb-4">Services</h4>
+                          <div className="space-y-3">
+                            {selectedServices.map((service) => (
+                              <motion.div
+                                key={service.id}
+                                layout
+                                className="bg-white/5 border border-white/10 rounded-xl p-4"
+                              >
+                                <div className="flex items-center justify-between">
+                                  <div className="flex-1">
+                                    <div className="font-medium text-white text-sm">{service.name}</div>
+                                    <div className="text-xs text-gray-400 mt-1">{service.subtitle}</div>
+                                    <div className="text-emerald-400 font-bold mt-2">
+                                      ₹{service.priceMin}{service.priceMax !== service.priceMin && ` - ₹${service.priceMax}`}
+                                    </div>
+                                  </div>
+                                  <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    onClick={() => toggleService(service)}
+                                    className="text-red-400 hover:text-red-300 hover:bg-red-500/10 ml-2"
+                                  >
+                                    <X className="w-4 h-4" />
+                                  </Button>
+                                </div>
+                              </motion.div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Selected Add-ons */}
+                      {selectedAddons.length > 0 && (
+                        <div className="mb-6">
+                          <h4 className="text-gray-300 font-medium text-sm mb-4">Add-ons</h4>
+                          <div className="space-y-3">
+                            {selectedAddons.map((addon) => (
+                              <motion.div
+                                key={addon.id}
+                                layout
+                                className="bg-white/5 border border-white/10 rounded-xl p-4"
+                              >
+                                <div className="flex items-center justify-between">
+                                  <div className="flex-1">
+                                    <div className="font-medium text-white text-sm">{addon.name}</div>
+                                    <div className="text-emerald-400 font-bold mt-1">
+                                      ₹{addon.priceMin}{addon.priceMax !== addon.priceMin && ` - ₹${addon.priceMax}`}
+                                    </div>
+                                  </div>
+                                  <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    onClick={() => toggleAddon(addon)}
+                                    className="text-red-400 hover:text-red-300 hover:bg-red-500/10 ml-2"
+                                  >
+                                    <X className="w-4 h-4" />
+                                  </Button>
+                                </div>
+                              </motion.div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Total Section */}
+                      <div className="border-t border-white/20 pt-6 mt-6">
+                        <div className="flex items-center justify-between mb-6">
+                          <span className="text-white font-bold text-lg">Total</span>
+                          <span className="text-emerald-400 font-bold text-2xl">
+                            ₹{getSubtotal().min}
+                          </span>
+                        </div>
+
+                        <Button
+                          onClick={() => setCurrentStep('details')}
+                          className="w-full bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white font-bold py-3 rounded-xl transition-all duration-300 shadow-lg hover:shadow-emerald-500/25"
+                          data-testid="proceed-to-booking"
+                        >
+                          <span>Proceed to Book</span>
+                          <ArrowRight className="w-5 h-5 ml-2" />
+                        </Button>
+                      </div>
+                    </div>
+                  </motion.div>
+                </>
+              )}
+            </AnimatePresence>
           </>
         )}
 
@@ -665,8 +827,7 @@ export default function Services() {
             animate={{ opacity: 1, x: 0 }}
             className="max-w-4xl mx-auto"
           >
-            <div className="grid lg:grid-cols-3 gap-8">
-              <div className="lg:col-span-2 space-y-8">
+            <div className="max-w-4xl mx-auto space-y-8">
                 {/* Back Button */}
                 <Button
                   variant="ghost"
@@ -708,12 +869,6 @@ export default function Services() {
                     </Button>
                   </motion.div>
                 )}
-              </div>
-
-              {/* Summary Sidebar */}
-              <div className="lg:col-span-1">
-                <BookingSummary />
-              </div>
             </div>
           </motion.div>
         )}
