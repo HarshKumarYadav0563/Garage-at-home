@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Star, Users, Clock, Shield, Award, Zap } from 'lucide-react';
 
@@ -48,6 +49,20 @@ const trustItems = [
 
 export function EnhancedTrustBar() {
   const shouldReduceMotion = useReducedMotion();
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const heroHeight = window.innerHeight * 0.6; // Approximate hero height
+      
+      // Show badges when user has scrolled past 20% of hero section
+      setIsVisible(scrollY > heroHeight * 0.2);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -103,7 +118,10 @@ export function EnhancedTrustBar() {
   };
 
   return (
-    <section className="relative py-6 md:py-12 bg-gradient-to-r from-gray-900 via-slate-800 to-gray-900 overflow-hidden">
+    <section className={`relative py-6 md:py-12 bg-gradient-to-r from-gray-900 via-slate-800 to-gray-900 overflow-hidden transition-all duration-500 ${
+      // Always visible on mobile, only visible after scroll on desktop
+      isVisible ? 'lg:opacity-100 lg:translate-y-0' : 'lg:opacity-0 lg:translate-y-4'
+    }`}>
       {/* Animated background elements */}
       <div className="absolute inset-0">
         <motion.div
