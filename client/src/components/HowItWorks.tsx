@@ -300,14 +300,17 @@ export function HowItWorks() {
 
           {/* Connecting Line with Gradient Sweep */}
           <motion.div
-            className="absolute top-1/2 left-12 right-12 h-1 -translate-y-1/2 bg-slate-700/30 rounded-full overflow-hidden"
+            className="absolute top-[60%] left-16 right-16 h-0.5 -translate-y-1/2 bg-slate-700/20 rounded-full overflow-hidden"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 1 }}
           >
             <motion.div
-              className="h-full bg-gradient-to-r from-emerald-500 via-cyan-500 to-purple-500 rounded-full"
+              className="h-full bg-gradient-to-r from-emerald-400 via-cyan-400 to-purple-400 rounded-full shadow-lg"
+              style={{
+                filter: "drop-shadow(0 0 8px rgba(34, 197, 94, 0.5))"
+              }}
               variants={lineVariants}
               initial="hidden"
               whileInView="show"
@@ -315,14 +318,39 @@ export function HowItWorks() {
             />
             
             {/* Step Indicator Dots */}
-            {steps.map((_, index) => (
+            {steps.map((step, index) => (
               <motion.div
                 key={index}
-                className={`absolute top-1/2 w-3 h-3 bg-${steps[index].glowColor} rounded-full -translate-y-1/2 border-2 border-slate-800`}
-                style={{ left: `${25 * index + 12.5}%` }}
-                variants={dotVariants}
-                animate="active"
-                transition={{ delay: 1.5 + index * 0.2 }}
+                className="absolute top-1/2 w-4 h-4 rounded-full -translate-y-1/2 border-2 border-slate-800 shadow-lg"
+                style={{ 
+                  left: `${(100 / (steps.length - 1)) * index}%`,
+                  background: `linear-gradient(135deg, ${step.gradient.replace('from-', '').replace('via-', '').replace('to-', '').split(' ').map(color => 
+                    color === 'emerald-400' ? '#34d399' :
+                    color === 'teal-500' ? '#14b8a6' :
+                    color === 'cyan-600' ? '#0891b2' :
+                    color === 'cyan-400' ? '#22d3ee' :
+                    color === 'blue-500' ? '#3b82f6' :
+                    color === 'indigo-600' ? '#4f46e5' :
+                    color === 'indigo-400' ? '#818cf8' :
+                    color === 'purple-500' ? '#a855f7' :
+                    color === 'pink-600' ? '#db2777' :
+                    color === 'pink-400' ? '#f472b6' :
+                    color === 'rose-500' ? '#f43f5e' :
+                    color === 'orange-500' ? '#f97316' : color
+                  ).join(', ')})`,
+                  boxShadow: "0 0 12px rgba(34, 197, 94, 0.6)"
+                }}
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ 
+                  scale: [0, 1.2, 1], 
+                  opacity: [0, 1, 0.9] 
+                }}
+                transition={{ 
+                  delay: 1.5 + index * 0.2, 
+                  duration: 0.8,
+                  type: "spring",
+                  stiffness: 200
+                }}
               />
             ))}
           </motion.div>
