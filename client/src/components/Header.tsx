@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Wrench, Phone, MapPin, Zap, Shield, Star, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Badge } from '@/components/ui/badge';
 import { useUiStore } from '@/stores/useUiStore';
 import { NCR_CITIES, VEHICLES, CITY_DISPLAY_NAMES, VEHICLE_DISPLAY_NAMES } from '@shared/config/serviceAreas';
 
@@ -613,21 +614,6 @@ export function Header() {
                         >
                           {item.name}
                         </motion.span>
-                        {item.badge && (
-                          <motion.div
-                            initial={{ scale: 0, rotate: -90 }}
-                            animate={{ scale: 1, rotate: 0 }}
-                            transition={{ 
-                              delay: index * 0.1 + 0.4,
-                              type: "spring",
-                              stiffness: 300
-                            }}
-                          >
-                            <Badge className="bg-emerald-500 text-white text-xs px-2 py-1">
-                              {item.badge}
-                            </Badge>
-                          </motion.div>
-                        )}
                       </motion.div>
                     </Link>
                   </motion.div>

@@ -531,23 +531,49 @@ export default function ServicesDynamic() {
         <BookingSummary />
 
         {/* Time Slot Selection */}
-        {currentStep === 'slot' && (
-          <SlotPicker 
-            onBack={() => setCurrentStep('services')}
-            onNext={() => setCurrentStep('customer')}
-          />
+        {currentStep === 'details' && !selectedSlot && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="max-w-4xl mx-auto"
+          >
+            <SlotPicker />
+            <div className="flex justify-between mt-6">
+              <Button
+                variant="outline"
+                onClick={() => setCurrentStep('services')}
+                className="border-white/20 text-white hover:bg-white/10"
+              >
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Back to Services
+              </Button>
+              <Button
+                onClick={() => selectedSlot && setCurrentStep('details')}
+                disabled={!selectedSlot}
+                className="bg-gradient-to-r from-emerald-500 to-sky-500 hover:from-emerald-600 hover:to-sky-600"
+              >
+                Continue
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
+            </div>
+          </motion.div>
         )}
 
         {/* Customer Details Form */}
-        {currentStep === 'customer' && (
-          <CustomerDetailsForm
-            onBack={() => setCurrentStep('slot')}
-            onNext={handleCustomerDetailsSubmit}
-          />
+        {currentStep === 'details' && selectedSlot && !customer?.name && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="max-w-4xl mx-auto"
+          >
+            <CustomerDetailsForm
+              onSubmit={handleCustomerDetailsSubmit}
+            />
+          </motion.div>
         )}
 
         {/* Final Review & Submit */}
-        {currentStep === 'details' && (
+        {currentStep === 'details' && selectedSlot && customer?.name && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -604,7 +630,7 @@ export default function ServicesDynamic() {
                   <div className="flex space-x-4">
                     <Button
                       variant="outline"
-                      onClick={() => setCurrentStep('customer')}
+                      onClick={() => setCurrentStep('services')}
                       className="flex-1 border-white/20 text-white hover:bg-white/10"
                     >
                       <ArrowLeft className="w-4 h-4 mr-2" />
