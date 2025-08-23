@@ -187,44 +187,6 @@ export function HowItWorks() {
             );
           })}
         </motion.ul>
-
-        {/* Optional horizontal scroll for very small screens */}
-        <div className="block sm:hidden">
-          <div className="mt-6 -mx-4 px-4 overflow-x-auto no-scrollbar">
-            <div className="flex gap-3 w-max md:hidden">
-              {steps.map((step, index) => {
-                const IconComponent = step.icon;
-                return (
-                  <motion.div
-                    key={`scroll-${index}`}
-                    className="w-[78vw] max-w-[320px] group relative rounded-2xl p-4 bg-white/6 border border-white/10 backdrop-blur-xl shadow-[0_8px_30px_rgba(2,6,23,.2)]"
-                    initial={{ opacity: 0, x: 20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
-                  >
-                    <div className="flex items-center space-x-4">
-                      <div className={`size-12 rounded-2xl bg-gradient-to-br ${step.gradient} flex items-center justify-center flex-shrink-0`}>
-                        <IconComponent className="w-5 h-5 text-white" aria-hidden="true" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="text-[10px] uppercase tracking-[0.12em] text-white/60">
-                          STEP {step.step}
-                        </div>
-                        <h3 className="text-sm font-semibold mt-0.5 text-white">
-                          {step.title}
-                        </h3>
-                        <p className="text-[12px] text-white/70 mt-0.5 line-clamp-2">
-                          {step.description}
-                        </p>
-                      </div>
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   );
