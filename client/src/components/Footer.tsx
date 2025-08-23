@@ -53,24 +53,24 @@ export function Footer() {
                     </div>
                   </div>
                   <div>
-                    <span className="text-2xl font-bold" data-testid="footer-brand">GarageWala</span>
-                    <p className="text-sm text-gray-400">Premium Doorstep Service</p>
+                    <span className="text-2xl font-bold dark:text-white" data-testid="footer-brand">GarageWala</span>
+                    <p className="text-sm text-gray-400 dark:text-gray-300">Premium Doorstep Service</p>
                   </div>
                 </div>
                 
-                <p className="text-gray-300 mb-4 leading-relaxed" data-testid="footer-description">
+                <p className="text-gray-300 dark:text-gray-200 mb-4 leading-relaxed" data-testid="footer-description">
                   India's first premium doorstep vehicle service platform. Professional mechanics, transparent pricing, real-time tracking, and guaranteed quality.
                 </p>
 
                 {/* Trust Indicators */}
                 <div className="grid grid-cols-2 gap-4 mb-4">
                   <div className="flex items-center space-x-2 text-sm">
-                    <Star className="w-4 h-4 text-yellow-400" />
-                    <span className="text-gray-300">4.9/5 Rating</span>
+                    <Star className="w-4 h-4 text-yellow-400 dark:text-yellow-300" />
+                    <span className="text-gray-300 dark:text-gray-200">4.9/5 Rating</span>
                   </div>
                   <div className="flex items-center space-x-2 text-sm">
-                    <Shield className="w-4 h-4 text-green-400" />
-                    <span className="text-gray-300">Quality Assured</span>
+                    <Shield className="w-4 h-4 text-green-400 dark:text-green-300" />
+                    <span className="text-gray-300 dark:text-gray-200">Quality Assured</span>
                   </div>
                 </div>
 
@@ -111,10 +111,10 @@ export function Footer() {
                     <li key={index}>
                       <Link href="/services">
                         <span
-                          className="text-gray-300 hover:text-primary-400 transition-colors cursor-pointer flex items-center space-x-2 group"
+                          className="text-gray-300 dark:text-gray-300 hover:text-primary-400 dark:hover:text-primary-300 transition-colors cursor-pointer flex items-center space-x-2 group"
                           data-testid={`footer-service-${index}`}
                         >
-                          <span className="w-1.5 h-1.5 bg-primary-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                          <span className="w-1.5 h-1.5 bg-primary-500 dark:bg-primary-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
                           <span>{service}</span>
                         </span>
                       </Link>
@@ -136,10 +136,10 @@ export function Footer() {
                     <li key={index}>
                       <Link href={`/${city.toLowerCase()}`}>
                         <span
-                          className="text-gray-300 hover:text-primary-400 transition-colors cursor-pointer flex items-center space-x-2 group"
+                          className="text-gray-300 dark:text-gray-300 hover:text-primary-400 dark:hover:text-primary-300 transition-colors cursor-pointer flex items-center space-x-2 group"
                           data-testid={`footer-city-${index}`}
                         >
-                          <MapPin className="w-3 h-3 text-primary-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                          <MapPin className="w-3 h-3 text-primary-500 dark:text-primary-400 opacity-0 group-hover:opacity-100 transition-opacity" />
                           <span>{city}</span>
                         </span>
                       </Link>
@@ -147,7 +147,7 @@ export function Footer() {
                   ))}
                   <li className="pt-2 border-t border-gray-700 dark:border-gray-600">
                     <Link href="/cities">
-                      <span className="text-primary-400 hover:text-primary-300 transition-colors cursor-pointer font-medium">
+                      <span className="text-primary-400 dark:text-primary-300 hover:text-primary-300 dark:hover:text-primary-200 transition-colors cursor-pointer font-medium">
                         View All Cities →
                       </span>
                     </Link>
@@ -168,10 +168,10 @@ export function Footer() {
                     <li key={index}>
                       <Link href={`/${item.toLowerCase().replace(' ', '-')}`}>
                         <span
-                          className="text-gray-300 hover:text-primary-400 transition-colors cursor-pointer flex items-center space-x-2 group"
+                          className="text-gray-300 dark:text-gray-300 hover:text-primary-400 dark:hover:text-primary-300 transition-colors cursor-pointer flex items-center space-x-2 group"
                           data-testid={`footer-company-${index}`}
                         >
-                          <span className="w-1.5 h-1.5 bg-primary-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                          <span className="w-1.5 h-1.5 bg-primary-500 dark:bg-primary-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
                           <span>{item}</span>
                         </span>
                       </Link>
