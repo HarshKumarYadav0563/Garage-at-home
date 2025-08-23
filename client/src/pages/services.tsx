@@ -57,14 +57,33 @@ export default function Services() {
   const handleToggleService = (service: ServiceData) => {
     const isCurrentlySelected = selectedServices.some(s => s.id === service.id);
     const hasComboSelected = selectedServices.some(s => s.type === 'combo');
+    const hasIndividualSelected = selectedServices.some(s => s.type === 'individual' || !s.type);
     
-    if (!isCurrentlySelected && service.type === 'combo' && hasComboSelected) {
-      const currentCombo = selectedServices.find(s => s.type === 'combo');
-      toast({
-        title: 'Service Package Replaced',
-        description: `${currentCombo?.name} has been replaced with ${service.name}. You can only select one service package at a time.`,
-        duration: 3000,
-      });
+    if (!isCurrentlySelected) {
+      if (service.type === 'combo') {
+        if (hasComboSelected) {
+          const currentCombo = selectedServices.find(s => s.type === 'combo');
+          toast({
+            title: 'Service Package Replaced',
+            description: `${currentCombo?.name} has been replaced with ${service.name}. Only one package can be selected.`,
+            duration: 3000,
+          });
+        } else if (hasIndividualSelected) {
+          const individualCount = selectedServices.filter(s => s.type === 'individual' || !s.type).length;
+          toast({
+            title: 'Individual Services Cleared',
+            description: `${individualCount} individual service${individualCount > 1 ? 's' : ''} cleared. Packages include everything needed.`,
+            duration: 3000,
+          });
+        }
+      } else if (hasComboSelected) {
+        const currentCombo = selectedServices.find(s => s.type === 'combo');
+        toast({
+          title: 'Package Replaced with Individual Services',
+          description: `${currentCombo?.name} package cleared. You can now select individual services.`,
+          duration: 3000,
+        });
+      }
     }
     
     toggleService(service);
@@ -324,7 +343,7 @@ export default function Services() {
                     </p>
                     <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3 mb-6">
                       <p className="text-blue-300 text-xs">
-                        <span className="font-medium">Selection Rule:</span> You can only select one service package at a time. Individual services can be added to any package.
+                        <span className="font-medium">Selection Rule:</span> Choose either one service package OR multiple individual services. They cannot be combined.
                       </p>
                     </div>
                     
@@ -373,7 +392,7 @@ export default function Services() {
                       Individual Services
                     </h3>
                     <p className="text-gray-400 text-sm mb-6">
-                      Specific services for targeted maintenance needs - can be combined freely with packages
+                      Specific services for targeted maintenance needs - can be combined with each other only
                     </p>
                     
                     <motion.ul

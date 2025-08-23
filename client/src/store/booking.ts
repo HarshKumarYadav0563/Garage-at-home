@@ -99,8 +99,11 @@ export const useBookingStore = create<BookingStore>((set, get) => ({
     } else {
       let newSelectedServices = [...state.selectedServices];
       
-      // If selecting a combo service, remove any existing combo services
       if (service.type === 'combo') {
+        // If selecting a combo service, clear ALL other services (combos and individuals)
+        newSelectedServices = [];
+      } else {
+        // If selecting an individual service, remove any existing combo services
         newSelectedServices = newSelectedServices.filter(s => s.type !== 'combo');
       }
       
