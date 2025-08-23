@@ -154,19 +154,12 @@ export default function Services() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-black relative overflow-hidden">
       {/* Enhanced Background Effects */}
-      <div className="absolute inset-0">
-        {/* Primary gradient overlay */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-purple-900/30 via-transparent to-transparent"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-blue-900/25 via-transparent to-transparent"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-emerald-900/15 via-transparent to-transparent"></div>
-        
-        {/* Floating orbs */}
-        <motion.div
-          className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"
+      <div className="absolute inset-0 overflow-hidden">
+        {/* Dynamic gradient overlays */}
+        <motion.div 
+          className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-purple-900/40 via-transparent to-transparent"
           animate={{
-            x: [0, 100, 0],
-            y: [0, -50, 0],
-            scale: [1, 1.2, 1],
+            opacity: [0.4, 0.7, 0.4]
           }}
           transition={{
             duration: 8,
@@ -174,12 +167,10 @@ export default function Services() {
             ease: "easeInOut"
           }}
         />
-        <motion.div
-          className="absolute top-3/4 right-1/3 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl"
+        <motion.div 
+          className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-blue-900/35 via-transparent to-transparent"
           animate={{
-            x: [0, -80, 0],
-            y: [0, 60, 0],
-            scale: [1, 0.8, 1],
+            opacity: [0.3, 0.6, 0.3]
           }}
           transition={{
             duration: 10,
@@ -188,12 +179,10 @@ export default function Services() {
             delay: 2
           }}
         />
-        <motion.div
-          className="absolute top-1/2 right-1/4 w-64 h-64 bg-emerald-500/8 rounded-full blur-3xl"
+        <motion.div 
+          className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-emerald-900/25 via-transparent to-transparent"
           animate={{
-            x: [0, 120, 0],
-            y: [0, -80, 0],
-            scale: [1, 1.3, 1],
+            opacity: [0.2, 0.5, 0.2]
           }}
           transition={{
             duration: 12,
@@ -202,102 +191,420 @@ export default function Services() {
             delay: 4
           }}
         />
+        
+        {/* Enhanced floating orbs with more complex animations */}
+        <motion.div
+          className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-emerald-500/30 to-sky-500/30 rounded-full blur-3xl"
+          animate={{
+            scale: [1, 1.4, 0.9, 1.2, 1],
+            opacity: [0.4, 0.7, 0.3, 0.6, 0.4],
+            x: [0, 120, -40, 80, 0],
+            y: [0, -60, 40, -30, 0],
+            rotate: [0, 180, 360]
+          }}
+          transition={{
+            duration: 12,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        <motion.div
+          className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-500/25 to-pink-500/25 rounded-full blur-3xl"
+          animate={{
+            scale: [1.2, 0.8, 1.3, 1],
+            opacity: [0.5, 0.8, 0.3, 0.5],
+            x: [0, -100, 60, 0],
+            y: [0, 80, -40, 0],
+            rotate: [0, -180, -360]
+          }}
+          transition={{
+            duration: 15,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        <motion.div
+          className="absolute top-1/2 left-1/2 w-72 h-72 bg-gradient-to-r from-indigo-500/20 to-cyan-500/20 rounded-full blur-3xl"
+          animate={{
+            scale: [0.8, 1.5, 0.9, 1.1, 0.8],
+            opacity: [0.3, 0.6, 0.4, 0.7, 0.3],
+            x: [0, -150, 100, -50, 0],
+            y: [0, 100, -80, 40, 0],
+            rotate: [0, 270, 540]
+          }}
+          transition={{
+            duration: 18,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        
+        {/* Floating particles */}
+        {Array.from({ length: 25 }).map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-1 h-1 bg-emerald-400/40 rounded-full"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              y: [0, -100, 0],
+              opacity: [0, 1, 0],
+              scale: [0, 1, 0]
+            }}
+            transition={{
+              duration: 4 + Math.random() * 4,
+              repeat: Infinity,
+              delay: Math.random() * 4,
+              ease: "easeInOut"
+            }}
+          />
+        ))}
+        
+        {/* Animated flowing lines */}
+        {Array.from({ length: 8 }).map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute h-px bg-gradient-to-r from-transparent via-emerald-500/30 to-transparent"
+            style={{
+              top: `${15 + i * 12}%`,
+              width: '200%',
+              left: '-50%'
+            }}
+            animate={{
+              x: ['-100%', '50%'],
+              opacity: [0, 1, 0]
+            }}
+            transition={{
+              duration: 8 + i * 1.5,
+              repeat: Infinity,
+              delay: i * 1.2,
+              ease: "easeInOut"
+            }}
+          />
+        ))}
       </div>
       
-      {/* Animated Grid Pattern */}
+      {/* Enhanced Animated Grid Pattern */}
       <motion.div
-        className="absolute inset-0 opacity-[0.03]"
+        className="absolute inset-0 opacity-[0.04]"
         animate={{
           backgroundPosition: ['0% 0%', '100% 100%'],
         }}
         transition={{
-          duration: 25,
+          duration: 40,
           repeat: Infinity,
           repeatType: 'reverse',
           ease: "linear"
         }}
         style={{
           backgroundImage: `
-            radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0),
+            radial-gradient(circle at 2px 2px, rgba(59, 130, 246, 0.3) 1px, transparent 0),
+            radial-gradient(circle at 30px 30px, rgba(16, 185, 129, 0.2) 1px, transparent 0),
             linear-gradient(45deg, transparent 49%, rgba(255,255,255,0.05) 50%, transparent 51%)
           `,
-          backgroundSize: '60px 60px, 120px 120px',
+          backgroundSize: '60px 60px, 90px 90px, 120px 120px',
+        }}
+      />
+      
+      {/* Parallax Hexagon Pattern */}
+      <motion.div
+        className="absolute inset-0 opacity-[0.02]"
+        animate={{
+          backgroundPosition: ['0% 0%', '50% 50%'],
+        }}
+        transition={{
+          duration: 60,
+          repeat: Infinity,
+          ease: "linear"
+        }}
+        style={{
+          backgroundImage: `
+            url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2310b981' fill-opacity='0.1'%3E%3Cpath d='m36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")
+          `,
+          backgroundSize: '60px 60px',
         }}
       />
       
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 pt-20 lg:pt-24">
         
-        {/* Compact Hero Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="text-center mb-6"
-        >
-          <h1 className="text-3xl lg:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-gray-100 to-gray-300 mb-2">
-            Book Doorstep <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-sky-400">Service</span>
-          </h1>
-          <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-            Premium vehicle care with <span className="text-emerald-400 font-semibold">certified mechanics</span> at your doorstep
-          </p>
-        </motion.div>
-
-        {/* Quick Service Selection */}
+        {/* Enhanced Hero Section */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.6 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="text-center mb-8"
+        >
+          <motion.h1 
+            className="text-4xl lg:text-5xl font-bold mb-3"
+            initial={{ scale: 0.9 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 0.2, duration: 0.5, ease: "easeOut" }}
+          >
+            <motion.span 
+              className="bg-clip-text text-transparent bg-gradient-to-r from-white via-gray-100 to-gray-300"
+              animate={{
+                backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
+              }}
+              transition={{
+                duration: 5,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              style={{
+                backgroundSize: '200% 200%'
+              }}
+            >
+              Book Doorstep{' '}
+            </motion.span>
+            <motion.span 
+              className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 via-sky-400 to-indigo-400"
+              animate={{
+                backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 1
+              }}
+              style={{
+                backgroundSize: '200% 200%'
+              }}
+            >
+              Service
+            </motion.span>
+          </motion.h1>
+          <motion.p 
+            className="text-lg text-gray-300 max-w-2xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+          >
+            Premium vehicle care with{' '}
+            <motion.span 
+              className="text-emerald-400 font-semibold"
+              animate={{
+                textShadow: [
+                  '0 0 0px rgba(16, 185, 129, 0)',
+                  '0 0 20px rgba(16, 185, 129, 0.5)',
+                  '0 0 0px rgba(16, 185, 129, 0)'
+                ]
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            >
+              certified mechanics
+            </motion.span>{' '}
+            at your doorstep
+          </motion.p>
+          
+          {/* Floating service badges */}
+          <motion.div 
+            className="flex justify-center space-x-4 mt-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.6 }}
+          >
+            {['24/7 Available', 'Quality Assured', 'Doorstep Service'].map((badge, index) => (
+              <motion.div
+                key={badge}
+                className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 text-sm text-gray-300"
+                animate={{
+                  y: [0, -5, 0],
+                  opacity: [0.7, 1, 0.7]
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: index * 0.5
+                }}
+                whileHover={{ 
+                  scale: 1.05,
+                  backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                  borderColor: 'rgba(16, 185, 129, 0.3)'
+                }}
+              >
+                {badge}
+              </motion.div>
+            ))}
+          </motion.div>
+        </motion.div>
+
+        {/* Enhanced Service Selection */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.8 }}
           className="mb-8"
         >
-          <div className="bg-white/8 backdrop-blur-xl border border-white/20 rounded-3xl p-6 shadow-2xl">
-            {/* Vehicle Selection - Moved to Top */}
-            <div className="flex flex-col items-center space-y-4 mb-6">
-              <h2 className="text-xl font-bold text-white">Choose Your Vehicle</h2>
-              <div className="flex space-x-4">
+          <motion.div 
+            className="bg-white/8 backdrop-blur-xl border border-white/20 rounded-3xl p-6 shadow-2xl relative overflow-hidden"
+            whileHover={{ 
+              scale: 1.005,
+              borderColor: 'rgba(16, 185, 129, 0.3)',
+              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)'
+            }}
+            transition={{ duration: 0.3 }}
+          >
+            {/* Animated border gradient */}
+            <motion.div
+              className="absolute inset-0 rounded-3xl"
+              style={{
+                background: 'linear-gradient(45deg, transparent, rgba(16, 185, 129, 0.1), transparent, rgba(59, 130, 246, 0.1), transparent)',
+                backgroundSize: '400% 400%'
+              }}
+              animate={{
+                backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
+              }}
+              transition={{
+                duration: 8,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+            />
+            {/* Enhanced Vehicle Selection */}
+            <div className="relative flex flex-col items-center space-y-6 mb-8 z-10">
+              <motion.h2 
+                className="text-2xl font-bold text-white"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+              >
+                Choose Your Vehicle
+              </motion.h2>
+              <div className="flex space-x-6">
                 <motion.button
                   onClick={() => setSelectedVehicle('bike')}
-                  className={`flex items-center space-x-3 px-6 py-4 rounded-2xl border transition-all duration-300 ${
+                  className={`group relative overflow-hidden flex items-center space-x-4 px-8 py-6 rounded-3xl border-2 transition-all duration-500 ${
                     selectedVehicle === 'bike'
-                      ? 'bg-emerald-500 border-emerald-500 text-white shadow-lg shadow-emerald-500/30'
+                      ? 'bg-gradient-to-r from-emerald-500 to-sky-500 border-emerald-400 text-white shadow-xl shadow-emerald-500/30'
                       : 'bg-white/5 border-white/20 text-gray-300 hover:bg-white/10 hover:border-emerald-500/50'
                   }`}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
+                  whileHover={{ 
+                    scale: 1.05,
+                    y: -3,
+                    boxShadow: selectedVehicle === 'bike' 
+                      ? '0 20px 40px rgba(16, 185, 129, 0.4)' 
+                      : '0 10px 20px rgba(255, 255, 255, 0.1)'
+                  }}
+                  whileTap={{ scale: 0.95 }}
                   data-testid="tab-bike"
+                  initial={{ opacity: 0, x: -50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.2, duration: 0.6 }}
                 >
+                  {/* Animated background gradient */}
                   <motion.div
-                    animate={{ rotate: selectedVehicle === 'bike' ? [0, 10, 0] : 0 }}
-                    transition={{ duration: 0.3 }}
+                    className="absolute inset-0 bg-gradient-to-r from-emerald-400/0 via-emerald-400/20 to-emerald-400/0"
+                    animate={{
+                      x: selectedVehicle === 'bike' ? ['-100%', '100%'] : 0,
+                      opacity: selectedVehicle === 'bike' ? [0, 1, 0] : 0
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: selectedVehicle === 'bike' ? Infinity : 0,
+                      ease: "easeInOut"
+                    }}
+                  />
+                  
+                  <motion.div
+                    animate={{ 
+                      rotate: selectedVehicle === 'bike' ? [0, 15, -15, 0] : 0,
+                      scale: selectedVehicle === 'bike' ? [1, 1.1, 1] : 1
+                    }}
+                    transition={{ 
+                      duration: selectedVehicle === 'bike' ? 2 : 0.3,
+                      repeat: selectedVehicle === 'bike' ? Infinity : 0
+                    }}
                   >
-                    <Bike className="w-6 h-6" />
+                    <Bike className="w-8 h-8 relative z-10" />
                   </motion.div>
-                  <div className="text-left">
-                    <div className="font-semibold">Bike Services</div>
-                    <div className="text-sm opacity-80">Starting ₹399</div>
+                  <div className="text-left relative z-10">
+                    <span className="font-semibold text-lg">Bike Services</span>
+                    <p className="text-sm opacity-80">2-Wheeler Maintenance</p>
                   </div>
+                  
+                  {/* Selection indicator */}
+                  {selectedVehicle === 'bike' && (
+                    <motion.div
+                      className="absolute -top-2 -right-2 w-6 h-6 bg-white rounded-full flex items-center justify-center"
+                      initial={{ scale: 0, rotate: -180 }}
+                      animate={{ scale: 1, rotate: 0 }}
+                      transition={{ type: "spring", stiffness: 500, damping: 15 }}
+                    >
+                      <CheckCircle className="w-4 h-4 text-emerald-500" />
+                    </motion.div>
+                  )}
                 </motion.button>
-
+                
                 <motion.button
                   onClick={() => setSelectedVehicle('car')}
-                  className={`flex items-center space-x-3 px-6 py-4 rounded-2xl border transition-all duration-300 ${
+                  className={`group relative overflow-hidden flex items-center space-x-4 px-8 py-6 rounded-3xl border-2 transition-all duration-500 ${
                     selectedVehicle === 'car'
-                      ? 'bg-emerald-500 border-emerald-500 text-white shadow-lg shadow-emerald-500/30'
+                      ? 'bg-gradient-to-r from-emerald-500 to-sky-500 border-emerald-400 text-white shadow-xl shadow-emerald-500/30'
                       : 'bg-white/5 border-white/20 text-gray-300 hover:bg-white/10 hover:border-emerald-500/50'
                   }`}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
+                  whileHover={{ 
+                    scale: 1.05,
+                    y: -3,
+                    boxShadow: selectedVehicle === 'car' 
+                      ? '0 20px 40px rgba(16, 185, 129, 0.4)' 
+                      : '0 10px 20px rgba(255, 255, 255, 0.1)'
+                  }}
+                  whileTap={{ scale: 0.95 }}
                   data-testid="tab-car"
+                  initial={{ opacity: 0, x: 50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.3, duration: 0.6 }}
                 >
+                  {/* Animated background gradient */}
                   <motion.div
-                    animate={{ rotate: selectedVehicle === 'car' ? [0, 10, 0] : 0 }}
-                    transition={{ duration: 0.3 }}
+                    className="absolute inset-0 bg-gradient-to-r from-emerald-400/0 via-emerald-400/20 to-emerald-400/0"
+                    animate={{
+                      x: selectedVehicle === 'car' ? ['-100%', '100%'] : 0,
+                      opacity: selectedVehicle === 'car' ? [0, 1, 0] : 0
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: selectedVehicle === 'car' ? Infinity : 0,
+                      ease: "easeInOut"
+                    }}
+                  />
+                  
+                  <motion.div
+                    animate={{ 
+                      rotate: selectedVehicle === 'car' ? [0, 15, -15, 0] : 0,
+                      scale: selectedVehicle === 'car' ? [1, 1.1, 1] : 1
+                    }}
+                    transition={{ 
+                      duration: selectedVehicle === 'car' ? 2 : 0.3,
+                      repeat: selectedVehicle === 'car' ? Infinity : 0
+                    }}
                   >
-                    <Car className="w-6 h-6" />
+                    <Car className="w-8 h-8 relative z-10" />
                   </motion.div>
-                  <div className="text-left">
-                    <div className="font-semibold">Car Services</div>
-                    <div className="text-sm opacity-80">Starting ₹999</div>
+                  <div className="text-left relative z-10">
+                    <span className="font-semibold text-lg">Car Services</span>
+                    <p className="text-sm opacity-80">4-Wheeler Maintenance</p>
                   </div>
+                  
+                  {/* Selection indicator */}
+                  {selectedVehicle === 'car' && (
+                    <motion.div
+                      className="absolute -top-2 -right-2 w-6 h-6 bg-white rounded-full flex items-center justify-center"
+                      initial={{ scale: 0, rotate: -180 }}
+                      animate={{ scale: 1, rotate: 0 }}
+                      transition={{ type: "spring", stiffness: 500, damping: 15 }}
+                    >
+                      <CheckCircle className="w-4 h-4 text-emerald-500" />
+                    </motion.div>
+                  )}
                 </motion.button>
               </div>
             </div>
@@ -307,35 +614,81 @@ export default function Services() {
               <div className="flex flex-col sm:flex-row items-center gap-4 flex-1">
                 {/* City Selector */}
 
-                {/* Search */}
+                {/* Enhanced Search */}
                 <motion.div 
                   className="relative flex-1 max-w-md"
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ type: "spring", stiffness: 400 }}
+                  whileHover={{ 
+                    scale: 1.02,
+                    y: -2
+                  }}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.4, duration: 0.6, type: "spring", stiffness: 400 }}
                 >
+                  {/* Glowing border effect */}
                   <motion.div
-                    className="absolute left-3 top-1/2 transform -translate-y-1/2"
+                    className="absolute inset-0 rounded-xl bg-gradient-to-r from-emerald-500/20 via-sky-500/20 to-purple-500/20 blur-sm"
+                    animate={{
+                      opacity: searchQuery ? [0.5, 1, 0.5] : 0.2,
+                      scale: searchQuery ? [1, 1.02, 1] : 1
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: searchQuery ? Infinity : 0,
+                      ease: "easeInOut"
+                    }}
+                  />
+                  
+                  <motion.div
+                    className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10"
                     animate={{ 
                       rotate: searchQuery ? [0, 360] : 0,
-                      scale: searchQuery ? [1, 1.1, 1] : 1
+                      scale: searchQuery ? [1, 1.2, 1] : 1,
+                      color: searchQuery ? ['#10b981', '#06b6d4', '#8b5cf6', '#10b981'] : '#9ca3af'
                     }}
-                    transition={{ duration: 0.5 }}
+                    transition={{ 
+                      duration: searchQuery ? 2 : 0.3,
+                      repeat: searchQuery ? Infinity : 0
+                    }}
                   >
-                    <Search className="w-5 h-5 text-gray-400" />
+                    <Search className="w-5 h-5" />
                   </motion.div>
+                  
                   <Input
                     type="text"
                     placeholder={`Search ${selectedVehicle} services...`}
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-12 py-3 bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-emerald-500/50 focus:bg-white/15 transition-all duration-300 rounded-xl"
+                    className="relative pl-14 pr-4 py-4 bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder:text-gray-400 focus:border-emerald-500/50 focus:bg-white/15 focus:shadow-lg focus:shadow-emerald-500/20 transition-all duration-300 rounded-xl text-lg"
                     data-testid="search-services"
                   />
+                  
+                  {/* Search suggestions indicator */}
+                  {searchQuery && (
+                    <motion.div
+                      className="absolute right-4 top-1/2 transform -translate-y-1/2"
+                      initial={{ scale: 0, rotate: -180 }}
+                      animate={{ scale: 1, rotate: 0 }}
+                      transition={{ type: "spring", stiffness: 300 }}
+                    >
+                      <motion.div
+                        className="w-2 h-2 bg-emerald-400 rounded-full"
+                        animate={{
+                          opacity: [0.4, 1, 0.4],
+                          scale: [1, 1.2, 1]
+                        }}
+                        transition={{
+                          duration: 1.5,
+                          repeat: Infinity,
+                          ease: "easeInOut"
+                        }}
+                      />
+                    </motion.div>
+                  )}
                 </motion.div>
               </div>
-
             </div>
-          </div>
+          </motion.div>
         </motion.div>
 
         {/* Enhanced Step Indicator */}
