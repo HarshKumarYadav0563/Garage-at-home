@@ -13,6 +13,7 @@ import Services from "@/pages/services";
 import Book from "@/pages/book";
 import Track from "@/pages/track";
 import Contact from "@/pages/contact";
+import HowItWorks from "@/pages/how-it-works";
 import CityLanding from "@/pages/city-landing";
 import Admin from "@/pages/admin";
 import Mechanic from "@/pages/mechanic";
@@ -32,6 +33,7 @@ function Router() {
           <Route path="/book" component={Book} />
           <Route path="/track/:trackingId?" component={Track} />
           <Route path="/contact" component={Contact} />
+          <Route path="/how-it-works" component={HowItWorks} />
           <Route path="/bike-service/:city" component={CityLanding} />
           <Route path="/admin" component={Admin} />
           <Route path="/mechanic" component={Mechanic} />

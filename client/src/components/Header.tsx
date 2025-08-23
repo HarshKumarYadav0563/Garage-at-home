@@ -29,7 +29,7 @@ export function Header() {
     { name: 'Home', href: '/', badge: null },
     { name: 'Services', href: '/services', badge: 'Popular' },
     { name: 'Track Order', href: '/track', badge: null },
-    { name: 'How It Works', href: '/', badge: null, scrollTo: 'how-it-works' },
+    { name: 'How It Works', href: '/how-it-works', badge: 'New' },
     { name: 'Contact', href: '/contact', badge: null },
   ] as Array<{ name: string; href: string; badge: string | null; scrollTo?: string }>;
 
