@@ -1116,61 +1116,6 @@ export default function Services() {
                   </motion.div>
                 </motion.div>
 
-                {/* Enhanced Add-ons Section */}
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1.4, duration: 0.8 }}
-                  className="bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-red-500/10 rounded-3xl p-8 border border-purple-500/20"
-                >
-                  <div className="flex items-center justify-between mb-8">
-                    <div>
-                      <h3 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400 mb-2">
-                        Premium Add-ons
-                      </h3>
-                      <p className="text-gray-300 text-lg">
-                        Extra services to enhance your vehicle care experience
-                      </p>
-                    </div>
-                    <motion.div
-                      animate={{ rotate: [0, 360] }}
-                      transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                    >
-                      <Badge className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2">
-                        Required for Individual Services
-                      </Badge>
-                    </motion.div>
-                  </div>
-                  
-                  <motion.div 
-                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
-                    variants={{
-                      hidden: { opacity: 0 },
-                      show: {
-                        opacity: 1,
-                        transition: {
-                          staggerChildren: 0.1,
-                          delayChildren: 0.3
-                        }
-                      }
-                    }}
-                    initial="hidden"
-                    animate="show"
-                  >
-                    {ADDONS.map((addon) => {
-                      const isSelected = selectedAddons.some(a => a.id === addon.id);
-                      
-                      return (
-                        <AddonChip
-                          key={addon.id}
-                          addon={addon}
-                          isSelected={isSelected}
-                          onToggle={() => toggleAddon(addon)}
-                        />
-                      );
-                    })}
-                  </motion.div>
-                </motion.div>
               </div>
 
             {/* Floating Cart Button */}
