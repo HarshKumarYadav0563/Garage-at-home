@@ -215,11 +215,11 @@ export default function Pricing() {
 
         {/* Pricing Plans */}
         <motion.div
+          key={activeTab}
           className="grid gap-4 md:gap-6 lg:gap-8 mb-12 md:mb-20"
           variants={containerVariants}
           initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.2 }}
+          animate="show"
           style={{
             gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))"
           }}
