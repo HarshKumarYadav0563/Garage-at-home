@@ -108,6 +108,17 @@ export default {
         serif: ["var(--font-serif)"],
         mono: ["var(--font-mono)"],
         inter: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        jakarta: ['Plus Jakarta Sans', 'Inter', 'system-ui', 'sans-serif'],
+      },
+      fontWeight: {
+        thin: '200',
+        extralight: '300',
+        light: '400',
+        normal: '500',
+        medium: '600',
+        semibold: '700',
+        bold: '800',
+        extrabold: '900',
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
