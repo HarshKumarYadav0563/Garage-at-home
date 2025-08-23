@@ -92,7 +92,7 @@ export function EnhancedFAQ() {
   };
 
   return (
-    <section className="relative py-16 lg:py-24 bg-gradient-to-br from-white via-gray-50 to-blue-50/30 overflow-hidden">
+    <section className="relative py-16 lg:py-24 bg-gradient-to-br from-gray-950 via-slate-900 to-gray-950 overflow-hidden">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
@@ -146,12 +146,12 @@ export function EnhancedFAQ() {
             <HelpCircle className="w-8 h-8 text-white" />
           </motion.div>
 
-          <h2 className="text-3xl lg:text-5xl font-bold mb-6 bg-gradient-to-r from-gray-900 via-indigo-800 to-gray-900 bg-clip-text text-transparent">
+          <h2 className="text-3xl lg:text-5xl font-bold mb-6 text-white">
             Frequently Asked Questions
           </h2>
           
           <motion.p 
-            className="text-xl text-gray-600 max-w-2xl mx-auto"
+            className="text-xl text-gray-300 max-w-2xl mx-auto"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
@@ -182,7 +182,7 @@ export function EnhancedFAQ() {
               >
                 <AccordionItem
                   value={faq.id}
-                  className="relative bg-white/70 backdrop-blur-xl border border-white/50 rounded-2xl overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.08)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.12)] transition-all duration-500"
+                  className="relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.3)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.4)] transition-all duration-500"
                 >
                   {/* Animated gradient border */}
                   <motion.div
@@ -209,7 +209,7 @@ export function EnhancedFAQ() {
                       </motion.div>
 
                       <motion.h3 
-                        className="text-left text-lg font-semibold text-gray-900 group-hover/trigger:text-indigo-700 transition-colors flex-1"
+                        className="text-left text-lg font-semibold text-white group-hover/trigger:text-gray-200 transition-colors flex-1"
                         initial={{ x: -10, opacity: 0 }}
                         whileInView={{ x: 0, opacity: 1 }}
                         viewport={{ once: true }}
@@ -224,7 +224,7 @@ export function EnhancedFAQ() {
                         whileHover={{ scale: 1.1 }}
                         transition={{ type: "spring", stiffness: 400 }}
                       >
-                        <ChevronDown className="h-5 w-5 text-gray-500 group-hover/trigger:text-indigo-600 transition-all duration-300 group-data-[state=open]/trigger:rotate-180" />
+                        <ChevronDown className="h-5 w-5 text-gray-400 group-hover/trigger:text-gray-200 transition-all duration-300 group-data-[state=open]/trigger:rotate-180" />
                       </motion.div>
                     </div>
                   </AccordionTrigger>
@@ -237,7 +237,7 @@ export function EnhancedFAQ() {
                       className="pl-16 pr-4"
                     >
                       <motion.p 
-                        className="text-gray-600 leading-relaxed"
+                        className="text-gray-300 leading-relaxed"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.1, duration: 0.4 }}
@@ -247,7 +247,7 @@ export function EnhancedFAQ() {
                       
                       {/* Decorative element */}
                       <motion.div
-                        className="mt-4 h-1 bg-gradient-to-r from-transparent via-indigo-200 to-transparent rounded-full"
+                        className="mt-4 h-1 bg-gradient-to-r from-transparent via-white/20 to-transparent rounded-full"
                         initial={{ scaleX: 0 }}
                         animate={{ scaleX: 1 }}
                         transition={{ delay: 0.2, duration: 0.5 }}

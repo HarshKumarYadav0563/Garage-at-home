@@ -81,7 +81,7 @@ export function EnhancedTestimonials() {
   };
 
   return (
-    <section className="relative py-12 sm:py-16 lg:py-24 bg-gradient-to-br from-gray-50 via-blue-50/30 to-purple-50/30 overflow-hidden">
+    <section className="relative py-12 sm:py-16 lg:py-24 bg-gradient-to-br from-gray-950 via-slate-900 to-gray-950 overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 opacity-30">
         <motion.div
@@ -128,7 +128,7 @@ export function EnhancedTestimonials() {
             <Quote className="w-8 h-8 text-white" />
           </motion.div>
           
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 bg-gradient-to-r from-gray-900 via-purple-800 to-gray-900 bg-clip-text text-transparent">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 text-white">
             What Our Customers Say
           </h2>
           <motion.p 
@@ -136,7 +136,7 @@ export function EnhancedTestimonials() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.4 }}
-            className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto"
+            className="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto"
           >
             Real reviews from customers who chose GarageWala over traditional garages
           </motion.p>
@@ -161,10 +161,10 @@ export function EnhancedTestimonials() {
               }}
               onHoverStart={() => setHoveredCard(testimonial.id)}
               onHoverEnd={() => setHoveredCard(null)}
-              className="group relative bg-white/80 backdrop-blur-xl rounded-2xl p-6 shadow-[0_8px_30px_rgba(0,0,0,0.12)] border border-white/50 hover:shadow-[0_20px_50px_rgba(0,0,0,0.15)] transition-all duration-500"
+              className="group relative bg-white/5 backdrop-blur-xl rounded-2xl p-6 shadow-[0_8px_30px_rgba(0,0,0,0.3)] border border-white/10 hover:shadow-[0_20px_50px_rgba(0,0,0,0.4)] transition-all duration-500"
             >
               {/* Background glow effect */}
-              <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-white/40 to-white/20 pointer-events-none" />
+              <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-white/10 to-white/5 pointer-events-none" />
               
               {/* Quote decoration */}
               <motion.div
@@ -199,7 +199,7 @@ export function EnhancedTestimonials() {
 
                 {/* Review text with typewriter effect */}
                 <motion.p 
-                  className="text-gray-700 mb-6 leading-relaxed italic"
+                  className="text-gray-300 mb-6 leading-relaxed italic"
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
                   viewport={{ once: true }}
@@ -219,7 +219,7 @@ export function EnhancedTestimonials() {
                   </motion.div>
                   <div>
                     <motion.h4 
-                      className="font-semibold text-gray-800"
+                      className="font-semibold text-white"
                       initial={{ x: -20, opacity: 0 }}
                       whileInView={{ x: 0, opacity: 1 }}
                       viewport={{ once: true }}
@@ -228,7 +228,7 @@ export function EnhancedTestimonials() {
                       {testimonial.name}
                     </motion.h4>
                     <motion.p 
-                      className="text-sm text-gray-600"
+                      className="text-sm text-gray-400"
                       initial={{ x: -20, opacity: 0 }}
                       whileInView={{ x: 0, opacity: 1 }}
                       viewport={{ once: true }}
