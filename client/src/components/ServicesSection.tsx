@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from 'framer-motion';
-import { ServiceCard } from '@/components/ServiceCard';
+import { BookingServiceCard } from '@/components/ServiceCard';
 import { servicePackages } from '@/data/services';
 
 export function ServicesSection() {
@@ -91,29 +91,35 @@ export function ServicesSection() {
           viewport={{ once: true, amount: 0.1 }}
         >
           <motion.div variants={itemVariants}>
-            <ServiceCard
-              id={bikeServices[0].id}
-              name="Bike Services"
-              vehicleType="bike"
-              description="Complete bike maintenance and repair"
-              basePrice={299}
-              features={['Oil Change', 'Brake Service', 'Chain Cleaning', 'Tire Check']}
-              icon="motorcycle"
-              gradient="from-emerald-400 to-teal-600"
-            />
+            <div className="p-6 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl hover:bg-white/8 transition-colors">
+              <h3 className="text-xl font-bold text-white mb-2">Bike Services</h3>
+              <p className="text-gray-300 mb-4">Complete bike maintenance and repair</p>
+              <div className="flex items-center space-x-2 mb-4">
+                <span className="text-emerald-400 font-bold text-lg">from ₹299</span>
+              </div>
+              <ul className="text-gray-400 text-sm space-y-1">
+                <li>• Oil Change</li>
+                <li>• Brake Service</li>
+                <li>• Chain Cleaning</li>
+                <li>• Tire Check</li>
+              </ul>
+            </div>
           </motion.div>
 
           <motion.div variants={itemVariants}>
-            <ServiceCard
-              id={carServices[0].id}
-              name="Car Services"
-              vehicleType="car"
-              description="Professional car care and maintenance"
-              basePrice={599}
-              features={['Engine Service', 'AC Service', 'Brake Repair', 'Battery Check']}
-              icon="car"
-              gradient="from-blue-400 to-indigo-600"
-            />
+            <div className="p-6 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl hover:bg-white/8 transition-colors">
+              <h3 className="text-xl font-bold text-white mb-2">Car Services</h3>
+              <p className="text-gray-300 mb-4">Professional car care and maintenance</p>
+              <div className="flex items-center space-x-2 mb-4">
+                <span className="text-blue-400 font-bold text-lg">from ₹599</span>
+              </div>
+              <ul className="text-gray-400 text-sm space-y-1">
+                <li>• Engine Service</li>
+                <li>• AC Service</li>
+                <li>• Brake Repair</li>
+                <li>• Battery Check</li>
+              </ul>
+            </div>
           </motion.div>
         </motion.div>
 

@@ -72,6 +72,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Create booking (new booking flow)
+  app.post("/api/booking", async (req, res) => {
+    try {
+      const { nanoid } = await import('nanoid');
+      
+      // Generate tracking ID
+      const trackingId = `GW-${nanoid(8).toUpperCase()}`;
+      
+      // Mock response for booking submission
+      res.status(201).json({ 
+        ok: true, 
+        trackingId,
+        message: 'Booking received successfully. A mechanic will contact you shortly.'
+      });
+    } catch (error) {
+      console.error('Error creating booking:', error);
+      res.status(500).json({ error: 'Failed to create booking' });
+    }
+  });
+
   // Track lead by tracking ID
   app.get("/api/track/:trackingId", async (req, res) => {
     try {

@@ -1,153 +1,120 @@
 import { motion, useReducedMotion } from 'framer-motion';
-import { CheckCircle, Car, Bike } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Link } from 'wouter';
+import { Check, Plus } from 'lucide-react';
+import * as Icons from 'lucide-react';
+import { ServiceData } from '@/data/bookingServices';
+import { useBookingStore } from '@/store/booking';
 
-interface ServiceCardProps {
-  id: string;
-  name: string;
-  vehicleType: 'bike' | 'car';
-  description: string;
-  basePrice: number;
-  features: string[];
-  icon: string;
-  gradient: string;
+interface BookingServiceCardProps {
+  service: ServiceData;
+  isSelected: boolean;
+  onToggle: () => void;
+  adjustedPrice: { min: number; max: number };
+  showRange: boolean;
 }
 
-export function ServiceCard({
-  id,
-  name,
-  vehicleType,
-  description,
-  basePrice,
-  features,
-  icon,
-  gradient,
-}: ServiceCardProps) {
+export function BookingServiceCard({ 
+  service, 
+  isSelected, 
+  onToggle, 
+  adjustedPrice, 
+  showRange 
+}: BookingServiceCardProps) {
   const shouldReduceMotion = useReducedMotion();
   
-  const IconComponent = icon === 'motorcycle' ? Bike : Car;
+  // Get icon component
+  const IconComponent = Icons[service.icon as keyof typeof Icons] as React.ComponentType<{ className?: string }> || Icons.Wrench;
   
-  const floatAnimation = shouldReduceMotion ? {} : {
-    y: [0, -2, 0, 1, 0],
-    transition: {
-      duration: 5,
-      repeat: Infinity,
-      ease: "easeInOut"
-    }
-  };
-
   return (
-    <motion.div
+    <motion.li
+      layout
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
       whileHover={shouldReduceMotion ? {} : { 
-        y: -6, 
-        rotateX: 1, 
-        rotateY: -0.5,
-        scale: 1.01
+        y: -4,
+        transition: { type: "spring", stiffness: 400 }
       }}
-      transition={{ 
-        type: "spring", 
-        stiffness: 200, 
-        damping: 20 
-      }}
-      className="h-full"
+      className="relative"
     >
-      <Card className="group relative h-full bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-5 md:p-6 lg:p-8 shadow-[0_8px_30px_rgba(0,0,0,0.3)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.4)] transition-all duration-500 overflow-hidden">
-        {/* Subtle background glow on hover */}
-        <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-white/10 to-white/5 pointer-events-none" />
+      <Card className={`h-full transition-all duration-300 cursor-pointer group ${
+        isSelected 
+          ? 'bg-white/10 border-emerald-500/50 shadow-lg shadow-emerald-500/20' 
+          : 'bg-white/5 border-white/10 hover:bg-white/8 hover:border-white/20'
+      }`}
+      onClick={onToggle}
+      >
+        {service.popular && (
+          <div className="absolute -top-2 left-4 z-10">
+            <Badge className="bg-gradient-to-r from-emerald-500 to-sky-500 text-white text-xs px-2 py-1">
+              Popular
+            </Badge>
+          </div>
+        )}
         
-        <CardContent className="p-0 h-full flex flex-col relative z-10">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center mb-5 md:mb-6">
-            {/* Enhanced icon with floating animation */}
-            <div className="relative mb-3 sm:mb-0 sm:mr-5">
-              <motion.div 
-                className={`relative w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br ${gradient} flex items-center justify-center shadow-lg`}
-                animate={shouldReduceMotion ? {} : floatAnimation}
-              >
-                <IconComponent 
-                  className="w-7 h-7 md:w-8 md:h-8 text-white" 
-                  aria-hidden="true"
-                />
-                
-                {/* Hover glow ring */}
-                <div className="absolute inset-0 rounded-2xl bg-white/20 opacity-0 group-hover:opacity-100 transition-all duration-300 blur-md scale-110" />
-              </motion.div>
-            </div>
-            
-            <div className="flex-1">
-              <h3 className="text-xl md:text-2xl font-bold mb-2 text-white group-hover:text-gray-200 transition-colors" data-testid={`service-name-${id}`}>
-                {name}
-              </h3>
-              <p className="text-base text-gray-300 leading-relaxed" data-testid={`service-description-${id}`}>
-                {description}
-              </p>
-            </div>
-          </div>
-
-          {/* Enhanced features grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 mb-6 md:mb-7 flex-1">
-            {features.map((feature, index) => (
-              <motion.div 
-                key={index} 
-                className="flex items-center space-x-3 py-1.5 px-2 rounded-lg hover:bg-white/10 transition-colors"
-                whileHover={{ x: 2 }}
-                transition={{ duration: 0.2 }}
-              >
-                <CheckCircle 
-                  className={`w-4 h-4 flex-shrink-0 ${
-                    vehicleType === 'bike' 
-                      ? 'text-emerald-500' 
-                      : 'text-blue-500'
-                  }`} 
-                />
-                <span className="text-sm md:text-base text-gray-300 font-medium" data-testid={`service-feature-${id}-${index}`}>
-                  {feature}
-                </span>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Enhanced pricing and CTA */}
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-0 mt-auto pt-4 border-t border-white/20">
-            <div>
-              <span 
-                className={`text-2xl md:text-3xl font-bold bg-gradient-to-r ${
-                  vehicleType === 'bike' 
-                    ? 'from-emerald-600 to-teal-600' 
-                    : 'from-blue-600 to-indigo-600'
-                } bg-clip-text text-transparent`}
-                data-testid={`service-price-${id}`}
-              >
-                ₹{basePrice}
-              </span>
-              <span className="text-gray-400 ml-2 text-base">onwards</span>
-            </div>
-            
-            <Link 
-              href={`/book?service=${id}&vehicleType=${vehicleType}`}
-              data-testid={`book-service-${id}`}
-              className="w-full sm:w-auto"
-            >
+        <CardContent className="p-6 h-full flex flex-col">
+          <div className="flex items-start justify-between mb-4">
+            <div className="flex items-center space-x-3 flex-1">
               <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.98 }}
-                transition={{ duration: 0.2 }}
+                className={`w-12 h-12 rounded-xl flex items-center justify-center ${
+                  isSelected 
+                    ? 'bg-gradient-to-br from-emerald-500 to-sky-600' 
+                    : 'bg-gradient-to-br from-gray-600 to-gray-700 group-hover:from-emerald-500/20 group-hover:to-sky-600/20'
+                }`}
+                animate={isSelected && !shouldReduceMotion ? {
+                  scale: [1, 1.1, 1],
+                  rotate: [0, 5, -5, 0]
+                } : {}}
+                transition={{ duration: 0.5 }}
               >
-                <Button
-                  className={`w-full sm:w-auto bg-gradient-to-r ${
-                    vehicleType === 'bike' 
-                      ? 'from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700' 
-                      : 'from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700'
-                  } text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 min-h-[48px] touch-manipulation`}
-                >
-                  Book Now
-                </Button>
+                <IconComponent className={`w-6 h-6 ${isSelected ? 'text-white' : 'text-gray-300'}`} />
               </motion.div>
-            </Link>
+              
+              <div className="flex-1 min-w-0">
+                <h3 className="text-white font-semibold text-lg mb-1 truncate">
+                  {service.name}
+                </h3>
+                <p className="text-gray-400 text-sm leading-tight">
+                  {service.subtitle}
+                </p>
+              </div>
+            </div>
+            
+            <motion.div
+              whileTap={{ scale: 0.95 }}
+              className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors ${
+                isSelected 
+                  ? 'bg-emerald-500 text-white' 
+                  : 'bg-white/10 text-gray-400 group-hover:bg-white/20'
+              }`}
+            >
+              {isSelected ? (
+                <Check className="w-4 h-4" />
+              ) : (
+                <Plus className="w-4 h-4" />
+              )}
+            </motion.div>
+          </div>
+          
+          <div className="mt-auto">
+            <div className="text-right">
+              {showRange ? (
+                <div className="text-white font-bold">
+                  <span className="text-lg">₹{adjustedPrice.min.toLocaleString()}</span>
+                  <span className="text-gray-400 text-sm"> - </span>
+                  <span className="text-lg">₹{adjustedPrice.max.toLocaleString()}</span>
+                </div>
+              ) : (
+                <div className="text-white font-bold">
+                  <span className="text-gray-400 text-sm">from </span>
+                  <span className="text-lg">₹{adjustedPrice.min.toLocaleString()}</span>
+                </div>
+              )}
+            </div>
           </div>
         </CardContent>
       </Card>
-    </motion.div>
+    </motion.li>
   );
 }
