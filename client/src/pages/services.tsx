@@ -527,27 +527,51 @@ export default function Services() {
                 {/* Combo Services */}
                 {comboServices.length > 0 && (
                   <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 1.0 }}
-                    className="mb-12"
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1.0, duration: 0.8 }}
+                    className="mb-16"
                   >
-                    <div className="flex items-center space-x-3 mb-6">
-                      <h2 className="text-2xl font-bold text-white">
-                        {selectedVehicle === 'bike' ? 'Bike' : 'Car'} Service Packages
-                      </h2>
-                      <Badge className="bg-gradient-to-r from-purple-500 to-pink-500 text-white">
-                        Best Value
-                      </Badge>
+                    <div className="flex items-center justify-between mb-8">
+                      <div>
+                        <motion.h2 
+                          className="text-4xl font-bold text-white mb-2"
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 1.1, duration: 0.6 }}
+                        >
+                          {selectedVehicle === 'bike' ? 'Bike' : 'Car'} Service Packages
+                        </motion.h2>
+                        <motion.p 
+                          className="text-gray-300 text-lg"
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 1.2, duration: 0.6 }}
+                        >
+                          Comprehensive care bundles with maximum savings
+                        </motion.p>
+                      </div>
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 1.3, type: "spring", stiffness: 300 }}
+                      >
+                        <Badge className="bg-gradient-to-r from-emerald-500 to-sky-500 text-white px-4 py-2 text-lg shadow-lg">
+                          Best Value
+                        </Badge>
+                      </motion.div>
                     </div>
-                    <p className="text-gray-400 text-sm mb-4">
-                      Complete service packages that include multiple services at discounted rates
-                    </p>
-                    <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3 mb-6">
-                      <p className="text-blue-300 text-xs">
-                        <span className="font-medium">Selection Rule:</span> Choose either one service package OR multiple individual services. They cannot be combined.
+                    
+                    <motion.div 
+                      className="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-4 mb-8"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 1.4, duration: 0.6 }}
+                    >
+                      <p className="text-emerald-300 text-sm">
+                        <span className="font-medium">Exclusive:</span> Choose one complete package for maximum savings and comprehensive care.
                       </p>
-                    </div>
+                    </motion.div>
                     
                     <motion.div
                       className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8"
@@ -583,29 +607,43 @@ export default function Services() {
                   </motion.div>
                 )}
 
-                {/* Individual Services */}
+                {/* Enhanced Individual Services */}
                 {individualServices.length > 0 && (
                   <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 1.2 }}
-                    className="mb-8"
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1.2, duration: 0.8 }}
+                    className="mb-16"
                   >
-                    <h3 className="text-xl font-bold text-white mb-6">
-                      Individual Services
-                    </h3>
-                    <p className="text-gray-400 text-sm mb-6">
-                      Specific services for targeted maintenance needs - can be combined with each other only
-                    </p>
+                    <div className="flex items-center justify-between mb-8">
+                      <div>
+                        <h3 className="text-3xl font-bold text-white mb-2">
+                          Individual Services
+                        </h3>
+                        <p className="text-gray-300 text-lg">
+                          Precision services for specific maintenance needs
+                        </p>
+                      </div>
+                      <Badge variant="outline" className="text-emerald-400 border-emerald-500/30">
+                        {individualServices.length} Services Available
+                      </Badge>
+                    </div>
+                    
+                    <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4 mb-8">
+                      <p className="text-blue-300 text-sm">
+                        <span className="font-medium">Mix & Match:</span> Individual services can be combined with each other for a custom maintenance solution.
+                      </p>
+                    </div>
                     
                     <motion.ul
-                      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+                      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
                       variants={{
                         hidden: { opacity: 0 },
                         show: {
                           opacity: 1,
                           transition: {
-                            staggerChildren: 0.1
+                            staggerChildren: 0.15,
+                            delayChildren: 0.2
                           }
                         }
                       }}
@@ -631,14 +669,47 @@ export default function Services() {
                   </motion.div>
                 )}
 
-                {/* Add-ons */}
+                {/* Enhanced Add-ons Section */}
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1.2 }}
+                  transition={{ delay: 1.4, duration: 0.8 }}
+                  className="bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-red-500/10 rounded-3xl p-8 border border-purple-500/20"
                 >
-                  <h3 className="text-xl font-bold text-white mb-6">Add-ons</h3>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                  <div className="flex items-center justify-between mb-8">
+                    <div>
+                      <h3 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400 mb-2">
+                        Premium Add-ons
+                      </h3>
+                      <p className="text-gray-300 text-lg">
+                        Extra services to enhance your vehicle care experience
+                      </p>
+                    </div>
+                    <motion.div
+                      animate={{ rotate: [0, 360] }}
+                      transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                    >
+                      <Badge className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2">
+                        Optional
+                      </Badge>
+                    </motion.div>
+                  </div>
+                  
+                  <motion.div 
+                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+                    variants={{
+                      hidden: { opacity: 0 },
+                      show: {
+                        opacity: 1,
+                        transition: {
+                          staggerChildren: 0.1,
+                          delayChildren: 0.3
+                        }
+                      }
+                    }}
+                    initial="hidden"
+                    animate="show"
+                  >
                     {ADDONS.map((addon) => {
                       const isSelected = selectedAddons.some(a => a.id === addon.id);
                       const adjustedPrice = getAdjustedPrice(addon.priceMin, addon.priceMax);
@@ -654,7 +725,7 @@ export default function Services() {
                         />
                       );
                     })}
-                  </div>
+                  </motion.div>
                 </motion.div>
               </div>
 
