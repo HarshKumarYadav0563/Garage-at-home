@@ -75,7 +75,7 @@ export function Hero() {
   };
 
   return (
-    <section className="relative min-h-[45vh] sm:min-h-[50vh] lg:min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-gray-50 via-blue-50 to-primary-50 dark:from-gray-900 dark:via-blue-950 dark:to-primary-950 pt-24 sm:pt-28 lg:pt-32">
+    <section className="relative min-h-[45vh] sm:min-h-[50vh] lg:min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-gray-50 via-blue-50 to-primary-50 pt-24 sm:pt-28 lg:pt-32">
       {/* Subtle Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div
@@ -99,7 +99,7 @@ export function Hero() {
             {/* Heading */}
             <motion.h1
               variants={itemVariants}
-              className="text-3xl font-bold leading-tight text-gray-900 dark:text-gray-100"
+              className="text-3xl font-bold leading-tight text-gray-900"
             >
               India's First{' '}
               <span className="bg-gradient-to-r from-primary-600 to-blue-600 bg-clip-text text-transparent">
@@ -111,7 +111,7 @@ export function Hero() {
             {/* Subheading */}
             <motion.p
               variants={itemVariants}
-              className="text-base text-gray-600 dark:text-gray-300 leading-relaxed px-4"
+              className="text-base text-gray-600 leading-relaxed px-4"
             >
               Skip the garage visits! Professional mechanics come to your location with all tools & parts.
             </motion.p>
@@ -145,7 +145,7 @@ export function Hero() {
             {/* Trust Row - Compact Single Row */}
             <motion.div
               variants={itemVariants}
-              className="flex items-center justify-center space-x-4 text-xs text-gray-600 dark:text-gray-400"
+              className="flex items-center justify-center space-x-4 text-xs text-gray-600"
             >
               <div className="flex items-center space-x-1">
                 <Star className="text-yellow-400 w-3 h-3" />
@@ -210,7 +210,7 @@ export function Hero() {
             {/* Heading - Max 2 lines */}
             <motion.h1
               variants={itemVariants}
-              className="text-5xl xl:text-6xl font-bold leading-tight mb-6 text-gray-900 dark:text-gray-100"
+              className="text-5xl xl:text-6xl font-bold leading-tight mb-6 text-gray-900"
             >
               India's First{' '}
               <span className="bg-gradient-to-r from-primary-600 to-blue-600 bg-clip-text text-transparent">
@@ -222,7 +222,7 @@ export function Hero() {
             {/* Shorter Subheading */}
             <motion.p
               variants={itemVariants}
-              className="text-xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed"
+              className="text-xl text-gray-600 mb-8 leading-relaxed"
             >
               Skip the garage visits! Professional mechanics come to your location with all tools & parts. Available in Mumbai, Delhi, Bangalore & 12 more cities.
             </motion.p>
@@ -258,17 +258,17 @@ export function Hero() {
             {/* Trust Badges Inline */}
             <motion.div
               variants={itemVariants}
-              className="flex items-center space-x-6 text-sm text-gray-600 dark:text-gray-400"
+              className="flex items-center space-x-6 text-sm text-gray-600"
             >
-              <div className="flex items-center space-x-2 bg-white/50 dark:bg-gray-800/50 px-3 py-2 rounded-lg">
+              <div className="flex items-center space-x-2 bg-white/50 px-3 py-2 rounded-lg">
                 <Star className="text-yellow-400 w-4 h-4" />
                 <span className="font-medium" data-testid="text-rating">4.9/5 Rating</span>
               </div>
-              <div className="flex items-center space-x-2 bg-white/50 dark:bg-gray-800/50 px-3 py-2 rounded-lg">
+              <div className="flex items-center space-x-2 bg-white/50 px-3 py-2 rounded-lg">
                 <Users className="text-primary-500 w-4 h-4" />
                 <span className="font-medium" data-testid="text-customers">25,000+ Services</span>
               </div>
-              <div className="flex items-center space-x-2 bg-white/50 dark:bg-gray-800/50 px-3 py-2 rounded-lg">
+              <div className="flex items-center space-x-2 bg-white/50 px-3 py-2 rounded-lg">
                 <Clock className="text-blue-500 w-4 h-4" />
                 <span className="font-medium" data-testid="text-service-time">2 Hour Service</span>
               </div>
