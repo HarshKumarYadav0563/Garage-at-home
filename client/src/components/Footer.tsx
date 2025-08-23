@@ -35,9 +35,9 @@ export function Footer() {
       {/* Top Section */}
       <div className="border-b border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-            {/* Brand */}
-            <div className="md:col-span-2 lg:col-span-1">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Brand Section */}
+            <div className="lg:pr-8">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -96,87 +96,90 @@ export function Footer() {
               </motion.div>
             </div>
 
-            {/* Services */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-            >
-              <h3 className="text-lg font-semibold mb-4 text-white">Our Services</h3>
-              <ul className="space-y-2">
-                {services.map((service, index) => (
-                  <li key={index}>
-                    <Link href="/services">
-                      <span
-                        className="text-gray-300 hover:text-primary-400 transition-colors cursor-pointer flex items-center space-x-2 group"
-                        data-testid={`footer-service-${index}`}
-                      >
-                        <span className="w-1.5 h-1.5 bg-primary-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                        <span>{service}</span>
-                      </span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
+            {/* Three Sections Together */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {/* Services */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.1 }}
+              >
+                <h3 className="text-lg font-semibold mb-4 text-white">Our Services</h3>
+                <ul className="space-y-2">
+                  {services.map((service, index) => (
+                    <li key={index}>
+                      <Link href="/services">
+                        <span
+                          className="text-gray-300 hover:text-primary-400 transition-colors cursor-pointer flex items-center space-x-2 group"
+                          data-testid={`footer-service-${index}`}
+                        >
+                          <span className="w-1.5 h-1.5 bg-primary-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                          <span>{service}</span>
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
 
-            {/* Cities */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-            >
-              <h3 className="text-lg font-semibold mb-4 text-white">Service Cities</h3>
-              <ul className="space-y-2">
-                {cities.map((city, index) => (
-                  <li key={index}>
-                    <Link href={`/${city.toLowerCase()}`}>
-                      <span
-                        className="text-gray-300 hover:text-primary-400 transition-colors cursor-pointer flex items-center space-x-2 group"
-                        data-testid={`footer-city-${index}`}
-                      >
-                        <MapPin className="w-3 h-3 text-primary-500 opacity-0 group-hover:opacity-100 transition-opacity" />
-                        <span>{city}</span>
+              {/* Cities */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+              >
+                <h3 className="text-lg font-semibold mb-4 text-white">Service Cities</h3>
+                <ul className="space-y-2">
+                  {cities.map((city, index) => (
+                    <li key={index}>
+                      <Link href={`/${city.toLowerCase()}`}>
+                        <span
+                          className="text-gray-300 hover:text-primary-400 transition-colors cursor-pointer flex items-center space-x-2 group"
+                          data-testid={`footer-city-${index}`}
+                        >
+                          <MapPin className="w-3 h-3 text-primary-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                          <span>{city}</span>
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                  <li className="pt-2 border-t border-gray-700">
+                    <Link href="/cities">
+                      <span className="text-primary-400 hover:text-primary-300 transition-colors cursor-pointer font-medium">
+                        View All Cities →
                       </span>
                     </Link>
                   </li>
-                ))}
-                <li className="pt-2 border-t border-gray-700">
-                  <Link href="/cities">
-                    <span className="text-primary-400 hover:text-primary-300 transition-colors cursor-pointer font-medium">
-                      View All Cities →
-                    </span>
-                  </Link>
-                </li>
-              </ul>
-            </motion.div>
+                </ul>
+              </motion.div>
 
-            {/* Company */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3 }}
-            >
-              <h3 className="text-lg font-semibold mb-4 text-white">Company</h3>
-              <ul className="space-y-2">
-                {company.map((item, index) => (
-                  <li key={index}>
-                    <Link href={`/${item.toLowerCase().replace(' ', '-')}`}>
-                      <span
-                        className="text-gray-300 hover:text-primary-400 transition-colors cursor-pointer flex items-center space-x-2 group"
-                        data-testid={`footer-company-${index}`}
-                      >
-                        <span className="w-1.5 h-1.5 bg-primary-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                        <span>{item}</span>
-                      </span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
+              {/* Company */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 }}
+              >
+                <h3 className="text-lg font-semibold mb-4 text-white">Company</h3>
+                <ul className="space-y-2">
+                  {company.map((item, index) => (
+                    <li key={index}>
+                      <Link href={`/${item.toLowerCase().replace(' ', '-')}`}>
+                        <span
+                          className="text-gray-300 hover:text-primary-400 transition-colors cursor-pointer flex items-center space-x-2 group"
+                          data-testid={`footer-company-${index}`}
+                        >
+                          <span className="w-1.5 h-1.5 bg-primary-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                          <span>{item}</span>
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            </div>
           </div>
         </div>
       </div>
