@@ -16,7 +16,7 @@ export default function Track() {
   const [searchTrackingId, setSearchTrackingId] = useState(urlTrackingId || '');
   const { addToast } = useUiStore();
 
-  const { data: trackingData = { lead: null, statusUpdates: [], mechanic: null }, isLoading, error } = useQuery({
+  const { data: trackingData, isLoading, error } = useQuery({
     queryKey: searchTrackingId ? [`/api/track/${searchTrackingId}`] : [],
     enabled: !!searchTrackingId,
   });
@@ -64,22 +64,22 @@ export default function Track() {
   };
 
   const getStatusColor = (status: string, isActive: boolean) => {
-    if (!isActive) return 'bg-gray-300 text-gray-600';
+    if (!isActive) return 'bg-gray-300 dark:bg-gray-600 text-gray-600 dark:text-gray-300';
     
     switch (status) {
       case 'confirmed':
       case 'pending':
-        return 'bg-green-500 text-white';
+        return 'bg-green-500 dark:bg-green-600 text-white';
       case 'assigned':
-        return 'bg-blue-500 text-white animate-pulse';
+        return 'bg-blue-500 dark:bg-blue-600 text-white animate-pulse';
       case 'on_the_way':
-        return 'bg-blue-500 text-white animate-pulse';
+        return 'bg-blue-500 dark:bg-blue-600 text-white animate-pulse';
       case 'in_progress':
-        return 'bg-orange-500 text-white animate-pulse';
+        return 'bg-orange-500 dark:bg-orange-600 text-white animate-pulse';
       case 'completed':
-        return 'bg-green-500 text-white';
+        return 'bg-green-500 dark:bg-green-600 text-white';
       default:
-        return 'bg-gray-500 text-white';
+        return 'bg-gray-500 dark:bg-gray-600 text-white';
     }
   };
 
@@ -153,7 +153,7 @@ export default function Track() {
         )}
 
         {/* Tracking Information */}
-        {trackingData && (
+        {trackingData && trackingData.lead && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -164,7 +164,7 @@ export default function Track() {
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h3 className="text-lg font-semibold mb-2">Tracking ID</h3>
+                    <h3 className="text-lg font-semibold mb-2 dark:text-gray-100">Tracking ID</h3>
                     <div className="flex items-center space-x-2">
                       <span className="font-mono text-lg text-primary-600" data-testid="tracking-id-display">
                         {trackingData.lead.trackingId}
@@ -181,13 +181,13 @@ export default function Track() {
                     </div>
                   </div>
                   <div className="text-right">
-                    <div className="text-sm text-gray-600">Status</div>
+                    <div className="text-sm text-gray-600 dark:text-gray-300">Status</div>
                     <div className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${
-                      trackingData.lead.status === 'completed' ? 'bg-green-100 text-green-800' :
-                      trackingData.lead.status === 'in_progress' ? 'bg-orange-100 text-orange-800' :
-                      'bg-blue-100 text-blue-800'
+                      trackingData.lead?.status === 'completed' ? 'bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-300' :
+                      trackingData.lead?.status === 'in_progress' ? 'bg-orange-100 dark:bg-orange-900/20 text-orange-800 dark:text-orange-300' :
+                      'bg-blue-100 dark:bg-blue-900/20 text-blue-800 dark:text-blue-300'
                     }`} data-testid="current-status">
-                      {trackingData.lead.status?.replace('_', ' ').toUpperCase()}
+                      {trackingData.lead?.status?.replace('_', ' ').toUpperCase()}
                     </div>
                   </div>
                 </div>
@@ -197,14 +197,14 @@ export default function Track() {
             {/* Status Timeline */}
             <Card>
               <CardContent className="p-8">
-                <h3 className="text-xl font-bold mb-6">Service Progress</h3>
+                <h3 className="text-xl font-bold mb-6 dark:text-gray-100">Service Progress</h3>
                 
                 <div className="space-y-6">
                   {statusSteps.map((step, index) => {
                     const isCompleted = trackingData.statusUpdates?.some((update: any) => 
                       update.status === step.key
                     );
-                    const isActive = trackingData.lead.status === step.key;
+                    const isActive = trackingData.lead?.status === step.key;
                     const statusUpdate = trackingData.statusUpdates?.find((update: any) => 
                       update.status === step.key
                     );
@@ -217,14 +217,14 @@ export default function Track() {
                           {getStatusIcon(step.key)}
                         </div>
                         <div className="flex-1">
-                          <h4 className={`font-semibold text-lg ${isActive ? 'text-primary-600' : ''}`}>
+                          <h4 className={`font-semibold text-lg ${isActive ? 'text-primary-600 dark:text-primary-400' : 'dark:text-gray-100'}`}>
                             {step.label}
                           </h4>
-                          <p className="text-gray-600 mb-1">
+                          <p className="text-gray-600 dark:text-gray-300 mb-1">
                             {statusUpdate?.message || step.message}
                           </p>
                           {statusUpdate?.timestamp && (
-                            <p className="text-sm text-gray-500">
+                            <p className="text-sm text-gray-500 dark:text-gray-400">
                               {new Date(statusUpdate.timestamp).toLocaleString()}
                             </p>
                           )}
@@ -237,21 +237,21 @@ export default function Track() {
             </Card>
 
             {/* Mechanic Information */}
-            {trackingData.mechanic && (
+            {trackingData?.mechanic && (
               <Card>
                 <CardContent className="p-6">
-                  <h3 className="text-lg font-semibold mb-4">Your Mechanic</h3>
+                  <h3 className="text-lg font-semibold mb-4 dark:text-gray-100">Your Mechanic</h3>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center">
                       <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-green-600 rounded-full flex items-center justify-center text-white font-semibold mr-4">
-                        {trackingData.mechanic.name.split(' ').map((n: string) => n[0]).join('').toUpperCase()}
+                        {trackingData.mechanic?.name?.split(' ').map((n: string) => n[0]).join('').toUpperCase()}
                       </div>
                       <div>
-                        <h4 className="font-semibold" data-testid="mechanic-name">
-                          {trackingData.mechanic.name}
+                        <h4 className="font-semibold dark:text-gray-100" data-testid="mechanic-name">
+                          {trackingData.mechanic?.name}
                         </h4>
-                        <p className="text-sm text-gray-600">
-                          Rating: {trackingData.mechanic.ratingAvg}/5 ⭐ | {trackingData.mechanic.jobsDone}+ jobs completed
+                        <p className="text-sm text-gray-600 dark:text-gray-300">
+                          Rating: {trackingData.mechanic?.ratingAvg}/5 ⭐ | {trackingData.mechanic?.jobsDone}+ jobs completed
                         </p>
                       </div>
                     </div>
@@ -270,30 +270,30 @@ export default function Track() {
             {/* Service Details */}
             <Card>
               <CardContent className="p-6">
-                <h3 className="text-lg font-semibold mb-4">Service Details</h3>
+                <h3 className="text-lg font-semibold mb-4 dark:text-gray-100">Service Details</h3>
                 <div className="grid md:grid-cols-2 gap-4 text-sm">
                   <div>
-                    <span className="text-gray-600">Vehicle:</span>
-                    <span className="ml-2 font-medium">
-                      {trackingData.lead.vehicleBrand} {trackingData.lead.vehicleModel} ({trackingData.lead.vehicleType})
+                    <span className="text-gray-600 dark:text-gray-300">Vehicle:</span>
+                    <span className="ml-2 font-medium dark:text-gray-100">
+                      {trackingData.lead?.vehicleBrand} {trackingData.lead?.vehicleModel} ({trackingData.lead?.vehicleType})
                     </span>
                   </div>
                   <div>
-                    <span className="text-gray-600">Address:</span>
-                    <span className="ml-2 font-medium">{trackingData.lead.address}</span>
+                    <span className="text-gray-600 dark:text-gray-300">Address:</span>
+                    <span className="ml-2 font-medium dark:text-gray-100">{trackingData.lead?.address}</span>
                   </div>
-                  {trackingData.lead.slotStart && (
+                  {trackingData.lead?.slotStart && (
                     <div>
-                      <span className="text-gray-600">Scheduled Time:</span>
-                      <span className="ml-2 font-medium">
-                        {new Date(trackingData.lead.slotStart).toLocaleString()}
+                      <span className="text-gray-600 dark:text-gray-300">Scheduled Time:</span>
+                      <span className="ml-2 font-medium dark:text-gray-100">
+                        {new Date(trackingData.lead?.slotStart).toLocaleString()}
                       </span>
                     </div>
                   )}
-                  {trackingData.lead.totalAmount && (
+                  {trackingData.lead?.totalAmount && (
                     <div>
-                      <span className="text-gray-600">Amount:</span>
-                      <span className="ml-2 font-medium">₹{trackingData.lead.totalAmount}</span>
+                      <span className="text-gray-600 dark:text-gray-300">Amount:</span>
+                      <span className="ml-2 font-medium dark:text-gray-100">₹{trackingData.lead?.totalAmount}</span>
                     </div>
                   )}
                 </div>
