@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useUiStore } from '@/stores/useUiStore';
 import { apiRequest } from '@/lib/queryClient';
+import { SEO, generateOrganizationSchema } from '@/components/SEO';
 
 export default function Track() {
   const { trackingId: urlTrackingId } = useParams();
@@ -91,8 +92,29 @@ export default function Track() {
     { key: 'completed', label: 'Completed', message: 'Service has been completed successfully' },
   ];
 
+  const trackingSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      generateOrganizationSchema(),
+      {
+        "@type": "WebPage",
+        "name": "Track Your Service",
+        "description": "Track your vehicle service status in real-time with live updates",
+        "url": "https://garageathome.com/track"
+      }
+    ]
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pt-20 lg:pt-24">
+      <SEO
+        title="Track Your Service - Live Order Status | Garage At Home"
+        description="Track your vehicle service status in real-time with live updates. Enter your tracking ID to see current status and estimated completion time."
+        keywords="track vehicle service, order status, service tracking, live updates, booking status"
+        canonical="/track"
+        structuredData={trackingSchema}
+        ogImage="/og-track.jpg"
+      />
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

@@ -16,6 +16,7 @@ import {
   comparisonFeatures, 
   pricingFAQs 
 } from '@/config/pricingConfig';
+import { SEO, generateOrganizationSchema } from '@/components/SEO';
 
 export default function Pricing() {
   const [activeTab, setActiveTab] = useState<'bike' | 'car'>('bike');
@@ -53,8 +54,51 @@ export default function Pricing() {
 
   const currentPlans = activeTab === 'bike' ? bikePlans : carPlans;
 
+  const pricingSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      generateOrganizationSchema(),
+      {
+        "@type": "Service",
+        "name": "Vehicle Service Packages",
+        "provider": {
+          "@type": "Organization",
+          "name": "Garage At Home"
+        },
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Service Packages",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "name": "Basic Service",
+              "price": "₹499",
+              "priceCurrency": "INR",
+              "description": "Essential maintenance services for your vehicle"
+            },
+            {
+              "@type": "Offer",
+              "name": "Premium Service", 
+              "price": "₹999",
+              "priceCurrency": "INR",
+              "description": "Comprehensive vehicle maintenance and inspection"
+            }
+          ]
+        }
+      }
+    ]
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-black pt-20 lg:pt-24 overflow-hidden relative">
+      <SEO
+        title="Transparent Pricing - Vehicle Service Rates | Garage At Home"
+        description="Clear, upfront pricing for all bike and car services in Delhi NCR. No hidden charges. Starting from ₹299. Professional doorstep vehicle maintenance with quality guarantee."
+        keywords="vehicle service pricing, bike service cost, car maintenance rates, doorstep service charges, transparent pricing delhi ncr"
+        canonical="/pricing"
+        structuredData={pricingSchema}
+        ogImage="/og-pricing.jpg"
+      />
       {/* Background Effects */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div

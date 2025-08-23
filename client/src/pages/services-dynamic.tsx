@@ -39,6 +39,9 @@ import {
   type VehicleType
 } from '@shared/config/serviceAreas';
 
+// SEO
+import { SEO, generateServiceSchema, generateLocalBusinessSchema } from '@/components/SEO';
+
 export default function ServicesDynamic() {
   const [, params] = useRoute('/services/:vehicle/:city');
   const [location, setLocation] = useLocation();
