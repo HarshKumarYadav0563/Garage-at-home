@@ -54,7 +54,7 @@ export function Hero() {
   };
 
   return (
-    <section className="relative min-h-[70vh] sm:min-h-[85vh] lg:min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-gray-50 via-blue-50 to-primary-50 dark:from-gray-900 dark:via-blue-950 dark:to-primary-950 pt-20 sm:pt-28 lg:pt-36">
+    <section className="relative min-h-[70vh] sm:min-h-[85vh] lg:min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-gray-50 via-blue-50 to-primary-50 dark:from-gray-900 dark:via-blue-950 dark:to-primary-950 pt-28 sm:pt-32 lg:pt-36">
       {/* Animated Background Pattern */}
       <motion.div 
         className="absolute inset-0 opacity-10"
