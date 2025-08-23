@@ -493,7 +493,7 @@ export default function Services() {
                       transition={{ delay: 1.4, duration: 0.6 }}
                     >
                       <p className="text-emerald-300 text-sm">
-                        <span className="font-medium">Exclusive:</span> Choose one complete package for maximum savings and comprehensive care.
+                        <span className="font-medium">Includes FREE Doorstep Service:</span> All combo packages include complimentary service at your location. Choose one complete package for maximum savings.
                       </p>
                     </motion.div>
                     
@@ -555,7 +555,7 @@ export default function Services() {
                     
                     <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4 mb-8">
                       <p className="text-blue-300 text-sm">
-                        <span className="font-medium">Mix & Match:</span> Individual services can be combined with each other for a custom maintenance solution.
+                        <span className="font-medium">Mix & Match:</span> Individual services can be combined with each other. Don't forget to add "Doorstep Service" from add-ons for home service.
                       </p>
                     </div>
                     
@@ -614,7 +614,7 @@ export default function Services() {
                       transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
                     >
                       <Badge className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2">
-                        Optional
+                        Required for Individual Services
                       </Badge>
                     </motion.div>
                   </div>

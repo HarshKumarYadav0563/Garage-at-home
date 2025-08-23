@@ -32,6 +32,7 @@ export const BIKE_SERVICES: ServiceData[] = [
     popular: true,
     type: 'combo',
     includedServices: [
+      'FREE Doorstep Service',
       'Engine oil check & top-up',
       'Chain lubrication & adjustment',
       'Brake inspection',
@@ -51,6 +52,7 @@ export const BIKE_SERVICES: ServiceData[] = [
     icon: 'calendar',
     type: 'combo',
     includedServices: [
+      'FREE Doorstep Service',
       'Complete engine oil change',
       'Air filter cleaning/replacement',
       'Spark plug inspection',
@@ -71,6 +73,7 @@ export const BIKE_SERVICES: ServiceData[] = [
     icon: 'shield-check',
     type: 'combo',
     includedServices: [
+      'FREE Doorstep Service',
       'Engine complete service',
       'Transmission service',
       'Suspension check & service',
@@ -216,6 +219,7 @@ export const CAR_SERVICES: ServiceData[] = [
     popular: true,
     type: 'combo',
     includedServices: [
+      'FREE Doorstep Service',
       'Engine oil & filter change',
       'Brake fluid check',
       'Battery inspection',
@@ -236,6 +240,7 @@ export const CAR_SERVICES: ServiceData[] = [
     icon: 'calendar',
     type: 'combo',
     includedServices: [
+      'FREE Doorstep Service',
       'Complete engine service',
       'Air & cabin filter replacement',
       'Brake system inspection',
@@ -257,6 +262,7 @@ export const CAR_SERVICES: ServiceData[] = [
     icon: 'shield-check',
     type: 'combo',
     includedServices: [
+      'FREE Doorstep Service',
       'Complete engine overhaul',
       'Transmission service',
       'Brake system service',
@@ -402,6 +408,13 @@ export const CAR_SERVICES: ServiceData[] = [
 ];
 
 export const ADDONS: AddonData[] = [
+  {
+    id: 'doorstep-service',
+    name: 'Doorstep Service',
+    priceMin: 200,
+    priceMax: 300,
+    description: 'Service at your location - Required for individual services'
+  },
   {
     id: 'pickup-drop',
     name: 'Pickup & Drop',
