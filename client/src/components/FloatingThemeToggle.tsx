@@ -7,8 +7,8 @@ export function FloatingThemeToggle() {
 
   return (
     <motion.div
-      className="fixed left-6 top-1/2 transform -translate-y-1/2 z-50"
-      initial={{ x: -100, opacity: 0 }}
+      className="fixed right-6 top-1/2 transform -translate-y-1/2 z-50"
+      initial={{ x: 100, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       transition={{ delay: 1, type: "spring", stiffness: 200 }}
     >
