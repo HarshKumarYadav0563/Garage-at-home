@@ -28,7 +28,6 @@ export function Header() {
   const navigation = [
     { name: 'Home', href: '/', badge: null },
     { name: 'Services', href: '/services', badge: 'Popular' },
-    { name: 'Pricing', href: '/pricing', badge: null },
     { name: 'How It Works', href: '/how-it-works', badge: 'New' },
     { name: 'Contact', href: '/contact', badge: null },
   ] as Array<{ name: string; href: string; badge: string | null; scrollTo?: string }>;
