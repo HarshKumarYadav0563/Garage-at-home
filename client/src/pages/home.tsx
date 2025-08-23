@@ -3,6 +3,7 @@ import { TrustBar } from '@/components/TrustBar';
 import { ServiceCard } from '@/components/ServiceCard';
 import { FAQ } from '@/components/FAQ';
 import { HowItWorks } from '@/components/HowItWorks';
+import { WhyChooseGarageWala } from '@/components/WhyChooseGarageWala';
 import { motion } from 'framer-motion';
 import { servicePackages } from '@/data/services';
 import { Link } from 'wouter';
@@ -18,78 +19,7 @@ export default function Home() {
       <TrustBar />
       <HowItWorks />
 
-      {/* Competitive Advantages */}
-      <section className="py-16 lg:py-24 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-3xl lg:text-5xl font-bold mb-6 dark:text-gray-100">Why Choose GarageWala</h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-              Unlike traditional garage visits, we bring premium service to your doorstep
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                title: "True Doorstep Service",
-                description: "No need to visit garages. Our mechanics come fully equipped to your location with all tools and parts.",
-                icon: "🏠",
-                color: "bg-blue-500"
-              },
-              {
-                title: "Professional Mechanics", 
-                description: "Trained, uniformed professionals with verified experience and background checks for your safety.",
-                icon: "👨‍🔧",
-                color: "bg-primary-500"
-              },
-              {
-                title: "Transparent Pricing",
-                description: "Upfront, fixed pricing with no hidden charges. What you see is what you pay.",
-                icon: "💰",
-                color: "bg-green-500"
-              },
-              {
-                title: "Real-time Tracking",
-                description: "Track your service progress live, from booking confirmation to completion with photo updates.",
-                icon: "📍",
-                color: "bg-orange-500"
-              },
-              {
-                title: "Quality Guarantee", 
-                description: "30-day warranty on all services with satisfaction guarantee or money back.",
-                icon: "🛡️",
-                color: "bg-purple-500"
-              },
-              {
-                title: "Same Day Service",
-                description: "Book and get service the same day. Emergency services available 24/7 across all cities.",
-                icon: "⚡",
-                color: "bg-red-500"
-              }
-            ].map((advantage, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg hover:shadow-xl dark:hover:shadow-2xl transition-all duration-300 group hover:-translate-y-2"
-              >
-                <div className={`w-16 h-16 ${advantage.color} rounded-xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                  {advantage.icon}
-                </div>
-                <h3 className="text-xl font-bold mb-4 text-gray-800 dark:text-gray-100">{advantage.title}</h3>
-                <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{advantage.description}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <WhyChooseGarageWala />
       
       {/* Services Section */}
       <section id="services" className="py-12 sm:py-16 lg:py-24 bg-gray-50 dark:bg-gray-900">
