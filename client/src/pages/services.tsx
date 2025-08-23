@@ -16,6 +16,7 @@ import {
 
 // Components  
 import { BookingServiceCard } from '@/components/ServiceCard';
+import { ComboServiceCard } from '@/components/ComboServiceCard';
 import { AddonChip } from '@/components/AddonChip';
 import { BookingSummary } from '@/components/BookingSummary';
 import { SlotPicker } from '@/components/SlotPicker';
@@ -55,13 +56,16 @@ export default function Services() {
   // Get current services based on vehicle type
   const currentServices = selectedVehicle === 'bike' ? BIKE_SERVICES : CAR_SERVICES;
 
-  // Filter services based on search
+  // Filter and categorize services
   const filteredServices = useMemo(() => {
     return currentServices.filter(service =>
       service.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       service.subtitle.toLowerCase().includes(searchQuery.toLowerCase())
     );
   }, [currentServices, searchQuery]);
+
+  const comboServices = filteredServices.filter(service => service.type === 'combo');
+  const individualServices = filteredServices.filter(service => service.type === 'individual' || !service.type);
 
   // Handle customer details form submission
   const handleCustomerDetailsSubmit = (data: CustomerData) => {
@@ -282,47 +286,106 @@ export default function Services() {
             <div className="grid lg:grid-cols-4 gap-8">
               {/* Services Section */}
               <div className="lg:col-span-3">
-                {/* Services Grid */}
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 1.0 }}
-                  className="mb-8"
-                >
-                  <h2 className="text-2xl font-bold text-white mb-6">
-                    {selectedVehicle === 'bike' ? 'Bike' : 'Car'} Services
-                  </h2>
-                  <motion.ul
-                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-                    variants={{
-                      hidden: { opacity: 0 },
-                      show: {
-                        opacity: 1,
-                        transition: {
-                          staggerChildren: 0.1
-                        }
-                      }
-                    }}
-                    initial="hidden"
-                    animate="show"
+                {/* Combo Services */}
+                {comboServices.length > 0 && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 1.0 }}
+                    className="mb-12"
                   >
-                    {filteredServices.map((service, index) => {
-                      const isSelected = selectedServices.some(s => s.id === service.id);
-                      const adjustedPrice = getAdjustedPrice(service.priceMin, service.priceMax);
-                      
-                      return (
-                        <BookingServiceCard
-                          key={service.id}
-                          service={service}
-                          isSelected={isSelected}
-                          onToggle={() => toggleService(service)}
-                          adjustedPrice={adjustedPrice}
-                          showRange={showPriceRanges}
-                        />
-                      );
-                    })}
-                  </motion.ul>
-                </motion.div>
+                    <div className="flex items-center space-x-3 mb-6">
+                      <h2 className="text-2xl font-bold text-white">
+                        {selectedVehicle === 'bike' ? 'Bike' : 'Car'} Service Packages
+                      </h2>
+                      <Badge className="bg-gradient-to-r from-purple-500 to-pink-500 text-white">
+                        Best Value
+                      </Badge>
+                    </div>
+                    <p className="text-gray-400 text-sm mb-6">
+                      Complete service packages that include multiple services at discounted rates
+                    </p>
+                    
+                    <motion.div
+                      className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6"
+                      variants={{
+                        hidden: { opacity: 0 },
+                        show: {
+                          opacity: 1,
+                          transition: {
+                            staggerChildren: 0.15
+                          }
+                        }
+                      }}
+                      initial="hidden"
+                      animate="show"
+                    >
+                      {comboServices.map((service) => {
+                        const isSelected = selectedServices.some(s => s.id === service.id);
+                        const adjustedPrice = getAdjustedPrice(service.priceMin, service.priceMax);
+                        
+                        return (
+                          <ComboServiceCard
+                            key={service.id}
+                            service={service}
+                            isSelected={isSelected}
+                            onToggle={() => toggleService(service)}
+                            adjustedPrice={adjustedPrice}
+                            showRange={showPriceRanges}
+                          />
+                        );
+                      })}
+                    </motion.div>
+                  </motion.div>
+                )}
+
+                {/* Individual Services */}
+                {individualServices.length > 0 && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 1.2 }}
+                    className="mb-8"
+                  >
+                    <h3 className="text-xl font-bold text-white mb-6">
+                      Individual Services
+                    </h3>
+                    <p className="text-gray-400 text-sm mb-6">
+                      Specific services for targeted maintenance needs
+                    </p>
+                    
+                    <motion.ul
+                      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+                      variants={{
+                        hidden: { opacity: 0 },
+                        show: {
+                          opacity: 1,
+                          transition: {
+                            staggerChildren: 0.1
+                          }
+                        }
+                      }}
+                      initial="hidden"
+                      animate="show"
+                    >
+                      {individualServices.map((service) => {
+                        const isSelected = selectedServices.some(s => s.id === service.id);
+                        const adjustedPrice = getAdjustedPrice(service.priceMin, service.priceMax);
+                        
+                        return (
+                          <BookingServiceCard
+                            key={service.id}
+                            service={service}
+                            isSelected={isSelected}
+                            onToggle={() => toggleService(service)}
+                            adjustedPrice={adjustedPrice}
+                            showRange={showPriceRanges}
+                          />
+                        );
+                      })}
+                    </motion.ul>
+                  </motion.div>
+                )}
 
                 {/* Add-ons */}
                 <motion.div

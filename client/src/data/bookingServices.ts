@@ -7,6 +7,9 @@ export interface ServiceData {
   priceMax: number;
   icon: string;
   popular?: boolean;
+  type?: 'combo' | 'individual';
+  includedServices?: string[];
+  savings?: string;
 }
 
 export interface AddonData {
@@ -21,30 +24,63 @@ export const BIKE_SERVICES: ServiceData[] = [
   {
     id: 'bike-general',
     name: 'General Service',
-    subtitle: 'Basic maintenance and inspection',
+    subtitle: 'Basic maintenance and inspection combo',
     vehicleType: 'bike',
     priceMin: 400,
     priceMax: 600,
     icon: 'wrench',
-    popular: true
+    popular: true,
+    type: 'combo',
+    includedServices: [
+      'Engine oil check & top-up',
+      'Chain lubrication & adjustment',
+      'Brake inspection',
+      'Tire pressure check',
+      'Battery terminal cleaning',
+      'Basic electrical check'
+    ],
+    savings: 'Save ₹200 vs individual services'
   },
   {
     id: 'bike-periodic',
     name: 'Periodic Service',
-    subtitle: 'Scheduled maintenance as per manual',
+    subtitle: 'Comprehensive maintenance package',
     vehicleType: 'bike',
     priceMin: 700,
     priceMax: 1000,
-    icon: 'calendar'
+    icon: 'calendar',
+    type: 'combo',
+    includedServices: [
+      'Complete engine oil change',
+      'Air filter cleaning/replacement',
+      'Spark plug inspection',
+      'Chain & sprocket service',
+      'Brake adjustment',
+      'Carburetor cleaning',
+      'All fluid level checks'
+    ],
+    savings: 'Save ₹350 vs individual services'
   },
   {
     id: 'bike-full',
     name: 'Full Service',
-    subtitle: 'Complete inspection and service',
+    subtitle: 'Complete bike overhaul package',
     vehicleType: 'bike',
     priceMin: 1200,
     priceMax: 1500,
-    icon: 'shield-check'
+    icon: 'shield-check',
+    type: 'combo',
+    includedServices: [
+      'Engine complete service',
+      'Transmission service',
+      'Suspension check & service',
+      'Complete brake service',
+      'Electrical system check',
+      'Body wash & polish',
+      'Safety inspection',
+      '30-day service warranty'
+    ],
+    savings: 'Save ₹500 vs individual services'
   },
   {
     id: 'bike-oil',
@@ -53,7 +89,8 @@ export const BIKE_SERVICES: ServiceData[] = [
     vehicleType: 'bike',
     priceMin: 300,
     priceMax: 500,
-    icon: 'droplets'
+    icon: 'droplets',
+    type: 'individual'
   },
   {
     id: 'bike-brake',
@@ -62,7 +99,8 @@ export const BIKE_SERVICES: ServiceData[] = [
     vehicleType: 'bike',
     priceMin: 400,
     priceMax: 700,
-    icon: 'disc'
+    icon: 'disc',
+    type: 'individual'
   },
   {
     id: 'bike-clutch',
@@ -71,7 +109,8 @@ export const BIKE_SERVICES: ServiceData[] = [
     vehicleType: 'bike',
     priceMin: 800,
     priceMax: 1200,
-    icon: 'settings'
+    icon: 'settings',
+    type: 'individual'
   },
   {
     id: 'bike-chain',
@@ -80,7 +119,8 @@ export const BIKE_SERVICES: ServiceData[] = [
     vehicleType: 'bike',
     priceMin: 1200,
     priceMax: 1800,
-    icon: 'link'
+    icon: 'link',
+    type: 'individual'
   },
   {
     id: 'bike-battery',
@@ -89,7 +129,8 @@ export const BIKE_SERVICES: ServiceData[] = [
     vehicleType: 'bike',
     priceMin: 1800,
     priceMax: 2800,
-    icon: 'battery'
+    icon: 'battery',
+    type: 'individual'
   },
   {
     id: 'bike-tyre',
@@ -98,7 +139,8 @@ export const BIKE_SERVICES: ServiceData[] = [
     vehicleType: 'bike',
     priceMin: 1200,
     priceMax: 2000,
-    icon: 'circle'
+    icon: 'circle',
+    type: 'individual'
   },
   {
     id: 'bike-puncture',
@@ -107,7 +149,8 @@ export const BIKE_SERVICES: ServiceData[] = [
     vehicleType: 'bike',
     priceMin: 80,
     priceMax: 150,
-    icon: 'band-aid'
+    icon: 'band-aid',
+    type: 'individual'
   },
   {
     id: 'bike-suspension',
@@ -116,7 +159,8 @@ export const BIKE_SERVICES: ServiceData[] = [
     vehicleType: 'bike',
     priceMin: 400,
     priceMax: 800,
-    icon: 'spring'
+    icon: 'spring',
+    type: 'individual'
   },
   {
     id: 'bike-electrical',
@@ -125,7 +169,8 @@ export const BIKE_SERVICES: ServiceData[] = [
     vehicleType: 'bike',
     priceMin: 150,
     priceMax: 400,
-    icon: 'zap'
+    icon: 'zap',
+    type: 'individual'
   },
   {
     id: 'bike-wash',
@@ -134,7 +179,8 @@ export const BIKE_SERVICES: ServiceData[] = [
     vehicleType: 'bike',
     priceMin: 200,
     priceMax: 400,
-    icon: 'sparkles'
+    icon: 'sparkles',
+    type: 'individual'
   },
   {
     id: 'bike-paint',
@@ -143,7 +189,8 @@ export const BIKE_SERVICES: ServiceData[] = [
     vehicleType: 'bike',
     priceMin: 800,
     priceMax: 2000,
-    icon: 'palette'
+    icon: 'palette',
+    type: 'individual'
   },
   {
     id: 'bike-roadside',
@@ -152,7 +199,8 @@ export const BIKE_SERVICES: ServiceData[] = [
     vehicleType: 'bike',
     priceMin: 300,
     priceMax: 700,
-    icon: 'phone-call'
+    icon: 'phone-call',
+    type: 'individual'
   }
 ];
 
@@ -160,30 +208,66 @@ export const CAR_SERVICES: ServiceData[] = [
   {
     id: 'car-general',
     name: 'General Service',
-    subtitle: 'Basic maintenance and checkup',
+    subtitle: 'Essential maintenance combo package',
     vehicleType: 'car',
     priceMin: 1000,
     priceMax: 1800,
     icon: 'wrench',
-    popular: true
+    popular: true,
+    type: 'combo',
+    includedServices: [
+      'Engine oil & filter change',
+      'Brake fluid check',
+      'Battery inspection',
+      'Tire pressure & tread check',
+      'Lights & indicators test',
+      'Fluid level checks',
+      'Basic diagnostic scan'
+    ],
+    savings: 'Save ₹400 vs individual services'
   },
   {
     id: 'car-periodic',
     name: 'Periodic Service',
-    subtitle: 'Scheduled service as per manual',
+    subtitle: 'Comprehensive maintenance package',
     vehicleType: 'car',
     priceMin: 2500,
     priceMax: 3500,
-    icon: 'calendar'
+    icon: 'calendar',
+    type: 'combo',
+    includedServices: [
+      'Complete engine service',
+      'Air & cabin filter replacement',
+      'Brake system inspection',
+      'Suspension check',
+      'AC performance test',
+      'Electrical system check',
+      'Transmission service',
+      'Computer diagnostic'
+    ],
+    savings: 'Save ₹800 vs individual services'
   },
   {
     id: 'car-major',
     name: 'Major Service',
-    subtitle: 'Comprehensive inspection',
+    subtitle: 'Complete car overhaul package',
     vehicleType: 'car',
     priceMin: 4000,
     priceMax: 6000,
-    icon: 'shield-check'
+    icon: 'shield-check',
+    type: 'combo',
+    includedServices: [
+      'Complete engine overhaul',
+      'Transmission service',
+      'Brake system service',
+      'AC system service',
+      'Suspension service',
+      'Electrical system service',
+      'Body inspection & wash',
+      'Road test & final check',
+      '90-day service warranty'
+    ],
+    savings: 'Save ₹1200 vs individual services'
   },
   {
     id: 'car-oil',
@@ -192,7 +276,8 @@ export const CAR_SERVICES: ServiceData[] = [
     vehicleType: 'car',
     priceMin: 800,
     priceMax: 1200,
-    icon: 'droplets'
+    icon: 'droplets',
+    type: 'individual'
   },
   {
     id: 'car-ac',
@@ -201,7 +286,8 @@ export const CAR_SERVICES: ServiceData[] = [
     vehicleType: 'car',
     priceMin: 1000,
     priceMax: 1800,
-    icon: 'snowflake'
+    icon: 'snowflake',
+    type: 'individual'
   },
   {
     id: 'car-brake',
@@ -210,7 +296,8 @@ export const CAR_SERVICES: ServiceData[] = [
     vehicleType: 'car',
     priceMin: 1500,
     priceMax: 2500,
-    icon: 'disc'
+    icon: 'disc',
+    type: 'individual'
   },
   {
     id: 'car-clutch',
@@ -219,7 +306,8 @@ export const CAR_SERVICES: ServiceData[] = [
     vehicleType: 'car',
     priceMin: 3500,
     priceMax: 5500,
-    icon: 'settings'
+    icon: 'settings',
+    type: 'individual'
   },
   {
     id: 'car-battery',
@@ -228,7 +316,8 @@ export const CAR_SERVICES: ServiceData[] = [
     vehicleType: 'car',
     priceMin: 3500,
     priceMax: 5000,
-    icon: 'battery'
+    icon: 'battery',
+    type: 'individual'
   },
   {
     id: 'car-tyre',
@@ -237,7 +326,8 @@ export const CAR_SERVICES: ServiceData[] = [
     vehicleType: 'car',
     priceMin: 2500,
     priceMax: 4000,
-    icon: 'circle'
+    icon: 'circle',
+    type: 'individual'
   },
   {
     id: 'car-alignment',
@@ -246,7 +336,8 @@ export const CAR_SERVICES: ServiceData[] = [
     vehicleType: 'car',
     priceMin: 500,
     priceMax: 900,
-    icon: 'target'
+    icon: 'target',
+    type: 'individual'
   },
   {
     id: 'car-suspension',
@@ -255,7 +346,8 @@ export const CAR_SERVICES: ServiceData[] = [
     vehicleType: 'car',
     priceMin: 1200,
     priceMax: 2500,
-    icon: 'spring'
+    icon: 'spring',
+    type: 'individual'
   },
   {
     id: 'car-electrical',
@@ -264,7 +356,8 @@ export const CAR_SERVICES: ServiceData[] = [
     vehicleType: 'car',
     priceMin: 500,
     priceMax: 1200,
-    icon: 'zap'
+    icon: 'zap',
+    type: 'individual'
   },
   {
     id: 'car-wash',
@@ -273,7 +366,8 @@ export const CAR_SERVICES: ServiceData[] = [
     vehicleType: 'car',
     priceMin: 400,
     priceMax: 800,
-    icon: 'sparkles'
+    icon: 'sparkles',
+    type: 'individual'
   },
   {
     id: 'car-detailing',
@@ -282,7 +376,8 @@ export const CAR_SERVICES: ServiceData[] = [
     vehicleType: 'car',
     priceMin: 1800,
     priceMax: 3000,
-    icon: 'star'
+    icon: 'star',
+    type: 'individual'
   },
   {
     id: 'car-paint',
@@ -291,7 +386,8 @@ export const CAR_SERVICES: ServiceData[] = [
     vehicleType: 'car',
     priceMin: 1200,
     priceMax: 2500,
-    icon: 'palette'
+    icon: 'palette',
+    type: 'individual'
   },
   {
     id: 'car-roadside',
@@ -300,7 +396,8 @@ export const CAR_SERVICES: ServiceData[] = [
     vehicleType: 'car',
     priceMin: 700,
     priceMax: 1500,
-    icon: 'phone-call'
+    icon: 'phone-call',
+    type: 'individual'
   }
 ];
 
