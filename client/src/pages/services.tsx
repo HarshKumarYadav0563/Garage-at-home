@@ -540,13 +540,6 @@ export default function Services() {
                   </Badge>
                 </div>
                 
-                <motion.div 
-                  className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-3 mb-4"
-                >
-                  <p className="text-emerald-300 text-sm">
-                    <span className="font-medium">FREE Doorstep Service:</span> All combo packages include complimentary service at your location.
-                  </p>
-                </motion.div>
                 
                 {/* Mobile: Horizontal scroll with snap */}
                 <div className="lg:hidden">
