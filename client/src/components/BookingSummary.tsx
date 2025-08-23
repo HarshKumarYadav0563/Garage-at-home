@@ -59,9 +59,9 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
       className={className}
     >
       <Card className="bg-white/5 border-white/10 backdrop-blur-xl sticky top-24">
-        <CardContent className="p-6">
-          <div className="flex items-center justify-between mb-6">
-            <h3 className="text-white font-bold text-lg">Booking Summary</h3>
+        <CardContent className={isMobile ? "p-3" : "p-6"}>
+          <div className={`flex items-center justify-between ${isMobile ? "mb-3" : "mb-6"}`}>
+            <h3 className={`text-white font-bold ${isMobile ? "text-base" : "text-lg"}`}>Booking Summary</h3>
             {isMobile && (
               <Button
                 variant="ghost"
@@ -76,21 +76,21 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
 
           {/* Selected Services */}
           {selectedServices.length > 0 && (
-            <div className="mb-6">
-              <h4 className="text-gray-300 font-medium text-sm mb-3">Services</h4>
-              <div className="space-y-3">
+            <div className={isMobile ? "mb-3" : "mb-6"}>
+              <h4 className={`text-gray-300 font-medium ${isMobile ? "text-xs mb-2" : "text-sm mb-3"}`}>Services</h4>
+              <div className={isMobile ? "space-y-2" : "space-y-3"}>
                 {selectedServices.map((service) => {
                   return (
                     <motion.div
                       key={service.id}
                       layout
-                      className="flex items-center justify-between p-3 bg-white/5 rounded-lg"
+                      className={`flex items-center justify-between ${isMobile ? "p-2" : "p-3"} bg-white/5 rounded-lg`}
                     >
                       <div className="flex-1 min-w-0">
-                        <p className="text-white text-sm font-medium truncate">
+                        <p className={`text-white font-medium truncate ${isMobile ? "text-xs" : "text-sm"}`}>
                           {service.name}
                         </p>
-                        <p className="text-gray-400 text-xs">
+                        <p className={`text-gray-400 ${isMobile ? "text-xs" : "text-xs"}`}>
                           ₹{service.price.toLocaleString()}
                         </p>
                       </div>
@@ -100,7 +100,7 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
                         onClick={() => toggleService(service)}
                         className="text-gray-400 hover:text-red-400 ml-2"
                       >
-                        <X className="w-3 h-3" />
+                        <X className={isMobile ? "w-3 h-3" : "w-3 h-3"} />
                       </Button>
                     </motion.div>
                   );
@@ -111,21 +111,21 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
 
           {/* Selected Add-ons */}
           {selectedAddons.length > 0 && (
-            <div className="mb-6">
-              <h4 className="text-gray-300 font-medium text-sm mb-3">Add-ons</h4>
-              <div className="space-y-3">
+            <div className={isMobile ? "mb-3" : "mb-6"}>
+              <h4 className={`text-gray-300 font-medium ${isMobile ? "text-xs mb-2" : "text-sm mb-3"}`}>Add-ons</h4>
+              <div className={isMobile ? "space-y-2" : "space-y-3"}>
                 {selectedAddons.map((addon) => {
                   return (
                     <motion.div
                       key={addon.id}
                       layout
-                      className="flex items-center justify-between p-3 bg-white/5 rounded-lg"
+                      className={`flex items-center justify-between ${isMobile ? "p-2" : "p-3"} bg-white/5 rounded-lg`}
                     >
                       <div className="flex-1 min-w-0">
-                        <p className="text-white text-sm font-medium truncate">
+                        <p className={`text-white font-medium truncate ${isMobile ? "text-xs" : "text-sm"}`}>
                           {addon.name}
                         </p>
-                        <p className="text-gray-400 text-xs">
+                        <p className={`text-gray-400 ${isMobile ? "text-xs" : "text-xs"}`}>
                           ₹{addon.price.toLocaleString()}
                         </p>
                       </div>
@@ -146,42 +146,50 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
 
           {hasItems && (
             <>
-              <Separator className="bg-white/10 mb-4" />
+              <Separator className={`bg-white/10 ${isMobile ? "mb-2" : "mb-4"}`} />
               
               {/* Pricing */}
-              <div className="space-y-2 mb-6">
+              <div className={`space-y-1 ${isMobile ? "mb-3" : "mb-6"}`}>
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-300 text-sm">Services Total</span>
-                  <span className="text-white font-medium">
+                  <span className={`text-gray-300 ${isMobile ? "text-xs" : "text-sm"}`}>Services Total</span>
+                  <span className={`text-white font-medium ${isMobile ? "text-xs" : "text-sm"}`}>
                     ₹{subtotal.toLocaleString()}
                   </span>
                 </div>
                 
                 {doorstepCharge > 0 && (
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-300 text-sm">Doorstep Charge</span>
-                    <span className="text-yellow-400 font-medium">
+                    <span className={`text-gray-300 ${isMobile ? "text-xs" : "text-sm"}`}>Doorstep Charge</span>
+                    <span className={`text-yellow-400 font-medium ${isMobile ? "text-xs" : "text-sm"}`}>
                       ₹{doorstepCharge}
                     </span>
                   </div>
                 )}
                 
-                <div className="border-t border-gray-700 pt-2 flex justify-between items-center">
-                  <span className="text-gray-300 text-sm font-medium">Final Total</span>
-                  <span className="text-white font-bold text-lg">
+                <div className={`border-t border-gray-700 ${isMobile ? "pt-1" : "pt-2"} flex justify-between items-center`}>
+                  <span className={`text-gray-300 font-medium ${isMobile ? "text-sm" : "text-sm"}`}>Final Total</span>
+                  <span className={`text-white font-bold ${isMobile ? "text-base" : "text-lg"}`}>
                     ₹{finalTotal.toLocaleString()}
                   </span>
                 </div>
                 
-                {doorstepCharge > 0 && (
+                {isMobile && doorstepCharge > 0 && (
+                  <div className="text-xs text-yellow-400 text-center">
+                    Doorstep charge applies for orders below ₹999
+                  </div>
+                )}
+                
+                {!isMobile && doorstepCharge > 0 && (
                   <div className="text-xs text-yellow-400 bg-yellow-500/10 rounded p-2">
                     ℹ️ Doorstep charge applies for orders below ₹999
                   </div>
                 )}
                 
-                <div className="text-xs text-gray-400">
-                  *Prices exclude GST. Final amount may vary based on actual work required.
-                </div>
+                {!isMobile && (
+                  <div className="text-xs text-gray-400">
+                    *Prices exclude GST. Final amount may vary based on actual work required.
+                  </div>
+                )}
               </div>
 
               {/* CTA Button */}
@@ -192,7 +200,7 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
                 <Button
                   onClick={() => setCurrentStep('details')}
                   disabled={selectedServices.length === 0}
-                  className="w-full bg-gradient-to-r from-emerald-500 to-sky-600 hover:from-emerald-600 hover:to-sky-700 text-white py-3 rounded-xl font-semibold shadow-lg transition-all duration-300"
+                  className={`w-full bg-gradient-to-r from-emerald-500 to-sky-600 hover:from-emerald-600 hover:to-sky-700 text-white rounded-xl font-semibold shadow-lg transition-all duration-300 ${isMobile ? "py-2 text-sm" : "py-3"}`}
                 >
                   <span className="flex items-center justify-center space-x-2">
                     <span>Continue to Details</span>
@@ -200,7 +208,7 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
                       animate={{ x: [0, 3, 0] }}
                       transition={{ duration: 1.5, repeat: Infinity }}
                     >
-                      <ArrowRight className="w-4 h-4" />
+                      <ArrowRight className={isMobile ? "w-3 h-3" : "w-4 h-4"} />
                     </motion.div>
                   </span>
                 </Button>
