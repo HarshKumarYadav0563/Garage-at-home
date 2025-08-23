@@ -1,6 +1,6 @@
 # Overview
 
-GarageWala is a doorstep vehicle service platform that connects customers with professional mechanics for on-site bike and car maintenance and repair services. The application is built as a full-stack web platform with a React frontend and Express.js backend, focusing on simplicity and guest booking without requiring user accounts. The platform offers transparent pricing, real-time service tracking, and location-based mechanic matching to provide convenient vehicle servicing at customers' preferred locations.
+Garageathome is a doorstep vehicle service platform that connects customers with professional mechanics for on-site bike and car maintenance and repair services. The application is built as a full-stack web platform with a React frontend and Express.js backend, focusing on simplicity and guest booking without requiring user accounts. The platform offers transparent pricing, real-time service tracking, and location-based mechanic matching to provide convenient vehicle servicing at customers' preferred locations.
 
 # User Preferences
 

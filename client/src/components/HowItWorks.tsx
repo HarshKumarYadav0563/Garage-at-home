@@ -100,7 +100,7 @@ export function HowItWorks() {
               id="how-heading" 
               className="text-2xl md:text-4xl font-semibold text-center leading-tight text-white"
             >
-              How GarageWala Works
+              How Garageathome Works
             </h2>
             
             {/* Animated gradient underline */}
