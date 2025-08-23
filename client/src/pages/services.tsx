@@ -398,930 +398,330 @@ export default function Services() {
         }}
       />
       
-      <div className="relative max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8 py-4 pt-16 sm:pt-20 lg:pt-24">
+      {/* Sticky Mobile Controls */}
+      <motion.div 
+        className="lg:hidden sticky top-0 z-40 bg-gray-900/80 backdrop-blur-xl border-b border-white/10"
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.5, duration: 0.6 }}
+      >
+        <div className="max-w-7xl mx-auto px-4 py-3">
+          <div className="flex items-center justify-between gap-3">
+            {/* Vehicle Toggle */}
+            <div className="flex bg-white/10 rounded-xl p-1">
+              <button
+                onClick={() => setSelectedVehicle('bike')}
+                className={`px-3 py-2 rounded-lg text-sm font-medium transition-all ${
+                  selectedVehicle === 'bike'
+                    ? 'bg-emerald-500 text-white'
+                    : 'text-gray-300 hover:text-white'
+                }`}
+              >
+                <Bike className="w-4 h-4 inline mr-1" />
+                Bike
+              </button>
+              <button
+                onClick={() => setSelectedVehicle('car')}
+                className={`px-3 py-2 rounded-lg text-sm font-medium transition-all ${
+                  selectedVehicle === 'car'
+                    ? 'bg-emerald-500 text-white'
+                    : 'text-gray-300 hover:text-white'
+                }`}
+              >
+                <Car className="w-4 h-4 inline mr-1" />
+                Car
+              </button>
+            </div>
+
+            {/* Search */}
+            <div className="flex-1 relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <Input
+                type="text"
+                placeholder={`Search ${selectedVehicle} services...`}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-10 bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-emerald-500/50 rounded-lg h-10"
+              />
+            </div>
+          </div>
+        </div>
+      </motion.div>
+
+      <div className="relative max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8 py-6 md:py-10">
         
-        {/* Enhanced Hero Section with Parallax - Mobile Responsive */}
+        {/* Compact Hero Section */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          style={{ y: heroY }}
-          className="text-center mb-6 sm:mb-8 px-2 sm:px-4"
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="text-center mb-6"
         >
           <motion.h1 
-            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2 sm:mb-3"
-            initial={{ scale: 0.9 }}
+            className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3"
+            initial={{ scale: 0.95 }}
             animate={{ scale: 1 }}
-            transition={{ delay: 0.2, duration: 0.5, ease: "easeOut" }}
+            transition={{ delay: 0.1, duration: 0.4 }}
           >
-            <motion.span 
-              className="bg-clip-text text-transparent bg-gradient-to-r from-white via-gray-100 to-gray-300"
-              animate={{
-                backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
-              }}
-              transition={{
-                duration: 5,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-              style={{
-                backgroundSize: '200% 200%'
-              }}
-            >
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-200">
               Book Doorstep{' '}
-            </motion.span>
-            <motion.span 
-              className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 via-sky-400 to-indigo-400"
-              animate={{
-                backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
-              }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 1
-              }}
-              style={{
-                backgroundSize: '200% 200%'
-              }}
-            >
+            </span>
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-sky-400">
               Service
-            </motion.span>
+            </span>
           </motion.h1>
           <motion.p 
-            className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto px-4"
-            initial={{ opacity: 0, y: 20 }}
+            className="text-lg text-gray-300 mb-4"
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
+            transition={{ delay: 0.2, duration: 0.4 }}
           >
-            Premium vehicle care with{' '}
-            <motion.span 
-              className="text-emerald-400 font-semibold"
-              animate={{
-                textShadow: [
-                  '0 0 0px rgba(16, 185, 129, 0)',
-                  '0 0 20px rgba(16, 185, 129, 0.5)',
-                  '0 0 0px rgba(16, 185, 129, 0)'
-                ]
-              }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            >
-              certified mechanics
-            </motion.span>{' '}
-            at your doorstep
+            Premium vehicle care with certified mechanics at your doorstep
           </motion.p>
           
-          {/* Floating service badges - Mobile Responsive */}
+          {/* Compact service badges */}
           <motion.div 
-            className="flex flex-wrap justify-center gap-2 sm:gap-4 mt-4 sm:mt-6 px-4"
-            initial={{ opacity: 0, y: 20 }}
+            className="flex flex-wrap justify-center gap-3 mb-6"
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.6 }}
+            transition={{ delay: 0.3, duration: 0.4 }}
           >
-            {['24/7 Available', 'Quality Assured', 'Doorstep Service'].map((badge, index) => (
-              <motion.div
-                key={badge}
-                className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm text-gray-300"
-                animate={{
-                  y: [0, -5, 0],
-                  opacity: [0.7, 1, 0.7]
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: index * 0.5
-                }}
-                whileHover={{ 
-                  scale: 1.05,
-                  backgroundColor: 'rgba(255, 255, 255, 0.15)',
-                  borderColor: 'rgba(16, 185, 129, 0.3)'
-                }}
-              >
+            {['24/7 Available', 'Quality Assured', 'Doorstep Service'].map((badge) => (
+              <Badge key={badge} variant="outline" className="bg-white/10 border-white/20 text-gray-300">
                 {badge}
-              </motion.div>
+              </Badge>
             ))}
           </motion.div>
         </motion.div>
 
-        {/* Enhanced Service Selection - Mobile Responsive */}
+        {/* Vehicle Selector & Search - Desktop */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 0.8 }}
-          className="mb-6 sm:mb-8 mx-2 sm:mx-4 lg:mx-0"
+          transition={{ delay: 0.2, duration: 0.6 }}
+          className="hidden lg:block mb-6"
         >
-          <motion.div 
-            className="bg-white/8 backdrop-blur-xl border border-white/20 rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-2xl relative overflow-hidden"
-            whileHover={{ 
-              scale: 1.005,
-              borderColor: 'rgba(16, 185, 129, 0.3)',
-              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)'
-            }}
-            transition={{ duration: 0.3 }}
-          >
-            {/* Animated border gradient */}
-            <motion.div
-              className="absolute inset-0 rounded-3xl"
-              style={{
-                background: 'linear-gradient(45deg, transparent, rgba(16, 185, 129, 0.1), transparent, rgba(59, 130, 246, 0.1), transparent)',
-                backgroundSize: '400% 400%'
-              }}
-              animate={{
-                backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
-              }}
-              transition={{
-                duration: 8,
-                repeat: Infinity,
-                ease: "linear"
-              }}
-            />
-            {/* Enhanced Vehicle Selection - Mobile Responsive */}
-            <div className="relative flex flex-col items-center space-y-4 sm:space-y-6 mb-6 sm:mb-8 z-10">
-              <motion.h2 
-                className="text-xl sm:text-2xl font-bold text-white text-center"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 }}
-              >
-                Choose Your Vehicle
-              </motion.h2>
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-6 w-full sm:w-auto">
+          <div className="bg-white/8 backdrop-blur-xl border border-white/20 rounded-2xl p-3">
+            <div className="flex justify-between items-center gap-3">
+              {/* Vehicle Toggle */}
+              <div className="flex bg-white/10 rounded-xl p-1">
                 <motion.button
                   onClick={() => setSelectedVehicle('bike')}
-                  className={`group relative overflow-hidden flex items-center justify-center sm:justify-start space-x-3 sm:space-x-4 px-4 sm:px-8 py-4 sm:py-6 rounded-2xl sm:rounded-3xl border-2 transition-all duration-500 w-full sm:w-auto ${
+                  className={`flex items-center space-x-2 px-6 py-3 rounded-xl font-medium transition-all ${
                     selectedVehicle === 'bike'
-                      ? 'bg-gradient-to-r from-emerald-500 to-sky-500 border-emerald-400 text-white shadow-xl shadow-emerald-500/30'
-                      : 'bg-white/5 border-white/20 text-gray-300 hover:bg-white/10 hover:border-emerald-500/50'
+                      ? 'bg-emerald-500 text-white shadow-lg'
+                      : 'text-gray-300 hover:text-white hover:bg-white/10'
                   }`}
-                  whileHover={{ 
-                    scale: 1.02,
-                    y: -2,
-                    boxShadow: selectedVehicle === 'bike' 
-                      ? '0 20px 40px rgba(16, 185, 129, 0.4)' 
-                      : '0 10px 20px rgba(255, 255, 255, 0.1)'
-                  }}
+                  whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  data-testid="tab-bike"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2, duration: 0.6 }}
                 >
-                  {/* Animated background gradient */}
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-emerald-400/0 via-emerald-400/20 to-emerald-400/0"
-                    animate={{
-                      x: selectedVehicle === 'bike' ? ['-100%', '100%'] : 0,
-                      opacity: selectedVehicle === 'bike' ? [0, 1, 0] : 0
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: selectedVehicle === 'bike' ? Infinity : 0,
-                      ease: "easeInOut"
-                    }}
-                  />
-                  
-                  <motion.div
-                    animate={{ 
-                      rotate: selectedVehicle === 'bike' ? [0, 15, -15, 0] : 0,
-                      scale: selectedVehicle === 'bike' ? [1, 1.1, 1] : 1
-                    }}
-                    transition={{ 
-                      duration: selectedVehicle === 'bike' ? 2 : 0.3,
-                      repeat: selectedVehicle === 'bike' ? Infinity : 0
-                    }}
-                  >
-                    <Bike className="w-6 h-6 sm:w-8 sm:h-8 relative z-10 flex-shrink-0" />
-                  </motion.div>
-                  <div className="text-left sm:text-left text-center relative z-10 min-w-0">
-                    <span className="font-semibold text-base sm:text-lg block">Bike Services</span>
-                    <p className="text-xs sm:text-sm opacity-80 hidden sm:block">2-Wheeler Maintenance</p>
-                  </div>
-                  
-                  {/* Selection indicator */}
-                  {selectedVehicle === 'bike' && (
-                    <motion.div
-                      className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 w-5 h-5 sm:w-6 sm:h-6 bg-white rounded-full flex items-center justify-center"
-                      initial={{ scale: 0, rotate: -180 }}
-                      animate={{ scale: 1, rotate: 0 }}
-                      transition={{ type: "spring", stiffness: 500, damping: 15 }}
-                    >
-                      <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4 text-emerald-500" />
-                    </motion.div>
-                  )}
+                  <Bike className="w-5 h-5" />
+                  <span>Bike Services</span>
                 </motion.button>
                 
                 <motion.button
                   onClick={() => setSelectedVehicle('car')}
-                  className={`group relative overflow-hidden flex items-center justify-center sm:justify-start space-x-3 sm:space-x-4 px-4 sm:px-8 py-4 sm:py-6 rounded-2xl sm:rounded-3xl border-2 transition-all duration-500 w-full sm:w-auto ${
+                  className={`flex items-center space-x-2 px-6 py-3 rounded-xl font-medium transition-all ${
                     selectedVehicle === 'car'
-                      ? 'bg-gradient-to-r from-emerald-500 to-sky-500 border-emerald-400 text-white shadow-xl shadow-emerald-500/30'
-                      : 'bg-white/5 border-white/20 text-gray-300 hover:bg-white/10 hover:border-emerald-500/50'
+                      ? 'bg-emerald-500 text-white shadow-lg'
+                      : 'text-gray-300 hover:text-white hover:bg-white/10'
                   }`}
-                  whileHover={{ 
-                    scale: 1.02,
-                    y: -2,
-                    boxShadow: selectedVehicle === 'car' 
-                      ? '0 20px 40px rgba(16, 185, 129, 0.4)' 
-                      : '0 10px 20px rgba(255, 255, 255, 0.1)'
-                  }}
+                  whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  data-testid="tab-car"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3, duration: 0.6 }}
                 >
-                  {/* Animated background gradient */}
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-emerald-400/0 via-emerald-400/20 to-emerald-400/0"
-                    animate={{
-                      x: selectedVehicle === 'car' ? ['-100%', '100%'] : 0,
-                      opacity: selectedVehicle === 'car' ? [0, 1, 0] : 0
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: selectedVehicle === 'car' ? Infinity : 0,
-                      ease: "easeInOut"
-                    }}
-                  />
-                  
-                  <motion.div
-                    animate={{ 
-                      rotate: selectedVehicle === 'car' ? [0, 15, -15, 0] : 0,
-                      scale: selectedVehicle === 'car' ? [1, 1.1, 1] : 1
-                    }}
-                    transition={{ 
-                      duration: selectedVehicle === 'car' ? 2 : 0.3,
-                      repeat: selectedVehicle === 'car' ? Infinity : 0
-                    }}
-                  >
-                    <Car className="w-6 h-6 sm:w-8 sm:h-8 relative z-10 flex-shrink-0" />
-                  </motion.div>
-                  <div className="text-left sm:text-left text-center relative z-10 min-w-0">
-                    <span className="font-semibold text-base sm:text-lg block">Car Services</span>
-                    <p className="text-xs sm:text-sm opacity-80 hidden sm:block">4-Wheeler Maintenance</p>
-                  </div>
-                  
-                  {/* Selection indicator */}
-                  {selectedVehicle === 'car' && (
-                    <motion.div
-                      className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 w-5 h-5 sm:w-6 sm:h-6 bg-white rounded-full flex items-center justify-center"
-                      initial={{ scale: 0, rotate: -180 }}
-                      animate={{ scale: 1, rotate: 0 }}
-                      transition={{ type: "spring", stiffness: 500, damping: 15 }}
-                    >
-                      <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4 text-emerald-500" />
-                    </motion.div>
-                  )}
+                  <Car className="w-5 h-5" />
+                  <span>Car Services</span>
                 </motion.button>
               </div>
-            </div>
 
-            {/* Enhanced Quick Controls - Mobile Responsive */}
-            <div className="flex flex-col gap-4 px-2 sm:px-0">
-              <div className="w-full">
-                {/* Enhanced Search - Mobile Responsive */}
-                <motion.div 
-                  className="relative w-full"
-                  whileHover={{ 
-                    scale: 1.01,
-                    y: -1
-                  }}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4, duration: 0.6, type: "spring", stiffness: 400 }}
-                >
-                  {/* Glowing border effect */}
-                  <motion.div
-                    className="absolute inset-0 rounded-xl bg-gradient-to-r from-emerald-500/20 via-sky-500/20 to-purple-500/20 blur-sm"
-                    animate={{
-                      opacity: searchQuery ? [0.5, 1, 0.5] : 0.2,
-                      scale: searchQuery ? [1, 1.02, 1] : 1
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: searchQuery ? Infinity : 0,
-                      ease: "easeInOut"
-                    }}
-                  />
-                  
-                  <motion.div
-                    className="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 z-10"
-                    animate={{ 
-                      rotate: searchQuery ? [0, 360] : 0,
-                      scale: searchQuery ? [1, 1.2, 1] : 1,
-                      color: searchQuery ? ['#10b981', '#06b6d4', '#8b5cf6', '#10b981'] : '#9ca3af'
-                    }}
-                    transition={{ 
-                      duration: searchQuery ? 2 : 0.3,
-                      repeat: searchQuery ? Infinity : 0
-                    }}
-                  >
-                    <Search className="w-4 h-4 sm:w-5 sm:h-5" />
-                  </motion.div>
-                  
-                  <Input
-                    type="text"
-                    placeholder={`Search ${selectedVehicle} services...`}
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="relative pl-12 sm:pl-14 pr-4 py-3 sm:py-4 bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder:text-gray-400 focus:border-emerald-500/50 focus:bg-white/15 focus:shadow-lg focus:shadow-emerald-500/20 transition-all duration-300 rounded-xl text-base sm:text-lg w-full"
-                    data-testid="search-services"
-                  />
-                  
-                  {/* Search suggestions indicator */}
-                  {searchQuery && (
-                    <motion.div
-                      className="absolute right-3 sm:right-4 top-1/2 transform -translate-y-1/2"
-                      initial={{ scale: 0, rotate: -180 }}
-                      animate={{ scale: 1, rotate: 0 }}
-                      transition={{ type: "spring", stiffness: 300 }}
-                    >
-                      <motion.div
-                        className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-emerald-400 rounded-full"
-                        animate={{
-                          opacity: [0.4, 1, 0.4],
-                          scale: [1, 1.2, 1]
-                        }}
-                        transition={{
-                          duration: 1.5,
-                          repeat: Infinity,
-                          ease: "easeInOut"
-                        }}
-                      />
-                    </motion.div>
-                  )}
-                </motion.div>
+              {/* Search Bar */}
+              <div className="relative flex-1 max-w-md">
+                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <Input
+                  type="text"
+                  placeholder={`Search ${selectedVehicle} services...`}
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-12 pr-4 py-3 bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-emerald-500/50 rounded-xl"
+                />
               </div>
             </div>
-          </motion.div>
+          </div>
         </motion.div>
 
-        {/* Enhanced Step Indicator - Mobile Responsive */}
-        {currentStep !== 'confirmation' && (
+        {/* Services Section - Immediately Visible */}
+        {currentStep === 'services' && (
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.8 }}
-            className="flex justify-center mb-8 sm:mb-12 px-2 sm:px-4"
+            transition={{ delay: 0.3, duration: 0.6 }}
+            className="space-y-8"
           >
-            <motion.div 
-              className="bg-white/5 backdrop-blur-xl border border-white/20 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 relative overflow-hidden w-full max-w-4xl"
-              whileHover={{ 
-                scale: 1.005,
-                borderColor: 'rgba(16, 185, 129, 0.3)',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)'
-              }}
-              transition={{ duration: 0.3 }}
-            >
-              {/* Animated background */}
+            {/* Combo Services */}
+            {comboServices.length > 0 && (
               <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-emerald-500/5 via-sky-500/5 to-purple-500/5"
-                animate={{
-                  x: ['-100%', '100%'],
-                  opacity: [0, 0.5, 0]
-                }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-              />
-              
-              <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 md:gap-8 relative z-10">
-                {/* Step 1 - Mobile Responsive */}
-                <motion.div 
-                  className={`flex flex-col sm:flex-row items-center text-center sm:text-left gap-2 sm:gap-3 transition-all duration-500 ${
-                    currentStep === 'services' ? 'text-emerald-400' : currentStep === 'details' ? 'text-white' : 'text-gray-500'
-                  }`}
-                  whileHover={{ scale: 1.02, y: -1 }}
-                  initial={{ x: -30, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: 0.6, duration: 0.6 }}
-                >
-                  <motion.div 
-                    className={`w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl sm:rounded-2xl flex items-center justify-center font-bold transition-all duration-500 relative ${
-                      currentStep === 'services' 
-                        ? 'bg-gradient-to-r from-emerald-500 to-emerald-600 shadow-xl shadow-emerald-500/40' 
-                        : currentStep === 'details' 
-                        ? 'bg-gradient-to-r from-emerald-500 to-emerald-600 shadow-xl shadow-emerald-500/40' 
-                        : 'bg-gray-600'
-                    }`}
-                    animate={{
-                      scale: currentStep === 'services' ? [1, 1.1, 1] : 1,
-                      rotate: currentStep === 'services' ? [0, 360] : 0,
-                      boxShadow: currentStep === 'services' 
-                        ? ['0 8px 25px rgba(16, 185, 129, 0.4)', '0 15px 35px rgba(16, 185, 129, 0.6)', '0 8px 25px rgba(16, 185, 129, 0.4)']
-                        : currentStep === 'details'
-                        ? '0 8px 25px rgba(16, 185, 129, 0.4)'
-                        : '0 0 0 rgba(16, 185, 129, 0)'
-                    }}
-                    transition={{
-                      duration: currentStep === 'services' ? 3 : 0.5,
-                      repeat: currentStep === 'services' ? Infinity : 0,
-                      ease: "easeInOut"
-                    }}
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    {/* Animated ring */}
-                    {currentStep === 'services' && (
-                      <motion.div
-                        className="absolute inset-0 rounded-xl sm:rounded-2xl border-2 border-emerald-400"
-                        animate={{
-                          scale: [1, 1.3],
-                          opacity: [1, 0]
-                        }}
-                        transition={{
-                          duration: 1.5,
-                          repeat: Infinity,
-                          ease: "easeOut"
-                        }}
-                      />
-                    )}
-                    
-                    {currentStep !== 'services' && currentStep !== 'details' ? (
-                      <span className="text-white font-bold text-sm sm:text-base md:text-lg">1</span>
-                    ) : (
-                      <motion.div
-                        animate={{ scale: [0.8, 1.2, 1] }}
-                        transition={{ duration: 0.5 }}
-                      >
-                        <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8" />
-                      </motion.div>
-                    )}
-                  </motion.div>
-                  <div className="text-center sm:text-left">
-                    <p className="font-bold text-sm sm:text-base md:text-lg">Select Services</p>
-                    <p className="text-xs sm:text-sm opacity-70 hidden sm:block">Choose what you need</p>
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1, duration: 0.6 }}
+                className="mb-8"
+              >
+                <div className="flex items-center justify-between mb-6">
+                  <div>
+                    <motion.h2 
+                      className="text-2xl md:text-3xl font-bold text-white mb-2"
+                    >
+                      {selectedVehicle === 'bike' ? 'Bike' : 'Car'} Service Packages
+                    </motion.h2>
+                    <motion.p 
+                      className="text-gray-300 text-base"
+                    >
+                      Comprehensive care bundles with maximum savings
+                    </motion.p>
                   </div>
+                  <Badge className="bg-gradient-to-r from-emerald-500 to-sky-500 text-white px-4 py-2">
+                    Best Value
+                  </Badge>
+                </div>
+                
+                <motion.div 
+                  className="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-4 mb-6"
+                >
+                  <p className="text-emerald-300 text-sm">
+                    <span className="font-medium">Includes FREE Doorstep Service:</span> All combo packages include complimentary service at your location.
+                  </p>
                 </motion.div>
                 
-                {/* Enhanced Connector - Mobile Responsive */}
-                <motion.div 
-                  className="relative w-8 h-1 sm:w-12 sm:h-2 md:w-16 md:h-2 bg-gray-600 rounded-full overflow-hidden"
-                  initial={{ width: 0 }}
-                  animate={{ 
-                    width: 'auto',
-                    backgroundColor: currentStep === 'details' ? '#10b981' : '#4b5563'
-                  }}
-                  transition={{ delay: 0.8, duration: 0.6 }}
+                <motion.div
+                  className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.2, staggerChildren: 0.1 }}
                 >
-                  {currentStep === 'details' && (
-                    <motion.div
-                      className="h-full bg-gradient-to-r from-emerald-500 to-sky-500 relative overflow-hidden"
-                      initial={{ width: '0%' }}
-                      animate={{ width: '100%' }}
-                      transition={{ duration: 1, ease: "easeInOut" }}
-                    >
-                      {/* Flowing light effect */}
+                  {comboServices.map((service, index) => {
+                    const isSelected = selectedServices.some(s => s.id === service.id);
+                    
+                    return (
                       <motion.div
-                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-                        animate={{
-                          x: ['-100%', '100%']
-                        }}
-                        transition={{
-                          duration: 1.5,
-                          repeat: Infinity,
-                          ease: "easeInOut"
-                        }}
+                        key={service.id}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.3 + (index * 0.1) }}
+                      >
+                        <ComboServiceCard
+                          service={service}
+                          isSelected={isSelected}
+                          onToggle={() => handleToggleService(service)}
+                        />
+                      </motion.div>
+                    );
+                  })}
+                </motion.div>
+              </motion.div>
+            )}
+
+            {/* Individual Services */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.6 }}
+              className="mb-8"
+            >
+              <motion.div 
+                className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4"
+              >
+                <div>
+                  <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">
+                    Individual Services
+                  </h3>
+                  <p className="text-gray-300 text-base">
+                    Precision services for specific maintenance needs
+                  </p>
+                </div>
+                <Badge variant="outline" className="text-emerald-400 border-emerald-500/30 self-start sm:self-auto">
+                  {individualServices.length} Services Available
+                </Badge>
+              </motion.div>
+              
+              <motion.div 
+                className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4 mb-6"
+              >
+                <p className="text-blue-300 text-sm">
+                  <span className="font-medium">Mix & Match:</span> Individual services can be combined. Orders below ₹999 include ₹99 doorstep charge.
+                </p>
+              </motion.div>
+              
+              <motion.div
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.5, staggerChildren: 0.05 }}
+              >
+                {individualServices.map((service, index) => {
+                  const isSelected = selectedServices.some(s => s.id === service.id);
+                  
+                  return (
+                    <motion.div
+                      key={service.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.6 + (index * 0.05) }}
+                    >
+                      <BookingServiceCard
+                        service={service}
+                        isSelected={isSelected}
+                        onToggle={() => handleToggleService(service)}
                       />
                     </motion.div>
-                  )}
-                </motion.div>
-                
-                {/* Step 2 - Mobile Responsive */}
-                <motion.div 
-                  className={`flex flex-col sm:flex-row items-center text-center sm:text-left gap-2 sm:gap-3 transition-all duration-500 ${
-                    currentStep === 'details' ? 'text-emerald-400' : 'text-gray-500'
-                  }`}
-                  whileHover={{ scale: 1.02, y: -1 }}
-                  initial={{ x: 30, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: 0.7, duration: 0.6 }}
-                >
-                  <motion.div 
-                    className={`w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl sm:rounded-2xl flex items-center justify-center font-bold transition-all duration-500 relative ${
-                      currentStep === 'details' 
-                        ? 'bg-gradient-to-r from-emerald-500 to-emerald-600 shadow-xl shadow-emerald-500/40' 
-                        : 'bg-gray-600'
-                    }`}
-                    animate={{
-                      scale: currentStep === 'details' ? [1, 1.1, 1] : 1,
-                      rotate: currentStep === 'details' ? [0, 360] : 0,
-                      boxShadow: currentStep === 'details' 
-                        ? ['0 8px 25px rgba(16, 185, 129, 0.4)', '0 15px 35px rgba(16, 185, 129, 0.6)', '0 8px 25px rgba(16, 185, 129, 0.4)']
-                        : '0 0 0 rgba(16, 185, 129, 0)'
-                    }}
-                    transition={{
-                      duration: currentStep === 'details' ? 3 : 0.5,
-                      repeat: currentStep === 'details' ? Infinity : 0,
-                      ease: "easeInOut"
-                    }}
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    {/* Animated ring */}
-                    {currentStep === 'details' && (
-                      <motion.div
-                        className="absolute inset-0 rounded-xl sm:rounded-2xl border-2 border-emerald-400"
-                        animate={{
-                          scale: [1, 1.3],
-                          opacity: [1, 0]
-                        }}
-                        transition={{
-                          duration: 1.5,
-                          repeat: Infinity,
-                          ease: "easeOut"
-                        }}
-                      />
-                    )}
-                    
-                    {currentStep === 'details' ? (
-                      <motion.div
-                        animate={{ scale: [0.8, 1.2, 1] }}
-                        transition={{ duration: 0.5 }}
-                      >
-                        <User className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8" />
-                      </motion.div>
-                    ) : (
-                      <span className="text-white font-bold text-sm sm:text-base md:text-lg">2</span>
-                    )}
-                  </motion.div>
-                  <div className="text-center sm:text-left">
-                    <p className="font-bold text-sm sm:text-base md:text-lg">Your Details</p>
-                    <p className="text-xs sm:text-sm opacity-70 hidden sm:block">Contact & address</p>
-                  </div>
-                </motion.div>
-              </div>
+                  );
+                })}
+              </motion.div>
             </motion.div>
+
+            {/* Add-ons Section */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7, duration: 0.6 }}
+              className="mb-8"
+            >
+              <div className="flex items-center justify-between mb-6">
+                <div>
+                  <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">Add-ons</h3>
+                  <p className="text-gray-300 text-base">Enhance your service experience</p>
+                </div>
+              </div>
+              
+              <motion.div 
+                className="flex flex-wrap gap-3"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.8, staggerChildren: 0.1 }}
+              >
+                {ADDONS.map((addon, index) => (
+                  <motion.div
+                    key={addon.id}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.9 + (index * 0.1) }}
+                  >
+                    <AddonChip
+                      addon={addon}
+                      isSelected={selectedAddons.some(a => a.id === addon.id)}
+                      onToggle={() => toggleAddon(addon)}
+                    />
+                  </motion.div>
+                ))}
+              </motion.div>
+            </motion.div>
+
           </motion.div>
         )}
 
+        {/* Desktop Sidebar Summary */}
         {currentStep === 'services' && (
-          <>
-
-
-            <div className="w-full">
-                {/* Combo Services with Scroll-triggered Animation */}
-                {comboServices.length > 0 && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 50 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.3 }}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
-                    className="mb-16"
-                  >
-                    <div className="flex items-center justify-between mb-8">
-                      <div>
-                        <motion.h2 
-                          className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-2"
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: 1.1, duration: 0.6 }}
-                        >
-                          {selectedVehicle === 'bike' ? 'Bike' : 'Car'} Service Packages
-                        </motion.h2>
-                        <motion.p 
-                          className="text-gray-300 text-sm sm:text-base md:text-lg"
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: 1.2, duration: 0.6 }}
-                        >
-                          Comprehensive care bundles with maximum savings
-                        </motion.p>
-                      </div>
-                      <motion.div
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: 1.3, type: "spring", stiffness: 300 }}
-                      >
-                        <Badge className="bg-gradient-to-r from-emerald-500 to-sky-500 text-white px-3 py-1.5 sm:px-4 sm:py-2 text-sm sm:text-base md:text-lg shadow-lg">
-                          Best Value
-                        </Badge>
-                      </motion.div>
-                    </div>
-                    
-                    <motion.div 
-                      className="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-4 mb-8"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 1.4, duration: 0.6 }}
-                    >
-                      <p className="text-emerald-300 text-sm">
-                        <span className="font-medium">Includes FREE Doorstep Service:</span> All combo packages include complimentary service at your location. Choose one complete package for maximum savings.
-                      </p>
-                    </motion.div>
-                    
-                    <motion.div
-                      className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 lg:gap-8"
-                      variants={{
-                        hidden: { opacity: 0 },
-                        show: {
-                          opacity: 1,
-                          transition: {
-                            staggerChildren: 0.2,
-                            delayChildren: 0.1
-                          }
-                        }
-                      }}
-                      initial="hidden"
-                      animate="show"
-                    >
-                      {comboServices.map((service) => {
-                        const isSelected = selectedServices.some(s => s.id === service.id);
-                        
-                        return (
-                          <ComboServiceCard
-                            key={service.id}
-                            service={service}
-                            isSelected={isSelected}
-                            onToggle={() => handleToggleService(service)}
-                          />
-                        );
-                      })}
-                    </motion.div>
-                  </motion.div>
-                )}
-
-                {/* Individual Services with Reliable Animation */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, ease: "easeOut" }}
-                  className="mb-16"
-                >
-                  <motion.div 
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2, duration: 0.5 }}
-                    className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4"
-                  >
-                    <div>
-                      <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-                        Individual Services
-                      </h3>
-                      <p className="text-gray-300 text-base sm:text-lg">
-                        Precision services for specific maintenance needs
-                      </p>
-                    </div>
-                    <Badge variant="outline" className="text-emerald-400 border-emerald-500/30 self-start sm:self-auto">
-                      {individualServices.length} Services Available
-                    </Badge>
-                  </motion.div>
-                  
-                  <motion.div 
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.3, duration: 0.4 }}
-                    className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4 mb-8"
-                  >
-                    <p className="text-blue-300 text-sm">
-                      <span className="font-medium">Mix & Match:</span> Individual services can be combined with each other. Don't forget to add "Doorstep Service" from add-ons for home service.
-                    </p>
-                  </motion.div>
-                  
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.4, duration: 0.6 }}
-                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8"
-                  >
-                    {individualServices.map((service, index) => {
-                      const isSelected = selectedServices.some(s => s.id === service.id);
-                      
-                      return (
-                        <motion.div
-                          key={service.id}
-                          initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                          animate={{ opacity: 1, y: 0, scale: 1 }}
-                          transition={{ 
-                            delay: 0.5 + (index * 0.1), 
-                            duration: 0.5,
-                            ease: "easeOut"
-                          }}
-                        >
-                          <BookingServiceCard
-                            service={service}
-                            isSelected={isSelected}
-                            onToggle={() => handleToggleService(service)}
-                          />
-                        </motion.div>
-                      );
-                    })}
-                  </motion.div>
-                </motion.div>
-
-              </div>
-
-            {/* Floating Cart Button */}
-            <AnimatePresence>
-              {(selectedServices.length > 0 || selectedAddons.length > 0) && (
-                <motion.div
-                  initial={{ scale: 0, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  exit={{ scale: 0, opacity: 0 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                  className="fixed bottom-6 right-6 z-50"
-                >
-                  <motion.button
-                    onClick={() => setShowSummary(!showSummary)}
-                    className="bg-gradient-to-r from-emerald-500 to-emerald-600 text-white p-4 rounded-full shadow-2xl hover:shadow-emerald-500/25 transition-all duration-300 border border-white/20 backdrop-blur-xl"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-                    data-testid="cart-button"
-                  >
-                    <div className="flex items-center space-x-3">
-                      <div className="relative">
-                        <ShoppingCart className="w-6 h-6" />
-                        <motion.div
-                          initial={{ scale: 0 }}
-                          animate={{ scale: 1 }}
-                          className="absolute -top-2 -right-2 bg-white text-emerald-600 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center"
-                        >
-                          {selectedServices.length + selectedAddons.length}
-                        </motion.div>
-                      </div>
-                      <div className="text-left">
-                        <div className="text-sm font-medium">Cart Total</div>
-                        <div className="text-lg font-bold">₹{getSubtotal()}</div>
-                      </div>
-                    </div>
-                  </motion.button>
-                </motion.div>
-              )}
-            </AnimatePresence>
-
-            {/* Cart Popup */}
-            <AnimatePresence>
-              {showSummary && (selectedServices.length > 0 || selectedAddons.length > 0) && (
-                <>
-                  {/* Backdrop */}
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
-                    onClick={() => setShowSummary(false)}
-                  />
-                  
-                  {/* Cart Modal */}
-                  <motion.div
-                    initial={{ x: "100%", opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    exit={{ x: "100%", opacity: 0 }}
-                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                    className="fixed right-0 top-0 h-full w-full max-w-md bg-gray-900/95 backdrop-blur-xl border-l border-white/20 z-50 overflow-y-auto"
-                  >
-                    <div className="p-6">
-                      <div className="flex items-center justify-between mb-6">
-                        <h3 className="text-white font-bold text-xl flex items-center space-x-2">
-                          <ShoppingCart className="w-5 h-5" />
-                          <span>Your Cart</span>
-                        </h3>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => setShowSummary(false)}
-                          className="text-gray-400 hover:text-white"
-                        >
-                          <X className="w-5 h-5" />
-                        </Button>
-                      </div>
-
-                      {/* Selected Services */}
-                      {selectedServices.length > 0 && (
-                        <div className="mb-6">
-                          <h4 className="text-gray-300 font-medium text-sm mb-4">Services</h4>
-                          <div className="space-y-3">
-                            {selectedServices.map((service) => (
-                              <motion.div
-                                key={service.id}
-                                layout
-                                className="bg-white/5 border border-white/10 rounded-xl p-4"
-                              >
-                                <div className="flex items-center justify-between">
-                                  <div className="flex-1">
-                                    <div className="font-medium text-white text-sm">{service.name}</div>
-                                    <div className="text-xs text-gray-400 mt-1">{service.name}</div>
-                                    <div className="text-emerald-400 font-bold mt-2">
-                                      ₹{service.price}
-                                    </div>
-                                  </div>
-                                  <Button
-                                    variant="ghost"
-                                    size="sm"
-                                    onClick={() => toggleService(service)}
-                                    className="text-red-400 hover:text-red-300 hover:bg-red-500/10 ml-2"
-                                  >
-                                    <X className="w-4 h-4" />
-                                  </Button>
-                                </div>
-                              </motion.div>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-
-                      {/* Selected Add-ons */}
-                      {selectedAddons.length > 0 && (
-                        <div className="mb-6">
-                          <h4 className="text-gray-300 font-medium text-sm mb-4">Add-ons</h4>
-                          <div className="space-y-3">
-                            {selectedAddons.map((addon) => (
-                              <motion.div
-                                key={addon.id}
-                                layout
-                                className="bg-white/5 border border-white/10 rounded-xl p-4"
-                              >
-                                <div className="flex items-center justify-between">
-                                  <div className="flex-1">
-                                    <div className="font-medium text-white text-sm">{addon.name}</div>
-                                    <div className="text-emerald-400 font-bold mt-1">
-                                      ₹{addon.price}
-                                    </div>
-                                  </div>
-                                  <Button
-                                    variant="ghost"
-                                    size="sm"
-                                    onClick={() => toggleAddon(addon)}
-                                    className="text-red-400 hover:text-red-300 hover:bg-red-500/10 ml-2"
-                                  >
-                                    <X className="w-4 h-4" />
-                                  </Button>
-                                </div>
-                              </motion.div>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-
-                      {/* Total Section */}
-                      <div className="border-t border-white/20 pt-6 mt-6">
-                        <div className="space-y-3 mb-6">
-                          <div className="flex items-center justify-between">
-                            <span className="text-gray-300 text-sm">Services Total</span>
-                            <span className="text-white font-medium">
-                              ₹{getSubtotal()}
-                            </span>
-                          </div>
-                          
-                          {(() => {
-                            const subtotal = getSubtotal();
-                            const doorstepCharge = subtotal > 0 && subtotal < 999 ? 99 : 0;
-                            
-                            return doorstepCharge > 0 ? (
-                              <div className="flex items-center justify-between">
-                                <span className="text-gray-300 text-sm">Doorstep Charge</span>
-                                <span className="text-yellow-400 font-medium">
-                                  ₹{doorstepCharge}
-                                </span>
-                              </div>
-                            ) : null;
-                          })()}
-                          
-                          <div className="border-t border-gray-700 pt-3 flex items-center justify-between">
-                            <span className="text-white font-bold text-lg">Total</span>
-                            <span className="text-emerald-400 font-bold text-2xl">
-                              ₹{(() => {
-                                const subtotal = getSubtotal();
-                                const doorstepCharge = subtotal > 0 && subtotal < 999 ? 99 : 0;
-                                return subtotal + doorstepCharge;
-                              })()}
-                            </span>
-                          </div>
-                          
-                          {(() => {
-                            const subtotal = getSubtotal();
-                            const doorstepCharge = subtotal > 0 && subtotal < 999 ? 99 : 0;
-                            
-                            return doorstepCharge > 0 ? (
-                              <div className="text-xs text-yellow-400 bg-yellow-500/10 rounded p-2">
-                                ℹ️ Doorstep charge applies for orders below ₹999
-                              </div>
-                            ) : null;
-                          })()}
-                        </div>
-
-                        <Button
-                          onClick={() => setCurrentStep('details')}
-                          className="w-full bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white font-bold py-3 rounded-xl transition-all duration-300 shadow-lg hover:shadow-emerald-500/25"
-                          data-testid="proceed-to-booking"
-                        >
-                          <span>Proceed to Book</span>
-                          <ArrowRight className="w-5 h-5 ml-2" />
-                        </Button>
-                      </div>
-                    </div>
-                  </motion.div>
-                </>
-              )}
-            </AnimatePresence>
-          </>
+          <div className="hidden lg:block fixed right-8 top-1/2 transform -translate-y-1/2 w-80 z-30">
+            <BookingSummary className="max-h-[80vh] overflow-y-auto" />
+          </div>
         )}
 
         {currentStep === 'details' && (
