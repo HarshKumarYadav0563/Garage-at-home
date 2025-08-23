@@ -41,6 +41,7 @@ interface BookingStore {
   currentStep: 'services' | 'details' | 'confirmation';
   showSummary: boolean;
   searchQuery: string;
+  showPriceRanges: boolean;
   
   // Actions
   setSelectedVehicle: (vehicle: 'bike' | 'car') => void;
@@ -51,10 +52,14 @@ interface BookingStore {
   setCurrentStep: (step: 'services' | 'details' | 'confirmation') => void;
   setShowSummary: (show: boolean) => void;
   setSearchQuery: (query: string) => void;
+  setShowPriceRanges: (show: boolean) => void;
   clearBooking: () => void;
   
   // Computed
   getSubtotal: () => number;
+  getAdjustedPrice: (priceMin: number, priceMax: number) => { min: number; max: number };
+  getDoortepCharge: () => number;
+  getFinalTotal: () => number;
 }
 
 const initialCustomer: CustomerDetails = {
@@ -74,6 +79,7 @@ export const useBookingStore = create<BookingStore>((set, get) => ({
   currentStep: 'services',
   showSummary: false,
   searchQuery: '',
+  showPriceRanges: false,
   
   // Actions
   setSelectedVehicle: (vehicle) => set({ selectedVehicle: vehicle, selectedServices: [] }),

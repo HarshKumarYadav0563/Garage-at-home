@@ -29,7 +29,7 @@ export const BIKE_SERVICES: ServiceData[] = [
     popular: true,
     type: 'combo',
     includedServices: [
-      'FREE Doorstep Service',
+      'Doorstep Service',
       'Engine oil check & top-up',
       'Chain lubrication & adjustment',
       'Brake inspection',
@@ -48,7 +48,7 @@ export const BIKE_SERVICES: ServiceData[] = [
     icon: 'calendar',
     type: 'combo',
     includedServices: [
-      'FREE Doorstep Service',
+      'Doorstep Service',
       'Complete engine oil change',
       'Air filter cleaning/replacement',
       'Spark plug inspection',
