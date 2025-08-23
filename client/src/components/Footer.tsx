@@ -151,7 +151,7 @@ export function Footer() {
             </div>
 
             {/* Three Sections Together */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-3 gap-4 md:gap-8">
               {/* Services */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -159,17 +159,17 @@ export function Footer() {
                 viewport={{ once: true }}
                 transition={{ delay: 0.1 }}
               >
-                <h3 className="text-lg font-semibold mb-4 text-white dark:text-gray-100">Our Services</h3>
-                <ul className="space-y-2">
+                <h3 className="text-sm md:text-lg font-semibold mb-3 md:mb-4 text-white dark:text-gray-100">Our Services</h3>
+                <ul className="space-y-1 md:space-y-2">
                   {services.map((service, index) => (
                     <li key={index}>
                       <Link href="/services">
                         <span
-                          className="text-gray-300 dark:text-gray-300 hover:text-primary-400 dark:hover:text-primary-300 transition-colors cursor-pointer flex items-center space-x-2 group"
+                          className="text-xs md:text-sm text-gray-300 dark:text-gray-300 hover:text-primary-400 dark:hover:text-primary-300 transition-colors cursor-pointer flex items-center space-x-1 md:space-x-2 group"
                           data-testid={`footer-service-${index}`}
                         >
-                          <span className="w-1.5 h-1.5 bg-primary-500 dark:bg-primary-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                          <span>{service}</span>
+                          <span className="w-1 h-1 md:w-1.5 md:h-1.5 bg-primary-500 dark:bg-primary-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                          <span className="leading-tight">{service}</span>
                         </span>
                       </Link>
                     </li>
@@ -184,24 +184,24 @@ export function Footer() {
                 viewport={{ once: true }}
                 transition={{ delay: 0.2 }}
               >
-                <h3 className="text-lg font-semibold mb-4 text-white dark:text-gray-100">Service Cities</h3>
-                <ul className="space-y-2">
+                <h3 className="text-sm md:text-lg font-semibold mb-3 md:mb-4 text-white dark:text-gray-100">Service Cities</h3>
+                <ul className="space-y-1 md:space-y-2">
                   {cities.map((city, index) => (
                     <li key={index}>
                       <Link href={`/${city.toLowerCase()}`}>
                         <span
-                          className="text-gray-300 dark:text-gray-300 hover:text-primary-400 dark:hover:text-primary-300 transition-colors cursor-pointer flex items-center space-x-2 group"
+                          className="text-xs md:text-sm text-gray-300 dark:text-gray-300 hover:text-primary-400 dark:hover:text-primary-300 transition-colors cursor-pointer flex items-center space-x-1 md:space-x-2 group"
                           data-testid={`footer-city-${index}`}
                         >
-                          <MapPin className="w-3 h-3 text-primary-500 dark:text-primary-400 opacity-0 group-hover:opacity-100 transition-opacity" />
-                          <span>{city}</span>
+                          <MapPin className="w-2 h-2 md:w-3 md:h-3 text-primary-500 dark:text-primary-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+                          <span className="leading-tight">{city}</span>
                         </span>
                       </Link>
                     </li>
                   ))}
-                  <li className="pt-2 border-t border-gray-700 dark:border-gray-600">
+                  <li className="pt-1 md:pt-2 border-t border-gray-700 dark:border-gray-600">
                     <Link href="/cities">
-                      <span className="text-primary-400 dark:text-primary-300 hover:text-primary-300 dark:hover:text-primary-200 transition-colors cursor-pointer font-medium">
+                      <span className="text-xs md:text-sm text-primary-400 dark:text-primary-300 hover:text-primary-300 dark:hover:text-primary-200 transition-colors cursor-pointer font-medium">
                         View All Cities →
                       </span>
                     </Link>
@@ -216,17 +216,17 @@ export function Footer() {
                 viewport={{ once: true }}
                 transition={{ delay: 0.3 }}
               >
-                <h3 className="text-lg font-semibold mb-4 text-white dark:text-gray-100">Company</h3>
-                <ul className="space-y-2">
+                <h3 className="text-sm md:text-lg font-semibold mb-3 md:mb-4 text-white dark:text-gray-100">Company</h3>
+                <ul className="space-y-1 md:space-y-2">
                   {company.map((item, index) => (
                     <li key={index}>
                       <Link href={`/${item.toLowerCase().replace(' ', '-')}`}>
                         <span
-                          className="text-gray-300 dark:text-gray-300 hover:text-primary-400 dark:hover:text-primary-300 transition-colors cursor-pointer flex items-center space-x-2 group"
+                          className="text-xs md:text-sm text-gray-300 dark:text-gray-300 hover:text-primary-400 dark:hover:text-primary-300 transition-colors cursor-pointer flex items-center space-x-1 md:space-x-2 group"
                           data-testid={`footer-company-${index}`}
                         >
-                          <span className="w-1.5 h-1.5 bg-primary-500 dark:bg-primary-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                          <span>{item}</span>
+                          <span className="w-1 h-1 md:w-1.5 md:h-1.5 bg-primary-500 dark:bg-primary-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                          <span className="leading-tight">{item}</span>
                         </span>
                       </Link>
                     </li>

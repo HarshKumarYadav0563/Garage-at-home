@@ -342,9 +342,9 @@ export function ServicesSection() {
           </motion.div>
         </div>
 
-        {/* Mobile Horizontal Scroll */}
+        {/* Mobile Grid - 2 Columns */}
         <div className="block md:hidden mb-16">
-          <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 -mx-4 px-4 scrollbar-hide">
+          <div className="grid grid-cols-2 gap-3 px-2">
             {services.map((service, index) => {
               const IconComponent = service.icon;
               return (
@@ -354,7 +354,7 @@ export function ServicesSection() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.15, duration: 0.6 }}
-                  className="group relative min-w-[280px] snap-center"
+                  className="group relative"
                   data-testid={`service-card-mobile-${index}`}
                 >
                   {/* Popular Badge */}
@@ -367,76 +367,63 @@ export function ServicesSection() {
                     </div>
                   )}
 
-                  {/* Compact Glassmorphism Card */}
-                  <div className={`relative h-full rounded-2xl p-5 bg-white/5 backdrop-blur-xl border border-white/10 shadow-[0_12px_40px_rgba(0,0,0,0.4)] transition-all duration-300 flex flex-col overflow-hidden ${service.popular ? 'ring-2 ring-emerald-500/30' : ''}`}>
+                  {/* Ultra Compact Glassmorphism Card */}
+                  <div className={`relative h-full rounded-xl p-3 bg-white/5 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.4)] transition-all duration-300 flex flex-col overflow-hidden ${service.popular ? 'ring-1 ring-emerald-500/30' : ''}`}>
                     
                     <div className="relative z-10 flex-1">
-                      {/* Compact Floating Icon */}
-                      <div className="relative mb-4">
+                      {/* Ultra Compact Floating Icon */}
+                      <div className="relative mb-3">
                         <motion.div 
-                          className={`relative w-14 h-14 rounded-xl bg-gradient-to-br ${service.gradient} flex items-center justify-center shadow-lg`}
+                          className={`relative w-10 h-10 rounded-lg bg-gradient-to-br ${service.gradient} flex items-center justify-center shadow-lg`}
                           animate={shouldReduceMotion ? {} : iconFloatAnimation}
                           style={{ animationDelay: `${index * 0.3}s` }}
                         >
                           <IconComponent 
-                            className="w-7 h-7 text-white" 
+                            className="w-5 h-5 text-white" 
                             aria-hidden="true"
                           />
                         </motion.div>
                       </div>
                       
                       {/* Title */}
-                      <h3 className="text-lg font-semibold text-white mb-2">
-                        {service.title}
+                      <h3 className="text-sm font-semibold text-white mb-1 leading-tight">
+                        {service.title.replace('Premium ', '')}
                       </h3>
                       
-                      {/* Description */}
-                      <p className="text-sm text-gray-300 leading-relaxed mb-4 line-clamp-2">
-                        {service.description}
-                      </p>
-
-                      {/* Compact Pricing */}
-                      <div className="flex items-baseline gap-2 mb-4">
-                        <span className="text-xl font-bold text-white">
+                      {/* Ultra Compact Pricing */}
+                      <div className="flex items-baseline gap-1 mb-3">
+                        <span className="text-lg font-bold text-white">
                           {service.priceFrom}
                         </span>
                         <span className="text-xs text-gray-400 line-through">
                           {service.originalPrice}
                         </span>
                       </div>
-                      
-                      {service.priceNote && (
-                        <p className="text-xs text-blue-400 mb-3">
-                          {service.priceNote}
-                        </p>
-                      )}
 
-                      {/* Compact Features List (first 4) */}
-                      <div className="space-y-2 mb-5">
-                        {service.features.slice(0, 4).map((feature, idx) => (
-                          <div key={idx} className="flex items-center gap-2">
-                            <div className="w-4 h-4 rounded-full bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
-                              <Check className="w-2.5 h-2.5 text-emerald-400" />
+                      {/* Ultra Compact Features List (first 3) */}
+                      <div className="space-y-1 mb-3">
+                        {service.features.slice(0, 3).map((feature, idx) => (
+                          <div key={idx} className="flex items-start gap-1">
+                            <div className="w-3 h-3 rounded-full bg-emerald-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                              <Check className="w-2 h-2 text-emerald-400" />
                             </div>
-                            <span className="text-xs text-gray-300">{feature}</span>
+                            <span className="text-xs text-gray-300 leading-tight">{feature}</span>
                           </div>
                         ))}
-                        {service.features.length > 4 && (
-                          <p className="text-xs text-gray-400">+{service.features.length - 4} more features</p>
-                        )}
+                        <p className="text-xs text-gray-400 mt-1">+{service.features.length - 3} more</p>
                       </div>
                     </div>
 
-                    {/* Compact CTA Button */}
+                    {/* Ultra Compact CTA Button */}
                     <Link href="/services" className="relative z-10 mt-auto">
                       <motion.button
-                        className={`w-full bg-gradient-to-r ${service.gradient} text-white font-semibold py-2.5 px-4 rounded-lg transition-all duration-300 group/btn flex items-center justify-center gap-2 text-sm`}
+                        className={`w-full bg-gradient-to-r ${service.gradient} text-white font-semibold py-2 px-3 rounded-lg transition-all duration-300 group/btn flex items-center justify-center gap-1 text-xs`}
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         data-testid={`book-${service.title.toLowerCase().replace(/\s+/g, '-')}-mobile`}
                       >
                         <span>Book Now</span>
-                        <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-200" />
+                        <ArrowRight className="w-3 h-3 group-hover/btn:translate-x-1 transition-transform duration-200" />
                       </motion.button>
                     </Link>
                   </div>
