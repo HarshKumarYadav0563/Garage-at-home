@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'wouter';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Wrench, Phone, MapPin, Zap, Shield, Star, ChevronDown, Check } from 'lucide-react';
+import { Menu, X, Wrench, Phone, MapPin, Zap, Shield, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { Badge } from '@/components/ui/badge';
 import { useUiStore } from '@/stores/useUiStore';
 
 export function Header() {
@@ -26,15 +25,12 @@ export function Header() {
   }, []);
 
   const navigation = [
-    { name: 'Home', href: '/', badge: null },
-    { name: 'Services', href: '/services', badge: 'Popular' },
-    { name: 'How It Works', href: '/how-it-works', badge: 'New' },
-    { name: 'Contact', href: '/contact', badge: null },
-  ] as Array<{ name: string; href: string; badge: string | null; scrollTo?: string }>;
+    { name: 'Home', href: '/' },
+    { name: 'Services', href: '/services' },
+    { name: 'How It Works', href: '/how-it-works' },
+    { name: 'Contact', href: '/contact' },
+  ] as Array<{ name: string; href: string; scrollTo?: string }>;
 
-  const cities = ['Mumbai', 'Delhi', 'Bangalore', 'Pune', 'Chennai', 'Hyderabad'];
-  const [selectedCity, setSelectedCity] = useState('Mumbai');
-  const [showCityDropdown, setShowCityDropdown] = useState(false);
 
   return (
     <motion.header
@@ -78,8 +74,8 @@ export function Header() {
             <div className="flex items-center space-x-3 sm:space-x-6">
               <div className="flex items-center space-x-1 sm:space-x-2 text-gray-300">
                 <MapPin className="w-3 h-3 sm:w-4 sm:h-4" />
-                <span className="hidden sm:inline">Available in {cities.length}+ cities</span>
-                <span className="sm:hidden">{cities.length}+ Cities</span>
+                <span className="hidden sm:inline">Available in 6+ cities</span>
+                <span className="sm:hidden">6+ Cities</span>
               </div>
               <div className="flex items-center space-x-1 sm:space-x-2">
                 <Star className="w-3 h-3 sm:w-4 sm:h-4 text-yellow-400" />
@@ -235,100 +231,6 @@ export function Header() {
             </motion.div>
           </Link>
 
-          {/* City Selector */}
-          <motion.div 
-            className="hidden sm:flex md:block relative"
-            initial={{ y: -20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
-          >
-            <motion.button
-              whileHover={{ 
-                scale: 1.02,
-                y: -2,
-                boxShadow: "0 8px 25px rgba(0, 0, 0, 0.1)"
-              }}
-              whileTap={{ scale: 0.98 }}
-              onClick={() => setShowCityDropdown(!showCityDropdown)}
-              className={`flex items-center space-x-2 bg-white/5 backdrop-blur-sm hover:bg-white/10 border border-white/10 hover:border-white/20 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md group ${
-                isScrolled ? 'px-2 sm:px-3 py-1.5 text-sm' : 'px-3 sm:px-4 py-2'
-              }`}
-            >
-              <div className="w-8 h-8 bg-gradient-to-br from-emerald-500/20 to-sky-500/20 rounded-lg flex items-center justify-center group-hover:from-emerald-500/30 group-hover:to-sky-500/30 transition-colors">
-                <MapPin className="w-4 h-4 text-emerald-400" />
-              </div>
-              <div className="flex flex-col items-start">
-                <span className="text-xs text-gray-400 font-medium leading-none">Service City</span>
-                <span className="font-semibold text-white text-sm leading-tight">{selectedCity}</span>
-              </div>
-              <ChevronDown className={`w-4 h-4 text-gray-300 transition-transform duration-200 ${showCityDropdown ? 'rotate-180' : ''}`} />
-            </motion.button>
-            
-            <AnimatePresence>
-              {showCityDropdown && (
-                <>
-                  {/* Backdrop */}
-                  <div 
-                    className="fixed inset-0 z-40"
-                    onClick={() => setShowCityDropdown(false)}
-                  />
-                  <motion.div
-                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                    className="absolute top-14 left-0 w-72 bg-gray-900 rounded-2xl shadow-2xl border border-white/10 overflow-hidden z-50"
-                  >
-                    <div className="p-4 bg-gradient-to-r from-emerald-500/10 to-sky-500/10 border-b border-white/10">
-                      <h3 className="font-semibold text-white flex items-center space-x-2">
-                        <MapPin className="w-4 h-4 text-emerald-400" />
-                        <span>Select Your City</span>
-                      </h3>
-                      <p className="text-sm text-gray-300 mt-1">Choose your location for doorstep service</p>
-                    </div>
-                    <div className="max-h-64 overflow-y-auto">
-                      {cities.map((city, index) => (
-                        <motion.button
-                          key={city}
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: index * 0.05 }}
-                          onClick={() => {
-                            setSelectedCity(city);
-                            setShowCityDropdown(false);
-                          }}
-                          className={`w-full text-left px-4 py-3 hover:bg-white/10 transition-all duration-150 flex items-center space-x-3 group ${
-                            selectedCity === city ? 'bg-emerald-500/20 text-emerald-400' : 'text-gray-300 hover:text-emerald-400'
-                          }`}
-                        >
-                          <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors ${
-                            selectedCity === city 
-                              ? 'bg-emerald-500/20 text-emerald-400' 
-                              : 'bg-white/10 text-gray-400 group-hover:bg-emerald-500/20 group-hover:text-emerald-400'
-                          }`}>
-                            <MapPin className="w-4 h-4" />
-                          </div>
-                          <div className="flex-1">
-                            <span className="font-medium block">{city}</span>
-                            <span className="text-xs text-gray-400">Available for service</span>
-                          </div>
-                          {selectedCity === city && (
-                            <div className="w-5 h-5 bg-emerald-500 rounded-full flex items-center justify-center">
-                              <Check className="w-3 h-3 text-white" />
-                            </div>
-                          )}
-                        </motion.button>
-                      ))}
-                    </div>
-                    <div className="p-3 bg-gray-800/50 border-t border-white/10">
-                      <p className="text-xs text-gray-400 text-center">
-                        Don't see your city? <span className="text-emerald-400 font-medium cursor-pointer hover:underline">Request service</span>
-                      </p>
-                    </div>
-                  </motion.div>
-                </>
-              )}
-            </AnimatePresence>
-          </motion.div>
 
           {/* Desktop Navigation */}
           <motion.div 
@@ -371,11 +273,6 @@ export function Header() {
                   }`}>
                     {item.name}
                   </span>
-                  {item.badge && (
-                    <Badge className="absolute -top-2 -right-8 bg-emerald-500 text-white text-xs px-2 py-0.5">
-                      {item.badge}
-                    </Badge>
-                  )}
                   {location === item.href && (
                     <motion.div
                       layoutId="activeTab"
@@ -503,34 +400,6 @@ export function Header() {
                   </div>
                 </div>
 
-                {/* City Selector Mobile */}
-                <div className="bg-gradient-to-r from-emerald-500/10 to-sky-500/10 rounded-2xl p-4 border border-emerald-500/20">
-                  <div className="flex items-center space-x-2 mb-3">
-                    <div className="w-8 h-8 bg-emerald-500 rounded-xl flex items-center justify-center">
-                      <MapPin className="w-4 h-4 text-white" />
-                    </div>
-                    <div>
-                      <label className="text-sm font-semibold text-white block">Service City</label>
-                      <p className="text-xs text-gray-300">Choose your location</p>
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-2 gap-2">
-                    {cities.map(city => (
-                      <motion.button
-                        key={city}
-                        whileTap={{ scale: 0.95 }}
-                        onClick={() => setSelectedCity(city)}
-                        className={`p-3 rounded-xl text-sm font-medium transition-all duration-200 ${
-                          selectedCity === city 
-                            ? 'bg-emerald-500 text-white shadow-md' 
-                            : 'bg-white/10 text-gray-300 hover:bg-emerald-500/20 hover:text-emerald-400'
-                        }`}
-                      >
-                        {city}
-                      </motion.button>
-                    ))}
-                  </div>
-                </div>
 
                 {/* Quick Stats */}
                 <motion.div 
