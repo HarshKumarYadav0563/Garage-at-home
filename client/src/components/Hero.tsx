@@ -122,18 +122,53 @@ export function Hero() {
               Skip the garage visits! Professional mechanics come to your location with all tools & parts.
             </motion.p>
 
-            {/* CTAs - Side by Side */}
+            {/* Primary CTAs - Mobile */}
             <motion.div
               variants={itemVariants}
-              className="flex gap-3 justify-center px-4"
+              className="flex gap-2 justify-center px-4 mb-4"
             >
-              
               <Link href="/services" className="flex-1">
-                <div className="w-full bg-white/5 border border-white/10 text-gray-200 px-4 py-3 rounded-xl font-semibold text-sm hover:bg-white/10 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 flex items-center justify-center cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
+                <div className="w-full bg-gradient-to-r from-emerald-500 via-sky-500 to-indigo-500 hover:shadow-[0_0_20px_rgba(16,185,129,0.4)] text-white px-4 py-3 rounded-xl font-semibold text-sm shadow-lg transition-all duration-300 flex items-center justify-center cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
                   data-testid="button-view-services"
                 >
                   <Wrench className="mr-2 w-4 h-4" />
                   Services
+                </div>
+              </Link>
+              <Link href="/contact" className="flex-1">
+                <div className="w-full bg-white/5 border border-white/10 text-gray-200 px-4 py-3 rounded-xl font-semibold text-sm hover:bg-white/10 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 flex items-center justify-center cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
+                  data-testid="button-contact"
+                >
+                  <Users className="mr-2 w-4 h-4" />
+                  Contact
+                </div>
+              </Link>
+            </motion.div>
+
+            {/* Secondary CTAs - Mobile */}
+            <motion.div
+              variants={itemVariants}
+              className="flex gap-2 justify-center px-4"
+            >
+              <Link href="/pricing" className="flex-1">
+                <div className="w-full bg-white/5 border border-white/10 text-gray-200 px-3 py-2 rounded-lg font-medium text-xs hover:bg-white/10 transition-all duration-300 flex items-center justify-center cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
+                  data-testid="button-pricing"
+                >
+                  Pricing
+                </div>
+              </Link>
+              <Link href="/track" className="flex-1">
+                <div className="w-full bg-white/5 border border-white/10 text-gray-200 px-3 py-2 rounded-lg font-medium text-xs hover:bg-white/10 transition-all duration-300 flex items-center justify-center cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
+                  data-testid="button-track"
+                >
+                  Track
+                </div>
+              </Link>
+              <Link href="/terms" className="flex-1">
+                <div className="w-full bg-white/5 border border-white/10 text-gray-200 px-3 py-2 rounded-lg font-medium text-xs hover:bg-white/10 transition-all duration-300 flex items-center justify-center cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
+                  data-testid="button-terms"
+                >
+                  Terms
                 </div>
               </Link>
             </motion.div>
@@ -242,23 +277,71 @@ export function Hero() {
               Skip the garage visits! Professional mechanics come to your location with all tools & parts. Available across all Delhi NCR cities with same-day service.
             </motion.p>
 
-            {/* CTAs Side by Side with Staggered Animation */}
+            {/* Primary CTAs - Desktop */}
             <motion.div
               variants={containerVariants}
-              className="flex gap-4 mb-8"
+              className="flex gap-4 mb-6"
             >
-              
               <Link href="/services">
-                <div className="bg-white/5 border border-white/10 text-gray-200 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all duration-300 flex items-center justify-center cursor-pointer hover:scale-[1.05] active:scale-[0.95]"
+                <div className="bg-gradient-to-r from-emerald-500 via-sky-500 to-indigo-500 hover:shadow-[0_0_30px_rgba(16,185,129,0.5)] text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-xl transition-all duration-300 flex items-center justify-center cursor-pointer hover:scale-[1.05] active:scale-[0.95]"
                   data-testid="button-view-services"
                 >
                   <Wrench className="mr-2 w-5 h-5" />
                   View Services
                 </div>
               </Link>
+              
+              <Link href="/contact">
+                <div className="bg-white/5 border border-white/10 text-gray-200 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all duration-300 flex items-center justify-center cursor-pointer hover:scale-[1.05] active:scale-[0.95]"
+                  data-testid="button-contact"
+                >
+                  <Users className="mr-2 w-5 h-5" />
+                  Contact Us
+                </div>
+              </Link>
+              
+              <Link href="/pricing">
+                <div className="bg-white/5 border border-white/10 text-gray-200 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all duration-300 flex items-center justify-center cursor-pointer hover:scale-[1.05] active:scale-[0.95]"
+                  data-testid="button-pricing"
+                >
+                  <Star className="mr-2 w-5 h-5" />
+                  Pricing
+                </div>
+              </Link>
             </motion.div>
 
-            {/* Quick Links */}
+            {/* Secondary Action Buttons - Desktop */}
+            <motion.div
+              variants={itemVariants}
+              className="flex gap-3 mb-6"
+            >
+              <Link href="/track">
+                <div className="bg-white/5 border border-white/10 text-gray-300 px-6 py-2 rounded-lg font-medium text-sm hover:bg-white/10 transition-all duration-300 flex items-center justify-center cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
+                  data-testid="button-track"
+                >
+                  <Clock className="mr-2 w-4 h-4" />
+                  Track Service
+                </div>
+              </Link>
+              
+              <Link href="/terms">
+                <div className="bg-white/5 border border-white/10 text-gray-300 px-6 py-2 rounded-lg font-medium text-sm hover:bg-white/10 transition-all duration-300 flex items-center justify-center cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
+                  data-testid="button-terms"
+                >
+                  Terms & Conditions
+                </div>
+              </Link>
+              
+              <Link href="/refund">
+                <div className="bg-white/5 border border-white/10 text-gray-300 px-6 py-2 rounded-lg font-medium text-sm hover:bg-white/10 transition-all duration-300 flex items-center justify-center cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
+                  data-testid="button-refund"
+                >
+                  Refund Policy
+                </div>
+              </Link>
+            </motion.div>
+
+            {/* Service Category Links */}
             <motion.div
               variants={itemVariants}
               className="flex items-center gap-6 text-sm mb-6"
@@ -271,11 +354,13 @@ export function Hero() {
                 <Car className="w-4 h-4" />
                 <span>Car Services</span>
               </Link>
-              <Link href="/pricing" className="text-gray-400 hover:text-emerald-400 transition-colors duration-200">
-                Pricing
+              <Link href="/services/maintenance" className="text-gray-400 hover:text-emerald-400 transition-colors duration-200 flex items-center gap-2">
+                <Wrench className="w-4 h-4" />
+                <span>Maintenance</span>
               </Link>
-              <Link href="/track" className="text-gray-400 hover:text-sky-400 transition-colors duration-200">
-                Track Service
+              <Link href="/services/emergency" className="text-gray-400 hover:text-red-400 transition-colors duration-200 flex items-center gap-2">
+                <Zap className="w-4 h-4" />
+                <span>Emergency</span>
               </Link>
             </motion.div>
 
