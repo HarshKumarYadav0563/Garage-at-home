@@ -100,26 +100,6 @@ export function ServicesSection() {
       ],
       popular: false,
       glowColor: "blue"
-    },
-    {
-      title: "Roadside Assistance",
-      description: "24/7 emergency roadside help for bikes and cars",
-      icon: Wrench,
-      gradient: "from-orange-400 to-red-500", 
-      priceFrom: "₹499",
-      originalPrice: "₹799",
-      priceNote: "Cars: ₹1,099",
-      features: [
-        "24/7 Emergency Support",
-        "Flat Tire Assistance", 
-        "Battery Jump Start",
-        "Emergency Towing",
-        "Fuel Delivery Service",
-        "On-Spot Minor Repairs",
-        "Instant Response Team"
-      ],
-      popular: false,
-      glowColor: "orange"
     }
   ];
 
@@ -227,7 +207,7 @@ export function ServicesSection() {
         {/* Services Grid - Desktop */}
         <div className="hidden md:block mb-16">
           <motion.div 
-            className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8"
+            className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 max-w-4xl mx-auto"
             variants={containerVariants}
             initial="hidden"
             whileInView="show"
