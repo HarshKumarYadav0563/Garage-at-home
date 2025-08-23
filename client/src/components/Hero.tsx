@@ -153,23 +153,44 @@ export function Hero() {
               </Link>
             </motion.div>
 
-            {/* Trust Row - Glass Pills */}
+            {/* Quick Links - Mobile */}
+            <motion.div
+              variants={itemVariants}
+              className="flex items-center justify-center gap-4 text-xs mb-4"
+            >
+              <Link href="/services/bike" className="text-gray-400 hover:text-emerald-400 transition-colors duration-200 flex items-center gap-1">
+                <Bike className="w-3 h-3" />
+                <span>Bike</span>
+              </Link>
+              <Link href="/services/car" className="text-gray-400 hover:text-sky-400 transition-colors duration-200 flex items-center gap-1">
+                <Car className="w-3 h-3" />
+                <span>Car</span>
+              </Link>
+              <Link href="/pricing" className="text-gray-400 hover:text-emerald-400 transition-colors duration-200">
+                Pricing
+              </Link>
+              <Link href="/track" className="text-gray-400 hover:text-sky-400 transition-colors duration-200">
+                Track
+              </Link>
+            </motion.div>
+
+            {/* Trust Row - Glass Pills - Now Clickable */}
             <motion.div
               variants={itemVariants}
               className="flex items-center justify-center gap-2 text-xs"
             >
-              <div className="flex items-center space-x-1 bg-white/5 text-gray-300 border border-white/10 rounded-full px-3 py-1">
+              <Link href="/contact" className="flex items-center space-x-1 bg-white/5 text-gray-300 border border-white/10 rounded-full px-3 py-1 hover:bg-white/10 transition-colors duration-200">
                 <Star className="text-yellow-400 w-3 h-3" />
                 <span className="font-medium">4.9/5</span>
-              </div>
-              <div className="flex items-center space-x-1 bg-white/5 text-gray-300 border border-white/10 rounded-full px-3 py-1">
+              </Link>
+              <Link href="/services" className="flex items-center space-x-1 bg-white/5 text-gray-300 border border-white/10 rounded-full px-3 py-1 hover:bg-white/10 transition-colors duration-200">
                 <Users className="text-emerald-400 w-3 h-3" />
                 <span className="font-medium">25,000+</span>
-              </div>
-              <div className="flex items-center space-x-1 bg-white/5 text-gray-300 border border-white/10 rounded-full px-3 py-1">
+              </Link>
+              <Link href="/book" className="flex items-center space-x-1 bg-white/5 text-gray-300 border border-white/10 rounded-full px-3 py-1 hover:bg-white/10 transition-colors duration-200">
                 <Clock className="text-sky-400 w-3 h-3" />
                 <span className="font-medium">2 Hours</span>
-              </div>
+              </Link>
             </motion.div>
 
             {/* Small Image */}
@@ -275,23 +296,44 @@ export function Hero() {
               </Link>
             </motion.div>
 
-            {/* Trust Badges - Glass Pills */}
+            {/* Quick Links */}
+            <motion.div
+              variants={itemVariants}
+              className="flex items-center gap-6 text-sm mb-6"
+            >
+              <Link href="/services/bike" className="text-gray-400 hover:text-emerald-400 transition-colors duration-200 flex items-center gap-2">
+                <Bike className="w-4 h-4" />
+                <span>Bike Services</span>
+              </Link>
+              <Link href="/services/car" className="text-gray-400 hover:text-sky-400 transition-colors duration-200 flex items-center gap-2">
+                <Car className="w-4 h-4" />
+                <span>Car Services</span>
+              </Link>
+              <Link href="/pricing" className="text-gray-400 hover:text-emerald-400 transition-colors duration-200">
+                Pricing
+              </Link>
+              <Link href="/track" className="text-gray-400 hover:text-sky-400 transition-colors duration-200">
+                Track Service
+              </Link>
+            </motion.div>
+
+            {/* Trust Badges - Glass Pills - Now Clickable */}
             <motion.div
               variants={itemVariants}
               className="flex items-center space-x-4 text-sm"
             >
-              <div className="flex items-center space-x-2 bg-white/5 text-gray-300 border border-white/10 rounded-full px-3 py-1">
+              <Link href="/contact" className="flex items-center space-x-2 bg-white/5 text-gray-300 border border-white/10 rounded-full px-3 py-1 hover:bg-white/10 transition-colors duration-200">
                 <Star className="text-yellow-400 w-4 h-4" />
                 <span className="font-medium" data-testid="text-rating">4.9/5 Rating</span>
-              </div>
-              <div className="flex items-center space-x-2 bg-white/5 text-gray-300 border border-white/10 rounded-full px-3 py-1">
+              </Link>
+              <Link href="/services" className="flex items-center space-x-2 bg-white/5 text-gray-300 border border-white/10 rounded-full px-3 py-1 hover:bg-white/10 transition-colors duration-200">
                 <Users className="text-emerald-400 w-4 h-4" />
                 <span className="font-medium" data-testid="text-customers">25,000+ Services</span>
-              </div>
-              <div className="flex items-center space-x-2 bg-white/5 text-gray-300 border border-white/10 rounded-full px-3 py-1">
+              </Link>
+              <Link href="/book" className="flex items-center space-x-2 bg-white/5 text-gray-300 border border-white/10 rounded-full px-3 py-1 hover:bg-white/10 transition-colors duration-200">
                 <Clock className="text-sky-400 w-4 h-4" />
                 <span className="font-medium" data-testid="text-service-time">2 Hour Service</span>
-              </div>
+              </Link>
             </motion.div>
           </motion.div>
 
