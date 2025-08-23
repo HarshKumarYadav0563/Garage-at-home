@@ -15,14 +15,12 @@ interface BookingSummaryProps {
 export function BookingSummary({ className = '', isMobile = false }: BookingSummaryProps) {
   const {
     selectedServices,
-    selectedAddons,
     getSubtotal,
     getDoortepCharge,
     getFinalTotal,
     currentStep,
     setCurrentStep,
     toggleService,
-    toggleAddon,
     showSummary,
     setShowSummary
   } = useBookingStore();
@@ -35,7 +33,7 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
   const doorstepCharge = subtotal > 0 && subtotal < 999 ? 99 : 0;
   const finalTotal = subtotal + doorstepCharge;
   
-  const hasItems = selectedServices.length > 0 || selectedAddons.length > 0;
+  const hasItems = selectedServices.length > 0;
 
   // Debug: log values
   console.log('Debug - Subtotal:', subtotal, 'Doorstep Charge:', doorstepCharge, 'Final Total:', finalTotal);
@@ -71,7 +69,7 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
                   <h3 className="text-white font-bold text-sm">Total: ₹{finalTotal.toLocaleString()}</h3>
                   {selectedServices.length > 0 && (
                     <Badge variant="outline" className="text-xs border-emerald-500/30 text-emerald-400">
-                      {selectedServices.length + selectedAddons.length} items
+                      {selectedServices.length} items
                     </Badge>
                   )}
                 </div>
@@ -175,43 +173,6 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
             </div>
           )}
 
-          {/* Selected Add-ons */}
-          {selectedAddons.length > 0 && (
-            <div className={isMobile ? "mb-3" : "mb-6"}>
-              <h4 className={`text-gray-300 font-medium ${isMobile ? "text-xs mb-2" : "text-sm mb-3"}`}>Add-ons</h4>
-              <div className={isMobile ? "space-y-2" : "space-y-3"}>
-                {selectedAddons.map((addon) => {
-                  return (
-                    <motion.div
-                      key={addon.id}
-                      layout
-                      className={`flex items-center justify-between ${isMobile ? "p-2" : "p-3"} bg-white/5 rounded-lg`}
-                    >
-                      <div className="flex-1 min-w-0">
-                        <p className={`text-white font-medium truncate ${isMobile ? "text-xs" : "text-sm"}`}>
-                          {addon.name}
-                        </p>
-                        <p className={`text-gray-400 ${isMobile ? "text-xs" : "text-xs"}`}>
-                          ₹{addon.price.toLocaleString()}
-                        </p>
-                      </div>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          toggleAddon(addon);
-                        }}
-                        className="text-gray-400 hover:text-red-400 ml-2"
-                      >
-                        <X className="w-3 h-3" />
-                      </Button>
-                    </motion.div>
-                  );
-                })}
-              </div>
-            </div>
-          )}
 
           {hasItems && (
             <>

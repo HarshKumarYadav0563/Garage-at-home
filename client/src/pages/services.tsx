@@ -18,13 +18,12 @@ import {
 // Components  
 import { BookingServiceCard } from '@/components/ServiceCard';
 import { ComboServiceCard } from '@/components/ComboServiceCard';
-import { AddonChip } from '@/components/AddonChip';
 import { BookingSummary } from '@/components/BookingSummary';
 import { SlotPicker } from '@/components/SlotPicker';
 import { CustomerDetailsForm } from '@/components/CustomerDetailsForm';
 
 // Data & Store
-import { BIKE_SERVICES, CAR_SERVICES, ADDONS, ServiceData } from '@/data/bookingServices';
+import { BIKE_SERVICES, CAR_SERVICES, ServiceData } from '@/data/bookingServices';
 import { useBookingStore } from '@/store/booking';
 import { apiRequest } from '@/lib/queryClient';
 import { CustomerData } from '@/lib/validators';
@@ -34,9 +33,7 @@ export default function Services() {
     selectedVehicle,
     setSelectedVehicle,
     selectedServices,
-    selectedAddons,
     toggleService,
-    toggleAddon,
     searchQuery,
     setSearchQuery,
     currentStep,
@@ -660,42 +657,6 @@ export default function Services() {
               </motion.div>
             </motion.div>
 
-            {/* Add-ons Section */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 0.4 }}
-              className="mb-6"
-            >
-              <div className="flex items-center justify-between mb-4">
-                <div>
-                  <h3 className="text-xl md:text-2xl font-bold text-white mb-1">Add-ons</h3>
-                  <p className="text-gray-300 text-sm md:text-base">Enhance your service experience</p>
-                </div>
-              </div>
-              
-              <motion.div 
-                className="flex flex-wrap gap-3"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.4, staggerChildren: 0.05 }}
-              >
-                {ADDONS.map((addon, index) => (
-                  <motion.div
-                    key={addon.id}
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.3 + (index * 0.05) }}
-                  >
-                    <AddonChip
-                      addon={addon}
-                      isSelected={selectedAddons.some(a => a.id === addon.id)}
-                      onToggle={() => toggleAddon(addon)}
-                    />
-                  </motion.div>
-                ))}
-              </motion.div>
-            </motion.div>
 
           </motion.div>
         )}
@@ -708,7 +669,7 @@ export default function Services() {
         )}
 
         {/* Mobile Bottom Summary */}
-        {currentStep === 'services' && (selectedServices.length > 0 || selectedAddons.length > 0) && showSummary && (
+        {currentStep === 'services' && selectedServices.length > 0 && showSummary && (
           <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 p-4 bg-gradient-to-t from-black/90 to-transparent backdrop-blur-xl">
             <BookingSummary isMobile={true} className="max-h-[60vh] overflow-y-auto" />
           </div>
