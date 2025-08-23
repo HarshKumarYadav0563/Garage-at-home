@@ -141,7 +141,7 @@ export function Hero() {
           >
             <motion.h1
               variants={itemVariants}
-              className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold leading-tight mb-3 sm:mb-4 lg:mb-6"
+              className="text-xl sm:text-2xl md:text-3xl lg:text-6xl font-bold leading-tight mb-2 sm:mb-3 lg:mb-6"
             >
               <motion.span
                 className="inline-block"
@@ -189,11 +189,11 @@ export function Hero() {
 
             <motion.p
               variants={itemVariants}
-              className="text-base sm:text-lg lg:text-xl text-gray-600 dark:text-gray-300 mb-4 sm:mb-6 lg:mb-8 leading-relaxed"
+              className="text-sm sm:text-base lg:text-xl text-gray-600 dark:text-gray-300 mb-3 sm:mb-4 lg:mb-8 leading-relaxed"
             >
               Skip the garage visits! Professional mechanics come to your location with all tools & parts. 
-              <span className="font-semibold text-gray-800 dark:text-gray-200 block mt-2 text-base sm:text-lg">Available in Mumbai, Delhi, Bangalore & 12 more cities</span>
-              <span className="text-sm sm:text-lg text-primary-600 dark:text-primary-400 block mt-2 space-x-1">
+              <span className="font-semibold text-gray-800 dark:text-gray-200 block mt-1 text-sm sm:text-base lg:text-lg">Available in Mumbai, Delhi, Bangalore & 12 more cities</span>
+              <span className="text-xs sm:text-sm lg:text-lg text-primary-600 dark:text-primary-400 block mt-1 space-x-1">
                 <span className="inline-block">✓ Transparent pricing</span>
                 <span className="inline-block">✓ Real-time tracking</span>
                 <span className="inline-block">✓ Quality guarantee</span>
@@ -223,7 +223,7 @@ export function Hero() {
                   }}
                 >
                   <Button
-                    className="w-full sm:w-auto bg-gradient-to-r from-primary-500 via-blue-600 to-purple-600 hover:from-primary-600 hover:via-blue-700 hover:to-purple-700 text-white px-4 sm:px-6 lg:px-8 py-2.5 sm:py-3 lg:py-4 rounded-xl font-semibold text-sm sm:text-base lg:text-lg shadow-xl hover:shadow-2xl transition-all duration-300 min-h-[44px] sm:min-h-[48px] touch-manipulation relative overflow-hidden group"
+                    className="w-full sm:w-auto bg-gradient-to-r from-primary-500 via-blue-600 to-purple-600 hover:from-primary-600 hover:via-blue-700 hover:to-purple-700 text-white px-3 sm:px-4 lg:px-8 py-2 sm:py-2.5 lg:py-4 rounded-lg sm:rounded-xl font-semibold text-xs sm:text-sm lg:text-lg shadow-xl hover:shadow-2xl transition-all duration-300 min-h-[40px] sm:min-h-[44px] lg:min-h-[48px] touch-manipulation relative overflow-hidden group"
                     data-testid="button-book-now"
                   >
                     <motion.div
@@ -251,7 +251,7 @@ export function Hero() {
               <Button
                 onClick={handleUseLocation}
                 variant="outline"
-                className="w-full sm:w-auto border-2 border-gray-300 text-gray-700 px-4 sm:px-6 lg:px-8 py-2.5 sm:py-3 lg:py-4 rounded-xl font-semibold text-sm sm:text-base lg:text-lg hover:border-primary-500 hover:text-primary-600 transition-all duration-200 min-h-[44px] sm:min-h-[48px] touch-manipulation"
+                className="w-full sm:w-auto border-2 border-gray-300 text-gray-700 px-3 sm:px-4 lg:px-8 py-2 sm:py-2.5 lg:py-4 rounded-lg sm:rounded-xl font-semibold text-xs sm:text-sm lg:text-lg hover:border-primary-500 hover:text-primary-600 transition-all duration-200 min-h-[40px] sm:min-h-[44px] lg:min-h-[48px] touch-manipulation"
                 data-testid="button-use-location"
               >
                 <MapPin className="mr-2 w-4 h-4 sm:w-5 sm:h-5" />
@@ -262,18 +262,18 @@ export function Hero() {
             {/* Trust Indicators */}
             <motion.div
               variants={itemVariants}
-              className="flex flex-col sm:flex-row items-center justify-center lg:justify-start space-y-3 sm:space-y-0 sm:space-x-6 text-xs sm:text-sm text-gray-600"
+              className="flex flex-col sm:flex-row items-center justify-center lg:justify-start space-y-2 sm:space-y-0 sm:space-x-4 lg:space-x-6 text-xs text-gray-600"
             >
-              <div className="flex items-center space-x-2 bg-white/50 px-3 py-2 rounded-lg">
-                <Star className="text-yellow-400 w-4 h-4" />
+              <div className="flex items-center space-x-1 sm:space-x-2 bg-white/50 px-2 sm:px-3 py-1 sm:py-2 rounded-lg">
+                <Star className="text-yellow-400 w-3 h-3 sm:w-4 sm:h-4" />
                 <span data-testid="text-rating" className="font-medium">4.9/5 Rating</span>
               </div>
-              <div className="flex items-center space-x-2 bg-white/50 px-3 py-2 rounded-lg">
-                <Users className="text-primary-500 w-4 h-4" />
+              <div className="flex items-center space-x-1 sm:space-x-2 bg-white/50 px-2 sm:px-3 py-1 sm:py-2 rounded-lg">
+                <Users className="text-primary-500 w-3 h-3 sm:w-4 sm:h-4" />
                 <span data-testid="text-customers" className="font-medium">25,000+ Services</span>
               </div>
-              <div className="flex items-center space-x-2 bg-white/50 px-3 py-2 rounded-lg">
-                <Clock className="text-blue-500 w-4 h-4" />
+              <div className="flex items-center space-x-1 sm:space-x-2 bg-white/50 px-2 sm:px-3 py-1 sm:py-2 rounded-lg">
+                <Clock className="text-blue-500 w-3 h-3 sm:w-4 sm:h-4" />
                 <span data-testid="text-service-time" className="font-medium">2 Hour Service</span>
               </div>
             </motion.div>
@@ -303,7 +303,7 @@ export function Hero() {
               <motion.img
                 src={heroImage}
                 alt="Professional vehicle service"
-                className="w-full h-auto object-cover max-h-[300px] sm:max-h-[400px] lg:max-h-none"
+                className="w-full h-auto object-cover max-h-[250px] sm:max-h-[350px] lg:max-h-none"
                 animate={{
                   filter: ["brightness(1)", "brightness(1.1)", "brightness(1)"]
                 }}
