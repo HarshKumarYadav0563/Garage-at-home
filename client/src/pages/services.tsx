@@ -23,7 +23,7 @@ import { SlotPicker } from '@/components/SlotPicker';
 import { CustomerDetailsForm } from '@/components/CustomerDetailsForm';
 
 // Data & Store
-import { BIKE_SERVICES, CAR_SERVICES, ADDONS, CITIES } from '@/data/bookingServices';
+import { BIKE_SERVICES, CAR_SERVICES, ADDONS, CITIES, ServiceData } from '@/data/bookingServices';
 import { useBookingStore } from '@/store/booking';
 import { apiRequest } from '@/lib/queryClient';
 import { CustomerData } from '@/lib/validators';
@@ -550,13 +550,14 @@ export default function Services() {
                     </div>
                     
                     <motion.div
-                      className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6"
+                      className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8"
                       variants={{
                         hidden: { opacity: 0 },
                         show: {
                           opacity: 1,
                           transition: {
-                            staggerChildren: 0.15
+                            staggerChildren: 0.2,
+                            delayChildren: 0.1
                           }
                         }
                       }}
