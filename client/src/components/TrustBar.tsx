@@ -24,7 +24,7 @@ export function TrustBar() {
   };
 
   return (
-    <section className="py-8 sm:py-12 bg-white border-b border-gray-200">
+    <section className="py-8 sm:py-12 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           variants={containerVariants}
@@ -37,7 +37,7 @@ export function TrustBar() {
             <motion.div
               key={index}
               variants={itemVariants}
-              className="text-center bg-gray-50 rounded-xl p-3 sm:p-4 lg:p-6 hover:bg-gray-100 transition-colors duration-200"
+              className="text-center bg-gray-50 dark:bg-gray-800 rounded-xl p-3 sm:p-4 lg:p-6 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
             >
               <div
                 className={`text-2xl sm:text-3xl lg:text-4xl font-bold mb-1 sm:mb-2 ${stat.color}`}
@@ -45,7 +45,7 @@ export function TrustBar() {
               >
                 {stat.number}
               </div>
-              <div className="text-gray-600 text-xs sm:text-sm lg:text-base font-medium" data-testid={`stat-label-${index}`}>
+              <div className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm lg:text-base font-medium" data-testid={`stat-label-${index}`}>
                 {stat.label}
               </div>
             </motion.div>

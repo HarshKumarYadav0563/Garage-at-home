@@ -33,17 +33,17 @@ export function ServiceCard({
       whileHover={{ y: -8 }}
       transition={{ duration: 0.3 }}
     >
-      <Card className="group bg-white/90 backdrop-blur-lg border border-white/20 rounded-2xl p-4 sm:p-6 lg:p-8 hover:shadow-xl transition-all duration-300 h-full">
+      <Card className="group bg-white/90 dark:bg-gray-800/90 backdrop-blur-lg border border-white/20 dark:border-gray-700/20 rounded-2xl p-4 sm:p-6 lg:p-8 hover:shadow-xl dark:hover:shadow-2xl transition-all duration-300 h-full">
         <CardContent className="p-0 h-full flex flex-col">
           <div className="flex flex-col sm:flex-row items-start sm:items-center mb-4 sm:mb-6">
             <div className={`w-12 h-12 sm:w-16 sm:h-16 ${gradient} rounded-xl flex items-center justify-center mb-3 sm:mb-0 sm:mr-4`}>
               <i className={`${icon} text-xl sm:text-2xl text-white`} />
             </div>
             <div className="flex-1">
-              <h3 className="text-lg sm:text-xl lg:text-2xl font-bold mb-1 sm:mb-2" data-testid={`service-name-${id}`}>
+              <h3 className="text-lg sm:text-xl lg:text-2xl font-bold mb-1 sm:mb-2 dark:text-gray-100" data-testid={`service-name-${id}`}>
                 {name}
               </h3>
-              <p className="text-sm sm:text-base text-gray-600" data-testid={`service-description-${id}`}>
+              <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300" data-testid={`service-description-${id}`}>
                 {description}
               </p>
             </div>
@@ -55,7 +55,7 @@ export function ServiceCard({
                 <CheckCircle 
                   className={`w-4 h-4 ${vehicleType === 'bike' ? 'text-primary-500' : 'text-blue-500'} flex-shrink-0`} 
                 />
-                <span className="text-xs sm:text-sm" data-testid={`service-feature-${id}-${index}`}>
+                <span className="text-xs sm:text-sm dark:text-gray-200" data-testid={`service-feature-${id}-${index}`}>
                   {feature}
                 </span>
               </div>
@@ -70,7 +70,7 @@ export function ServiceCard({
               >
                 ₹{basePrice}
               </span>
-              <span className="text-gray-500 ml-2 text-sm sm:text-base">onwards</span>
+              <span className="text-gray-500 dark:text-gray-400 ml-2 text-sm sm:text-base">onwards</span>
             </div>
             
             <Link 

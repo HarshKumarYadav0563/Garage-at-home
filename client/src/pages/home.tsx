@@ -17,7 +17,7 @@ export default function Home() {
       <TrustBar />
       
       {/* How It Works Section */}
-      <section id="how-it-works" className="py-12 sm:py-16 lg:py-24 bg-white">
+      <section id="how-it-works" className="py-12 sm:py-16 lg:py-24 bg-white dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -25,8 +25,8 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-12 sm:mb-16"
           >
-            <h2 className="text-2xl sm:text-3xl lg:text-5xl font-bold mb-4 sm:mb-6">How GarageWala Works</h2>
-            <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto">
+            <h2 className="text-2xl sm:text-3xl lg:text-5xl font-bold mb-4 sm:mb-6 dark:text-gray-100">How GarageWala Works</h2>
+            <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
               Get premium vehicle service at your doorstep in 4 simple steps
             </p>
           </motion.div>
@@ -73,9 +73,9 @@ export default function Home() {
                 <div className={`w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 sm:mb-6 bg-gradient-to-br ${step.color} rounded-2xl flex items-center justify-center text-2xl sm:text-3xl shadow-lg group-hover:scale-110 transition-transform duration-300`}>
                   {step.icon}
                 </div>
-                <div className="text-xs sm:text-sm font-bold text-gray-400 mb-2">STEP {step.step}</div>
-                <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3 text-gray-800">{step.title}</h3>
-                <p className="text-sm sm:text-base text-gray-600 leading-relaxed">{step.description}</p>
+                <div className="text-xs sm:text-sm font-bold text-gray-400 dark:text-gray-500 mb-2">STEP {step.step}</div>
+                <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3 text-gray-800 dark:text-gray-100">{step.title}</h3>
+                <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 leading-relaxed">{step.description}</p>
               </motion.div>
             ))}
           </div>
@@ -83,7 +83,7 @@ export default function Home() {
       </section>
 
       {/* Competitive Advantages */}
-      <section className="py-16 lg:py-24 bg-gray-50">
+      <section className="py-16 lg:py-24 bg-gray-50 dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -91,8 +91,8 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl lg:text-5xl font-bold mb-6">Why Choose GarageWala</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <h2 className="text-3xl lg:text-5xl font-bold mb-6 dark:text-gray-100">Why Choose GarageWala</h2>
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
               Unlike traditional garage visits, we bring premium service to your doorstep
             </p>
           </motion.div>
@@ -142,13 +142,13 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 group hover:-translate-y-2"
+                className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg hover:shadow-xl dark:hover:shadow-2xl transition-all duration-300 group hover:-translate-y-2"
               >
                 <div className={`w-16 h-16 ${advantage.color} rounded-xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform duration-300`}>
                   {advantage.icon}
                 </div>
-                <h3 className="text-xl font-bold mb-4 text-gray-800">{advantage.title}</h3>
-                <p className="text-gray-600 leading-relaxed">{advantage.description}</p>
+                <h3 className="text-xl font-bold mb-4 text-gray-800 dark:text-gray-100">{advantage.title}</h3>
+                <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{advantage.description}</p>
               </motion.div>
             ))}
           </div>
@@ -156,7 +156,7 @@ export default function Home() {
       </section>
       
       {/* Services Section */}
-      <section id="services" className="py-12 sm:py-16 lg:py-24 bg-gray-50">
+      <section id="services" className="py-12 sm:py-16 lg:py-24 bg-gray-50 dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -164,8 +164,8 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-12 sm:mb-16"
           >
-            <h2 className="text-2xl sm:text-3xl lg:text-5xl font-bold mb-4 sm:mb-6">Our Services</h2>
-            <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto">
+            <h2 className="text-2xl sm:text-3xl lg:text-5xl font-bold mb-4 sm:mb-6 dark:text-gray-100">Our Services</h2>
+            <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
               Professional vehicle maintenance and repair services delivered right to your doorstep with transparent pricing.
             </p>
           </motion.div>

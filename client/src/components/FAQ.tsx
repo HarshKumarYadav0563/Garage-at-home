@@ -32,7 +32,7 @@ const faqs = [
 
 export function FAQ() {
   return (
-    <section className="py-16 lg:py-24 bg-white">
+    <section className="py-16 lg:py-24 bg-white dark:bg-gray-900">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -40,10 +40,10 @@ export function FAQ() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl lg:text-5xl font-bold mb-6">
+          <h2 className="text-3xl lg:text-5xl font-bold mb-6 dark:text-gray-100">
             Frequently Asked Questions
           </h2>
-          <p className="text-xl text-gray-600">
+          <p className="text-xl text-gray-600 dark:text-gray-300">
             Get answers to common questions about our doorstep vehicle service
           </p>
         </motion.div>
@@ -59,16 +59,16 @@ export function FAQ() {
               <AccordionItem
                 key={faq.id}
                 value={faq.id}
-                className="bg-white/90 backdrop-blur-lg border border-white/20 rounded-2xl px-8 py-2"
+                className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-lg border border-white/20 dark:border-gray-700/20 rounded-2xl px-8 py-2"
               >
                 <AccordionTrigger 
-                  className="text-left text-lg font-semibold hover:no-underline"
+                  className="text-left text-lg font-semibold hover:no-underline dark:text-gray-100"
                   data-testid={`faq-question-${index}`}
                 >
                   {faq.question}
                 </AccordionTrigger>
                 <AccordionContent 
-                  className="text-gray-600 pt-2"
+                  className="text-gray-600 dark:text-gray-300 pt-2"
                   data-testid={`faq-answer-${index}`}
                 >
                   {faq.answer}
