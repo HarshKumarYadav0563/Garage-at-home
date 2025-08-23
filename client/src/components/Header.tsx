@@ -327,28 +327,86 @@ export function Header() {
             
             <div className="flex items-center space-x-4">
               {/* Theme Toggle */}
-              <motion.button
-                whileHover={{ 
-                  scale: 1.1,
-                  rotate: 180,
-                  backgroundColor: theme === 'dark' ? '#fbbf24' : '#1f2937'
-                }}
-                whileTap={{ scale: 0.9 }}
-                onClick={toggleTheme}
-                className={`p-2 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 ${
-                  isScrolled ? 'w-8 h-8' : 'w-10 h-10'
-                }`}
-                data-testid="theme-toggle"
-                initial={{ rotate: 0 }}
-                animate={{ rotate: theme === 'dark' ? 0 : 0 }}
-                transition={{ duration: 0.5 }}
+              <motion.div
+                className="relative"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                {theme === 'dark' ? (
-                  <Sun className="w-5 h-5 text-yellow-500" />
-                ) : (
-                  <Moon className="w-5 h-5 text-gray-600" />
-                )}
-              </motion.button>
+                <motion.button
+                  onClick={toggleTheme}
+                  className={`relative flex items-center rounded-full p-1 transition-all duration-500 ${
+                    theme === 'dark' 
+                      ? 'bg-gradient-to-r from-blue-600 to-purple-600' 
+                      : 'bg-gradient-to-r from-yellow-400 to-orange-500'
+                  } ${isScrolled ? 'w-12 h-6' : 'w-14 h-7'}`}
+                  data-testid="theme-toggle"
+                  animate={{
+                    backgroundColor: theme === 'dark' 
+                      ? ['#2563eb', '#7c3aed', '#2563eb']
+                      : ['#fbbf24', '#f97316', '#fbbf24']
+                  }}
+                  transition={{
+                    backgroundColor: { duration: 2, repeat: Infinity }
+                  }}
+                >
+                  {/* Toggle Track */}
+                  <motion.div
+                    className={`flex items-center justify-center rounded-full bg-white shadow-lg transition-all duration-300 ${
+                      isScrolled ? 'w-5 h-5' : 'w-6 h-6'
+                    }`}
+                    animate={{
+                      x: theme === 'dark' ? (isScrolled ? 24 : 28) : 2
+                    }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 500,
+                      damping: 30
+                    }}
+                  >
+                    <motion.div
+                      animate={{ rotate: theme === 'dark' ? 180 : 0 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      {theme === 'dark' ? (
+                        <Sun className={`text-yellow-500 ${isScrolled ? 'w-3 h-3' : 'w-4 h-4'}`} />
+                      ) : (
+                        <Moon className={`text-gray-600 ${isScrolled ? 'w-3 h-3' : 'w-4 h-4'}`} />
+                      )}
+                    </motion.div>
+                  </motion.div>
+                  
+                  {/* Status Text */}
+                  <motion.span
+                    className={`absolute text-xs font-medium transition-opacity duration-300 ${
+                      theme === 'dark' ? 'text-white left-2' : 'text-white right-2'
+                    } ${isScrolled ? 'opacity-0' : 'opacity-70'}`}
+                    animate={{
+                      opacity: isScrolled ? 0 : 0.7
+                    }}
+                  >
+                    {theme === 'dark' ? 'ON' : 'OFF'}
+                  </motion.span>
+                </motion.button>
+                
+                {/* Glow Effect */}
+                <motion.div
+                  className={`absolute inset-0 rounded-full blur-sm opacity-50 ${
+                    theme === 'dark' 
+                      ? 'bg-gradient-to-r from-blue-400 to-purple-400' 
+                      : 'bg-gradient-to-r from-yellow-300 to-orange-400'
+                  }`}
+                  animate={{
+                    scale: [1, 1.1, 1],
+                    opacity: [0.3, 0.6, 0.3]
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                  style={{ zIndex: -1 }}
+                />
+              </motion.div>
 
               <Link href="/track">
                 <motion.div
