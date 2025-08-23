@@ -1,0 +1,53 @@
+You are a React + Next.js + TailwindCSS + Framer Motion expert.  
+Redesign the “Why Choose Garage At Home” section to make it **more premium, animated, and visually engaging**.
+
+## Current Issues
+- Feature cards are flat and too similar.
+- No animations → feels static.
+- Icons are small and don’t stand out.
+- Layout doesn’t feel modern SaaS-level.
+
+## Improvements Needed
+1. **Card Design**
+   - Use **glassmorphism** style: `bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl`.
+   - Add gradient highlights per card (`from-emerald-400 to-sky-500`, etc.).
+   - Each card should have a **subtle glowing shadow** matching its icon color.
+
+2. **Icons**
+   - Place inside a glowing circle background with gradient (`bg-gradient-to-br ...`).
+   - Icons larger (`w-8 h-8 md:w-10 md:h-10`).
+   - Floating animation: small up/down loop.
+
+3. **Animations**
+   - Cards: staggered fade-up on scroll (`delay = index * 0.15s`).
+   - On hover:
+     - Slight lift (`scale: 1.05`).
+     - Glow intensifies around the border.
+     - Icon animates (rotate 10deg and back or bounce).
+   - Add particle background (floating dots, blurred gradient blobs).
+
+4. **Text Styling**
+   - Headline: `text-3xl md:text-4xl font-bold text-white`.
+   - Subtitle: `text-gray-400 text-base md:text-lg`.
+   - Card titles bold white (`text-lg md:text-xl font-semibold`).
+   - Card descriptions in `text-sm text-gray-300 leading-relaxed`.
+
+5. **Layout**
+   - Desktop: 3x2 grid.
+   - Tablet: 2x3 grid.
+   - Mobile: single column with horizontal scroll option (`snap-x snap-mandatory`).
+   - Ensure equal card heights with `flex flex-col justify-between`.
+
+6. **Extra Polish**
+   - Add a gradient **section divider line** under the heading (animated gradient sweep).
+   - Add subtle glow on section background (`bg-gradient-to-b from-gray-950 via-gray-900 to-black`).
+   - Include a CTA below cards:  
+     “✔ Trusted by 25,000+ customers | 🚀 Book your service now”.
+
+## Deliverables
+- Updated `WhyChoose.tsx` with:
+  - Animated feature cards (Framer Motion).
+  - Floating gradient icons.
+  - Glow hover states.
+  - Responsive 3x2 → 2x3 → 1 layout.
+  - Background with subtle particles/glow.
