@@ -54,7 +54,7 @@ export function Hero() {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-gray-50 via-blue-50 to-primary-50 dark:from-gray-900 dark:via-blue-950 dark:to-primary-950 pt-28 sm:pt-32 lg:pt-36">
+    <section className="relative min-h-[70vh] sm:min-h-[85vh] lg:min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-gray-50 via-blue-50 to-primary-50 dark:from-gray-900 dark:via-blue-950 dark:to-primary-950 pt-20 sm:pt-28 lg:pt-36">
       {/* Animated Background Pattern */}
       <motion.div 
         className="absolute inset-0 opacity-10"
@@ -76,12 +76,14 @@ export function Hero() {
         />
       </motion.div>
 
-      {/* Floating Particles */}
+      {/* Floating Particles - Fewer on mobile */}
       <div className="absolute inset-0 pointer-events-none">
         {[...Array(15)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-2 h-2 bg-primary-400 rounded-full opacity-30"
+            className={`absolute w-1 h-1 sm:w-2 sm:h-2 bg-primary-400 rounded-full opacity-30 ${
+              i > 8 ? 'hidden sm:block' : ''
+            }`}
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
@@ -102,9 +104,9 @@ export function Hero() {
         ))}
       </div>
 
-      {/* Gradient Orbs */}
+      {/* Gradient Orbs - Smaller on mobile */}
       <motion.div
-        className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-primary-400/20 to-blue-400/20 rounded-full blur-3xl"
+        className="absolute top-1/4 left-1/4 w-48 h-48 sm:w-80 sm:h-80 lg:w-96 lg:h-96 bg-gradient-to-r from-primary-400/20 to-blue-400/20 rounded-full blur-3xl"
         animate={{
           scale: [1, 1.2, 1],
           rotate: [0, 180, 360]
@@ -116,7 +118,7 @@ export function Hero() {
         }}
       />
       <motion.div
-        className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-400/20 to-pink-400/20 rounded-full blur-3xl"
+        className="absolute bottom-1/4 right-1/4 w-40 h-40 sm:w-64 sm:h-64 lg:w-80 lg:h-80 bg-gradient-to-r from-purple-400/20 to-pink-400/20 rounded-full blur-3xl"
         animate={{
           scale: [1.2, 1, 1.2],
           rotate: [360, 180, 0]
@@ -129,7 +131,7 @@ export function Hero() {
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 items-center min-h-[calc(100vh-7rem)] sm:min-h-[calc(100vh-8rem)] lg:min-h-[calc(100vh-9rem)]">
+        <div className="grid lg:grid-cols-2 gap-4 sm:gap-8 lg:gap-12 items-center min-h-[calc(70vh-5rem)] sm:min-h-[calc(85vh-7rem)] lg:min-h-[calc(100vh-9rem)]">
           {/* Left Content */}
           <motion.div
             variants={containerVariants}
@@ -139,7 +141,7 @@ export function Hero() {
           >
             <motion.h1
               variants={itemVariants}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4 sm:mb-6"
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold leading-tight mb-3 sm:mb-4 lg:mb-6"
             >
               <motion.span
                 className="inline-block"
@@ -187,7 +189,7 @@ export function Hero() {
 
             <motion.p
               variants={itemVariants}
-              className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 mb-6 sm:mb-8 leading-relaxed"
+              className="text-base sm:text-lg lg:text-xl text-gray-600 dark:text-gray-300 mb-4 sm:mb-6 lg:mb-8 leading-relaxed"
             >
               Skip the garage visits! Professional mechanics come to your location with all tools & parts. 
               <span className="font-semibold text-gray-800 dark:text-gray-200 block mt-2 text-base sm:text-lg">Available in Mumbai, Delhi, Bangalore & 12 more cities</span>
@@ -200,7 +202,7 @@ export function Hero() {
 
             <motion.div
               variants={itemVariants}
-              className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-6 sm:mb-8 justify-center lg:justify-start"
+              className="flex flex-col sm:flex-row gap-2 sm:gap-3 lg:gap-4 mb-4 sm:mb-6 lg:mb-8 justify-center lg:justify-start"
             >
               <Link href="/book" className="w-full sm:w-auto">
                 <motion.div
@@ -221,7 +223,7 @@ export function Hero() {
                   }}
                 >
                   <Button
-                    className="w-full sm:w-auto bg-gradient-to-r from-primary-500 via-blue-600 to-purple-600 hover:from-primary-600 hover:via-blue-700 hover:to-purple-700 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold text-base sm:text-lg shadow-xl hover:shadow-2xl transition-all duration-300 min-h-[48px] touch-manipulation relative overflow-hidden group"
+                    className="w-full sm:w-auto bg-gradient-to-r from-primary-500 via-blue-600 to-purple-600 hover:from-primary-600 hover:via-blue-700 hover:to-purple-700 text-white px-4 sm:px-6 lg:px-8 py-2.5 sm:py-3 lg:py-4 rounded-xl font-semibold text-sm sm:text-base lg:text-lg shadow-xl hover:shadow-2xl transition-all duration-300 min-h-[44px] sm:min-h-[48px] touch-manipulation relative overflow-hidden group"
                     data-testid="button-book-now"
                   >
                     <motion.div
@@ -249,7 +251,7 @@ export function Hero() {
               <Button
                 onClick={handleUseLocation}
                 variant="outline"
-                className="w-full sm:w-auto border-2 border-gray-300 text-gray-700 px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold text-base sm:text-lg hover:border-primary-500 hover:text-primary-600 transition-all duration-200 min-h-[48px] touch-manipulation"
+                className="w-full sm:w-auto border-2 border-gray-300 text-gray-700 px-4 sm:px-6 lg:px-8 py-2.5 sm:py-3 lg:py-4 rounded-xl font-semibold text-sm sm:text-base lg:text-lg hover:border-primary-500 hover:text-primary-600 transition-all duration-200 min-h-[44px] sm:min-h-[48px] touch-manipulation"
                 data-testid="button-use-location"
               >
                 <MapPin className="mr-2 w-4 h-4 sm:w-5 sm:h-5" />
@@ -282,7 +284,7 @@ export function Hero() {
             initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
             animate={{ opacity: 1, scale: 1, rotate: 0 }}
             transition={{ duration: 1, delay: 0.5, type: "spring", stiffness: 100 }}
-            className="relative"
+            className="relative mt-4 lg:mt-0"
           >
             {/* Main Hero Image */}
             <motion.div
@@ -301,7 +303,7 @@ export function Hero() {
               <motion.img
                 src={heroImage}
                 alt="Professional vehicle service"
-                className="w-full h-auto object-cover"
+                className="w-full h-auto object-cover max-h-[300px] sm:max-h-[400px] lg:max-h-none"
                 animate={{
                   filter: ["brightness(1)", "brightness(1.1)", "brightness(1)"]
                 }}
@@ -326,50 +328,50 @@ export function Hero() {
               />
             </motion.div>
 
-            {/* Floating Service Icons */}
+            {/* Floating Service Icons - Smaller on mobile, some hidden */}
             <motion.div
               variants={floatingVariants}
               animate="floating"
-              className="absolute -top-4 -right-4 w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl shadow-xl flex items-center justify-center"
+              className="absolute -top-2 -right-2 sm:-top-4 sm:-right-4 w-14 h-14 sm:w-20 sm:h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl sm:rounded-2xl shadow-xl flex items-center justify-center"
               whileHover={{ scale: 1.1, rotate: 180 }}
             >
-              <Car className="text-white w-8 h-8" />
+              <Car className="text-white w-5 h-5 sm:w-8 sm:h-8" />
             </motion.div>
 
             <motion.div
               variants={floatingVariants}
               animate="floating"
-              className="absolute top-1/4 -left-4 w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl shadow-xl flex items-center justify-center"
+              className="hidden sm:flex absolute top-1/4 -left-2 sm:-left-4 w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl sm:rounded-2xl shadow-xl items-center justify-center"
               style={{ animationDelay: '-2s' }}
               whileHover={{ scale: 1.1, rotate: -180 }}
             >
-              <Bike className="text-white w-6 h-6" />
+              <Bike className="text-white w-4 h-4 sm:w-6 sm:h-6" />
             </motion.div>
 
             <motion.div
               variants={floatingVariants}
               animate="floating"
-              className="absolute bottom-1/4 -right-6 w-18 h-18 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl shadow-xl flex items-center justify-center"
+              className="absolute bottom-1/4 -right-3 sm:-right-6 w-16 h-16 sm:w-18 sm:h-18 bg-gradient-to-br from-green-500 to-green-600 rounded-xl sm:rounded-2xl shadow-xl flex items-center justify-center"
               style={{ animationDelay: '-4s' }}
               whileHover={{ scale: 1.1, rotate: 360 }}
             >
-              <CheckCircle className="text-white w-8 h-8" />
+              <CheckCircle className="text-white w-6 h-6 sm:w-8 sm:h-8" />
             </motion.div>
 
             <motion.div
               variants={floatingVariants}
               animate="floating"
-              className="absolute -bottom-4 left-1/4 w-16 h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl shadow-xl flex items-center justify-center"
+              className="absolute -bottom-2 left-1/4 sm:-bottom-4 w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl sm:rounded-2xl shadow-xl flex items-center justify-center"
               style={{ animationDelay: '-1s' }}
               whileHover={{ scale: 1.1, rotate: 270 }}
             >
-              <Wrench className="text-white w-6 h-6" />
+              <Wrench className="text-white w-4 h-4 sm:w-6 sm:h-6" />
             </motion.div>
 
             <motion.div
               variants={floatingVariants}
               animate="floating"
-              className="absolute top-3/4 -left-2 w-14 h-14 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl shadow-xl flex items-center justify-center"
+              className="hidden lg:flex absolute top-3/4 -left-2 w-14 h-14 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl shadow-xl items-center justify-center"
               style={{ animationDelay: '-3s' }}
               whileHover={{ scale: 1.1, rotate: 90 }}
             >
