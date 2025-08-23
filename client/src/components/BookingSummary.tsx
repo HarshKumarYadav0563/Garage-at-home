@@ -16,7 +16,6 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
     selectedServices,
     selectedAddons,
     getSubtotal,
-    getCityMultiplier,
     city,
     currentStep,
     setCurrentStep,
@@ -28,7 +27,6 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
   
   const shouldReduceMotion = useReducedMotion();
   const subtotal = getSubtotal();
-  const cityMultiplier = getCityMultiplier();
   const hasItems = selectedServices.length > 0 || selectedAddons.length > 0;
 
   const cityName = {
@@ -79,8 +77,8 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
               <h4 className="text-gray-300 font-medium text-sm mb-3">Services</h4>
               <div className="space-y-3">
                 {selectedServices.map((service) => {
-                  const adjustedMin = Math.round(service.priceMin * cityMultiplier);
-                  const adjustedMax = Math.round(service.priceMax * cityMultiplier);
+                  const adjustedMin = service.priceMin;
+                  const adjustedMax = service.priceMax;
                   
                   return (
                     <motion.div
@@ -117,8 +115,8 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
               <h4 className="text-gray-300 font-medium text-sm mb-3">Add-ons</h4>
               <div className="space-y-3">
                 {selectedAddons.map((addon) => {
-                  const adjustedMin = Math.round(addon.priceMin * cityMultiplier);
-                  const adjustedMax = Math.round(addon.priceMax * cityMultiplier);
+                  const adjustedMin = addon.priceMin;
+                  const adjustedMax = addon.priceMax;
                   
                   return (
                     <motion.div
@@ -162,11 +160,6 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
                   </span>
                 </div>
                 
-                {cityMultiplier !== 1 && (
-                  <div className="text-xs text-gray-400">
-                    *{cityName} pricing (+{Math.round((cityMultiplier - 1) * 100)}%) applied
-                  </div>
-                )}
                 
                 <div className="text-xs text-gray-400">
                   *Prices exclude GST. Final amount may vary based on actual work required.

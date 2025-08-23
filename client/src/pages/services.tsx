@@ -227,74 +227,142 @@ export default function Services() {
         }}
       />
       
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pt-20 lg:pt-24">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 pt-20 lg:pt-24">
         
-        {/* Enhanced Hero Section */}
+        {/* Compact Hero Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="text-center mb-6"
+        >
+          <h1 className="text-3xl lg:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-gray-100 to-gray-300 mb-2">
+            Book Doorstep <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-sky-400">Service</span>
+          </h1>
+          <p className="text-lg text-gray-300 max-w-2xl mx-auto">
+            Premium vehicle care with <span className="text-emerald-400 font-semibold">certified mechanics</span> at your doorstep
+          </p>
+        </motion.div>
+
+        {/* Quick Service Selection */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="text-center mb-16"
+          transition={{ delay: 0.2, duration: 0.6 }}
+          className="mb-8"
         >
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.6, ease: "easeOut" }}
-            className="mb-6"
-          >
-            <h1 className="text-5xl lg:text-7xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-white via-gray-100 to-gray-300 mb-4 leading-tight">
-              Book Doorstep
-              <br />
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 via-sky-400 to-purple-400">
-                Service
-              </span>
-            </h1>
-            
-            {/* Animated underline */}
-            <motion.div
-              className="h-1.5 w-48 bg-gradient-to-r from-emerald-500 via-sky-500 to-purple-500 mx-auto rounded-full"
-              initial={{ width: 0, opacity: 0 }}
-              animate={{ width: 192, opacity: 1 }}
-              transition={{ delay: 0.8, duration: 1.2, ease: "easeOut" }}
-            />
-          </motion.div>
-          
-          <motion.p 
-            className="text-xl lg:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.6 }}
-          >
-            Premium vehicle care with transparent pricing. 
-            <span className="text-emerald-400 font-semibold"> Certified mechanics</span> at your doorstep.
-          </motion.p>
-          
-          {/* Floating elements */}
-          <motion.div
-            className="absolute top-20 left-10 w-6 h-6 bg-emerald-500/30 rounded-full blur-sm"
-            animate={{
-              y: [0, -10, 0],
-              opacity: [0.3, 0.7, 0.3],
-            }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          />
-          <motion.div
-            className="absolute top-32 right-16 w-4 h-4 bg-blue-500/30 rounded-full blur-sm"
-            animate={{
-              y: [0, -15, 0],
-              opacity: [0.4, 0.8, 0.4],
-            }}
-            transition={{
-              duration: 4,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 1
-            }}
-          />
+          <div className="bg-white/8 backdrop-blur-xl border border-white/20 rounded-3xl p-6 shadow-2xl">
+            {/* Vehicle Selection - Moved to Top */}
+            <div className="flex flex-col items-center space-y-4 mb-6">
+              <h2 className="text-xl font-bold text-white">Choose Your Vehicle</h2>
+              <div className="flex space-x-4">
+                <motion.button
+                  onClick={() => setSelectedVehicle('bike')}
+                  className={`flex items-center space-x-3 px-6 py-4 rounded-2xl border transition-all duration-300 ${
+                    selectedVehicle === 'bike'
+                      ? 'bg-emerald-500 border-emerald-500 text-white shadow-lg shadow-emerald-500/30'
+                      : 'bg-white/5 border-white/20 text-gray-300 hover:bg-white/10 hover:border-emerald-500/50'
+                  }`}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  data-testid="tab-bike"
+                >
+                  <motion.div
+                    animate={{ rotate: selectedVehicle === 'bike' ? [0, 10, 0] : 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <Bike className="w-6 h-6" />
+                  </motion.div>
+                  <div className="text-left">
+                    <div className="font-semibold">Bike Services</div>
+                    <div className="text-sm opacity-80">Starting ₹399</div>
+                  </div>
+                </motion.button>
+
+                <motion.button
+                  onClick={() => setSelectedVehicle('car')}
+                  className={`flex items-center space-x-3 px-6 py-4 rounded-2xl border transition-all duration-300 ${
+                    selectedVehicle === 'car'
+                      ? 'bg-emerald-500 border-emerald-500 text-white shadow-lg shadow-emerald-500/30'
+                      : 'bg-white/5 border-white/20 text-gray-300 hover:bg-white/10 hover:border-emerald-500/50'
+                  }`}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  data-testid="tab-car"
+                >
+                  <motion.div
+                    animate={{ rotate: selectedVehicle === 'car' ? [0, 10, 0] : 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <Car className="w-6 h-6" />
+                  </motion.div>
+                  <div className="text-left">
+                    <div className="font-semibold">Car Services</div>
+                    <div className="text-sm opacity-80">Starting ₹999</div>
+                  </div>
+                </motion.button>
+              </div>
+            </div>
+
+            {/* Quick Controls */}
+            <div className="flex flex-col lg:flex-row items-center justify-between gap-4">
+              <div className="flex flex-col sm:flex-row items-center gap-4 flex-1">
+                {/* City Selector */}
+                <div className="flex items-center space-x-2">
+                  <MapPin className="w-4 h-4 text-gray-400" />
+                  <Select value={city} onValueChange={setCity}>
+                    <SelectTrigger className="w-[140px] bg-white/5 border-white/10 text-white">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="bg-gray-800 border-gray-700">
+                      {CITIES.map((cityOption) => (
+                        <SelectItem key={cityOption.id} value={cityOption.id} className="text-white">
+                          {cityOption.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Search */}
+                <motion.div 
+                  className="relative flex-1 max-w-md"
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ type: "spring", stiffness: 400 }}
+                >
+                  <motion.div
+                    className="absolute left-3 top-1/2 transform -translate-y-1/2"
+                    animate={{ 
+                      rotate: searchQuery ? [0, 360] : 0,
+                      scale: searchQuery ? [1, 1.1, 1] : 1
+                    }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <Search className="w-5 h-5 text-gray-400" />
+                  </motion.div>
+                  <Input
+                    type="text"
+                    placeholder={`Search ${selectedVehicle} services...`}
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="pl-12 py-3 bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-emerald-500/50 focus:bg-white/15 transition-all duration-300 rounded-xl"
+                    data-testid="search-services"
+                  />
+                </motion.div>
+              </div>
+
+              {/* Price Toggle */}
+              <div className="flex items-center space-x-3">
+                <span className="text-gray-300 text-sm">Show ranges</span>
+                <Switch
+                  checked={showPriceRanges}
+                  onCheckedChange={setShowPriceRanges}
+                  className="data-[state=checked]:bg-emerald-500"
+                />
+                <span className="text-gray-300 text-sm">From price</span>
+              </div>
+            </div>
+          </div>
         </motion.div>
 
         {/* Enhanced Step Indicator */}
@@ -373,139 +441,7 @@ export default function Services() {
 
         {currentStep === 'services' && (
           <>
-            {/* Enhanced Vehicle Tabs */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 0.6 }}
-              className="flex justify-center mb-10"
-            >
-              <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-3 shadow-2xl">
-                <div className="flex relative">
-                  {/* Background slider */}
-                  <motion.div
-                    className={`absolute top-1 bottom-1 rounded-2xl transition-all duration-500 ${
-                      selectedVehicle === 'bike' 
-                        ? 'bg-gradient-to-r from-emerald-500 to-teal-600 shadow-lg shadow-emerald-500/30' 
-                        : 'bg-gradient-to-r from-blue-500 to-indigo-600 shadow-lg shadow-blue-500/30'
-                    }`}
-                    initial={false}
-                    animate={{
-                      x: selectedVehicle === 'bike' ? 4 : '100%',
-                      width: selectedVehicle === 'bike' ? '46%' : '46%'
-                    }}
-                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                  />
-                  
-                  <motion.button
-                    onClick={() => setSelectedVehicle('bike')}
-                    className={`relative flex items-center space-x-3 px-8 py-4 rounded-2xl font-bold transition-all duration-300 z-10 ${
-                      selectedVehicle === 'bike'
-                        ? 'text-white'
-                        : 'text-gray-300 hover:text-white'
-                    }`}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    data-testid="tab-bike"
-                  >
-                    <motion.div
-                      animate={{ rotate: selectedVehicle === 'bike' ? [0, 10, 0] : 0 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <Bike className="w-6 h-6" />
-                    </motion.div>
-                    <span className="text-lg">Bike Services</span>
-                  </motion.button>
-                  
-                  <motion.button
-                    onClick={() => setSelectedVehicle('car')}
-                    className={`relative flex items-center space-x-3 px-8 py-4 rounded-2xl font-bold transition-all duration-300 z-10 ${
-                      selectedVehicle === 'car'
-                        ? 'text-white'
-                        : 'text-gray-300 hover:text-white'
-                    }`}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    data-testid="tab-car"
-                  >
-                    <motion.div
-                      animate={{ rotate: selectedVehicle === 'car' ? [0, 10, 0] : 0 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <Car className="w-6 h-6" />
-                    </motion.div>
-                    <span className="text-lg">Car Services</span>
-                  </motion.button>
-                </div>
-              </div>
-            </motion.div>
 
-            {/* Enhanced Controls Bar */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8, duration: 0.6 }}
-              className="bg-white/8 backdrop-blur-xl border border-white/20 rounded-3xl p-8 mb-12 shadow-2xl"
-            >
-              <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
-                <div className="flex flex-col sm:flex-row items-center gap-4 flex-1">
-                  {/* City Selector */}
-                  <div className="flex items-center space-x-2">
-                    <MapPin className="w-4 h-4 text-gray-400" />
-                    <Select value={city} onValueChange={setCity}>
-                      <SelectTrigger className="w-[140px] bg-white/5 border-white/10 text-white">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent className="bg-gray-800 border-gray-700">
-                        {CITIES.map((cityOption) => (
-                          <SelectItem key={cityOption.id} value={cityOption.id} className="text-white">
-                            {cityOption.name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  {/* Enhanced Search */}
-                  <motion.div 
-                    className="relative flex-1 max-w-md"
-                    whileHover={{ scale: 1.02 }}
-                    transition={{ type: "spring", stiffness: 400 }}
-                  >
-                    <motion.div
-                      className="absolute left-3 top-1/2 transform -translate-y-1/2"
-                      animate={{ 
-                        rotate: searchQuery ? [0, 360] : 0,
-                        scale: searchQuery ? [1, 1.1, 1] : 1
-                      }}
-                      transition={{ duration: 0.5 }}
-                    >
-                      <Search className="w-5 h-5 text-gray-400" />
-                    </motion.div>
-                    <Input
-                      type="text"
-                      placeholder={`Search ${selectedVehicle} services...`}
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      className="pl-12 py-3 bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-emerald-500/50 focus:bg-white/15 transition-all duration-300 rounded-xl"
-                      data-testid="search-services"
-                    />
-                  </motion.div>
-                </div>
-
-                {/* Price Toggle */}
-                <div className="flex items-center space-x-3">
-                  <span className="text-gray-300 text-sm">Show ranges</span>
-                  <Switch
-                    checked={showPriceRanges}
-                    onCheckedChange={setShowPriceRanges}
-                    className="data-[state=checked]:bg-emerald-500"
-                  />
-                  <span className="text-gray-300 text-sm">From price</span>
-                </div>
-              </div>
-              
-            </motion.div>
 
             <div className="grid lg:grid-cols-4 gap-8">
               {/* Services Section */}
