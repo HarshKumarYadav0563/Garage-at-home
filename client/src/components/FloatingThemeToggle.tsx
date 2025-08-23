@@ -19,79 +19,114 @@ export function FloatingThemeToggle() {
       >
         <motion.button
           onClick={toggleTheme}
-          className={`relative flex flex-col items-center rounded-2xl p-2 transition-all duration-500 shadow-lg ${
+          className={`relative flex items-center justify-center rounded-full p-1 transition-all duration-500 shadow-lg ${
             theme === 'dark' 
-              ? 'bg-gradient-to-b from-blue-600 to-purple-600' 
-              : 'bg-gradient-to-b from-yellow-400 to-orange-500'
-          } w-16 h-32`}
+              ? 'bg-gradient-to-r from-blue-600 to-purple-600' 
+              : 'bg-gradient-to-r from-yellow-400 to-orange-500'
+          } w-12 h-12`}
           data-testid="floating-theme-toggle"
           animate={{
             backgroundColor: theme === 'dark' 
               ? ['#2563eb', '#7c3aed', '#2563eb']
-              : ['#fbbf24', '#f97316', '#fbbf24']
+              : ['#fbbf24', '#f97316', '#fbbf24'],
+            rotate: [0, 360],
+            scale: [1, 1.1, 1]
           }}
           transition={{
-            backgroundColor: { duration: 3, repeat: Infinity }
+            backgroundColor: { duration: 3, repeat: Infinity },
+            rotate: { duration: 8, repeat: Infinity, ease: "linear" },
+            scale: { duration: 2, repeat: Infinity, ease: "easeInOut" }
+          }}
+          whileHover={{
+            scale: 1.2,
+            rotate: 180,
+            transition: { duration: 0.3 }
           }}
         >
-          {/* Toggle Slider */}
+          {/* Animated Icon */}
           <motion.div
-            className="flex items-center justify-center rounded-xl bg-white shadow-lg w-12 h-12 mb-2"
-            animate={{
-              y: theme === 'dark' ? 64 : 4
+            animate={{ 
+              rotate: theme === 'dark' ? [0, 360] : [360, 0],
+              scale: [1, 1.2, 1]
             }}
-            transition={{
-              type: "spring",
-              stiffness: 500,
-              damping: 30
+            transition={{ 
+              rotate: { duration: 0.6 },
+              scale: { duration: 1.5, repeat: Infinity, ease: "easeInOut" }
             }}
           >
-            <motion.div
-              animate={{ rotate: theme === 'dark' ? 360 : 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              {theme === 'dark' ? (
-                <Sun className="text-yellow-500 w-6 h-6" />
-              ) : (
-                <Moon className="text-gray-600 w-6 h-6" />
-              )}
-            </motion.div>
+            {theme === 'dark' ? (
+              <Sun className="text-yellow-300 w-6 h-6 drop-shadow-lg" />
+            ) : (
+              <Moon className="text-white w-6 h-6 drop-shadow-lg" />
+            )}
           </motion.div>
           
-          {/* Status Labels */}
+          {/* Floating Particles */}
           <motion.div
-            className="flex flex-col justify-between h-full py-2"
+            className="absolute inset-0 pointer-events-none"
             animate={{
-              opacity: 0.8
+              rotate: [0, 360]
+            }}
+            transition={{
+              duration: 10,
+              repeat: Infinity,
+              ease: "linear"
             }}
           >
-            <motion.span
-              className={`text-xs font-bold transition-opacity duration-300 ${
-                theme === 'dark' ? 'text-white opacity-40' : 'text-white opacity-100'
-              }`}
-            >
-              OFF
-            </motion.span>
-            <motion.span
-              className={`text-xs font-bold transition-opacity duration-300 ${
-                theme === 'dark' ? 'text-white opacity-100' : 'text-white opacity-40'
-              }`}
-            >
-              ON
-            </motion.span>
+            {[...Array(3)].map((_, i) => (
+              <motion.div
+                key={i}
+                className={`absolute w-1 h-1 rounded-full ${
+                  theme === 'dark' ? 'bg-yellow-300' : 'bg-white'
+                }`}
+                style={{
+                  top: `${20 + i * 20}%`,
+                  left: `${20 + i * 20}%`
+                }}
+                animate={{
+                  scale: [0, 1, 0],
+                  opacity: [0, 1, 0]
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  delay: i * 0.5,
+                  ease: "easeInOut"
+                }}
+              />
+            ))}
           </motion.div>
         </motion.button>
         
-        {/* Glow Effect */}
+        {/* Pulsing Glow Effect */}
         <motion.div
-          className={`absolute inset-0 rounded-2xl blur-md opacity-40 ${
+          className={`absolute inset-0 rounded-full blur-lg opacity-60 ${
             theme === 'dark' 
-              ? 'bg-gradient-to-b from-blue-400 to-purple-400' 
-              : 'bg-gradient-to-b from-yellow-300 to-orange-400'
+              ? 'bg-gradient-to-r from-blue-400 to-purple-400' 
+              : 'bg-gradient-to-r from-yellow-300 to-orange-400'
           }`}
           animate={{
-            scale: [1, 1.1, 1],
-            opacity: [0.2, 0.4, 0.2]
+            scale: [1, 1.5, 1],
+            opacity: [0.3, 0.8, 0.3]
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          style={{ zIndex: -1 }}
+        />
+        
+        {/* Outer Glow Ring */}
+        <motion.div
+          className={`absolute inset-0 rounded-full border-2 ${
+            theme === 'dark' 
+              ? 'border-blue-300/30' 
+              : 'border-yellow-300/30'
+          }`}
+          animate={{
+            scale: [1, 1.3, 1],
+            opacity: [1, 0, 1]
           }}
           transition={{
             duration: 3,
