@@ -87,8 +87,8 @@ export default function Contact() {
     {
       icon: MapPin,
       title: 'Service Areas',
-      value: 'Mumbai, Delhi, Bangalore',
-      description: 'Expanding to more cities soon',
+      value: 'Delhi, Gurugram, Noida, Ghaziabad, Faridabad',
+      description: 'Complete Delhi NCR coverage',
       color: 'from-violet-400 to-pink-600'
     }
   ];
@@ -327,7 +327,7 @@ export default function Contact() {
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.7 }}
                       >
-                        Mumbai • Delhi • Bangalore • Pune • Chennai
+                        Delhi • Gurugram • Noida • Ghaziabad • Faridabad
                       </motion.p>
                       <motion.div
                         className="mt-4 flex justify-center space-x-2"

@@ -232,7 +232,7 @@ export function Hero() {
               variants={itemVariants}
               className="text-xl text-gray-400 mb-8 leading-relaxed"
             >
-              Skip the garage visits! Professional mechanics come to your location with all tools & parts. Available in Mumbai, Delhi, Bangalore & 12 more cities.
+              Skip the garage visits! Professional mechanics come to your location with all tools & parts. Available across all Delhi NCR cities with same-day service.
             </motion.p>
 
             {/* CTAs Side by Side with Staggered Animation */}
