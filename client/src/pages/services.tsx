@@ -121,7 +121,6 @@ export default function Services() {
     try {
       const bookingData = {
         vehicle: selectedVehicle,
-        city,
         services: selectedServices,
         addons: selectedAddons,
         slot: selectedSlot,
@@ -307,21 +306,6 @@ export default function Services() {
             <div className="flex flex-col lg:flex-row items-center justify-between gap-4">
               <div className="flex flex-col sm:flex-row items-center gap-4 flex-1">
                 {/* City Selector */}
-                <div className="flex items-center space-x-2">
-                  <MapPin className="w-4 h-4 text-gray-400" />
-                  <Select value={city} onValueChange={setCity}>
-                    <SelectTrigger className="w-[140px] bg-white/5 border-white/10 text-white">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className="bg-gray-800 border-gray-700">
-                      {CITIES.map((cityOption) => (
-                        <SelectItem key={cityOption.id} value={cityOption.id} className="text-white">
-                          {cityOption.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
 
                 {/* Search */}
                 <motion.div 
@@ -350,16 +334,6 @@ export default function Services() {
                 </motion.div>
               </div>
 
-              {/* Price Toggle */}
-              <div className="flex items-center space-x-3">
-                <span className="text-gray-300 text-sm">Show ranges</span>
-                <Switch
-                  checked={showPriceRanges}
-                  onCheckedChange={setShowPriceRanges}
-                  className="data-[state=checked]:bg-emerald-500"
-                />
-                <span className="text-gray-300 text-sm">From price</span>
-              </div>
             </div>
           </div>
         </motion.div>
@@ -730,7 +704,7 @@ export default function Services() {
                                     <div className="font-medium text-white text-sm">{service.name}</div>
                                     <div className="text-xs text-gray-400 mt-1">{service.subtitle}</div>
                                     <div className="text-emerald-400 font-bold mt-2">
-                                      ₹{service.priceMin}{service.priceMax !== service.priceMin && ` - ₹${service.priceMax}`}
+                                      ₹{service.price}
                                     </div>
                                   </div>
                                   <Button
@@ -763,7 +737,7 @@ export default function Services() {
                                   <div className="flex-1">
                                     <div className="font-medium text-white text-sm">{addon.name}</div>
                                     <div className="text-emerald-400 font-bold mt-1">
-                                      ₹{addon.priceMin}{addon.priceMax !== addon.priceMin && ` - ₹${addon.priceMax}`}
+                                      ₹{addon.price}
                                     </div>
                                   </div>
                                   <Button
