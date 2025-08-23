@@ -1076,17 +1076,23 @@ export default function Services() {
                     </p>
                   </div>
                   
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
-                    {individualServices.map((service) => {
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 min-h-[200px]">
+                    {individualServices.map((service, index) => {
                       const isSelected = selectedServices.some(s => s.id === service.id);
                       
                       return (
-                        <BookingServiceCard
-                          key={service.id}
-                          service={service}
-                          isSelected={isSelected}
-                          onToggle={() => handleToggleService(service)}
-                        />
+                        <div key={service.id} className="bg-red-500/20 border border-red-500 p-2 rounded" style={{ minHeight: '200px' }}>
+                          <div className="text-white text-xs">Debug Card {index + 1}</div>
+                          <div className="text-white text-xs">ID: {service.id}</div>
+                          <div className="text-white text-xs">Name: {service.name}</div>
+                          <div className="text-white text-xs">Type: {service.type}</div>
+                          <BookingServiceCard
+                            key={`card-${service.id}`}
+                            service={service}
+                            isSelected={isSelected}
+                            onToggle={() => handleToggleService(service)}
+                          />
+                        </div>
                       );
                     })}
                   </div>
@@ -1238,7 +1244,7 @@ export default function Services() {
                                 <div className="flex items-center justify-between">
                                   <div className="flex-1">
                                     <div className="font-medium text-white text-sm">{service.name}</div>
-                                    <div className="text-xs text-gray-400 mt-1">{service.subtitle}</div>
+                                    <div className="text-xs text-gray-400 mt-1">{service.name}</div>
                                     <div className="text-emerald-400 font-bold mt-2">
                                       ₹{service.price}
                                     </div>
