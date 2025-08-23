@@ -55,7 +55,7 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
             animate={{ opacity: 1, scale: 1, x: 0 }}
             exit={{ opacity: 0, scale: 0, x: 100 }}
             transition={{ type: "spring", stiffness: 500, damping: 30 }}
-            className="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-40"
+            className="fixed bottom-20 right-4 md:bottom-6 md:right-6 z-40"
           >
             <motion.button
               onClick={() => setShowSummary(true)}
