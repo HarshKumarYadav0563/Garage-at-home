@@ -450,49 +450,6 @@ export default function Services() {
 
       <div className="relative max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8 py-4 md:py-8">
         
-        {/* Ultra-Compact Hero Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-          className="text-center mb-4"
-        >
-          <motion.h1 
-            className="text-2xl md:text-4xl font-bold mb-2"
-            initial={{ scale: 0.95 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.1, duration: 0.3 }}
-          >
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-200">
-              Book Doorstep{' '}
-            </span>
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-sky-400">
-              Service
-            </span>
-          </motion.h1>
-          <motion.p 
-            className="text-sm md:text-base text-gray-400 mb-3"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.3 }}
-          >
-            Premium vehicle care with certified mechanics at your doorstep
-          </motion.p>
-          
-          {/* Compact service badges in single row */}
-          <motion.div 
-            className="flex flex-wrap justify-center gap-2 mb-4"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.3 }}
-          >
-            {['24/7 Available', 'Quality Assured', 'Doorstep Service'].map((badge) => (
-              <Badge key={badge} variant="outline" className="bg-white/10 border-white/20 text-gray-300 text-xs md:text-sm px-2 py-1">
-                {badge}
-              </Badge>
-            ))}
-          </motion.div>
-        </motion.div>
 
         {/* Vehicle Selector & Search - Desktop Inline */}
         <motion.div
