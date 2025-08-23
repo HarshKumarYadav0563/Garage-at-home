@@ -43,18 +43,72 @@ export function Footer() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <div className="flex items-center space-x-3 mb-4">
+                <div className="flex items-center space-x-4 mb-4">
                   <div className="relative">
-                    <div className="w-12 h-12 bg-gradient-to-br from-primary-500 via-blue-600 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
-                      <Wrench className="text-white text-xl" />
-                    </div>
-                    <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
-                      <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
-                    </div>
+                    {/* Enhanced Footer Logo */}
+                    <motion.div 
+                      className="w-14 h-14 bg-gradient-to-br from-emerald-500 via-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center shadow-xl border border-white/20 backdrop-blur-sm"
+                      whileHover={{ 
+                        scale: 1.1,
+                        rotate: [0, -5, 5, 0],
+                        boxShadow: "0 20px 40px rgba(16, 185, 129, 0.3)"
+                      }}
+                      transition={{ duration: 0.4 }}
+                    >
+                      {/* Layered Design */}
+                      <div className="relative">
+                        {/* Background Shape */}
+                        <div className="absolute inset-0 bg-white/10 rounded-lg w-7 h-7"></div>
+                        
+                        {/* Main Icon */}
+                        <Wrench className="relative z-10 text-white text-lg" />
+                        
+                        {/* Home Indicator */}
+                        <div className="absolute -bottom-1 -right-1 bg-white rounded-full p-1 w-4 h-4">
+                          <div className="bg-emerald-500 rounded-full flex items-center justify-center w-full h-full">
+                            <div className="w-1.5 h-1.5 bg-white rounded-sm"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                    
+                    {/* Service Status Indicator */}
+                    <motion.div 
+                      className="absolute -top-1 -right-1 w-5 h-5 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center shadow-lg"
+                      animate={{ 
+                        scale: [1, 1.2, 1],
+                        opacity: [1, 0.8, 1],
+                        rotate: [0, 180, 360]
+                      }}
+                      transition={{ 
+                        duration: 4,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                      }}
+                    >
+                      <div className="w-2 h-2 bg-white rounded-full"></div>
+                    </motion.div>
+                    
+                    {/* Glow Effect */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/20 to-blue-500/20 rounded-2xl blur-lg -z-10 w-14 h-14"></div>
                   </div>
+                  
                   <div>
-                    <span className="text-2xl font-bold dark:text-white" data-testid="footer-brand">Garage At Home</span>
-                    <p className="text-sm text-gray-400 dark:text-gray-300">Premium Doorstep Service</p>
+                    <motion.div 
+                      className="flex items-center space-x-1 mb-1"
+                      whileHover={{ scale: 1.02 }}
+                    >
+                      <span className="text-2xl font-bold bg-gradient-to-r from-emerald-400 via-sky-400 to-indigo-400 bg-clip-text text-transparent" data-testid="footer-brand">Garage</span>
+                      <span className="text-2xl font-bold text-white">@</span>
+                      <span className="text-2xl font-bold bg-gradient-to-r from-orange-400 via-yellow-400 to-red-400 bg-clip-text text-transparent">Home</span>
+                    </motion.div>
+                    <div className="flex items-center space-x-1 text-sm">
+                      <span className="text-gray-400 font-medium">Premium</span>
+                      <div className="w-1 h-1 bg-emerald-400 rounded-full"></div>
+                      <span className="text-emerald-400 font-semibold">Doorstep</span>
+                      <div className="w-1 h-1 bg-orange-400 rounded-full"></div>
+                      <span className="text-orange-400 font-medium">Service</span>
+                    </div>
                   </div>
                 </div>
                 

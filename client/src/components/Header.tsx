@@ -122,31 +122,53 @@ export function Header() {
               transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
             >
               <div className="relative">
+                {/* Main Logo Container */}
                 <motion.div 
-                  className={`bg-gradient-to-br from-primary-500 via-blue-600 to-purple-600 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg transition-all duration-300 ${
+                  className={`bg-gradient-to-br from-emerald-500 via-blue-600 to-indigo-600 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-xl border border-white/20 backdrop-blur-sm transition-all duration-300 ${
                     isScrolled ? 'w-8 h-8 sm:w-10 sm:h-10' : 'w-10 h-10 sm:w-12 sm:h-12'
                   }`}
                   whileHover={{ 
-                    rotate: 360,
                     scale: 1.1,
-                    boxShadow: "0 10px 25px rgba(59, 130, 246, 0.5)"
+                    rotate: [0, -5, 5, 0],
+                    boxShadow: "0 15px 35px rgba(16, 185, 129, 0.4)"
                   }}
-                  transition={{ duration: 0.3 }}
+                  transition={{ duration: 0.4 }}
                 >
-                  <Wrench className={`text-white transition-all duration-300 ${
-                    isScrolled ? 'text-sm sm:text-base' : 'text-lg sm:text-xl'
-                  }`} />
+                  {/* Layered Icon Design */}
+                  <div className="relative">
+                    {/* Background Car/Bike Shape */}
+                    <div className={`absolute inset-0 bg-white/10 rounded-lg transition-all duration-300 ${
+                      isScrolled ? 'w-4 h-4 sm:w-5 sm:h-5' : 'w-5 h-5 sm:w-6 sm:h-6'
+                    }`}></div>
+                    
+                    {/* Main Wrench Icon */}
+                    <Wrench className={`relative z-10 text-white transition-all duration-300 ${
+                      isScrolled ? 'text-xs sm:text-sm' : 'text-sm sm:text-base'
+                    }`} />
+                    
+                    {/* Small Home Icon Overlay */}
+                    <div className={`absolute -bottom-0.5 -right-0.5 bg-white rounded-full p-0.5 transition-all duration-300 ${
+                      isScrolled ? 'w-2 h-2 sm:w-2.5 sm:h-2.5' : 'w-2.5 h-2.5 sm:w-3 sm:h-3'
+                    }`}>
+                      <div className={`bg-emerald-500 rounded-full flex items-center justify-center w-full h-full`}>
+                        <div className={`w-1 h-1 bg-white rounded-sm transition-all duration-300`}></div>
+                      </div>
+                    </div>
+                  </div>
                 </motion.div>
+                
+                {/* Premium Service Indicator */}
                 <motion.div 
-                  className={`absolute -top-0.5 -right-0.5 sm:-top-1 sm:-right-1 bg-green-500 rounded-full flex items-center justify-center transition-all duration-300 ${
-                    isScrolled ? 'w-2 h-2 sm:w-3 sm:h-3' : 'w-3 h-3 sm:w-4 sm:h-4'
+                  className={`absolute -top-0.5 -right-0.5 sm:-top-1 sm:-right-1 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 ${
+                    isScrolled ? 'w-2.5 h-2.5 sm:w-3.5 sm:h-3.5' : 'w-3.5 h-3.5 sm:w-4.5 sm:h-4.5'
                   }`}
                   animate={{ 
-                    scale: [1, 1.2, 1],
-                    opacity: [1, 0.7, 1]
+                    scale: [1, 1.3, 1],
+                    opacity: [1, 0.8, 1],
+                    rotate: [0, 180, 360]
                   }}
                   transition={{ 
-                    duration: 2,
+                    duration: 3,
                     repeat: Infinity,
                     ease: "easeInOut"
                   }}
@@ -155,27 +177,60 @@ export function Header() {
                     isScrolled ? 'w-1 h-1 sm:w-1.5 sm:h-1.5' : 'w-1.5 h-1.5 sm:w-2 sm:h-2'
                   }`}></div>
                 </motion.div>
+                
+                {/* Subtle Glow Effect */}
+                <div className={`absolute inset-0 bg-gradient-to-br from-emerald-500/20 to-blue-500/20 rounded-xl sm:rounded-2xl blur-md -z-10 transition-all duration-300 ${
+                  isScrolled ? 'w-8 h-8 sm:w-10 sm:h-10' : 'w-10 h-10 sm:w-12 sm:h-12'
+                }`}></div>
               </div>
               <div className="flex flex-col">
-                <motion.span 
-                  className={`font-bold bg-gradient-to-r from-emerald-400 via-sky-400 to-indigo-400 bg-clip-text text-transparent transition-all duration-300 ${
-                    isScrolled ? 'text-base sm:text-lg lg:text-xl' : 'text-lg sm:text-xl lg:text-2xl'
-                  }`}
-                  whileHover={{ 
-                    scale: 1.05,
-                    textShadow: "0px 0px 8px rgba(59, 130, 246, 0.8)"
-                  }}
-                >
-                  Garage At Home
-                </motion.span>
-                <motion.span 
-                  className={`text-gray-400 font-medium -mt-1 transition-all duration-300 ${
-                    isScrolled ? 'hidden' : 'hidden sm:block text-xs'
+                <motion.div className="flex items-center space-x-1">
+                  <motion.span 
+                    className={`font-bold bg-gradient-to-r from-emerald-400 via-sky-400 to-indigo-400 bg-clip-text text-transparent transition-all duration-300 ${
+                      isScrolled ? 'text-base sm:text-lg lg:text-xl' : 'text-lg sm:text-xl lg:text-2xl'
+                    }`}
+                    whileHover={{ 
+                      scale: 1.05,
+                      filter: "drop-shadow(0px 0px 8px rgba(16, 185, 129, 0.6))"
+                    }}
+                  >
+                    Garage
+                  </motion.span>
+                  <motion.span 
+                    className={`font-bold text-white transition-all duration-300 ${
+                      isScrolled ? 'text-base sm:text-lg lg:text-xl' : 'text-lg sm:text-xl lg:text-2xl'
+                    }`}
+                    whileHover={{ 
+                      scale: 1.05,
+                      color: "#10b981"
+                    }}
+                  >
+                    @
+                  </motion.span>
+                  <motion.span 
+                    className={`font-bold bg-gradient-to-r from-orange-400 via-yellow-400 to-red-400 bg-clip-text text-transparent transition-all duration-300 ${
+                      isScrolled ? 'text-base sm:text-lg lg:text-xl' : 'text-lg sm:text-xl lg:text-2xl'
+                    }`}
+                    whileHover={{ 
+                      scale: 1.05,
+                      filter: "drop-shadow(0px 0px 8px rgba(251, 146, 60, 0.6))"
+                    }}
+                  >
+                    Home
+                  </motion.span>
+                </motion.div>
+                <motion.div 
+                  className={`flex items-center space-x-1 -mt-1 transition-all duration-300 ${
+                    isScrolled ? 'hidden' : 'hidden sm:flex text-xs'
                   }`}
                   animate={{ opacity: isScrolled ? 0 : 1 }}
                 >
-                  Premium Doorstep Service
-                </motion.span>
+                  <span className="text-gray-400 font-medium">Premium</span>
+                  <div className="w-1 h-1 bg-emerald-400 rounded-full"></div>
+                  <span className="text-emerald-400 font-semibold">Doorstep</span>
+                  <div className="w-1 h-1 bg-orange-400 rounded-full"></div>
+                  <span className="text-orange-400 font-medium">Service</span>
+                </motion.div>
               </div>
             </motion.div>
           </Link>
@@ -433,8 +488,18 @@ export function Header() {
                     <Wrench className="text-white text-lg" />
                   </div>
                   <div>
-                    <span className="text-xl font-bold text-white">Garage At Home</span>
-                    <p className="text-sm text-gray-400">Premium Doorstep Service</p>
+                    <div className="flex items-center space-x-1">
+                      <span className="text-xl font-bold bg-gradient-to-r from-emerald-400 to-sky-400 bg-clip-text text-transparent">Garage</span>
+                      <span className="text-xl font-bold text-white">@</span>
+                      <span className="text-xl font-bold bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent">Home</span>
+                    </div>
+                    <div className="flex items-center space-x-1 text-sm">
+                      <span className="text-gray-400">Premium</span>
+                      <div className="w-1 h-1 bg-emerald-400 rounded-full"></div>
+                      <span className="text-emerald-400">Doorstep</span>
+                      <div className="w-1 h-1 bg-orange-400 rounded-full"></div>
+                      <span className="text-orange-400">Service</span>
+                    </div>
                   </div>
                 </div>
 
