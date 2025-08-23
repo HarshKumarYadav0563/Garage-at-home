@@ -34,8 +34,8 @@ export function Footer() {
     <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
       {/* Top Section */}
       <div className="border-b border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
             {/* Brand */}
             <div className="md:col-span-2 lg:col-span-1">
               <motion.div
@@ -43,7 +43,7 @@ export function Footer() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <div className="flex items-center space-x-3 mb-6">
+                <div className="flex items-center space-x-3 mb-4">
                   <div className="relative">
                     <div className="w-12 h-12 bg-gradient-to-br from-primary-500 via-blue-600 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
                       <Wrench className="text-white text-xl" />
@@ -58,12 +58,12 @@ export function Footer() {
                   </div>
                 </div>
                 
-                <p className="text-gray-300 mb-6 leading-relaxed" data-testid="footer-description">
+                <p className="text-gray-300 mb-4 leading-relaxed" data-testid="footer-description">
                   India's first premium doorstep vehicle service platform. Professional mechanics, transparent pricing, real-time tracking, and guaranteed quality.
                 </p>
 
                 {/* Trust Indicators */}
-                <div className="grid grid-cols-2 gap-4 mb-6">
+                <div className="grid grid-cols-2 gap-4 mb-4">
                   <div className="flex items-center space-x-2 text-sm">
                     <Star className="w-4 h-4 text-yellow-400" />
                     <span className="text-gray-300">4.9/5 Rating</span>
@@ -103,8 +103,8 @@ export function Footer() {
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
             >
-              <h3 className="text-lg font-semibold mb-6 text-white">Our Services</h3>
-              <ul className="space-y-3">
+              <h3 className="text-lg font-semibold mb-4 text-white">Our Services</h3>
+              <ul className="space-y-2">
                 {services.map((service, index) => (
                   <li key={index}>
                     <Link href="/services">
@@ -128,8 +128,8 @@ export function Footer() {
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
             >
-              <h3 className="text-lg font-semibold mb-6 text-white">Service Cities</h3>
-              <ul className="space-y-3">
+              <h3 className="text-lg font-semibold mb-4 text-white">Service Cities</h3>
+              <ul className="space-y-2">
                 {cities.map((city, index) => (
                   <li key={index}>
                     <Link href={`/${city.toLowerCase()}`}>
@@ -160,8 +160,8 @@ export function Footer() {
               viewport={{ once: true }}
               transition={{ delay: 0.3 }}
             >
-              <h3 className="text-lg font-semibold mb-6 text-white">Company</h3>
-              <ul className="space-y-3">
+              <h3 className="text-lg font-semibold mb-4 text-white">Company</h3>
+              <ul className="space-y-2">
                 {company.map((item, index) => (
                   <li key={index}>
                     <Link href={`/${item.toLowerCase().replace(' ', '-')}`}>
@@ -183,15 +183,15 @@ export function Footer() {
 
       {/* Contact Section */}
       <div className="border-b border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.4 }}
           >
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="bg-gray-800/50 rounded-2xl p-6 border border-gray-700/50 hover:border-primary-500/50 transition-colors">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="bg-gray-800/50 rounded-2xl p-4 border border-gray-700/50 hover:border-primary-500/50 transition-colors">
                 <div className="flex items-center space-x-4">
                   <div className="w-12 h-12 bg-primary-500/20 rounded-xl flex items-center justify-center">
                     <Phone className="text-primary-400 w-5 h-5" />
@@ -204,7 +204,7 @@ export function Footer() {
                 </div>
               </div>
 
-              <div className="bg-gray-800/50 rounded-2xl p-6 border border-gray-700/50 hover:border-primary-500/50 transition-colors">
+              <div className="bg-gray-800/50 rounded-2xl p-4 border border-gray-700/50 hover:border-primary-500/50 transition-colors">
                 <div className="flex items-center space-x-4">
                   <div className="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center">
                     <Mail className="text-green-400 w-5 h-5" />
@@ -217,7 +217,7 @@ export function Footer() {
                 </div>
               </div>
 
-              <div className="bg-gray-800/50 rounded-2xl p-6 border border-gray-700/50 hover:border-primary-500/50 transition-colors">
+              <div className="bg-gray-800/50 rounded-2xl p-4 border border-gray-700/50 hover:border-primary-500/50 transition-colors">
                 <div className="flex items-center space-x-4">
                   <div className="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center">
                     <Clock className="text-blue-400 w-5 h-5" />
@@ -235,7 +235,7 @@ export function Footer() {
       </div>
 
       {/* Bottom Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
