@@ -1,42 +1,48 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import { Link } from 'wouter';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Check, User, Wrench, Star } from 'lucide-react';
 
-// Import illustrations directly from attached_assets
-const bookingIllustration = '/attached_assets/generated_images/Mobile_app_booking_illustration_db0d4d1f.png';
-const confirmationIllustration = '/attached_assets/generated_images/Confirmation_notification_illustration_4f1b0f52.png';
-const mechanicIllustration = '/attached_assets/generated_images/Mechanic_arrival_illustration_ed1a67dd.png';
-const completionIllustration = '/attached_assets/generated_images/Service_completion_illustration_813d8d47.png';
+// Import premium illustrations
+const bookingIllustration = '/attached_assets/generated_images/Premium_booking_app_illustration_08558233.png';
+const confirmationIllustration = '/attached_assets/generated_images/Premium_confirmation_notification_illustration_26aa61f0.png';
+const mechanicIllustration = '/attached_assets/generated_images/Premium_mechanic_arrival_illustration_a0b94ded.png';
+const completionIllustration = '/attached_assets/generated_images/Premium_service_completion_illustration_af928bf6.png';
 
 export function HowItWorks() {
   const shouldReduceMotion = useReducedMotion();
 
   const containerVariants = {
-    hidden: { opacity: 0, y: 12 },
+    hidden: { opacity: 0 },
     show: {
       opacity: 1,
-      y: 0,
       transition: {
-        staggerChildren: 0.08,
-        delayChildren: 0.1
+        staggerChildren: 0.3,
+        delayChildren: 0.2
       }
     }
   };
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 14 },
+  const cardVariants = {
+    hidden: { 
+      opacity: 0, 
+      y: 60,
+      scale: 0.8
+    },
     show: {
       opacity: 1,
       y: 0,
+      scale: 1,
       transition: {
-        duration: 0.35,
-        ease: "easeOut"
+        type: "spring",
+        stiffness: 100,
+        damping: 15,
+        duration: 0.8
       }
     }
   };
 
   const floatAnimation = shouldReduceMotion ? {} : {
-    y: [0, -8, 0],
+    y: [0, -10, 0],
     transition: {
       duration: 3,
       repeat: Infinity,
@@ -44,32 +50,33 @@ export function HowItWorks() {
     }
   };
 
-  const cardVariants = {
-    hidden: { 
-      opacity: 0, 
-      y: 40,
-      scale: 0.9
-    },
-    show: (index: number) => ({
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: {
-        delay: index * 0.2,
-        duration: 0.6,
-        ease: "easeOut"
-      }
-    })
-  };
-
   const lineVariants = {
-    hidden: { scaleX: 0 },
+    hidden: { scaleX: 0, opacity: 0 },
     show: {
       scaleX: 1,
+      opacity: 1,
       transition: {
-        delay: 0.8,
-        duration: 2,
+        delay: 1.2,
+        duration: 2.5,
         ease: "easeInOut"
+      }
+    }
+  };
+
+  const dotVariants = {
+    inactive: { 
+      scale: 1, 
+      opacity: 0.4,
+      boxShadow: "0 0 0px rgba(34, 197, 94, 0.5)"
+    },
+    active: { 
+      scale: 1.3, 
+      opacity: 1,
+      boxShadow: "0 0 20px rgba(34, 197, 94, 0.8)",
+      transition: {
+        duration: 0.5,
+        repeat: Infinity,
+        repeatType: "reverse" as const
       }
     }
   };
@@ -80,32 +87,40 @@ export function HowItWorks() {
       title: "Book Online",
       description: "Choose vehicle type, service needed, and time slot",
       illustration: bookingIllustration,
-      gradient: "from-sky-400 to-indigo-600",
-      ringColor: "hover:ring-sky-400/30"
+      icon: User,
+      gradient: "from-emerald-400 via-teal-500 to-cyan-600",
+      glowColor: "emerald-500",
+      direction: "left"
     },
     {
       step: "02", 
       title: "Get Confirmation",
       description: "Instant confirmation with mechanic details and tracking ID",
       illustration: confirmationIllustration,
-      gradient: "from-emerald-400 to-teal-600",
-      ringColor: "hover:ring-emerald-400/30"
+      icon: Check,
+      gradient: "from-cyan-400 via-blue-500 to-indigo-600",
+      glowColor: "cyan-500",
+      direction: "right"
     },
     {
       step: "03",
       title: "Mechanic Arrives",
       description: "Professional mechanic comes to your location with tools",
       illustration: mechanicIllustration,
-      gradient: "from-amber-400 to-orange-600",
-      ringColor: "hover:ring-amber-400/30"
+      icon: Wrench,
+      gradient: "from-indigo-400 via-purple-500 to-pink-600",
+      glowColor: "indigo-500",
+      direction: "left"
     },
     {
       step: "04",
       title: "Service Complete",
       description: "Quality service with warranty, transparent billing & payment",
       illustration: completionIllustration,
-      gradient: "from-violet-400 to-fuchsia-600",
-      ringColor: "hover:ring-violet-400/30"
+      icon: Star,
+      gradient: "from-pink-400 via-rose-500 to-orange-500",
+      glowColor: "pink-500",
+      direction: "right"
     }
   ];
 
@@ -113,194 +128,414 @@ export function HowItWorks() {
     <section 
       id="how-it-works" 
       aria-labelledby="how-heading" 
-      className="relative px-4 pt-10 pb-16 md:px-10 md:pt-16 md:pb-24 overflow-hidden bg-[radial-gradient(80%_60%_at_20%_0%,rgba(56,189,248,.25),transparent),radial-gradient(70%_50%_at_100%_100%,rgba(99,102,241,.25),transparent)] bg-gray-900"
+      className="relative px-4 pt-16 pb-24 md:px-10 md:pt-24 md:pb-32 overflow-hidden"
+      style={{
+        background: `
+          radial-gradient(circle at 20% 20%, rgba(34, 197, 94, 0.15) 0%, transparent 50%),
+          radial-gradient(circle at 80% 30%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+          radial-gradient(circle at 40% 70%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+          radial-gradient(circle at 90% 80%, rgba(236, 72, 153, 0.15) 0%, transparent 50%),
+          linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)
+        `
+      }}
     >
-      {/* Glowing particles background */}
-      <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_20%_50%,rgba(34,197,94,0.15),transparent_50%),radial-gradient(circle_at_80%_20%,rgba(59,130,246,0.15),transparent_50%),radial-gradient(circle_at_40%_80%,rgba(139,92,246,0.15),transparent_50%)] opacity-10" />
+      {/* Floating Particles */}
+      <div className="absolute inset-0 overflow-hidden">
+        {[...Array(20)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-1 h-1 bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-full opacity-60"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              y: [0, -30, 0],
+              opacity: [0.3, 0.8, 0.3],
+              scale: [1, 1.5, 1],
+            }}
+            transition={{
+              duration: 3 + Math.random() * 2,
+              repeat: Infinity,
+              delay: Math.random() * 2,
+              ease: "easeInOut"
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Gradient Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-slate-900/20" />
       
-      {/* Background noise overlay */}
-      <div 
-        className="absolute inset-0 opacity-[0.015]"
-        style={{
-          backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.8) 1px, transparent 0)',
-          backgroundSize: '24px 24px'
-        }}
-      />
-      
-      <div className="max-w-6xl mx-auto relative">
+      <div className="max-w-7xl mx-auto relative z-10">
+        {/* Header */}
         <motion.div
-          className="text-center mb-6 md:mb-12"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.2 }}
+          className="text-center mb-16 md:mb-20"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          <motion.div variants={itemVariants}>
-            <h2 
-              id="how-heading" 
-              className="text-2xl md:text-4xl font-semibold text-center leading-tight text-white"
-            >
-              How Garage At Home Works
-            </h2>
-            
-            {/* Animated gradient underline */}
-            <motion.div
-              className="h-1 bg-gradient-to-r from-emerald-500 via-sky-500 to-indigo-600 rounded-full mx-auto mt-3"
-              initial={{ width: 0 }}
-              whileInView={{ width: 64 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.5, duration: 0.8, ease: "easeOut" }}
-            />
-          </motion.div>
+          <motion.h2 
+            id="how-heading" 
+            className="text-3xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-emerald-400 via-cyan-400 to-purple-400 bg-clip-text text-transparent mb-6"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2, duration: 0.8 }}
+          >
+            How Garage At Home Works
+          </motion.h2>
+          
+          <motion.div
+            className="h-1 bg-gradient-to-r from-emerald-500 via-cyan-500 to-purple-500 rounded-full mx-auto mb-6"
+            initial={{ width: 0, opacity: 0 }}
+            whileInView={{ width: 120, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.5, duration: 1.2, ease: "easeOut" }}
+          />
           
           <motion.p 
-            variants={itemVariants}
-            className="text-sm md:text-lg text-white/70 mt-4 text-center max-w-[52ch] mx-auto"
+            className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.7, duration: 0.8 }}
           >
-            Get premium vehicle service at your doorstep in 4 simple steps
+            Experience premium vehicle service at your doorstep in 4 seamless steps
           </motion.p>
         </motion.div>
 
-        {/* Cards Container */}
-        <div className="relative">
-          <motion.ul 
-            role="list"
-            className="grid grid-cols-1 gap-6 mt-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6"
+        {/* Desktop Layout */}
+        <div className="hidden lg:block relative">
+          <motion.div 
+            className="grid grid-cols-4 gap-8"
+            variants={containerVariants}
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.2 }}
           >
             {steps.map((step, index) => {
+              const IconComponent = step.icon;
               return (
-                <motion.li
+                <motion.div
                   key={index}
-                  custom={index}
                   variants={cardVariants}
                   className="group relative"
                   data-testid={`step-card-${step.step}`}
                 >
-                  {/* Card */}
                   <motion.div
-                    className="flex flex-col items-center text-center relative rounded-2xl p-5 md:p-6 bg-white/5 border border-white/10 backdrop-blur-xl shadow-[0_8px_30px_rgba(2,6,23,.2)] hover:bg-white/8 hover:border-white/20 transition-all duration-300"
+                    className="relative bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl border border-slate-700/50 rounded-3xl p-8 text-center overflow-hidden"
                     whileHover={shouldReduceMotion ? {} : { 
-                      y: -6, 
-                      scale: 1.02,
-                      transition: { 
-                        type: "spring", 
-                        stiffness: 300, 
-                        damping: 20 
-                      }
+                      scale: 1.05,
+                      y: -10,
+                      transition: { type: "spring", stiffness: 300, damping: 20 }
                     }}
                   >
-                    {/* Floating Illustration */}
-                    <div className="relative mb-4">
-                      <motion.div 
-                        className="relative"
+                    {/* Glow Effect */}
+                    <motion.div 
+                      className={`absolute inset-0 bg-gradient-to-br ${step.gradient} opacity-0 group-hover:opacity-20 blur-2xl transition-opacity duration-500`}
+                    />
+                    
+                    {/* Card Content */}
+                    <div className="relative z-10">
+                      {/* Floating Illustration */}
+                      <motion.div
+                        className="relative mb-6 flex justify-center"
                         animate={shouldReduceMotion ? {} : floatAnimation}
-                        style={{ animationDelay: `${index * 0.5}s` }}
-                        whileHover={shouldReduceMotion ? {} : {
-                          scale: 1.1,
-                          transition: { type: "spring", stiffness: 400, damping: 20 }
-                        }}
+                        style={{ animationDelay: `${index * 0.3}s` }}
                       >
-                        <img 
-                          src={step.illustration}
-                          alt={`${step.title} illustration`}
-                          className="w-16 h-16 md:w-20 md:h-20 object-contain drop-shadow-2xl"
-                          loading="lazy"
-                        />
-                        
-                        {/* Glow effect on hover */}
-                        <motion.div 
-                          className={`absolute inset-0 rounded-full bg-gradient-to-br ${step.gradient} opacity-0 group-hover:opacity-30 blur-xl scale-110 transition-opacity duration-300`}
-                        />
+                        <div className="relative">
+                          <img 
+                            src={step.illustration}
+                            alt={`${step.title} illustration`}
+                            className="w-24 h-24 md:w-28 md:h-28 object-contain drop-shadow-2xl"
+                            loading="lazy"
+                          />
+                          <motion.div 
+                            className={`absolute inset-0 bg-${step.glowColor} opacity-20 blur-xl rounded-full scale-125`}
+                            animate={shouldReduceMotion ? {} : {
+                              scale: [1.25, 1.5, 1.25],
+                              opacity: [0.2, 0.4, 0.2]
+                            }}
+                            transition={{
+                              duration: 2,
+                              repeat: Infinity,
+                              ease: "easeInOut"
+                            }}
+                          />
+                        </div>
                       </motion.div>
+                      
+                      {/* Step Number with Icon */}
+                      <div className="flex items-center justify-center gap-2 mb-4">
+                        <div className={`w-8 h-8 rounded-full bg-gradient-to-r ${step.gradient} flex items-center justify-center`}>
+                          <IconComponent className="w-4 h-4 text-white" />
+                        </div>
+                        <span className="text-sm font-medium text-slate-400">STEP {step.step}</span>
+                      </div>
+                      
+                      <h3 className="text-xl font-bold text-white mb-3">
+                        {step.title}
+                      </h3>
+                      
+                      <p className="text-slate-300 text-sm leading-relaxed max-w-[200px] mx-auto">
+                        {step.description}
+                      </p>
                     </div>
-                    
-                    {/* Step Number */}
-                    <div className="text-xs uppercase tracking-wide text-gray-400 mb-2 font-medium">
-                      STEP {step.step}
-                    </div>
-                    
-                    {/* Title */}
-                    <h3 
-                      className="text-lg font-semibold text-white mb-2"
-                      id={`step-${step.step}-title`}
-                    >
-                      {step.title}
-                    </h3>
-                    
-                    {/* Description */}
-                    <p 
-                      className="text-sm leading-relaxed text-gray-400 max-w-[220px]"
-                      aria-labelledby={`step-${step.step}-title`}
-                    >
-                      {step.description}
-                    </p>
 
-                    {/* Gradient border at bottom */}
+                    {/* Bottom Gradient Bar */}
                     <motion.div
-                      className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${step.gradient} rounded-b-2xl`}
+                      className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${step.gradient}`}
                       initial={{ scaleX: 0 }}
                       whileInView={{ scaleX: 1 }}
                       viewport={{ once: true }}
-                      transition={{ delay: index * 0.2 + 0.3, duration: 0.6 }}
+                      transition={{ delay: index * 0.3 + 0.5, duration: 0.8 }}
                     />
                   </motion.div>
-                </motion.li>
+                </motion.div>
               );
             })}
-          </motion.ul>
+          </motion.div>
 
-          {/* Connecting Line Animation - Desktop Only */}
+          {/* Connecting Line with Gradient Sweep */}
           <motion.div
-            className="hidden lg:block absolute top-1/2 left-8 right-8 h-0.5 -translate-y-1/2 origin-left"
-            variants={lineVariants}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, amount: 0.2 }}
+            className="absolute top-1/2 left-12 right-12 h-1 -translate-y-1/2 bg-slate-700/30 rounded-full overflow-hidden"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 1 }}
           >
-            <div className="w-full h-full bg-gradient-to-r from-emerald-500 via-sky-500 to-indigo-500 rounded-full opacity-60" />
+            <motion.div
+              className="h-full bg-gradient-to-r from-emerald-500 via-cyan-500 to-purple-500 rounded-full"
+              variants={lineVariants}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true }}
+            />
             
-            {/* Animated dots on the line */}
-            {[...Array(3)].map((_, i) => (
+            {/* Step Indicator Dots */}
+            {steps.map((_, index) => (
               <motion.div
-                key={i}
-                className="absolute top-1/2 w-2 h-2 bg-white rounded-full -translate-y-1/2 shadow-lg"
-                style={{ left: `${25 + i * 25}%` }}
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ 
-                  scale: [0, 1.2, 1], 
-                  opacity: [0, 1, 0.8] 
-                }}
-                transition={{ 
-                  delay: 1.2 + i * 0.2, 
-                  duration: 0.6,
-                  type: "spring",
-                  stiffness: 200
-                }}
+                key={index}
+                className={`absolute top-1/2 w-3 h-3 bg-${steps[index].glowColor} rounded-full -translate-y-1/2 border-2 border-slate-800`}
+                style={{ left: `${25 * index + 12.5}%` }}
+                variants={dotVariants}
+                animate="active"
+                transition={{ delay: 1.5 + index * 0.2 }}
               />
             ))}
           </motion.div>
         </div>
 
-        {/* CTA Section */}
+        {/* Tablet Layout */}
+        <div className="hidden md:block lg:hidden">
+          <motion.div 
+            className="grid grid-cols-2 gap-8"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.2 }}
+          >
+            {steps.map((step, index) => {
+              const IconComponent = step.icon;
+              return (
+                <motion.div
+                  key={index}
+                  variants={cardVariants}
+                  className="group relative"
+                  data-testid={`step-card-${step.step}`}
+                >
+                  <motion.div
+                    className="relative bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-6 text-center overflow-hidden"
+                    whileHover={shouldReduceMotion ? {} : { 
+                      scale: 1.02,
+                      y: -5,
+                      transition: { type: "spring", stiffness: 300, damping: 20 }
+                    }}
+                  >
+                    <motion.div 
+                      className={`absolute inset-0 bg-gradient-to-br ${step.gradient} opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-500`}
+                    />
+                    
+                    <div className="relative z-10">
+                      <motion.div
+                        className="relative mb-4 flex justify-center"
+                        animate={shouldReduceMotion ? {} : floatAnimation}
+                        style={{ animationDelay: `${index * 0.3}s` }}
+                      >
+                        <img 
+                          src={step.illustration}
+                          alt={`${step.title} illustration`}
+                          className="w-20 h-20 object-contain drop-shadow-xl"
+                          loading="lazy"
+                        />
+                      </motion.div>
+                      
+                      <div className="flex items-center justify-center gap-2 mb-3">
+                        <div className={`w-6 h-6 rounded-full bg-gradient-to-r ${step.gradient} flex items-center justify-center`}>
+                          <IconComponent className="w-3 h-3 text-white" />
+                        </div>
+                        <span className="text-xs font-medium text-slate-400">STEP {step.step}</span>
+                      </div>
+                      
+                      <h3 className="text-lg font-bold text-white mb-2">
+                        {step.title}
+                      </h3>
+                      
+                      <p className="text-slate-300 text-sm leading-relaxed">
+                        {step.description}
+                      </p>
+                    </div>
+
+                    <motion.div
+                      className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${step.gradient}`}
+                      initial={{ scaleX: 0 }}
+                      whileInView={{ scaleX: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: index * 0.3 + 0.5, duration: 0.8 }}
+                    />
+                  </motion.div>
+                </motion.div>
+              );
+            })}
+          </motion.div>
+        </div>
+
+        {/* Mobile Vertical Timeline */}
+        <div className="block md:hidden">
+          <div className="relative">
+            {/* Vertical connecting line */}
+            <motion.div
+              className="absolute left-6 top-16 bottom-16 w-0.5 bg-gradient-to-b from-emerald-500 via-cyan-500 to-purple-500 rounded-full"
+              initial={{ scaleY: 0 }}
+              whileInView={{ scaleY: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.5, duration: 2 }}
+            />
+            
+            {steps.map((step, index) => {
+              const IconComponent = step.icon;
+              const isLeft = step.direction === "left";
+              
+              return (
+                <motion.div
+                  key={index}
+                  className="relative mb-12 last:mb-0"
+                  initial={{ 
+                    opacity: 0, 
+                    x: isLeft ? -50 : 50,
+                    y: 30
+                  }}
+                  whileInView={{ 
+                    opacity: 1, 
+                    x: 0,
+                    y: 0
+                  }}
+                  viewport={{ once: true }}
+                  transition={{ 
+                    delay: index * 0.3,
+                    duration: 0.8,
+                    type: "spring",
+                    stiffness: 100
+                  }}
+                  data-testid={`step-card-${step.step}`}
+                >
+                  {/* Timeline dot */}
+                  <motion.div
+                    className={`absolute left-6 w-3 h-3 bg-gradient-to-r ${step.gradient} rounded-full -translate-x-1/2 border-2 border-slate-800 z-10`}
+                    initial={{ scale: 0 }}
+                    whileInView={{ scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.3 + 0.3 }}
+                  />
+                  
+                  {/* Card */}
+                  <div className="ml-16">
+                    <motion.div
+                      className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-6 overflow-hidden group"
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      <motion.div 
+                        className={`absolute inset-0 bg-gradient-to-br ${step.gradient} opacity-0 group-active:opacity-10 transition-opacity duration-300`}
+                      />
+                      
+                      <div className="relative z-10">
+                        <motion.div
+                          className="w-16 h-16 mx-auto mb-4"
+                          animate={shouldReduceMotion ? {} : floatAnimation}
+                          style={{ animationDelay: `${index * 0.3}s` }}
+                        >
+                          <img 
+                            src={step.illustration}
+                            alt={`${step.title} illustration`}
+                            className="w-full h-full object-contain drop-shadow-xl"
+                            loading="lazy"
+                          />
+                        </motion.div>
+                        
+                        <div className="flex items-center gap-2 mb-3">
+                          <div className={`w-6 h-6 rounded-full bg-gradient-to-r ${step.gradient} flex items-center justify-center`}>
+                            <IconComponent className="w-3 h-3 text-white" />
+                          </div>
+                          <span className="text-xs font-medium text-slate-400">STEP {step.step}</span>
+                        </div>
+                        
+                        <h3 className="text-lg font-bold text-white mb-2">
+                          {step.title}
+                        </h3>
+                        
+                        <p className="text-slate-300 text-sm leading-relaxed">
+                          {step.description}
+                        </p>
+                      </div>
+                    </motion.div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Premium CTA Section */}
         <motion.div
-          className="text-center mt-12 md:mt-16"
-          initial={{ opacity: 0, y: 20 }}
+          className="text-center mt-20 md:mt-24"
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 1.5, duration: 0.6 }}
+          transition={{ delay: 2, duration: 0.8 }}
         >
           <Link href="/services">
             <motion.div
-              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-emerald-500 to-sky-500 hover:from-emerald-600 hover:to-sky-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              className="group relative inline-flex items-center gap-3 px-10 py-5 bg-gradient-to-r from-emerald-500 via-cyan-500 to-purple-500 text-white font-bold text-lg rounded-2xl shadow-2xl overflow-hidden"
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.98 }}
               data-testid="book-service-cta"
             >
-              Book Your Service Now
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
+              {/* Animated background overlay */}
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-purple-500 via-cyan-500 to-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+              />
+              
+              {/* Glowing border effect */}
+              <motion.div
+                className="absolute inset-0 rounded-2xl"
+                style={{
+                  background: "linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent)",
+                  backgroundSize: "200% 200%"
+                }}
+                animate={{
+                  backgroundPosition: ["0% 0%", "100% 100%"]
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "linear"
+                }}
+              />
+              
+              <span className="relative z-10">Book Your Service Now</span>
+              <ArrowRight className="relative z-10 w-6 h-6 group-hover:translate-x-1 transition-transform duration-300" />
             </motion.div>
           </Link>
         </motion.div>

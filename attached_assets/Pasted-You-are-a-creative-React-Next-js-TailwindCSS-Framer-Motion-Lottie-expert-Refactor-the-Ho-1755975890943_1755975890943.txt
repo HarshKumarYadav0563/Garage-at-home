@@ -1,0 +1,53 @@
+You are a creative React + Next.js + TailwindCSS + Framer Motion + Lottie expert.  
+Refactor the "How Garage At Home Works" section to look **awesome, premium, and animated**.
+
+## Visual Style
+- Replace current stock-like illustrations with **modern, vector-3D hybrid illustrations**.
+- Style: Gradient-rich, semi-3D, futuristic SaaS illustrations (green/blue/purple neon tones).
+- Each step should feel like part of a single journey (consistent color palette, perspective, and depth).
+- Background: subtle gradient + particle glow effect (floating dots, blurred circles).
+- Use SVGs or Lottie JSONs for lightweight animation.
+
+## Steps (Illustration Prompts)
+1. **Book Online**  
+   - A user holding a phone with a glowing app UI and a mechanic icon.  
+   - Theme: instant booking, mobile-first convenience.  
+
+2. **Get Confirmation**  
+   - A phone screen with a big checkmark, mechanic avatar, and notification popup.  
+   - Theme: trust + transparency.  
+
+3. **Mechanic Arrives**  
+   - A mechanic with a toolkit standing next to a car/bike parked outside a house.  
+   - Theme: doorstep convenience, professional service.  
+
+4. **Service Complete**  
+   - Happy customer with vehicle shining, a big glowing checkmark/star floating above.  
+   - Theme: quality, satisfaction, guarantee.  
+
+---
+
+## Animations
+- **Cards**: fade-up + scale-in with stagger (`delay = index * 0.3s`).
+- **Illustrations**: subtle floating loop (`y: [0, -10, 0]`, `duration: 3s`, repeat).
+- **Connecting Line**: animate left → right as user scrolls into view, with glowing gradient sweep.
+- **Step Indicator Dots**: glow pulse animation (active step brighter).
+- **Hover**: card lifts slightly (`scale: 1.05`, shadow glow).
+- **Mobile**: use a vertical timeline style (each step slides in from left/right with illustration floating).
+
+---
+
+## Layout
+- Desktop: 4 horizontal cards with connecting animated line below illustrations.
+- Tablet: 2x2 grid with connecting line animating in zig-zag.
+- Mobile: vertical timeline (illustration → text), animated connector line with dots.
+
+---
+
+## Deliverables
+- Updated `HowItWorks.tsx`:
+  - Uses Framer Motion for stagger + floating animations.
+  - Animated gradient line that connects steps.
+  - Responsive layout (4 → 2 → 1).
+- `assets/how-it-works/` folder with new illustrations (SVG/Lottie).
+- Optional: Lottie JSON animations for illustrations (glowing phone, waving mechanic, shining vehicle).
