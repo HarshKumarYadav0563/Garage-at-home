@@ -118,10 +118,7 @@ export function EnhancedTrustBar() {
   };
 
   return (
-    <section className={`relative py-6 md:py-12 bg-gradient-to-r from-gray-900 via-slate-800 to-gray-900 overflow-hidden transition-all duration-500 ${
-      // Always visible on mobile, only visible after scroll on desktop
-      isVisible ? 'lg:opacity-100 lg:translate-y-0' : 'lg:opacity-0 lg:translate-y-4'
-    }`}>
+    <section className="relative py-6 md:py-12 bg-gradient-to-r from-gray-900 via-slate-800 to-gray-900 overflow-hidden">
       {/* Animated background elements */}
       <div className="absolute inset-0">
         <motion.div
@@ -151,12 +148,172 @@ export function EnhancedTrustBar() {
       </div>
 
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 relative">
+        {/* Desktop: Animated placeholder that transforms into badges */}
+        <div className="hidden lg:block">
+          {!isVisible ? (
+            // Placeholder animation before scroll
+            <motion.div
+              className="grid grid-cols-6 gap-6"
+              initial={{ opacity: 1 }}
+              animate={{ opacity: 1 }}
+            >
+              {Array.from({ length: 6 }).map((_, index) => (
+                <motion.div
+                  key={`placeholder-${index}`}
+                  className="text-center"
+                  initial={{ opacity: 0.3 }}
+                  animate={{ 
+                    opacity: [0.3, 0.8, 0.3],
+                    scale: [1, 1.05, 1]
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    delay: index * 0.2,
+                    ease: "easeInOut"
+                  }}
+                >
+                  {/* Animated circle placeholder */}
+                  <div className="relative mx-auto w-20 h-20 rounded-2xl bg-gradient-to-br from-gray-700/50 to-gray-600/50 flex items-center justify-center mb-4 border border-white/10">
+                    <motion.div
+                      className="w-8 h-8 rounded-full bg-gradient-to-r from-emerald-400/30 to-blue-400/30"
+                      animate={{
+                        rotate: [0, 360],
+                        scale: [0.8, 1.2, 0.8]
+                      }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        delay: index * 0.3,
+                        ease: "easeInOut"
+                      }}
+                    />
+                  </div>
+                  
+                  {/* Animated text placeholders */}
+                  <motion.div
+                    className="h-6 bg-gradient-to-r from-gray-600/40 to-gray-500/40 rounded mb-2"
+                    animate={{
+                      opacity: [0.4, 0.8, 0.4]
+                    }}
+                    transition={{
+                      duration: 1.5,
+                      repeat: Infinity,
+                      delay: index * 0.1
+                    }}
+                  />
+                  <motion.div
+                    className="h-3 bg-gradient-to-r from-gray-700/40 to-gray-600/40 rounded"
+                    animate={{
+                      opacity: [0.3, 0.6, 0.3]
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      delay: index * 0.15
+                    }}
+                  />
+                </motion.div>
+              ))}
+            </motion.div>
+          ) : (
+            // Actual badges after scroll
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate="show"
+              className="grid grid-cols-6 gap-6"
+            >
+              {trustItems.map((item, index) => {
+                const IconComponent = item.icon;
+                return (
+                  <motion.div
+                    key={index}
+                    variants={itemVariants}
+                    whileHover={shouldReduceMotion ? {} : {
+                      y: -5,
+                      scale: 1.05,
+                      transition: { type: "spring", stiffness: 400 }
+                    }}
+                    className="group text-center"
+                  >
+                    <div className="relative">
+                      {/* Icon container with glow effect */}
+                      <motion.div
+                        className={`relative mx-auto w-20 h-20 rounded-2xl bg-gradient-to-br ${item.color} flex items-center justify-center shadow-xl mb-4 border border-white/20`}
+                        variants={shouldReduceMotion ? {} : iconFloat}
+                        animate="float"
+                        style={{ animationDelay: `${item.delay}s` }}
+                        whileHover={shouldReduceMotion ? {} : {
+                          rotate: [0, 5, -5, 0],
+                          scale: 1.1
+                        }}
+                      >
+                        <IconComponent className="w-8 h-8 text-white" />
+                        
+                        {/* Hover glow ring */}
+                        <motion.div 
+                          className="absolute inset-0 rounded-2xl bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-md scale-110"
+                          variants={shouldReduceMotion ? {} : pulseVariants}
+                          animate="pulse"
+                        />
+                        
+                        {/* Spinning ring on hover */}
+                        <motion.div
+                          className="absolute inset-0 rounded-2xl border-2 border-white/30 opacity-0 group-hover:opacity-100"
+                          animate={shouldReduceMotion ? {} : {
+                            rotate: [0, 360],
+                            transition: { duration: 3, repeat: Infinity, ease: "linear" }
+                          }}
+                        />
+                      </motion.div>
+
+                      {/* Value with counter animation */}
+                      <motion.div
+                        className="text-3xl font-bold text-white mb-2"
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{ 
+                          delay: item.delay + 0.3, 
+                          type: "spring", 
+                          stiffness: 200 
+                        }}
+                      >
+                        {item.value}
+                      </motion.div>
+
+                      {/* Label */}
+                      <motion.p
+                        className="text-sm text-gray-300 font-medium"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: item.delay + 0.5 }}
+                      >
+                        {item.label}
+                      </motion.p>
+
+                      {/* Animated underline */}
+                      <motion.div
+                        className={`mx-auto mt-2 h-0.5 bg-gradient-to-r ${item.color} rounded-full`}
+                        initial={{ width: 0 }}
+                        animate={{ width: "50%" }}
+                        transition={{ delay: item.delay + 0.7, duration: 0.8 }}
+                      />
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </motion.div>
+          )}
+        </div>
+
+        {/* Mobile: Always show badges */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.3 }}
-          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 sm:gap-4 md:gap-4 lg:gap-6"
+          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 sm:gap-4 md:gap-4 lg:hidden"
         >
           {trustItems.map((item, index) => {
             const IconComponent = item.icon;
