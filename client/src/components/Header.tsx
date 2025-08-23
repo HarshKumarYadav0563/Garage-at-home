@@ -29,9 +29,9 @@ export function Header() {
     { name: 'Home', href: '/', badge: null },
     { name: 'Services', href: '/services', badge: 'Popular' },
     { name: 'Track Order', href: '/track', badge: null },
-    { name: 'How It Works', href: '/#how-it-works', badge: null },
+    { name: 'How It Works', href: '/', badge: null, scrollTo: 'how-it-works' },
     { name: 'Contact', href: '/contact', badge: null },
-  ];
+  ] as Array<{ name: string; href: string; badge: string | null; scrollTo?: string }>;
 
   const cities = ['Mumbai', 'Delhi', 'Bangalore', 'Pune', 'Chennai', 'Hyderabad'];
   const [selectedCity, setSelectedCity] = useState('Mumbai');
@@ -300,6 +300,15 @@ export function Header() {
                     type: "spring",
                     stiffness: 200
                   }}
+                  onClick={(e) => {
+                    if (item.scrollTo) {
+                      e.preventDefault();
+                      const element = document.getElementById(item.scrollTo);
+                      if (element) {
+                        element.scrollIntoView({ behavior: 'smooth' });
+                      }
+                    }
+                  }}
                 >
                   <span className={`font-medium transition-colors ${
                     location === item.href
@@ -477,7 +486,17 @@ export function Header() {
                   <Link
                     key={item.name}
                     href={item.href}
-                    onClick={() => setMobileMenuOpen(false)}
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      if (item.scrollTo) {
+                        setTimeout(() => {
+                          const element = document.getElementById(item.scrollTo);
+                          if (element) {
+                            element.scrollIntoView({ behavior: 'smooth' });
+                          }
+                        }, 100);
+                      }
+                    }}
                   >
                     <motion.div
                       whileTap={{ scale: 0.95 }}
@@ -518,9 +537,9 @@ export function Header() {
                 </div>
 
                 {/* Help Section */}
-                <div className="bg-gray-50 rounded-xl p-4 mt-6">
-                  <p className="text-sm font-medium text-gray-700 mb-2">Need Help?</p>
-                  <div className="flex items-center space-x-2 text-primary-600">
+                <div className="bg-white/5 border border-white/10 rounded-xl p-4 mt-6">
+                  <p className="text-sm font-medium text-white mb-2">Need Help?</p>
+                  <div className="flex items-center space-x-2 text-emerald-400">
                     <Phone className="w-4 h-4" />
                     <span className="font-medium">+91 98765 43210</span>
                   </div>
