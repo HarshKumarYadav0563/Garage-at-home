@@ -24,7 +24,7 @@ export function BookingServiceCard({
   const IconComponent = Icons[service.icon as keyof typeof Icons] as React.ComponentType<{ className?: string }> || Icons.Wrench;
   
   return (
-    <motion.li
+    <motion.div
       layout
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -63,11 +63,11 @@ export function BookingServiceCard({
           </motion.div>
         )}
         
-        <CardContent className="p-6 h-full flex flex-col relative z-10">
-          <div className="flex items-start justify-between mb-6">
-            <div className="flex items-center space-x-4 flex-1">
+        <CardContent className="p-4 sm:p-6 h-full flex flex-col relative z-10">
+          <div className="flex flex-col sm:flex-row sm:items-start justify-between mb-6 gap-4">
+            <div className="flex items-center space-x-3 sm:space-x-4 flex-1">
               <motion.div
-                className={`w-16 h-16 rounded-2xl flex items-center justify-center transition-all duration-500 ${
+                className={`w-12 h-12 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center transition-all duration-500 ${
                   isSelected 
                     ? 'bg-gradient-to-br from-emerald-500 to-sky-600 shadow-lg shadow-emerald-500/30' 
                     : 'bg-gradient-to-br from-gray-600/50 to-gray-700/50 group-hover:from-emerald-500/30 group-hover:to-sky-600/30'
@@ -79,13 +79,13 @@ export function BookingServiceCard({
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.6, type: "spring", stiffness: 300 }}
               >
-                <IconComponent className={`w-8 h-8 transition-colors duration-300 ${
+                <IconComponent className={`w-6 h-6 sm:w-8 sm:h-8 transition-colors duration-300 ${
                   isSelected ? 'text-white' : 'text-gray-300 group-hover:text-white'
                 }`} />
               </motion.div>
               
               <div className="flex-1 min-w-0">
-                <h3 className="text-white font-bold text-xl mb-2 truncate">
+                <h3 className="text-white font-bold text-lg sm:text-xl mb-1 sm:mb-2 truncate">
                   {service.name}
                 </h3>
                 <p className="text-gray-300 text-sm leading-relaxed">
@@ -97,7 +97,7 @@ export function BookingServiceCard({
             <motion.div
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
-              className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 ${
+              className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all duration-300 ${
                 isSelected 
                   ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/30' 
                   : 'bg-white/10 text-gray-400 group-hover:bg-white/20 hover:text-white'
@@ -110,7 +110,7 @@ export function BookingServiceCard({
                 {isSelected ? (
                   <Check className="w-6 h-6" />
                 ) : (
-                  <Plus className="w-6 h-6" />
+                  <Plus className="w-5 h-5 sm:w-6 sm:h-6" />
                 )}
               </motion.div>
             </motion.div>
@@ -137,6 +137,6 @@ export function BookingServiceCard({
           </motion.div>
         </CardContent>
       </Card>
-    </motion.li>
+    </motion.div>
   );
 }

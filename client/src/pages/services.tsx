@@ -1076,7 +1076,7 @@ export default function Services() {
                       </p>
                     </div>
                     
-                    <motion.ul
+                    <motion.div
                       className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8"
                       variants={{
                         hidden: { opacity: 0 },
@@ -1104,7 +1104,7 @@ export default function Services() {
                           />
                         );
                       })}
-                    </motion.ul>
+                    </motion.div>
                   </motion.div>
                 )}
 
@@ -1254,7 +1254,7 @@ export default function Services() {
                                 <div className="flex items-center justify-between">
                                   <div className="flex-1">
                                     <div className="font-medium text-white text-sm">{service.name}</div>
-                                    <div className="text-xs text-gray-400 mt-1">{service.description}</div>
+                                    <div className="text-xs text-gray-400 mt-1">{service.subtitle}</div>
                                     <div className="text-emerald-400 font-bold mt-2">
                                       ₹{service.price}
                                     </div>
