@@ -53,8 +53,8 @@ export function Header() {
       }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${
         isScrolled
-          ? 'bg-white/95 backdrop-blur-xl border-b border-gray-200/50 shadow-2xl transform'
-          : 'bg-white/90 backdrop-blur-lg'
+          ? 'bg-gray-950/95 backdrop-blur-xl border-b border-white/10 shadow-2xl transform'
+          : 'bg-gray-950/90 backdrop-blur-lg'
       }`}
       style={{
         transform: `translateY(${Math.min(scrollY * -0.5, -10)}px)` 
@@ -62,7 +62,7 @@ export function Header() {
     >
       {/* Top Bar with City and Phone */}
       <motion.div 
-        className="border-b border-gray-200/30 overflow-hidden"
+        className="border-b border-white/10 overflow-hidden"
         animate={{
           height: isScrolled ? 0 : 'auto',
           opacity: isScrolled ? 0 : 1
@@ -77,22 +77,22 @@ export function Header() {
             transition={{ delay: 0.1, duration: 0.3 }}
           >
             <div className="flex items-center space-x-3 sm:space-x-6">
-              <div className="flex items-center space-x-1 sm:space-x-2 text-gray-600">
+              <div className="flex items-center space-x-1 sm:space-x-2 text-gray-300">
                 <MapPin className="w-3 h-3 sm:w-4 sm:h-4" />
                 <span className="hidden sm:inline">Available in {cities.length}+ cities</span>
                 <span className="sm:hidden">{cities.length}+ Cities</span>
               </div>
               <div className="flex items-center space-x-1 sm:space-x-2">
                 <Star className="w-3 h-3 sm:w-4 sm:h-4 text-yellow-400" />
-                <span className="text-gray-700 font-medium">4.9/5</span>
+                <span className="text-gray-200 font-medium">4.9/5</span>
               </div>
             </div>
             <div className="hidden md:flex items-center space-x-6">
               <div className="flex items-center space-x-2">
                 <Shield className="w-4 h-4 text-green-500" />
-                <span className="text-gray-700">Quality Guaranteed</span>
+                <span className="text-gray-200">Quality Guaranteed</span>
               </div>
-              <div className="flex items-center space-x-2 text-primary-600 font-medium">
+              <div className="flex items-center space-x-2 text-emerald-400 font-medium">
                 <Phone className="w-4 h-4" />
                 <span>+91 98765 43210</span>
               </div>
@@ -159,7 +159,7 @@ export function Header() {
               </div>
               <div className="flex flex-col">
                 <motion.span 
-                  className={`font-bold bg-gradient-to-r from-primary-600 to-blue-600 bg-clip-text text-transparent transition-all duration-300 ${
+                  className={`font-bold bg-gradient-to-r from-emerald-400 via-sky-400 to-indigo-400 bg-clip-text text-transparent transition-all duration-300 ${
                     isScrolled ? 'text-base sm:text-lg lg:text-xl' : 'text-lg sm:text-xl lg:text-2xl'
                   }`}
                   whileHover={{ 
@@ -170,7 +170,7 @@ export function Header() {
                   GarageWala
                 </motion.span>
                 <motion.span 
-                  className={`text-gray-500 font-medium -mt-1 transition-all duration-300 ${
+                  className={`text-gray-400 font-medium -mt-1 transition-all duration-300 ${
                     isScrolled ? 'hidden' : 'hidden sm:block text-xs'
                   }`}
                   animate={{ opacity: isScrolled ? 0 : 1 }}
@@ -196,18 +196,18 @@ export function Header() {
               }}
               whileTap={{ scale: 0.98 }}
               onClick={() => setShowCityDropdown(!showCityDropdown)}
-              className={`flex items-center space-x-2 bg-white/80 backdrop-blur-sm hover:bg-white border border-gray-200/60 hover:border-primary-200 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md group ${
+              className={`flex items-center space-x-2 bg-white/5 backdrop-blur-sm hover:bg-white/10 border border-white/10 hover:border-white/20 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md group ${
                 isScrolled ? 'px-2 sm:px-3 py-1.5 text-sm' : 'px-3 sm:px-4 py-2'
               }`}
             >
-              <div className="w-8 h-8 bg-gradient-to-br from-primary-100 to-blue-100 rounded-lg flex items-center justify-center group-hover:from-primary-200 group-hover:to-blue-200 transition-colors">
-                <MapPin className="w-4 h-4 text-primary-600" />
+              <div className="w-8 h-8 bg-gradient-to-br from-emerald-500/20 to-sky-500/20 rounded-lg flex items-center justify-center group-hover:from-emerald-500/30 group-hover:to-sky-500/30 transition-colors">
+                <MapPin className="w-4 h-4 text-emerald-400" />
               </div>
               <div className="flex flex-col items-start">
-                <span className="text-xs text-gray-500 font-medium leading-none">Service City</span>
-                <span className="font-semibold text-gray-800 text-sm leading-tight">{selectedCity}</span>
+                <span className="text-xs text-gray-400 font-medium leading-none">Service City</span>
+                <span className="font-semibold text-white text-sm leading-tight">{selectedCity}</span>
               </div>
-              <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${showCityDropdown ? 'rotate-180' : ''}`} />
+              <ChevronDown className={`w-4 h-4 text-gray-300 transition-transform duration-200 ${showCityDropdown ? 'rotate-180' : ''}`} />
             </motion.button>
             
             <AnimatePresence>
@@ -222,14 +222,14 @@ export function Header() {
                     initial={{ opacity: 0, y: 10, scale: 0.95 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                    className="absolute top-14 left-0 w-72 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden z-50"
+                    className="absolute top-14 left-0 w-72 bg-gray-900 rounded-2xl shadow-2xl border border-white/10 overflow-hidden z-50"
                   >
-                    <div className="p-4 bg-gradient-to-r from-primary-50 to-blue-50 border-b border-gray-100">
-                      <h3 className="font-semibold text-gray-800 flex items-center space-x-2">
-                        <MapPin className="w-4 h-4 text-primary-600" />
+                    <div className="p-4 bg-gradient-to-r from-emerald-500/10 to-sky-500/10 border-b border-white/10">
+                      <h3 className="font-semibold text-white flex items-center space-x-2">
+                        <MapPin className="w-4 h-4 text-emerald-400" />
                         <span>Select Your City</span>
                       </h3>
-                      <p className="text-sm text-gray-600 mt-1">Choose your location for doorstep service</p>
+                      <p className="text-sm text-gray-300 mt-1">Choose your location for doorstep service</p>
                     </div>
                     <div className="max-h-64 overflow-y-auto">
                       {cities.map((city, index) => (
@@ -242,32 +242,32 @@ export function Header() {
                             setSelectedCity(city);
                             setShowCityDropdown(false);
                           }}
-                          className={`w-full text-left px-4 py-3 hover:bg-gray-50 transition-all duration-150 flex items-center space-x-3 group ${
-                            selectedCity === city ? 'bg-primary-50 text-primary-700' : 'text-gray-700 hover:text-primary-600'
+                          className={`w-full text-left px-4 py-3 hover:bg-white/10 transition-all duration-150 flex items-center space-x-3 group ${
+                            selectedCity === city ? 'bg-emerald-500/20 text-emerald-400' : 'text-gray-300 hover:text-emerald-400'
                           }`}
                         >
                           <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors ${
                             selectedCity === city 
-                              ? 'bg-primary-100 text-primary-600' 
-                              : 'bg-gray-100 text-gray-500 group-hover:bg-primary-100 group-hover:text-primary-600'
+                              ? 'bg-emerald-500/20 text-emerald-400' 
+                              : 'bg-white/10 text-gray-400 group-hover:bg-emerald-500/20 group-hover:text-emerald-400'
                           }`}>
                             <MapPin className="w-4 h-4" />
                           </div>
                           <div className="flex-1">
                             <span className="font-medium block">{city}</span>
-                            <span className="text-xs text-gray-500">Available for service</span>
+                            <span className="text-xs text-gray-400">Available for service</span>
                           </div>
                           {selectedCity === city && (
-                            <div className="w-5 h-5 bg-primary-500 rounded-full flex items-center justify-center">
+                            <div className="w-5 h-5 bg-emerald-500 rounded-full flex items-center justify-center">
                               <Check className="w-3 h-3 text-white" />
                             </div>
                           )}
                         </motion.button>
                       ))}
                     </div>
-                    <div className="p-3 bg-gray-50 border-t border-gray-100">
-                      <p className="text-xs text-gray-500 text-center">
-                        Don't see your city? <span className="text-primary-600 font-medium cursor-pointer hover:underline">Request service</span>
+                    <div className="p-3 bg-gray-800/50 border-t border-white/10">
+                      <p className="text-xs text-gray-400 text-center">
+                        Don't see your city? <span className="text-emerald-400 font-medium cursor-pointer hover:underline">Request service</span>
                       </p>
                     </div>
                   </motion.div>
@@ -303,20 +303,20 @@ export function Header() {
                 >
                   <span className={`font-medium transition-colors ${
                     location === item.href
-                      ? 'text-primary-600'
-                      : 'text-gray-700 hover:text-primary-600'
+                      ? 'text-emerald-400'
+                      : 'text-gray-300 hover:text-emerald-400'
                   }`}>
                     {item.name}
                   </span>
                   {item.badge && (
-                    <Badge className="absolute -top-2 -right-8 bg-primary-500 text-white text-xs px-2 py-0.5">
+                    <Badge className="absolute -top-2 -right-8 bg-emerald-500 text-white text-xs px-2 py-0.5">
                       {item.badge}
                     </Badge>
                   )}
                   {location === item.href && (
                     <motion.div
                       layoutId="activeTab"
-                      className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary-600 rounded-full"
+                      className="absolute -bottom-1 left-0 right-0 h-0.5 bg-emerald-400 rounded-full"
                     />
                   )}
                 </motion.div>
@@ -334,7 +334,7 @@ export function Header() {
                 >
                   <Button
                     variant="outline"
-                    className={`border-primary-200 text-primary-600 hover:bg-primary-50 rounded-xl font-medium transition-all duration-300 ${
+                    className={`border-emerald-400/30 text-emerald-400 hover:bg-emerald-500/10 rounded-xl font-medium transition-all duration-300 ${
                       isScrolled ? 'px-4 py-2 text-sm' : 'px-6 py-2.5'
                     }`}
                     data-testid="button-track-order"
@@ -364,7 +364,7 @@ export function Header() {
                   }}
                 >
                   <Button
-                    className={`bg-gradient-to-r from-primary-500 to-blue-600 hover:from-primary-600 hover:to-blue-700 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden group ${
+                    className={`bg-gradient-to-r from-emerald-500 to-sky-600 hover:from-emerald-600 hover:to-sky-700 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden group ${
                       isScrolled ? 'px-4 py-2 text-sm' : 'px-6 py-2.5'
                     }`}
                     data-testid="button-book-now"
@@ -379,7 +379,7 @@ export function Header() {
                       <span>Book Now</span>
                     </span>
                     <motion.div 
-                      className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 opacity-0 group-hover:opacity-100 transition-all duration-500"
+                      className="absolute inset-0 bg-gradient-to-r from-sky-600 to-indigo-600 opacity-0 group-hover:opacity-100 transition-all duration-500"
                       initial={{ scale: 0 }}
                       whileHover={{ scale: 1 }}
                       style={{ borderRadius: 'inherit' }}
@@ -401,7 +401,7 @@ export function Header() {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="relative overflow-hidden"
+                  className="relative overflow-hidden text-gray-300 hover:text-white"
                   data-testid="button-mobile-menu"
                 >
                   <motion.div
@@ -417,28 +417,28 @@ export function Header() {
                 </Button>
               </motion.div>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[350px] sm:w-[400px]">
+            <SheetContent side="right" className="w-[350px] sm:w-[400px] bg-gray-950 border-white/10">
               <div className="flex flex-col space-y-6 mt-6">
                 {/* Mobile Logo */}
-                <div className="flex items-center space-x-3 pb-6 border-b border-gray-200">
-                  <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-blue-600 rounded-xl flex items-center justify-center">
+                <div className="flex items-center space-x-3 pb-6 border-b border-white/20">
+                  <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-sky-600 rounded-xl flex items-center justify-center">
                     <Wrench className="text-white text-lg" />
                   </div>
                   <div>
-                    <span className="text-xl font-bold text-gray-800">GarageWala</span>
-                    <p className="text-sm text-gray-500">Premium Doorstep Service</p>
+                    <span className="text-xl font-bold text-white">GarageWala</span>
+                    <p className="text-sm text-gray-400">Premium Doorstep Service</p>
                   </div>
                 </div>
 
                 {/* City Selector Mobile */}
-                <div className="bg-gradient-to-r from-primary-50 to-blue-50 rounded-2xl p-4 border border-primary-100">
+                <div className="bg-gradient-to-r from-emerald-500/10 to-sky-500/10 rounded-2xl p-4 border border-emerald-500/20">
                   <div className="flex items-center space-x-2 mb-3">
-                    <div className="w-8 h-8 bg-primary-500 rounded-xl flex items-center justify-center">
+                    <div className="w-8 h-8 bg-emerald-500 rounded-xl flex items-center justify-center">
                       <MapPin className="w-4 h-4 text-white" />
                     </div>
                     <div>
-                      <label className="text-sm font-semibold text-gray-800 block">Service City</label>
-                      <p className="text-xs text-gray-600">Choose your location</p>
+                      <label className="text-sm font-semibold text-white block">Service City</label>
+                      <p className="text-xs text-gray-300">Choose your location</p>
                     </div>
                   </div>
                   <div className="grid grid-cols-2 gap-2">
@@ -449,8 +449,8 @@ export function Header() {
                         onClick={() => setSelectedCity(city)}
                         className={`p-3 rounded-xl text-sm font-medium transition-all duration-200 ${
                           selectedCity === city 
-                            ? 'bg-primary-500 text-white shadow-md' 
-                            : 'bg-white text-gray-700 hover:bg-primary-100 hover:text-primary-700'
+                            ? 'bg-emerald-500 text-white shadow-md' 
+                            : 'bg-white/10 text-gray-300 hover:bg-emerald-500/20 hover:text-emerald-400'
                         }`}
                       >
                         {city}
@@ -461,15 +461,15 @@ export function Header() {
 
                 {/* Quick Stats */}
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-primary-50 rounded-xl p-4 text-center">
-                    <Star className="w-6 h-6 text-primary-600 mx-auto mb-2" />
-                    <p className="text-lg font-bold text-primary-600">4.9★</p>
-                    <p className="text-xs text-gray-600">Rating</p>
+                  <div className="bg-emerald-500/10 rounded-xl p-4 text-center">
+                    <Star className="w-6 h-6 text-emerald-400 mx-auto mb-2" />
+                    <p className="text-lg font-bold text-emerald-400">4.9★</p>
+                    <p className="text-xs text-gray-300">Rating</p>
                   </div>
-                  <div className="bg-green-50 rounded-xl p-4 text-center">
-                    <Shield className="w-6 h-6 text-green-600 mx-auto mb-2" />
-                    <p className="text-lg font-bold text-green-600">100%</p>
-                    <p className="text-xs text-gray-600">Quality</p>
+                  <div className="bg-green-500/10 rounded-xl p-4 text-center">
+                    <Shield className="w-6 h-6 text-green-400 mx-auto mb-2" />
+                    <p className="text-lg font-bold text-green-400">100%</p>
+                    <p className="text-xs text-gray-300">Quality</p>
                   </div>
                 </div>
 
@@ -483,14 +483,14 @@ export function Header() {
                       whileTap={{ scale: 0.95 }}
                       className={`flex items-center justify-between p-4 rounded-xl transition-all duration-200 ${
                         location === item.href
-                          ? 'bg-primary-50 text-primary-600'
-                          : 'text-gray-700 hover:bg-gray-50'
+                          ? 'bg-emerald-500/20 text-emerald-400'
+                          : 'text-gray-300 hover:bg-white/10'
                       }`}
                       data-testid={`nav-mobile-${item.name.toLowerCase().replace(/\s+/g, '-')}`}
                     >
                       <span className="text-lg font-medium">{item.name}</span>
                       {item.badge && (
-                        <Badge className="bg-primary-500 text-white text-xs px-2 py-1">
+                        <Badge className="bg-emerald-500 text-white text-xs px-2 py-1">
                           {item.badge}
                         </Badge>
                       )}
@@ -498,11 +498,11 @@ export function Header() {
                   </Link>
                 ))}
 
-                <div className="space-y-3 pt-4 border-t border-gray-200">
+                <div className="space-y-3 pt-4 border-t border-white/20">
                   <Link href="/track" onClick={() => setMobileMenuOpen(false)}>
                     <Button
                       variant="outline"
-                      className="w-full border-primary-200 text-primary-600 hover:bg-primary-50 py-3 rounded-xl font-medium"
+                      className="w-full border-emerald-400/30 text-emerald-400 hover:bg-emerald-500/10 py-3 rounded-xl font-medium"
                       data-testid="button-mobile-track-order"
                     >
                       Track Order
@@ -510,7 +510,7 @@ export function Header() {
                   </Link>
                   
                   <Link href="/book" onClick={() => setMobileMenuOpen(false)}>
-                    <Button className="w-full bg-gradient-to-r from-primary-500 to-blue-600 text-white py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300">
+                    <Button className="w-full bg-gradient-to-r from-emerald-500 to-sky-600 text-white py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300">
                       <Zap className="mr-2 w-4 h-4" />
                       Book Service Now
                     </Button>
