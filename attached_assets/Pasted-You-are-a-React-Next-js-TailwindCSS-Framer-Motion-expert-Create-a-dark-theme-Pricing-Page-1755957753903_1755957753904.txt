@@ -1,0 +1,89 @@
+You are a React + Next.js + TailwindCSS + Framer Motion expert.  
+Create a **dark theme Pricing Page** (/pricing) for GarageWala with affordable bike & car service pricing, and add a **Pricing link** to the header navigation.
+
+## Header
+- Add "Pricing" link in header nav, between "Services" and "Book".
+- Highlight it when active (gradient underline or text highlight).
+- Include in both desktop nav and mobile menu.
+
+## Pricing Page Design
+- Dark gradient background: `from-gray-950 via-gray-900 to-black` with subtle radial glows.
+- Container: `max-w-6xl mx-auto px-4 md:px-8 py-12 md:py-20`.
+- Animate sections on scroll with Framer Motion (`initial="hidden" whileInView="show"`).
+
+### 1. Hero Section
+- Title: "Simple, Transparent Pricing"
+- Subtitle: "Affordable doorstep vehicle service – no hidden charges."
+- Subtle gradient underline animation under heading.
+- CTA: "Book Service Now" → link to /book.
+
+### 2. Pricing Plans
+- Two tabs: **Bike Services** | **Car Services**
+- Each tab shows **3 plans**: Basic, Standard, Premium.
+- Plans structured as cards:
+  - Glassmorphism card: `bg-white/5 border border-white/10 backdrop-blur-xl rounded-2xl p-6 shadow-md`
+  - Title, price, tagline, bullet list of included services.
+  - Badge for "Best Value" on Standard.
+  - Button: "Choose Plan" → /book?plan=basic&vehicle=bike (or car).
+- Affordable Prices (use INR):
+  - **Bike Plans**
+    - Basic: ₹400 – 600 → General Service
+    - Standard: ₹700 – 1,000 → Periodic Service
+    - Premium: ₹1,200 – 1,500 → Full Service
+  - **Car Plans**
+    - Basic: ₹1,000 – 1,800 → General Service
+    - Standard: ₹2,500 – 3,500 → Periodic Service
+    - Premium: ₹4,000 – 6,000 → Major Service
+
+### 3. Add-On Services
+- Section titled "Optional Add-Ons"
+- Grid of small cards with icons, e.g.:
+  - Pickup & Drop: ₹150 – 300
+  - Home Diagnosis: ₹200 – 400
+  - Emergency 2-Hour Service: +₹200 – 400
+  - Extended Warranty: ₹300 – 600
+- Cards: `rounded-xl bg-white/5 border border-white/10 p-4 text-sm text-gray-300`
+- Hover glow effect.
+
+### 4. Detailed Services (Expandable)
+- Accordion or expandable list of **all services** (bike + car) with affordable price ranges:
+  - Engine oil change, brake pad replacement, clutch work, tyre replacement, battery, AC service, suspension, painting, roadside assistance.
+- Each item: title + description + price (e.g. "Brake Pad Replacement – Bike: ₹400–700 | Car: ₹1,500–2,500").
+- Animate expand/collapse.
+
+### 5. Comparison Table
+- Horizontal scroll on mobile.
+- Columns: Basic | Standard | Premium.
+- Rows: Engine oil change, brake check, wash, detailing, warranty, etc.
+- ✅ or — markers.
+
+### 6. FAQ
+- Common pricing questions:
+  - “Are spare parts included?”
+  - “Do prices vary by city?”
+  - “How fast can service be done?”
+- Accordion style, accessible.
+
+### 7. CTA Section (Bottom)
+- Gradient background strip.
+- Text: "Ready to book your doorstep service?"
+- Button: "Book Now →" → /book.
+
+## Animations
+- Section headings fade-up.
+- Cards stagger fade-up.
+- CTA button hover pulse.
+- Icons micro-float (desktop only).
+
+## Styling
+- Dark mode text: white for headings, gray-300 for body, gray-400 muted.
+- Accent gradients: emerald → sky → indigo.
+- Buttons:
+  - Primary: gradient background with glow hover.
+  - Secondary: glass background with border.
+
+## Deliverables
+- `app/pricing/page.tsx` with sections above.
+- Header updated with "Pricing" link.
+- Plans and add-ons stored in a `pricingConfig.ts` file so prices/services can be updated easily.
+- Fully responsive (mobile-first, two-column on desktop).

@@ -13,6 +13,7 @@ import Services from "@/pages/services";
 import Book from "@/pages/book";
 import Track from "@/pages/track";
 import Contact from "@/pages/contact";
+import Pricing from "@/pages/pricing";
 import HowItWorks from "@/pages/how-it-works";
 import CityLanding from "@/pages/city-landing";
 import Admin from "@/pages/admin";
@@ -30,6 +31,7 @@ function Router() {
         <Switch>
           <Route path="/" component={Home} />
           <Route path="/services" component={Services} />
+          <Route path="/pricing" component={Pricing} />
           <Route path="/book" component={Book} />
           <Route path="/track/:trackingId?" component={Track} />
           <Route path="/contact" component={Contact} />
