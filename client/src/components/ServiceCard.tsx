@@ -91,7 +91,7 @@ export function BookingServiceCard({
                   {service.name}
                 </h3>
                 <p className={`text-sm leading-relaxed transition-colors duration-300 ${
-                  isSelected ? 'text-emerald-100' : 'text-gray-300 group-hover:text-gray-200'
+                  isSelected ? 'text-white' : 'text-gray-300 group-hover:text-gray-200'
                 }`}>
                   {service.subtitle}
                 </p>
