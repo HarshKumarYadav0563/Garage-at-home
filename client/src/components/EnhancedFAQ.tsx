@@ -177,7 +177,10 @@ export function EnhancedFAQ() {
                 }}
                 onHoverStart={() => setHoveredItem(faq.id)}
                 onHoverEnd={() => setHoveredItem(null)}
+                onTouchStart={() => setHoveredItem(faq.id)}
+                onTouchEnd={() => setHoveredItem(null)}
                 className="group"
+                style={{ touchAction: 'manipulation' }}
               >
                 <AccordionItem
                   value={faq.id}
@@ -194,15 +197,17 @@ export function EnhancedFAQ() {
                     }}
                   />
 
-                  <AccordionTrigger className="px-6 py-5 hover:no-underline group/trigger">
+                  <AccordionTrigger className="px-6 py-5 hover:no-underline group/trigger touch-manipulation cursor-pointer" style={{ touchAction: 'manipulation' }}>
                     <div className="flex items-center w-full">
                       {/* Animated icon */}
                       <motion.div 
-                        className={`w-12 h-12 rounded-xl bg-gradient-to-br ${faq.color} flex items-center justify-center mr-4 shadow-lg`}
+                        className={`w-12 h-12 rounded-xl bg-gradient-to-br ${faq.color} flex items-center justify-center mr-4 shadow-lg select-none`}
                         variants={shouldReduceMotion ? {} : iconFloat}
                         animate={hoveredItem === faq.id ? "float" : ""}
                         whileHover={{ scale: 1.1, rotate: 5 }}
+                        whileTap={{ scale: 0.95 }}
                         transition={{ type: "spring", stiffness: 400 }}
+                        style={{ touchAction: 'manipulation' }}
                       >
                         <span className="text-xl">{faq.icon}</span>
                       </motion.div>
@@ -219,9 +224,11 @@ export function EnhancedFAQ() {
 
                       {/* Enhanced chevron animation */}
                       <motion.div
-                        className="ml-4"
+                        className="ml-4 select-none"
                         whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.95 }}
                         transition={{ type: "spring", stiffness: 400 }}
+                        style={{ touchAction: 'manipulation' }}
                       >
                         <ChevronDown className="h-5 w-5 text-gray-400 group-hover/trigger:text-gray-200 transition-all duration-300 group-data-[state=open]/trigger:rotate-180" />
                       </motion.div>
