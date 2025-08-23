@@ -37,7 +37,7 @@ export function BookingServiceCard({
     >
       <Card className={`h-full transition-all duration-500 cursor-pointer group overflow-hidden backdrop-blur-sm ${
         isSelected 
-          ? 'bg-gradient-to-br from-emerald-500/15 via-sky-500/10 to-indigo-500/15 border-emerald-500/60 shadow-xl shadow-emerald-500/25' 
+          ? 'bg-gradient-to-br from-emerald-500/20 via-sky-500/15 to-indigo-500/20 border-emerald-500/70 shadow-xl shadow-emerald-500/30' 
           : 'bg-white/8 border-white/15 hover:bg-white/12 hover:border-white/30 hover:shadow-2xl'
       }`}
       onClick={onToggle}
@@ -91,7 +91,7 @@ export function BookingServiceCard({
                   {service.name}
                 </h3>
                 <p className={`text-sm leading-relaxed transition-colors duration-300 ${
-                  isSelected ? 'text-white' : 'text-gray-300 group-hover:text-gray-200'
+                  isSelected ? 'text-emerald-50' : 'text-gray-300 group-hover:text-gray-200'
                 }`}>
                   {service.subtitle}
                 </p>
