@@ -128,27 +128,26 @@ export function Hero() {
               className="flex gap-3 justify-center px-4"
             >
               <Link href="/book" className="flex-1">
-                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                  <Button
-                    className="w-full bg-gradient-to-r from-emerald-500 via-sky-500 to-indigo-500 hover:shadow-[0_0_20px_rgba(16,185,129,0.4)] text-white px-4 py-3 rounded-xl font-semibold text-sm shadow-lg transition-all duration-300"
-                    data-testid="button-book-now"
-                  >
-                    <Zap className="mr-2 w-4 h-4" />
-                    Book Now
-                  </Button>
+                <motion.div 
+                  whileHover={{ scale: 1.02 }} 
+                  whileTap={{ scale: 0.98 }}
+                  className="w-full bg-gradient-to-r from-emerald-500 via-sky-500 to-indigo-500 hover:shadow-[0_0_20px_rgba(16,185,129,0.4)] text-white px-4 py-3 rounded-xl font-semibold text-sm shadow-lg transition-all duration-300 flex items-center justify-center cursor-pointer"
+                  data-testid="button-book-now"
+                >
+                  <Zap className="mr-2 w-4 h-4" />
+                  Book Now
                 </motion.div>
               </Link>
               
               <Link href="/services" className="flex-1">
-                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                  <Button
-                    variant="outline"
-                    className="w-full bg-white/5 border border-white/10 text-gray-200 px-4 py-3 rounded-xl font-semibold text-sm hover:bg-white/10 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300"
-                    data-testid="button-view-services"
-                  >
-                    <Wrench className="mr-2 w-4 h-4" />
-                    Services
-                  </Button>
+                <motion.div 
+                  whileHover={{ scale: 1.02 }} 
+                  whileTap={{ scale: 0.98 }}
+                  className="w-full bg-white/5 border border-white/10 text-gray-200 px-4 py-3 rounded-xl font-semibold text-sm hover:bg-white/10 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 flex items-center justify-center cursor-pointer"
+                  data-testid="button-view-services"
+                >
+                  <Wrench className="mr-2 w-4 h-4" />
+                  Services
                 </motion.div>
               </Link>
             </motion.div>
@@ -267,14 +266,11 @@ export function Hero() {
                   variants={itemVariants}
                   whileHover={{ scale: 1.05 }} 
                   whileTap={{ scale: 0.95 }}
+                  className="bg-gradient-to-r from-emerald-500 via-sky-500 to-indigo-500 hover:shadow-[0_0_30px_rgba(16,185,129,0.5)] text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-xl transition-all duration-300 flex items-center justify-center cursor-pointer"
+                  data-testid="button-book-now"
                 >
-                  <Button
-                    className="bg-gradient-to-r from-emerald-500 via-sky-500 to-indigo-500 hover:shadow-[0_0_30px_rgba(16,185,129,0.5)] text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-xl transition-all duration-300"
-                    data-testid="button-book-now"
-                  >
-                    <Zap className="mr-2 w-5 h-5" />
-                    Book Service Now
-                  </Button>
+                  <Zap className="mr-2 w-5 h-5" />
+                  Book Service Now
                 </motion.div>
               </Link>
               
@@ -283,15 +279,11 @@ export function Hero() {
                   variants={itemVariants}
                   whileHover={{ scale: 1.05 }} 
                   whileTap={{ scale: 0.95 }}
+                  className="bg-white/5 border border-white/10 text-gray-200 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all duration-300 flex items-center justify-center cursor-pointer"
+                  data-testid="button-view-services"
                 >
-                  <Button
-                    variant="outline"
-                    className="bg-white/5 border border-white/10 text-gray-200 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all duration-300"
-                    data-testid="button-view-services"
-                  >
-                    <Wrench className="mr-2 w-5 h-5" />
-                    View Services
-                  </Button>
+                  <Wrench className="mr-2 w-5 h-5" />
+                  View Services
                 </motion.div>
               </Link>
             </motion.div>
