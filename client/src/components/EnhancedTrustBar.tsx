@@ -54,12 +54,14 @@ export function EnhancedTrustBar() {
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
-      const heroHeight = window.innerHeight * 0.6; // Approximate hero height
       
-      // Show badges when user has scrolled past 20% of hero section
-      setIsVisible(scrollY > heroHeight * 0.2);
+      // Show badges when user has scrolled more than 100px
+      setIsVisible(scrollY > 100);
     };
 
+    // Initial check
+    handleScroll();
+    
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
