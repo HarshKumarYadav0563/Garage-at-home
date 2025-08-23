@@ -7,6 +7,7 @@ import { ThemeProvider } from "@/contexts/ThemeContext";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Toast } from "@/components/Toast";
+import { FloatingThemeToggle } from "@/components/FloatingThemeToggle";
 
 // Pages
 import Home from "@/pages/home";
@@ -44,6 +45,7 @@ function Router() {
       </main>
       <Footer />
       <Toast />
+      <FloatingThemeToggle />
     </div>
   );
 }
