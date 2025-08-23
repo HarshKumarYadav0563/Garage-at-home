@@ -1262,11 +1262,49 @@ export default function Services() {
 
                       {/* Total Section */}
                       <div className="border-t border-white/20 pt-6 mt-6">
-                        <div className="flex items-center justify-between mb-6">
-                          <span className="text-white font-bold text-lg">Total</span>
-                          <span className="text-emerald-400 font-bold text-2xl">
-                            ₹{getSubtotal()}
-                          </span>
+                        <div className="space-y-3 mb-6">
+                          <div className="flex items-center justify-between">
+                            <span className="text-gray-300 text-sm">Services Total</span>
+                            <span className="text-white font-medium">
+                              ₹{getSubtotal()}
+                            </span>
+                          </div>
+                          
+                          {(() => {
+                            const subtotal = getSubtotal();
+                            const doorstepCharge = subtotal > 0 && subtotal < 999 ? 99 : 0;
+                            
+                            return doorstepCharge > 0 ? (
+                              <div className="flex items-center justify-between">
+                                <span className="text-gray-300 text-sm">Doorstep Charge</span>
+                                <span className="text-yellow-400 font-medium">
+                                  ₹{doorstepCharge}
+                                </span>
+                              </div>
+                            ) : null;
+                          })()}
+                          
+                          <div className="border-t border-gray-700 pt-3 flex items-center justify-between">
+                            <span className="text-white font-bold text-lg">Total</span>
+                            <span className="text-emerald-400 font-bold text-2xl">
+                              ₹{(() => {
+                                const subtotal = getSubtotal();
+                                const doorstepCharge = subtotal > 0 && subtotal < 999 ? 99 : 0;
+                                return subtotal + doorstepCharge;
+                              })()}
+                            </span>
+                          </div>
+                          
+                          {(() => {
+                            const subtotal = getSubtotal();
+                            const doorstepCharge = subtotal > 0 && subtotal < 999 ? 99 : 0;
+                            
+                            return doorstepCharge > 0 ? (
+                              <div className="text-xs text-yellow-400 bg-yellow-500/10 rounded p-2">
+                                ℹ️ Doorstep charge applies for orders below ₹999
+                              </div>
+                            ) : null;
+                          })()}
                         </div>
 
                         <Button
