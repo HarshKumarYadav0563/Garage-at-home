@@ -139,17 +139,18 @@ export function Hero() {
                 </motion.div>
               </Link>
               
-              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="flex-1">
-                <Button
-                  onClick={handleUseLocation}
-                  variant="outline"
-                  className="w-full bg-white/5 border border-white/10 text-gray-200 px-4 py-3 rounded-xl font-semibold text-sm hover:bg-white/10 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300"
-                  data-testid="button-use-location"
-                >
-                  <MapPin className="mr-2 w-4 h-4" />
-                  Location
-                </Button>
-              </motion.div>
+              <Link href="/services" className="flex-1">
+                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                  <Button
+                    variant="outline"
+                    className="w-full bg-white/5 border border-white/10 text-gray-200 px-4 py-3 rounded-xl font-semibold text-sm hover:bg-white/10 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300"
+                    data-testid="button-view-services"
+                  >
+                    <Wrench className="mr-2 w-4 h-4" />
+                    Services
+                  </Button>
+                </motion.div>
+              </Link>
             </motion.div>
 
             {/* Trust Row - Glass Pills */}
@@ -256,21 +257,22 @@ export function Hero() {
                 </motion.div>
               </Link>
               
-              <motion.div
-                variants={itemVariants}
-                whileHover={{ scale: 1.05 }} 
-                whileTap={{ scale: 0.95 }}
-              >
-                <Button
-                  onClick={handleUseLocation}
-                  variant="outline"
-                  className="bg-white/5 border border-white/10 text-gray-200 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all duration-300"
-                  data-testid="button-use-location"
+              <Link href="/services">
+                <motion.div
+                  variants={itemVariants}
+                  whileHover={{ scale: 1.05 }} 
+                  whileTap={{ scale: 0.95 }}
                 >
-                  <MapPin className="mr-2 w-5 h-5" />
-                  Use My Location
-                </Button>
-              </motion.div>
+                  <Button
+                    variant="outline"
+                    className="bg-white/5 border border-white/10 text-gray-200 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all duration-300"
+                    data-testid="button-view-services"
+                  >
+                    <Wrench className="mr-2 w-5 h-5" />
+                    View Services
+                  </Button>
+                </motion.div>
+              </Link>
             </motion.div>
 
             {/* Trust Badges - Glass Pills */}
