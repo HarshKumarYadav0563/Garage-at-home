@@ -10,16 +10,20 @@ import { useTheme } from '@/contexts/ThemeContext';
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
   const [location] = useLocation();
   const { isMobileMenuOpen, setMobileMenuOpen } = useUiStore();
   const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      const currentScrollY = window.scrollY;
+      setScrollY(currentScrollY);
+      setIsScrolled(currentScrollY > 50);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Set initial scroll position
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -37,18 +41,43 @@ export function Header() {
 
   return (
     <motion.header
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ 
+        y: 0, 
+        opacity: 1,
+        scale: isScrolled ? 0.98 : 1
+      }}
+      transition={{ 
+        type: "spring", 
+        stiffness: 400, 
+        damping: 30,
+        scale: { duration: 0.2 }
+      }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${
         isScrolled
-          ? 'bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border-b border-gray-200/50 dark:border-gray-700/50 shadow-xl'
+          ? 'bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border-b border-gray-200/50 dark:border-gray-700/50 shadow-2xl transform'
           : 'bg-white/90 dark:bg-gray-900/90 backdrop-blur-lg'
       }`}
+      style={{
+        transform: `translateY(${Math.min(scrollY * -0.5, -10)}px)` 
+      }}
     >
       {/* Top Bar with City and Phone */}
-      <div className={`border-b border-gray-200/30 dark:border-gray-700/30 ${isScrolled ? 'hidden' : 'block'}`}>
+      <motion.div 
+        className="border-b border-gray-200/30 dark:border-gray-700/30 overflow-hidden"
+        animate={{
+          height: isScrolled ? 0 : 'auto',
+          opacity: isScrolled ? 0 : 1
+        }}
+        transition={{ duration: 0.3, ease: "easeInOut" }}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-8 sm:h-10 text-xs sm:text-sm">
+          <motion.div 
+            className="flex justify-between items-center h-8 sm:h-10 text-xs sm:text-sm"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1, duration: 0.3 }}
+          >
             <div className="flex items-center space-x-3 sm:space-x-6">
               <div className="flex items-center space-x-1 sm:space-x-2 text-gray-600 dark:text-gray-300">
                 <MapPin className="w-3 h-3 sm:w-4 sm:h-4" />
@@ -70,42 +99,108 @@ export function Header() {
                 <span>+91 98765 43210</span>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
 
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16 lg:h-20">
+        <motion.div 
+          className={`flex justify-between items-center transition-all duration-300 ${
+            isScrolled ? 'h-14 lg:h-16' : 'h-16 lg:h-20'
+          }`}
+          layout
+        >
           {/* Logo */}
           <Link href="/" data-testid="logo-link">
             <motion.div
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ 
+                scale: 1.05,
+                rotate: [0, -1, 1, 0],
+                transition: { duration: 0.4 }
+              }}
+              whileTap={{ scale: 0.95 }}
               className="flex items-center space-x-2 sm:space-x-3"
+              initial={{ x: -50, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
             >
               <div className="relative">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-primary-500 via-blue-600 to-purple-600 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg">
-                  <Wrench className="text-white text-lg sm:text-xl" />
-                </div>
-                <div className="absolute -top-0.5 -right-0.5 sm:-top-1 sm:-right-1 w-3 h-3 sm:w-4 sm:h-4 bg-green-500 rounded-full flex items-center justify-center">
-                  <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-white rounded-full animate-pulse"></div>
-                </div>
+                <motion.div 
+                  className={`bg-gradient-to-br from-primary-500 via-blue-600 to-purple-600 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg transition-all duration-300 ${
+                    isScrolled ? 'w-8 h-8 sm:w-10 sm:h-10' : 'w-10 h-10 sm:w-12 sm:h-12'
+                  }`}
+                  whileHover={{ 
+                    rotate: 360,
+                    scale: 1.1,
+                    boxShadow: "0 10px 25px rgba(59, 130, 246, 0.5)"
+                  }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <Wrench className={`text-white transition-all duration-300 ${
+                    isScrolled ? 'text-sm sm:text-base' : 'text-lg sm:text-xl'
+                  }`} />
+                </motion.div>
+                <motion.div 
+                  className={`absolute -top-0.5 -right-0.5 sm:-top-1 sm:-right-1 bg-green-500 rounded-full flex items-center justify-center transition-all duration-300 ${
+                    isScrolled ? 'w-2 h-2 sm:w-3 sm:h-3' : 'w-3 h-3 sm:w-4 sm:h-4'
+                  }`}
+                  animate={{ 
+                    scale: [1, 1.2, 1],
+                    opacity: [1, 0.7, 1]
+                  }}
+                  transition={{ 
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                >
+                  <div className={`bg-white rounded-full transition-all duration-300 ${
+                    isScrolled ? 'w-1 h-1 sm:w-1.5 sm:h-1.5' : 'w-1.5 h-1.5 sm:w-2 sm:h-2'
+                  }`}></div>
+                </motion.div>
               </div>
               <div className="flex flex-col">
-                <span className="text-lg sm:text-xl lg:text-2xl font-bold bg-gradient-to-r from-primary-600 to-blue-600 bg-clip-text text-transparent">
+                <motion.span 
+                  className={`font-bold bg-gradient-to-r from-primary-600 to-blue-600 bg-clip-text text-transparent transition-all duration-300 ${
+                    isScrolled ? 'text-base sm:text-lg lg:text-xl' : 'text-lg sm:text-xl lg:text-2xl'
+                  }`}
+                  whileHover={{ 
+                    scale: 1.05,
+                    textShadow: "0px 0px 8px rgba(59, 130, 246, 0.8)"
+                  }}
+                >
                   GarageWala
-                </span>
-                <span className="hidden sm:block text-xs text-gray-500 dark:text-gray-400 font-medium -mt-1">Premium Doorstep Service</span>
+                </motion.span>
+                <motion.span 
+                  className={`text-gray-500 dark:text-gray-400 font-medium -mt-1 transition-all duration-300 ${
+                    isScrolled ? 'hidden' : 'hidden sm:block text-xs'
+                  }`}
+                  animate={{ opacity: isScrolled ? 0 : 1 }}
+                >
+                  Premium Doorstep Service
+                </motion.span>
               </div>
             </motion.div>
           </Link>
 
           {/* City Selector */}
-          <div className="hidden sm:flex md:block relative">
+          <motion.div 
+            className="hidden sm:flex md:block relative"
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
+          >
             <motion.button
-              whileHover={{ scale: 1.02 }}
+              whileHover={{ 
+                scale: 1.02,
+                y: -2,
+                boxShadow: "0 8px 25px rgba(0, 0, 0, 0.1)"
+              }}
               whileTap={{ scale: 0.98 }}
               onClick={() => setShowCityDropdown(!showCityDropdown)}
-              className="flex items-center space-x-2 px-3 sm:px-4 py-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm hover:bg-white dark:hover:bg-gray-800 border border-gray-200/60 dark:border-gray-600/60 hover:border-primary-200 dark:hover:border-primary-600 rounded-xl transition-all duration-200 shadow-sm hover:shadow-md group"
+              className={`flex items-center space-x-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm hover:bg-white dark:hover:bg-gray-800 border border-gray-200/60 dark:border-gray-600/60 hover:border-primary-200 dark:hover:border-primary-600 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md group ${
+                isScrolled ? 'px-2 sm:px-3 py-1.5 text-sm' : 'px-3 sm:px-4 py-2'
+              }`}
             >
               <div className="w-8 h-8 bg-gradient-to-br from-primary-100 to-blue-100 dark:from-primary-900/30 dark:to-blue-900/30 rounded-lg flex items-center justify-center group-hover:from-primary-200 group-hover:to-blue-200 dark:group-hover:from-primary-800/50 dark:group-hover:to-blue-800/50 transition-colors">
                 <MapPin className="w-4 h-4 text-primary-600 dark:text-primary-400" />
@@ -181,16 +276,32 @@ export function Header() {
                 </>
               )}
             </AnimatePresence>
-          </div>
+          </motion.div>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-8">
-            {navigation.map((item) => (
+          <motion.div 
+            className="hidden lg:flex items-center space-x-8"
+            initial={{ x: 50, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.4, type: "spring", stiffness: 200 }}
+          >
+            {navigation.map((item, index) => (
               <Link key={item.name} href={item.href}>
                 <motion.div
-                  whileHover={{ scale: 1.05 }}
+                  whileHover={{ 
+                    scale: 1.05,
+                    y: -2
+                  }}
+                  whileTap={{ scale: 0.95 }}
                   className="relative cursor-pointer"
                   data-testid={`nav-${item.name.toLowerCase().replace(/\s+/g, '-')}`}
+                  initial={{ y: -20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ 
+                    delay: 0.5 + index * 0.1,
+                    type: "spring",
+                    stiffness: 200
+                  }}
                 >
                   <span className={`font-medium transition-colors ${
                     location === item.href
@@ -217,11 +328,20 @@ export function Header() {
             <div className="flex items-center space-x-4">
               {/* Theme Toggle */}
               <motion.button
-                whileHover={{ scale: 1.1 }}
+                whileHover={{ 
+                  scale: 1.1,
+                  rotate: 180,
+                  backgroundColor: theme === 'dark' ? '#fbbf24' : '#1f2937'
+                }}
                 whileTap={{ scale: 0.9 }}
                 onClick={toggleTheme}
-                className="p-2 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                className={`p-2 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 ${
+                  isScrolled ? 'w-8 h-8' : 'w-10 h-10'
+                }`}
                 data-testid="theme-toggle"
+                initial={{ rotate: 0 }}
+                animate={{ rotate: theme === 'dark' ? 0 : 0 }}
+                transition={{ duration: 0.5 }}
               >
                 {theme === 'dark' ? (
                   <Sun className="w-5 h-5 text-yellow-500" />
@@ -231,41 +351,97 @@ export function Header() {
               </motion.button>
 
               <Link href="/track">
-                <Button
-                  variant="outline"
-                  className="border-primary-200 text-primary-600 hover:bg-primary-50 dark:border-primary-600 dark:text-primary-400 dark:hover:bg-primary-900/20 px-6 py-2.5 rounded-xl font-medium"
-                  data-testid="button-track-order"
+                <motion.div
+                  whileHover={{ 
+                    scale: 1.05,
+                    y: -2
+                  }}
+                  whileTap={{ scale: 0.95 }}
                 >
-                  Track Order
-                </Button>
+                  <Button
+                    variant="outline"
+                    className={`border-primary-200 text-primary-600 hover:bg-primary-50 dark:border-primary-600 dark:text-primary-400 dark:hover:bg-primary-900/20 rounded-xl font-medium transition-all duration-300 ${
+                      isScrolled ? 'px-4 py-2 text-sm' : 'px-6 py-2.5'
+                    }`}
+                    data-testid="button-track-order"
+                  >
+                    Track Order
+                  </Button>
+                </motion.div>
               </Link>
               
               <Link href="/book">
-                <Button
-                  className="bg-gradient-to-r from-primary-500 to-blue-600 hover:from-primary-600 hover:to-blue-700 text-white px-6 py-2.5 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105 relative overflow-hidden"
-                  data-testid="button-book-now"
+                <motion.div
+                  whileHover={{ 
+                    scale: 1.05,
+                    y: -3,
+                    boxShadow: "0 20px 40px rgba(59, 130, 246, 0.4)"
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                  animate={{
+                    boxShadow: [
+                      "0 10px 20px rgba(59, 130, 246, 0.2)",
+                      "0 15px 30px rgba(59, 130, 246, 0.3)",
+                      "0 10px 20px rgba(59, 130, 246, 0.2)"
+                    ]
+                  }}
+                  transition={{
+                    boxShadow: { duration: 3, repeat: Infinity }
+                  }}
                 >
-                  <span className="relative z-10 flex items-center space-x-2">
-                    <Zap className="w-4 h-4" />
-                    <span>Book Now</span>
-                  </span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
-                </Button>
+                  <Button
+                    className={`bg-gradient-to-r from-primary-500 to-blue-600 hover:from-primary-600 hover:to-blue-700 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden group ${
+                      isScrolled ? 'px-4 py-2 text-sm' : 'px-6 py-2.5'
+                    }`}
+                    data-testid="button-book-now"
+                  >
+                    <span className="relative z-10 flex items-center space-x-2">
+                      <motion.div
+                        animate={{ rotate: [0, 360] }}
+                        transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                      >
+                        <Zap className={`${isScrolled ? 'w-3 h-3' : 'w-4 h-4'}`} />
+                      </motion.div>
+                      <span>Book Now</span>
+                    </span>
+                    <motion.div 
+                      className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 opacity-0 group-hover:opacity-100 transition-all duration-500"
+                      initial={{ scale: 0 }}
+                      whileHover={{ scale: 1 }}
+                      style={{ borderRadius: 'inherit' }}
+                    />
+                  </Button>
+                </motion.div>
               </Link>
             </div>
-          </div>
+          </motion.div>
 
           {/* Mobile Menu */}
           <Sheet open={isMobileMenuOpen} onOpenChange={setMobileMenuOpen}>
             <SheetTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
+              <motion.div
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
                 className="lg:hidden"
-                data-testid="button-mobile-menu"
               >
-                <Menu className="h-6 w-6" />
-              </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="relative overflow-hidden"
+                  data-testid="button-mobile-menu"
+                >
+                  <motion.div
+                    animate={isMobileMenuOpen ? { rotate: 90 } : { rotate: 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {isMobileMenuOpen ? (
+                      <X className={`${isScrolled ? 'h-5 w-5' : 'h-6 w-6'}`} />
+                    ) : (
+                      <Menu className={`${isScrolled ? 'h-5 w-5' : 'h-6 w-6'}`} />
+                    )}
+                  </motion.div>
+                </Button>
+              </motion.div>
             </SheetTrigger>
             <SheetContent side="right" className="w-[350px] sm:w-[400px] dark:bg-gray-800">
               <div className="flex flex-col space-y-6 mt-6">
@@ -381,7 +557,7 @@ export function Header() {
               </div>
             </SheetContent>
           </Sheet>
-        </div>
+        </motion.div>
       </nav>
     </motion.header>
   );
