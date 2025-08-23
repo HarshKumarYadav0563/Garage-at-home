@@ -96,10 +96,10 @@ export default function ServicesDynamic() {
 
   // Sync store with URL params
   useEffect(() => {
-    if (params && isValidRoute(vehicleParam, cityParam)) {
+    if (params && isValidRoute(vehicleParam, cityParam) && selectedVehicle !== vehicleParam) {
       setSelectedVehicle(vehicleParam);
     }
-  }, [vehicleParam, setSelectedVehicle, params]);
+  }, [vehicleParam, selectedVehicle, params]);
 
   const shouldReduceMotion = useReducedMotion();
   

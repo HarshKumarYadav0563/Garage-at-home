@@ -82,7 +82,10 @@ export const useBookingStore = create<BookingStore>((set, get) => ({
   showPriceRanges: false,
   
   // Actions
-  setSelectedVehicle: (vehicle) => set({ selectedVehicle: vehicle, selectedServices: [] }),
+  setSelectedVehicle: (vehicle) => set((state) => {
+    if (state.selectedVehicle === vehicle) return state; // Prevent unnecessary updates
+    return { selectedVehicle: vehicle, selectedServices: [] };
+  }),
   
   toggleService: (service) => set((state) => {
     const exists = state.selectedServices.find(s => s.id === service.id);
