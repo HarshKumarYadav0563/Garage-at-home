@@ -48,7 +48,6 @@ const faqs = [
 
 export function EnhancedFAQ() {
   const shouldReduceMotion = useReducedMotion();
-  const [openItems, setOpenItems] = useState<string[]>([]);
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
 
   const containerVariants = {
@@ -167,7 +166,7 @@ export function EnhancedFAQ() {
           whileInView="show"
           viewport={{ once: true, amount: 0.2 }}
         >
-          <Accordion type="multiple" className="space-y-4">
+          <Accordion type="single" collapsible className="space-y-4">
             {faqs.map((faq, index) => (
               <motion.div
                 key={faq.id}
