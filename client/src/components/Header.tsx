@@ -62,7 +62,7 @@ export function Header() {
         transform: `translateY(${Math.min(scrollY * -0.5, -10)}px)` 
       }}
     >
-      {/* Mobile: Horizontal Scrollable Pills | Desktop: Traditional Top Bar */}
+      {/* Top Bar with City and Phone */}
       <motion.div 
         className="border-b border-gray-200/30 dark:border-gray-700/30 overflow-hidden"
         animate={{
@@ -71,30 +71,7 @@ export function Header() {
         }}
         transition={{ duration: 0.3, ease: "easeInOut" }}
       >
-        {/* Mobile Pills */}
-        <div className="md:hidden overflow-x-auto no-scrollbar px-3 py-1">
-          <div className="flex gap-2 min-w-max">
-            <div className="text-xs px-2 py-1 rounded-full bg-white/70 dark:bg-gray-800/70 border border-black/5 dark:border-white/10 backdrop-blur flex items-center gap-1">
-              <MapPin className="w-3 h-3" />
-              <span>{cities.length}+ Cities</span>
-            </div>
-            <div className="text-xs px-2 py-1 rounded-full bg-white/70 dark:bg-gray-800/70 border border-black/5 dark:border-white/10 backdrop-blur flex items-center gap-1">
-              <Star className="w-3 h-3 text-yellow-400" />
-              <span>4.9/5</span>
-            </div>
-            <div className="text-xs px-2 py-1 rounded-full bg-white/70 dark:bg-gray-800/70 border border-black/5 dark:border-white/10 backdrop-blur flex items-center gap-1">
-              <Shield className="w-3 h-3 text-green-500" />
-              <span>Quality</span>
-            </div>
-            <div className="text-xs px-2 py-1 rounded-full bg-white/70 dark:bg-gray-800/70 border border-black/5 dark:border-white/10 backdrop-blur flex items-center gap-1">
-              <Phone className="w-3 h-3" />
-              <span>+91 98765 43210</span>
-            </div>
-          </div>
-        </div>
-        
-        {/* Desktop Traditional */}
-        <div className="hidden md:block max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div 
             className="flex justify-between items-center h-8 sm:h-10 text-xs sm:text-sm"
             initial={{ opacity: 0, y: -10 }}
@@ -104,14 +81,15 @@ export function Header() {
             <div className="flex items-center space-x-3 sm:space-x-6">
               <div className="flex items-center space-x-1 sm:space-x-2 text-gray-600 dark:text-gray-300">
                 <MapPin className="w-3 h-3 sm:w-4 sm:h-4" />
-                <span>Available in {cities.length}+ cities</span>
+                <span className="hidden sm:inline">Available in {cities.length}+ cities</span>
+                <span className="sm:hidden">{cities.length}+ Cities</span>
               </div>
               <div className="flex items-center space-x-1 sm:space-x-2">
                 <Star className="w-3 h-3 sm:w-4 sm:h-4 text-yellow-400" />
                 <span className="text-gray-700 dark:text-gray-200 font-medium">4.9/5</span>
               </div>
             </div>
-            <div className="flex items-center space-x-6">
+            <div className="hidden md:flex items-center space-x-6">
               <div className="flex items-center space-x-2">
                 <Shield className="w-4 h-4 text-green-500" />
                 <span className="text-gray-700 dark:text-gray-200">Quality Guaranteed</span>
@@ -132,94 +110,78 @@ export function Header() {
           }`}
           layout
         >
-          {/* Logo - Mobile: Logo + tagline on one line | Desktop: Same as before */}
-          <div className="flex flex-col">
-            <Link href="/" data-testid="logo-link">
-              <motion.div
-                whileHover={{ 
-                  scale: 1.05,
-                  rotate: [0, -1, 1, 0],
-                  transition: { duration: 0.4 }
-                }}
-                whileTap={{ scale: 0.95 }}
-                className="flex items-center space-x-2 sm:space-x-3"
-                initial={{ x: -50, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-              >
-                <div className="relative">
-                  <motion.div 
-                    className={`bg-gradient-to-br from-primary-500 via-blue-600 to-purple-600 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg transition-all duration-300 ${
-                      isScrolled ? 'w-8 h-8 sm:w-10 sm:h-10' : 'w-10 h-10 sm:w-12 sm:h-12'
-                    }`}
-                    whileHover={{ 
-                      rotate: 360,
-                      scale: 1.1,
-                      boxShadow: "0 10px 25px rgba(59, 130, 246, 0.5)"
-                    }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <Wrench className={`text-white transition-all duration-300 ${
-                      isScrolled ? 'text-sm sm:text-base' : 'text-lg sm:text-xl'
-                    }`} />
-                  </motion.div>
-                  <motion.div 
-                    className={`absolute -top-0.5 -right-0.5 sm:-top-1 sm:-right-1 bg-green-500 rounded-full flex items-center justify-center transition-all duration-300 ${
-                      isScrolled ? 'w-2 h-2 sm:w-3 sm:h-3' : 'w-3 h-3 sm:w-4 sm:h-4'
-                    }`}
-                    animate={{ 
-                      scale: [1, 1.2, 1],
-                      opacity: [1, 0.7, 1]
-                    }}
-                    transition={{ 
-                      duration: 2,
-                      repeat: Infinity,
-                      ease: "easeInOut"
-                    }}
-                  >
-                    <div className={`bg-white rounded-full transition-all duration-300 ${
-                      isScrolled ? 'w-1 h-1 sm:w-1.5 sm:h-1.5' : 'w-1.5 h-1.5 sm:w-2 sm:h-2'
-                    }`}></div>
-                  </motion.div>
-                </div>
-                <div className="flex flex-col md:flex-row md:items-center md:space-x-2">
-                  <motion.span 
-                    className={`font-bold bg-gradient-to-r from-primary-600 to-blue-600 bg-clip-text text-transparent transition-all duration-300 ${
-                      isScrolled ? 'text-base sm:text-lg lg:text-xl' : 'text-lg sm:text-xl lg:text-2xl'
-                    }`}
-                    whileHover={{ 
-                      scale: 1.05,
-                      textShadow: "0px 0px 8px rgba(59, 130, 246, 0.8)"
-                    }}
-                  >
-                    GarageWala
-                  </motion.span>
-                  <motion.span 
-                    className={`text-gray-500 dark:text-gray-400 font-medium transition-all duration-300 ${
-                      isScrolled ? 'hidden md:block text-xs' : 'block text-xs md:text-xs truncate'
-                    }`}
-                    animate={{ opacity: isScrolled ? 0 : 1 }}
-                  >
-                    Premium Doorstep Service
-                  </motion.span>
-                </div>
-              </motion.div>
-            </Link>
-            
-            {/* Mobile City Selector Pill */}
-            <div className="md:hidden mt-2">
-              <button
-                onClick={() => setShowCityDropdown(!showCityDropdown)}
-                className="text-xs px-2 py-1 rounded-full bg-white dark:bg-gray-800 shadow-sm border border-black/5 dark:border-white/10 flex items-center gap-1"
-              >
-                <MapPin className="w-3 h-3" />
-                <span>{selectedCity}</span>
-                <ChevronDown className={`w-3 h-3 transition-transform ${
-                  showCityDropdown ? 'rotate-180' : ''
-                }`} />
-              </button>
-            </div>
-          </div>
+          {/* Logo */}
+          <Link href="/" data-testid="logo-link">
+            <motion.div
+              whileHover={{ 
+                scale: 1.05,
+                rotate: [0, -1, 1, 0],
+                transition: { duration: 0.4 }
+              }}
+              whileTap={{ scale: 0.95 }}
+              className="flex items-center space-x-2 sm:space-x-3"
+              initial={{ x: -50, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+            >
+              <div className="relative">
+                <motion.div 
+                  className={`bg-gradient-to-br from-primary-500 via-blue-600 to-purple-600 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg transition-all duration-300 ${
+                    isScrolled ? 'w-8 h-8 sm:w-10 sm:h-10' : 'w-10 h-10 sm:w-12 sm:h-12'
+                  }`}
+                  whileHover={{ 
+                    rotate: 360,
+                    scale: 1.1,
+                    boxShadow: "0 10px 25px rgba(59, 130, 246, 0.5)"
+                  }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <Wrench className={`text-white transition-all duration-300 ${
+                    isScrolled ? 'text-sm sm:text-base' : 'text-lg sm:text-xl'
+                  }`} />
+                </motion.div>
+                <motion.div 
+                  className={`absolute -top-0.5 -right-0.5 sm:-top-1 sm:-right-1 bg-green-500 rounded-full flex items-center justify-center transition-all duration-300 ${
+                    isScrolled ? 'w-2 h-2 sm:w-3 sm:h-3' : 'w-3 h-3 sm:w-4 sm:h-4'
+                  }`}
+                  animate={{ 
+                    scale: [1, 1.2, 1],
+                    opacity: [1, 0.7, 1]
+                  }}
+                  transition={{ 
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                >
+                  <div className={`bg-white rounded-full transition-all duration-300 ${
+                    isScrolled ? 'w-1 h-1 sm:w-1.5 sm:h-1.5' : 'w-1.5 h-1.5 sm:w-2 sm:h-2'
+                  }`}></div>
+                </motion.div>
+              </div>
+              <div className="flex flex-col">
+                <motion.span 
+                  className={`font-bold bg-gradient-to-r from-primary-600 to-blue-600 bg-clip-text text-transparent transition-all duration-300 ${
+                    isScrolled ? 'text-base sm:text-lg lg:text-xl' : 'text-lg sm:text-xl lg:text-2xl'
+                  }`}
+                  whileHover={{ 
+                    scale: 1.05,
+                    textShadow: "0px 0px 8px rgba(59, 130, 246, 0.8)"
+                  }}
+                >
+                  GarageWala
+                </motion.span>
+                <motion.span 
+                  className={`text-gray-500 dark:text-gray-400 font-medium -mt-1 transition-all duration-300 ${
+                    isScrolled ? 'hidden' : 'hidden sm:block text-xs'
+                  }`}
+                  animate={{ opacity: isScrolled ? 0 : 1 }}
+                >
+                  Premium Doorstep Service
+                </motion.span>
+              </div>
+            </motion.div>
+          </Link>
 
           {/* City Selector */}
           <motion.div 
