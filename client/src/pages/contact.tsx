@@ -73,7 +73,7 @@ export default function Contact() {
     {
       icon: Mail,
       title: 'Email Us',
-      value: 'support@garagewala.com',
+      value: 'support@garageathome.com',
       description: 'We reply within 24 hours',
       color: 'from-sky-400 to-blue-600'
     },

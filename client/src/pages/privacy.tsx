@@ -144,7 +144,7 @@ export default function Privacy() {
                 please don't hesitate to contact us.
               </p>
               <div className="space-y-2">
-                <p className="font-medium">Email: privacy@garagewala.com</p>
+                <p className="font-medium">Email: privacy@garageathome.com</p>
                 <p className="font-medium">Phone: +91 98765 43210</p>
                 <p className="text-sm text-gray-600">
                   Our privacy team typically responds within 24 hours

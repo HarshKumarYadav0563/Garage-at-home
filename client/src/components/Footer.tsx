@@ -316,7 +316,7 @@ export function Footer() {
                   </div>
                   <div>
                     <div className="font-semibold text-white dark:text-gray-100">Email</div>
-                    <div className="text-gray-300 dark:text-gray-300 text-sm" data-testid="footer-email">support@garagewala.com</div>
+                    <div className="text-gray-300 dark:text-gray-300 text-sm" data-testid="footer-email">support@garageathome.com</div>
                     <div className="text-xs text-gray-400 dark:text-gray-400">Quick response</div>
                   </div>
                 </div>
@@ -443,7 +443,7 @@ export function Footer() {
             "description": "Delhi-NCR's premium doorstep vehicle service platform. Professional bike and car repair services at your location.",
             "url": "https://garagewala.com",
             "telephone": "+91-98765-43210",
-            "email": "support@garagewala.com",
+            "email": "support@garageathome.com",
             "address": {
               "@type": "PostalAddress",
               "addressRegion": "Delhi-NCR",
