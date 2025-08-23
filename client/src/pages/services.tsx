@@ -327,17 +327,17 @@ export default function Services() {
         }}
       />
       
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 pt-20 lg:pt-24">
+      <div className="relative max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8 py-4 pt-16 sm:pt-20 lg:pt-24">
         
-        {/* Enhanced Hero Section */}
+        {/* Enhanced Hero Section - Mobile Responsive */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="text-center mb-8"
+          className="text-center mb-6 sm:mb-8 px-2 sm:px-4"
         >
           <motion.h1 
-            className="text-4xl lg:text-5xl font-bold mb-3"
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2 sm:mb-3"
             initial={{ scale: 0.9 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.2, duration: 0.5, ease: "easeOut" }}
@@ -377,7 +377,7 @@ export default function Services() {
             </motion.span>
           </motion.h1>
           <motion.p 
-            className="text-lg text-gray-300 max-w-2xl mx-auto"
+            className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto px-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.6 }}
@@ -403,9 +403,9 @@ export default function Services() {
             at your doorstep
           </motion.p>
           
-          {/* Floating service badges */}
+          {/* Floating service badges - Mobile Responsive */}
           <motion.div 
-            className="flex justify-center space-x-4 mt-6"
+            className="flex flex-wrap justify-center gap-2 sm:gap-4 mt-4 sm:mt-6 px-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.6 }}
@@ -413,7 +413,7 @@ export default function Services() {
             {['24/7 Available', 'Quality Assured', 'Doorstep Service'].map((badge, index) => (
               <motion.div
                 key={badge}
-                className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 text-sm text-gray-300"
+                className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm text-gray-300"
                 animate={{
                   y: [0, -5, 0],
                   opacity: [0.7, 1, 0.7]
@@ -436,15 +436,15 @@ export default function Services() {
           </motion.div>
         </motion.div>
 
-        {/* Enhanced Service Selection */}
+        {/* Enhanced Service Selection - Mobile Responsive */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.8 }}
-          className="mb-8"
+          className="mb-6 sm:mb-8 mx-2 sm:mx-4 lg:mx-0"
         >
           <motion.div 
-            className="bg-white/8 backdrop-blur-xl border border-white/20 rounded-3xl p-6 shadow-2xl relative overflow-hidden"
+            className="bg-white/8 backdrop-blur-xl border border-white/20 rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-2xl relative overflow-hidden"
             whileHover={{ 
               scale: 1.005,
               borderColor: 'rgba(16, 185, 129, 0.3)',
@@ -468,35 +468,35 @@ export default function Services() {
                 ease: "linear"
               }}
             />
-            {/* Enhanced Vehicle Selection */}
-            <div className="relative flex flex-col items-center space-y-6 mb-8 z-10">
+            {/* Enhanced Vehicle Selection - Mobile Responsive */}
+            <div className="relative flex flex-col items-center space-y-4 sm:space-y-6 mb-6 sm:mb-8 z-10">
               <motion.h2 
-                className="text-2xl font-bold text-white"
+                className="text-xl sm:text-2xl font-bold text-white text-center"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
               >
                 Choose Your Vehicle
               </motion.h2>
-              <div className="flex space-x-6">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-6 w-full sm:w-auto">
                 <motion.button
                   onClick={() => setSelectedVehicle('bike')}
-                  className={`group relative overflow-hidden flex items-center space-x-4 px-8 py-6 rounded-3xl border-2 transition-all duration-500 ${
+                  className={`group relative overflow-hidden flex items-center justify-center sm:justify-start space-x-3 sm:space-x-4 px-4 sm:px-8 py-4 sm:py-6 rounded-2xl sm:rounded-3xl border-2 transition-all duration-500 w-full sm:w-auto ${
                     selectedVehicle === 'bike'
                       ? 'bg-gradient-to-r from-emerald-500 to-sky-500 border-emerald-400 text-white shadow-xl shadow-emerald-500/30'
                       : 'bg-white/5 border-white/20 text-gray-300 hover:bg-white/10 hover:border-emerald-500/50'
                   }`}
                   whileHover={{ 
-                    scale: 1.05,
-                    y: -3,
+                    scale: 1.02,
+                    y: -2,
                     boxShadow: selectedVehicle === 'bike' 
                       ? '0 20px 40px rgba(16, 185, 129, 0.4)' 
                       : '0 10px 20px rgba(255, 255, 255, 0.1)'
                   }}
-                  whileTap={{ scale: 0.95 }}
+                  whileTap={{ scale: 0.98 }}
                   data-testid="tab-bike"
-                  initial={{ opacity: 0, x: -50 }}
-                  animate={{ opacity: 1, x: 0 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2, duration: 0.6 }}
                 >
                   {/* Animated background gradient */}
@@ -523,44 +523,44 @@ export default function Services() {
                       repeat: selectedVehicle === 'bike' ? Infinity : 0
                     }}
                   >
-                    <Bike className="w-8 h-8 relative z-10" />
+                    <Bike className="w-6 h-6 sm:w-8 sm:h-8 relative z-10 flex-shrink-0" />
                   </motion.div>
-                  <div className="text-left relative z-10">
-                    <span className="font-semibold text-lg">Bike Services</span>
-                    <p className="text-sm opacity-80">2-Wheeler Maintenance</p>
+                  <div className="text-left sm:text-left text-center relative z-10 min-w-0">
+                    <span className="font-semibold text-base sm:text-lg block">Bike Services</span>
+                    <p className="text-xs sm:text-sm opacity-80 hidden sm:block">2-Wheeler Maintenance</p>
                   </div>
                   
                   {/* Selection indicator */}
                   {selectedVehicle === 'bike' && (
                     <motion.div
-                      className="absolute -top-2 -right-2 w-6 h-6 bg-white rounded-full flex items-center justify-center"
+                      className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 w-5 h-5 sm:w-6 sm:h-6 bg-white rounded-full flex items-center justify-center"
                       initial={{ scale: 0, rotate: -180 }}
                       animate={{ scale: 1, rotate: 0 }}
                       transition={{ type: "spring", stiffness: 500, damping: 15 }}
                     >
-                      <CheckCircle className="w-4 h-4 text-emerald-500" />
+                      <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4 text-emerald-500" />
                     </motion.div>
                   )}
                 </motion.button>
                 
                 <motion.button
                   onClick={() => setSelectedVehicle('car')}
-                  className={`group relative overflow-hidden flex items-center space-x-4 px-8 py-6 rounded-3xl border-2 transition-all duration-500 ${
+                  className={`group relative overflow-hidden flex items-center justify-center sm:justify-start space-x-3 sm:space-x-4 px-4 sm:px-8 py-4 sm:py-6 rounded-2xl sm:rounded-3xl border-2 transition-all duration-500 w-full sm:w-auto ${
                     selectedVehicle === 'car'
                       ? 'bg-gradient-to-r from-emerald-500 to-sky-500 border-emerald-400 text-white shadow-xl shadow-emerald-500/30'
                       : 'bg-white/5 border-white/20 text-gray-300 hover:bg-white/10 hover:border-emerald-500/50'
                   }`}
                   whileHover={{ 
-                    scale: 1.05,
-                    y: -3,
+                    scale: 1.02,
+                    y: -2,
                     boxShadow: selectedVehicle === 'car' 
                       ? '0 20px 40px rgba(16, 185, 129, 0.4)' 
                       : '0 10px 20px rgba(255, 255, 255, 0.1)'
                   }}
-                  whileTap={{ scale: 0.95 }}
+                  whileTap={{ scale: 0.98 }}
                   data-testid="tab-car"
-                  initial={{ opacity: 0, x: 50 }}
-                  animate={{ opacity: 1, x: 0 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3, duration: 0.6 }}
                 >
                   {/* Animated background gradient */}
@@ -587,42 +587,40 @@ export default function Services() {
                       repeat: selectedVehicle === 'car' ? Infinity : 0
                     }}
                   >
-                    <Car className="w-8 h-8 relative z-10" />
+                    <Car className="w-6 h-6 sm:w-8 sm:h-8 relative z-10 flex-shrink-0" />
                   </motion.div>
-                  <div className="text-left relative z-10">
-                    <span className="font-semibold text-lg">Car Services</span>
-                    <p className="text-sm opacity-80">4-Wheeler Maintenance</p>
+                  <div className="text-left sm:text-left text-center relative z-10 min-w-0">
+                    <span className="font-semibold text-base sm:text-lg block">Car Services</span>
+                    <p className="text-xs sm:text-sm opacity-80 hidden sm:block">4-Wheeler Maintenance</p>
                   </div>
                   
                   {/* Selection indicator */}
                   {selectedVehicle === 'car' && (
                     <motion.div
-                      className="absolute -top-2 -right-2 w-6 h-6 bg-white rounded-full flex items-center justify-center"
+                      className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 w-5 h-5 sm:w-6 sm:h-6 bg-white rounded-full flex items-center justify-center"
                       initial={{ scale: 0, rotate: -180 }}
                       animate={{ scale: 1, rotate: 0 }}
                       transition={{ type: "spring", stiffness: 500, damping: 15 }}
                     >
-                      <CheckCircle className="w-4 h-4 text-emerald-500" />
+                      <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4 text-emerald-500" />
                     </motion.div>
                   )}
                 </motion.button>
               </div>
             </div>
 
-            {/* Quick Controls */}
-            <div className="flex flex-col lg:flex-row items-center justify-between gap-4">
-              <div className="flex flex-col sm:flex-row items-center gap-4 flex-1">
-                {/* City Selector */}
-
-                {/* Enhanced Search */}
+            {/* Enhanced Quick Controls - Mobile Responsive */}
+            <div className="flex flex-col gap-4 px-2 sm:px-0">
+              <div className="w-full">
+                {/* Enhanced Search - Mobile Responsive */}
                 <motion.div 
-                  className="relative flex-1 max-w-md"
+                  className="relative w-full"
                   whileHover={{ 
-                    scale: 1.02,
-                    y: -2
+                    scale: 1.01,
+                    y: -1
                   }}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4, duration: 0.6, type: "spring", stiffness: 400 }}
                 >
                   {/* Glowing border effect */}
@@ -640,7 +638,7 @@ export default function Services() {
                   />
                   
                   <motion.div
-                    className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10"
+                    className="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 z-10"
                     animate={{ 
                       rotate: searchQuery ? [0, 360] : 0,
                       scale: searchQuery ? [1, 1.2, 1] : 1,
@@ -651,7 +649,7 @@ export default function Services() {
                       repeat: searchQuery ? Infinity : 0
                     }}
                   >
-                    <Search className="w-5 h-5" />
+                    <Search className="w-4 h-4 sm:w-5 sm:h-5" />
                   </motion.div>
                   
                   <Input
@@ -659,20 +657,20 @@ export default function Services() {
                     placeholder={`Search ${selectedVehicle} services...`}
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="relative pl-14 pr-4 py-4 bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder:text-gray-400 focus:border-emerald-500/50 focus:bg-white/15 focus:shadow-lg focus:shadow-emerald-500/20 transition-all duration-300 rounded-xl text-lg"
+                    className="relative pl-12 sm:pl-14 pr-4 py-3 sm:py-4 bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder:text-gray-400 focus:border-emerald-500/50 focus:bg-white/15 focus:shadow-lg focus:shadow-emerald-500/20 transition-all duration-300 rounded-xl text-base sm:text-lg w-full"
                     data-testid="search-services"
                   />
                   
                   {/* Search suggestions indicator */}
                   {searchQuery && (
                     <motion.div
-                      className="absolute right-4 top-1/2 transform -translate-y-1/2"
+                      className="absolute right-3 sm:right-4 top-1/2 transform -translate-y-1/2"
                       initial={{ scale: 0, rotate: -180 }}
                       animate={{ scale: 1, rotate: 0 }}
                       transition={{ type: "spring", stiffness: 300 }}
                     >
                       <motion.div
-                        className="w-2 h-2 bg-emerald-400 rounded-full"
+                        className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-emerald-400 rounded-full"
                         animate={{
                           opacity: [0.4, 1, 0.4],
                           scale: [1, 1.2, 1]
@@ -691,77 +689,204 @@ export default function Services() {
           </motion.div>
         </motion.div>
 
-        {/* Enhanced Step Indicator */}
+        {/* Enhanced Step Indicator - Mobile Responsive */}
         {currentStep !== 'confirmation' && (
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.6 }}
-            className="flex justify-center mb-12"
+            transition={{ delay: 0.5, duration: 0.8 }}
+            className="flex justify-center mb-8 sm:mb-12 px-2 sm:px-4"
           >
-            <div className="bg-white/5 backdrop-blur-xl border border-white/20 rounded-2xl p-6">
-              <div className="flex items-center space-x-8">
-                {/* Step 1 */}
+            <motion.div 
+              className="bg-white/5 backdrop-blur-xl border border-white/20 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 relative overflow-hidden w-full max-w-4xl"
+              whileHover={{ 
+                scale: 1.005,
+                borderColor: 'rgba(16, 185, 129, 0.3)',
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)'
+              }}
+              transition={{ duration: 0.3 }}
+            >
+              {/* Animated background */}
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-emerald-500/5 via-sky-500/5 to-purple-500/5"
+                animate={{
+                  x: ['-100%', '100%'],
+                  opacity: [0, 0.5, 0]
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              />
+              
+              <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 md:gap-8 relative z-10">
+                {/* Step 1 - Mobile Responsive */}
                 <motion.div 
-                  className={`flex items-center space-x-3 transition-all duration-500 ${
+                  className={`flex flex-col sm:flex-row items-center text-center sm:text-left gap-2 sm:gap-3 transition-all duration-500 ${
                     currentStep === 'services' ? 'text-emerald-400' : currentStep === 'details' ? 'text-white' : 'text-gray-500'
                   }`}
-                  whileHover={{ scale: 1.05 }}
+                  whileHover={{ scale: 1.02, y: -1 }}
+                  initial={{ x: -30, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ delay: 0.6, duration: 0.6 }}
                 >
                   <motion.div 
-                    className={`w-12 h-12 rounded-full flex items-center justify-center font-bold transition-all duration-500 ${
+                    className={`w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl sm:rounded-2xl flex items-center justify-center font-bold transition-all duration-500 relative ${
                       currentStep === 'services' 
-                        ? 'bg-gradient-to-r from-emerald-500 to-emerald-600 shadow-lg shadow-emerald-500/30' 
+                        ? 'bg-gradient-to-r from-emerald-500 to-emerald-600 shadow-xl shadow-emerald-500/40' 
                         : currentStep === 'details' 
-                        ? 'bg-gradient-to-r from-emerald-500 to-emerald-600 shadow-lg shadow-emerald-500/30' 
+                        ? 'bg-gradient-to-r from-emerald-500 to-emerald-600 shadow-xl shadow-emerald-500/40' 
                         : 'bg-gray-600'
                     }`}
+                    animate={{
+                      scale: currentStep === 'services' ? [1, 1.1, 1] : 1,
+                      rotate: currentStep === 'services' ? [0, 360] : 0,
+                      boxShadow: currentStep === 'services' 
+                        ? ['0 8px 25px rgba(16, 185, 129, 0.4)', '0 15px 35px rgba(16, 185, 129, 0.6)', '0 8px 25px rgba(16, 185, 129, 0.4)']
+                        : currentStep === 'details'
+                        ? '0 8px 25px rgba(16, 185, 129, 0.4)'
+                        : '0 0 0 rgba(16, 185, 129, 0)'
+                    }}
+                    transition={{
+                      duration: currentStep === 'services' ? 3 : 0.5,
+                      repeat: currentStep === 'services' ? Infinity : 0,
+                      ease: "easeInOut"
+                    }}
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    <span className="text-white font-bold">1</span>
+                    {/* Animated ring */}
+                    {currentStep === 'services' && (
+                      <motion.div
+                        className="absolute inset-0 rounded-xl sm:rounded-2xl border-2 border-emerald-400"
+                        animate={{
+                          scale: [1, 1.3],
+                          opacity: [1, 0]
+                        }}
+                        transition={{
+                          duration: 1.5,
+                          repeat: Infinity,
+                          ease: "easeOut"
+                        }}
+                      />
+                    )}
+                    
+                    {currentStep !== 'services' && currentStep !== 'details' ? (
+                      <span className="text-white font-bold text-sm sm:text-base md:text-lg">1</span>
+                    ) : (
+                      <motion.div
+                        animate={{ scale: [0.8, 1.2, 1] }}
+                        transition={{ duration: 0.5 }}
+                      >
+                        <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8" />
+                      </motion.div>
+                    )}
                   </motion.div>
-                  <div>
-                    <div className="font-semibold">Select Services</div>
-                    <div className="text-xs text-gray-400">Choose your package</div>
+                  <div className="text-center sm:text-left">
+                    <p className="font-bold text-sm sm:text-base md:text-lg">Select Services</p>
+                    <p className="text-xs sm:text-sm opacity-70 hidden sm:block">Choose what you need</p>
                   </div>
                 </motion.div>
                 
-                {/* Connector */}
+                {/* Enhanced Connector - Mobile Responsive */}
                 <motion.div 
-                  className={`w-16 h-0.5 transition-all duration-500 ${
-                    currentStep === 'details' ? 'bg-gradient-to-r from-emerald-500 to-blue-500' : 'bg-gray-600'
-                  }`}
-                  initial={{ scaleX: 0 }}
-                  animate={{ scaleX: currentStep === 'details' ? 1 : 0.3 }}
-                  transition={{ duration: 0.5 }}
-                />
+                  className="relative w-8 h-1 sm:w-12 sm:h-2 md:w-16 md:h-2 bg-gray-600 rounded-full overflow-hidden"
+                  initial={{ width: 0 }}
+                  animate={{ 
+                    width: 'auto',
+                    backgroundColor: currentStep === 'details' ? '#10b981' : '#4b5563'
+                  }}
+                  transition={{ delay: 0.8, duration: 0.6 }}
+                >
+                  {currentStep === 'details' && (
+                    <motion.div
+                      className="h-full bg-gradient-to-r from-emerald-500 to-sky-500 relative overflow-hidden"
+                      initial={{ width: '0%' }}
+                      animate={{ width: '100%' }}
+                      transition={{ duration: 1, ease: "easeInOut" }}
+                    >
+                      {/* Flowing light effect */}
+                      <motion.div
+                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                        animate={{
+                          x: ['-100%', '100%']
+                        }}
+                        transition={{
+                          duration: 1.5,
+                          repeat: Infinity,
+                          ease: "easeInOut"
+                        }}
+                      />
+                    </motion.div>
+                  )}
+                </motion.div>
                 
-                {/* Step 2 */}
+                {/* Step 2 - Mobile Responsive */}
                 <motion.div 
-                  className={`flex items-center space-x-3 transition-all duration-500 ${
-                    currentStep === 'details' ? 'text-blue-400' : 'text-gray-500'
+                  className={`flex flex-col sm:flex-row items-center text-center sm:text-left gap-2 sm:gap-3 transition-all duration-500 ${
+                    currentStep === 'details' ? 'text-emerald-400' : 'text-gray-500'
                   }`}
-                  whileHover={{ scale: 1.05 }}
+                  whileHover={{ scale: 1.02, y: -1 }}
+                  initial={{ x: 30, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ delay: 0.7, duration: 0.6 }}
                 >
                   <motion.div 
-                    className={`w-12 h-12 rounded-full flex items-center justify-center font-bold transition-all duration-500 ${
+                    className={`w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl sm:rounded-2xl flex items-center justify-center font-bold transition-all duration-500 relative ${
                       currentStep === 'details' 
-                        ? 'bg-gradient-to-r from-blue-500 to-blue-600 shadow-lg shadow-blue-500/30' 
+                        ? 'bg-gradient-to-r from-emerald-500 to-emerald-600 shadow-xl shadow-emerald-500/40' 
                         : 'bg-gray-600'
                     }`}
+                    animate={{
+                      scale: currentStep === 'details' ? [1, 1.1, 1] : 1,
+                      rotate: currentStep === 'details' ? [0, 360] : 0,
+                      boxShadow: currentStep === 'details' 
+                        ? ['0 8px 25px rgba(16, 185, 129, 0.4)', '0 15px 35px rgba(16, 185, 129, 0.6)', '0 8px 25px rgba(16, 185, 129, 0.4)']
+                        : '0 0 0 rgba(16, 185, 129, 0)'
+                    }}
+                    transition={{
+                      duration: currentStep === 'details' ? 3 : 0.5,
+                      repeat: currentStep === 'details' ? Infinity : 0,
+                      ease: "easeInOut"
+                    }}
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    <span className="text-white font-bold">2</span>
+                    {/* Animated ring */}
+                    {currentStep === 'details' && (
+                      <motion.div
+                        className="absolute inset-0 rounded-xl sm:rounded-2xl border-2 border-emerald-400"
+                        animate={{
+                          scale: [1, 1.3],
+                          opacity: [1, 0]
+                        }}
+                        transition={{
+                          duration: 1.5,
+                          repeat: Infinity,
+                          ease: "easeOut"
+                        }}
+                      />
+                    )}
+                    
+                    {currentStep === 'details' ? (
+                      <motion.div
+                        animate={{ scale: [0.8, 1.2, 1] }}
+                        transition={{ duration: 0.5 }}
+                      >
+                        <User className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8" />
+                      </motion.div>
+                    ) : (
+                      <span className="text-white font-bold text-sm sm:text-base md:text-lg">2</span>
+                    )}
                   </motion.div>
-                  <div>
-                    <div className="font-semibold">Book Details</div>
-                    <div className="text-xs text-gray-400">Time & customer info</div>
+                  <div className="text-center sm:text-left">
+                    <p className="font-bold text-sm sm:text-base md:text-lg">Your Details</p>
+                    <p className="text-xs sm:text-sm opacity-70 hidden sm:block">Contact & address</p>
                   </div>
                 </motion.div>
               </div>
-            </div>
+            </motion.div>
           </motion.div>
         )}
 
@@ -781,7 +906,7 @@ export default function Services() {
                     <div className="flex items-center justify-between mb-8">
                       <div>
                         <motion.h2 
-                          className="text-4xl font-bold text-white mb-2"
+                          className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-2"
                           initial={{ opacity: 0, x: -20 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: 1.1, duration: 0.6 }}
@@ -789,7 +914,7 @@ export default function Services() {
                           {selectedVehicle === 'bike' ? 'Bike' : 'Car'} Service Packages
                         </motion.h2>
                         <motion.p 
-                          className="text-gray-300 text-lg"
+                          className="text-gray-300 text-sm sm:text-base md:text-lg"
                           initial={{ opacity: 0, x: -20 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: 1.2, duration: 0.6 }}
@@ -802,7 +927,7 @@ export default function Services() {
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: 1.3, type: "spring", stiffness: 300 }}
                       >
-                        <Badge className="bg-gradient-to-r from-emerald-500 to-sky-500 text-white px-4 py-2 text-lg shadow-lg">
+                        <Badge className="bg-gradient-to-r from-emerald-500 to-sky-500 text-white px-3 py-1.5 sm:px-4 sm:py-2 text-sm sm:text-base md:text-lg shadow-lg">
                           Best Value
                         </Badge>
                       </motion.div>
@@ -820,7 +945,7 @@ export default function Services() {
                     </motion.div>
                     
                     <motion.div
-                      className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8"
+                      className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 lg:gap-8"
                       variants={{
                         hidden: { opacity: 0 },
                         show: {
