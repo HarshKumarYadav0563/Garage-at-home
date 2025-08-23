@@ -12,7 +12,7 @@ export default function Refund() {
         'Mechanic failed to arrive within the scheduled time slot',
         'Service quality does not meet our guaranteed standards',
         'Parts/materials charged but not used in the service',
-        'Service cancelled by Garageathome due to unforeseen circumstances'
+        'Service cancelled by Garage At Home due to unforeseen circumstances'
       ]
     },
     {

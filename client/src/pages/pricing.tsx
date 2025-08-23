@@ -701,7 +701,7 @@ export default function Pricing() {
               whileInView={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.3 }}
             >
-              Join thousands of satisfied customers who trust Garageathome for affordable, professional vehicle service.
+              Join thousands of satisfied customers who trust Garage At Home for affordable, professional vehicle service.
             </motion.p>
             
             <motion.div

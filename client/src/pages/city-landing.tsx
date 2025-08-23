@@ -31,7 +31,7 @@ export default function CityLanding() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "AutomotiveBusiness",
-    "name": `Garageathome - ${city.name}`,
+    "name": `Garage At Home - ${city.name}`,
     "description": city.description,
     "address": {
       "@type": "PostalAddress",
@@ -274,7 +274,7 @@ export default function CityLanding() {
           >
             <Card className="bg-white/90 backdrop-blur-lg border border-white/20 rounded-2xl p-8">
               <h3 className="text-2xl font-bold mb-6">
-                Why Choose Garageathome in {city.name}?
+                Why Choose Garage At Home in {city.name}?
               </h3>
               
               <div className="grid md:grid-cols-2 gap-6">

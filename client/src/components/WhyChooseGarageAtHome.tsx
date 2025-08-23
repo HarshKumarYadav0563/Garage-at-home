@@ -1,7 +1,7 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import { Home, UserCheck, DollarSign, MapPin, Shield, Zap } from 'lucide-react';
 
-export function WhyChooseGarageathome() {
+export function WhyChooseGarageAtHome() {
   const shouldReduceMotion = useReducedMotion();
 
   const containerVariants = {
@@ -110,7 +110,7 @@ export function WhyChooseGarageathome() {
         >
           <motion.div variants={itemVariants}>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight">
-              Why Choose Garageathome
+              Why Choose Garage At Home
             </h2>
             
             {/* Animated gradient underline */}

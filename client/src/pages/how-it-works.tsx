@@ -182,7 +182,7 @@ export default function HowItWorks() {
           </motion.div>
 
           <h1 className="text-4xl lg:text-6xl font-bold mb-6 text-white">
-            How Garageathome Works
+            How Garage At Home Works
           </h1>
           <motion.p 
             className="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed"
@@ -282,7 +282,7 @@ export default function HowItWorks() {
             className="text-3xl font-bold text-center mb-16 text-white"
             variants={itemVariants}
           >
-            Why Choose Garageathome?
+            Why Choose Garage At Home?
           </motion.h2>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -394,7 +394,7 @@ export default function HowItWorks() {
                 whileInView={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.3 }}
               >
-                Join thousands of satisfied customers who trust Garageathome for their vehicle maintenance needs.
+                Join thousands of satisfied customers who trust Garage At Home for their vehicle maintenance needs.
               </motion.p>
               
               <motion.div

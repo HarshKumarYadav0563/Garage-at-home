@@ -138,7 +138,7 @@ export function EnhancedTestimonials() {
             transition={{ delay: 0.4 }}
             className="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto"
           >
-            Real reviews from customers who chose Garageathome over traditional garages
+            Real reviews from customers who chose Garage At Home over traditional garages
           </motion.p>
         </motion.div>
 

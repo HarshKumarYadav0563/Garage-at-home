@@ -1,6 +1,6 @@
 import { Hero } from '@/components/Hero';
 import { HowItWorks } from '@/components/HowItWorks';
-import { WhyChooseGarageathome } from '@/components/WhyChooseGarageathome';
+import { WhyChooseGarageAtHome } from '@/components/WhyChooseGarageAtHome';
 import { ServicesSection } from '@/components/ServicesSection';
 import { AnimatedBackground } from '@/components/AnimatedBackground';
 import { EnhancedTestimonials } from '@/components/EnhancedTestimonials';
@@ -14,7 +14,7 @@ export default function Home() {
       <Hero />
       <EnhancedTrustBar />
       <HowItWorks />
-      <WhyChooseGarageathome />
+      <WhyChooseGarageAtHome />
       <ServicesSection />
       <EnhancedTestimonials />
       <EnhancedFAQ />

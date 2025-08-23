@@ -53,7 +53,7 @@ export function Footer() {
                     </div>
                   </div>
                   <div>
-                    <span className="text-2xl font-bold dark:text-white" data-testid="footer-brand">Garageathome</span>
+                    <span className="text-2xl font-bold dark:text-white" data-testid="footer-brand">Garage At Home</span>
                     <p className="text-sm text-gray-400 dark:text-gray-300">Premium Doorstep Service</p>
                   </div>
                 </div>
@@ -248,7 +248,7 @@ export function Footer() {
         >
           <div className="flex items-center space-x-4 text-gray-400 dark:text-gray-400 text-sm">
             <p data-testid="footer-copyright">
-              &copy; 2024 Garageathome. All rights reserved.
+              &copy; 2024 Garage At Home. All rights reserved.
             </p>
             <span className="hidden sm:inline">•</span>
             <p className="flex items-center space-x-1">

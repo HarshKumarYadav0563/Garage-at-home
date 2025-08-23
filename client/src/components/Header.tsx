@@ -166,7 +166,7 @@ export function Header() {
                     textShadow: "0px 0px 8px rgba(59, 130, 246, 0.8)"
                   }}
                 >
-                  Garageathome
+                  Garage At Home
                 </motion.span>
                 <motion.span 
                   className={`text-gray-400 font-medium -mt-1 transition-all duration-300 ${
@@ -433,7 +433,7 @@ export function Header() {
                     <Wrench className="text-white text-lg" />
                   </div>
                   <div>
-                    <span className="text-xl font-bold text-white">Garageathome</span>
+                    <span className="text-xl font-bold text-white">Garage At Home</span>
                     <p className="text-sm text-gray-400">Premium Doorstep Service</p>
                   </div>
                 </div>

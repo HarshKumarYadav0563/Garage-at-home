@@ -8,7 +8,7 @@ export default function Terms() {
       icon: FileText,
       title: 'Service Agreement',
       content: [
-        'Garageathome provides doorstep vehicle maintenance and repair services',
+        'Garage At Home provides doorstep vehicle maintenance and repair services',
         'Services are performed by qualified and verified mechanics',
         'All services are subject to availability in your location',
         'Service quality is guaranteed as per our service standards',
@@ -142,7 +142,7 @@ export default function Terms() {
                 <div>
                   <h3 className="text-lg font-semibold text-yellow-800 mb-2">Important Notice</h3>
                   <p className="text-yellow-700 text-sm leading-relaxed">
-                    These terms constitute a legally binding agreement between you and Garageathome. 
+                    These terms constitute a legally binding agreement between you and Garage At Home. 
                     If you do not agree with any part of these terms, please do not use our services. 
                     We reserve the right to modify these terms at any time, and such modifications will be 
                     effective immediately upon posting on our website.
@@ -189,7 +189,7 @@ export default function Terms() {
             <CardContent className="p-6">
               <h3 className="text-lg font-semibold mb-3">Acceptance of Terms</h3>
               <p className="text-gray-600 text-sm">
-                By accessing and using Garageathome's services, you acknowledge that you have read, 
+                By accessing and using Garage At Home's services, you acknowledge that you have read, 
                 understood, and agree to be bound by these Terms of Service and our Privacy Policy. 
                 If you are using our services on behalf of an organization, you represent and warrant 
                 that you have the authority to bind that organization to these terms.

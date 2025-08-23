@@ -65,7 +65,7 @@ export default {
           border: "var(--sidebar-border)",
           ring: "var(--sidebar-ring)",
         },
-        // Garageathome specific colors matching design reference
+        // Garage At Home specific colors matching design reference
         blue: {
           50: "var(--blue-50)",
           100: "var(--blue-100)",
