@@ -1056,16 +1056,16 @@ export default function Services() {
                     transition={{ duration: 0.8, ease: "easeOut" }}
                     className="mb-16"
                   >
-                    <div className="flex items-center justify-between mb-8">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
                       <div>
-                        <h3 className="text-3xl font-bold text-white mb-2">
+                        <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2">
                           Individual Services
                         </h3>
-                        <p className="text-gray-300 text-lg">
+                        <p className="text-gray-300 text-base sm:text-lg">
                           Precision services for specific maintenance needs
                         </p>
                       </div>
-                      <Badge variant="outline" className="text-emerald-400 border-emerald-500/30">
+                      <Badge variant="outline" className="text-emerald-400 border-emerald-500/30 self-start sm:self-auto">
                         {individualServices.length} Services Available
                       </Badge>
                     </div>
@@ -1077,7 +1077,7 @@ export default function Services() {
                     </div>
                     
                     <motion.ul
-                      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
+                      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8"
                       variants={{
                         hidden: { opacity: 0 },
                         show: {
@@ -1089,7 +1089,8 @@ export default function Services() {
                         }
                       }}
                       initial="hidden"
-                      animate="show"
+                      whileInView="show"
+                      viewport={{ once: true, amount: 0.2 }}
                     >
                       {individualServices.map((service) => {
                         const isSelected = selectedServices.some(s => s.id === service.id);
@@ -1253,7 +1254,7 @@ export default function Services() {
                                 <div className="flex items-center justify-between">
                                   <div className="flex-1">
                                     <div className="font-medium text-white text-sm">{service.name}</div>
-                                    <div className="text-xs text-gray-400 mt-1">{service.subtitle}</div>
+                                    <div className="text-xs text-gray-400 mt-1">{service.description}</div>
                                     <div className="text-emerald-400 font-bold mt-2">
                                       ₹{service.price}
                                     </div>
@@ -1311,7 +1312,7 @@ export default function Services() {
                         <div className="flex items-center justify-between mb-6">
                           <span className="text-white font-bold text-lg">Total</span>
                           <span className="text-emerald-400 font-bold text-2xl">
-                            ₹{getSubtotal().min}
+                            ₹{getSubtotal()}
                           </span>
                         </div>
 
