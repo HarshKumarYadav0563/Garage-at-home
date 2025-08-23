@@ -426,8 +426,8 @@ export function Header() {
                 </Button>
               </motion.div>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[350px] sm:w-[400px] bg-gray-950 border-white/10">
-              <div className="flex flex-col space-y-6 mt-6">
+            <SheetContent side="right" className="w-[350px] sm:w-[400px] bg-gray-950 border-white/10 overflow-y-auto">
+              <div className="flex flex-col space-y-6 mt-6 pb-6">
                 {/* Mobile Logo */}
                 <div className="flex items-center space-x-3 pb-6 border-b border-white/20">
                   <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-sky-600 rounded-xl flex items-center justify-center">
@@ -478,9 +478,9 @@ export function Header() {
                   <motion.div 
                     className="bg-emerald-500/10 rounded-xl p-4 text-center"
                     whileHover={{ 
-                      scale: 1.05,
-                      backgroundColor: "rgba(16, 185, 129, 0.15)"
+                      scale: 1.05
                     }}
+                    style={{ backgroundColor: "rgba(16, 185, 129, 0.1)" }}
                     whileTap={{ scale: 0.95 }}
                     initial={{ x: -20, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
@@ -505,9 +505,9 @@ export function Header() {
                   <motion.div 
                     className="bg-green-500/10 rounded-xl p-4 text-center"
                     whileHover={{ 
-                      scale: 1.05,
-                      backgroundColor: "rgba(34, 197, 94, 0.15)"
+                      scale: 1.05
                     }}
+                    style={{ backgroundColor: "rgba(34, 197, 94, 0.1)" }}
                     whileTap={{ scale: 0.95 }}
                     initial={{ x: 20, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
@@ -654,9 +654,9 @@ export function Header() {
                     stiffness: 300
                   }}
                   whileHover={{ 
-                    scale: 1.02,
-                    borderColor: "rgba(16, 185, 129, 0.3)"
+                    scale: 1.02
                   }}
+                  style={{ borderColor: "rgba(255, 255, 255, 0.1)" }}
                 >
                   <motion.p 
                     className="text-sm font-medium text-white mb-2"
