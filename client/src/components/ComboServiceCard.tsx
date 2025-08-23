@@ -1,10 +1,11 @@
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion, useReducedMotion, AnimatePresence } from 'framer-motion';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Check, Plus, Star, Gift } from 'lucide-react';
+import { Check, Plus, Star, Gift, ChevronDown, ChevronUp } from 'lucide-react';
 import * as Icons from 'lucide-react';
 import { ServiceData } from '@/data/bookingServices';
+import { useState } from 'react';
 
 interface ComboServiceCardProps {
   service: ServiceData;
@@ -18,9 +19,15 @@ export function ComboServiceCard({
   onToggle
 }: ComboServiceCardProps) {
   const shouldReduceMotion = useReducedMotion();
+  const [isExpanded, setIsExpanded] = useState(false);
   
   // Get icon component
   const IconComponent = Icons[service.icon as keyof typeof Icons] as React.ComponentType<{ className?: string }> || Icons.Wrench;
+  
+  // Show only first 3 services by default
+  const visibleServices = service.includedServices?.slice(0, 3) || [];
+  const hiddenServices = service.includedServices?.slice(3) || [];
+  const hasMoreServices = hiddenServices.length > 0;
   
   return (
     <motion.div
@@ -33,7 +40,7 @@ export function ComboServiceCard({
       }}
       className="relative"
     >
-      <Card className={`h-full transition-all duration-300 cursor-pointer group overflow-hidden ${
+      <Card className={`h-full min-h-[400px] max-h-[450px] transition-all duration-300 cursor-pointer group overflow-hidden flex flex-col ${
         isSelected 
           ? 'bg-gradient-to-br from-emerald-500/20 via-sky-500/20 to-indigo-500/20 border-emerald-500/50 shadow-xl shadow-emerald-500/20' 
           : 'bg-white/5 border-white/10 hover:bg-white/8 hover:border-white/20'
@@ -102,7 +109,7 @@ export function ComboServiceCard({
           )}
         </div>
         
-        <CardContent className="p-6 pt-8 h-full flex flex-col">
+        <CardContent className="p-4 md:p-6 pt-8 h-full flex flex-col justify-between">
           {/* Header */}
           <div className="flex items-start justify-between mb-4">
             <div className="flex items-center space-x-3 flex-1">
@@ -122,10 +129,10 @@ export function ComboServiceCard({
               </motion.div>
               
               <div className="flex-1 min-w-0">
-                <h3 className="text-white font-bold text-xl mb-1 truncate">
+                <h3 className="text-white font-bold text-lg mb-1 truncate">
                   {service.name}
                 </h3>
-                <p className="text-gray-300 text-sm leading-tight">
+                <p className="text-gray-300 text-xs leading-tight line-clamp-1">
                   {service.subtitle}
                 </p>
               </div>
@@ -147,102 +154,132 @@ export function ComboServiceCard({
             </motion.div>
           </div>
 
-          {/* Enhanced Included Services - Show All */}
-          {service.includedServices && (
-            <motion.div 
-              className="mb-6 flex-1"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.4 }}
-            >
-              <div className="flex items-center gap-2 mb-4">
-                <h4 className="text-white font-semibold text-sm">Complete Package Includes:</h4>
-                <Badge variant="outline" className="text-xs border-emerald-500/30 text-emerald-400">
-                  {service.includedServices.length} Services
-                </Badge>
-              </div>
-              
-              <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-                <div className="grid grid-cols-1 gap-2">
-                  {service.includedServices.map((item, index) => (
-                    <motion.li 
-                      key={index} 
-                      className="flex items-start space-x-3 text-gray-300 text-sm"
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.5 + (index * 0.1) }}
-                    >
-                      <motion.div
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ delay: 0.5 + (index * 0.1), type: "spring", stiffness: 500 }}
-                      >
-                        <Check className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
-                      </motion.div>
-                      <span className="leading-relaxed">{item}</span>
-                    </motion.li>
-                  ))}
+          {/* Compact Service Highlights */}
+          <div className="flex-1 mb-4">
+            {service.includedServices && (
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4 }}
+              >
+                <div className="flex items-center gap-2 mb-3">
+                  <h4 className="text-white font-semibold text-sm">Package Includes:</h4>
+                  <Badge variant="outline" className="text-xs border-emerald-500/30 text-emerald-400">
+                    {service.includedServices.length} Services
+                  </Badge>
                 </div>
                 
-                {/* Value highlight */}
-                <motion.div
-                  className="mt-4 pt-3 border-t border-white/10"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.8 }}
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-gray-400">Package Value:</span>
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs text-emerald-400 font-semibold">All-in-One Deal</span>
-                      <motion.div
-                        animate={{ rotate: [0, 360] }}
-                        transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                <div className="bg-white/5 rounded-lg p-3 border border-white/10">
+                  <div className="space-y-2">
+                    {/* Always visible top 3 services */}
+                    {visibleServices.map((item, index) => (
+                      <motion.div 
+                        key={index} 
+                        className="flex items-start space-x-2 text-gray-300 text-sm"
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.3 + (index * 0.05) }}
                       >
-                        <Star className="w-3 h-3 text-emerald-400" />
+                        <Check className="w-3 h-3 text-emerald-400 mt-0.5 flex-shrink-0" />
+                        <span className="leading-tight">{item}</span>
                       </motion.div>
-                    </div>
+                    ))}
+                    
+                    {/* Expandable additional services */}
+                    <AnimatePresence>
+                      {isExpanded && hiddenServices.map((item, index) => (
+                        <motion.div 
+                          key={`hidden-${index}`} 
+                          className="flex items-start space-x-2 text-gray-300 text-sm"
+                          initial={{ opacity: 0, height: 0, x: -10 }}
+                          animate={{ opacity: 1, height: 'auto', x: 0 }}
+                          exit={{ opacity: 0, height: 0, x: -10 }}
+                          transition={{ duration: 0.2, delay: index * 0.05 }}
+                        >
+                          <Check className="w-3 h-3 text-emerald-400 mt-0.5 flex-shrink-0" />
+                          <span className="leading-tight">{item}</span>
+                        </motion.div>
+                      ))}
+                    </AnimatePresence>
+                    
+                    {/* View More/Less toggle */}
+                    {hasMoreServices && (
+                      <motion.button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setIsExpanded(!isExpanded);
+                        }}
+                        className="flex items-center space-x-1 text-emerald-400 text-xs underline cursor-pointer hover:text-emerald-300 transition-colors mt-2"
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                      >
+                        <span>{isExpanded ? 'View Less' : `+ View ${hiddenServices.length} More`}</span>
+                        {isExpanded ? (
+                          <ChevronUp className="w-3 h-3" />
+                        ) : (
+                          <ChevronDown className="w-3 h-3" />
+                        )}
+                      </motion.button>
+                    )}
                   </div>
-                </motion.div>
-              </div>
-            </motion.div>
-          )}
+                </div>
+              </motion.div>
+            )}
+          </div>
           
-          {/* Enhanced Price Section */}
+          {/* Sticky Footer with Price and CTA */}
           <motion.div 
-            className="mt-auto"
+            className="mt-auto pt-3 border-t border-white/10"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
           >
-            <div className="bg-gradient-to-r from-emerald-500/10 to-sky-500/10 rounded-xl p-4 border border-emerald-500/20">
-              <div className="text-center">
-                <div className="text-white font-bold">
-                  <motion.span 
-                    className="text-3xl"
-                    whileHover={{ scale: 1.05 }}
-                  >
-                    ₹{service.price.toLocaleString()}
-                  </motion.span>
-                </div>
-                
-                <motion.div 
-                  className="text-sm text-emerald-400 mt-2 font-semibold flex items-center justify-center gap-2"
-                  animate={{ 
-                    opacity: [0.7, 1, 0.7],
-                  }}
-                  transition={{ 
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                >
-                  <Gift className="w-4 h-4" />
-                  Complete Package Deal
-                  <Gift className="w-4 h-4" />
-                </motion.div>
-              </div>
+            <div className="text-center mb-3">
+              <motion.div 
+                className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 via-sky-400 to-indigo-400 font-bold text-2xl"
+                whileHover={{ scale: 1.05 }}
+              >
+                ₹{service.price.toLocaleString()}
+              </motion.div>
+              <p className="text-xs text-gray-400 mt-1">Complete Package Deal</p>
             </div>
+            
+            <motion.div
+              whileHover={{ 
+                scale: 1.02,
+                boxShadow: "0 0 20px rgba(16, 185, 129, 0.4)"
+              }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <Button 
+                className={`w-full bg-gradient-to-r from-emerald-500 via-sky-500 to-indigo-500 hover:from-emerald-600 hover:via-sky-600 hover:to-indigo-600 text-white font-semibold py-2 rounded-lg transition-all duration-300 ${
+                  isSelected ? 'ring-2 ring-emerald-400' : ''
+                }`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onToggle();
+                }}
+              >
+                {isSelected ? (
+                  <motion.div 
+                    className="flex items-center space-x-2"
+                    initial={{ scale: 0.9 }}
+                    animate={{ scale: 1 }}
+                  >
+                    <Check className="w-4 h-4" />
+                    <span>Added to Cart</span>
+                  </motion.div>
+                ) : (
+                  <motion.div 
+                    className="flex items-center space-x-2"
+                    whileHover={{ x: 2 }}
+                  >
+                    <Plus className="w-4 h-4" />
+                    <span>Book Now</span>
+                  </motion.div>
+                )}
+              </Button>
+            </motion.div>
           </motion.div>
         </CardContent>
       </Card>

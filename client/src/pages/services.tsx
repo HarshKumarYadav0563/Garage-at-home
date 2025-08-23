@@ -591,31 +591,64 @@ export default function Services() {
                   </p>
                 </motion.div>
                 
-                <motion.div
-                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.2, staggerChildren: 0.05 }}
-                >
-                  {comboServices.map((service, index) => {
-                    const isSelected = selectedServices.some(s => s.id === service.id);
-                    
-                    return (
-                      <motion.div
-                        key={service.id}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.1 + (index * 0.05) }}
-                      >
-                        <ComboServiceCard
-                          service={service}
-                          isSelected={isSelected}
-                          onToggle={() => handleToggleService(service)}
-                        />
-                      </motion.div>
-                    );
-                  })}
-                </motion.div>
+                {/* Mobile: Horizontal scroll with snap */}
+                <div className="lg:hidden">
+                  <motion.div
+                    className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 px-1 scrollbar-hide"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.2, staggerChildren: 0.05 }}
+                  >
+                    {comboServices.map((service, index) => {
+                      const isSelected = selectedServices.some(s => s.id === service.id);
+                      
+                      return (
+                        <motion.div
+                          key={service.id}
+                          className="min-w-[300px] max-w-[300px] snap-start"
+                          initial={{ opacity: 0, x: 20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 0.1 + (index * 0.05) }}
+                        >
+                          <ComboServiceCard
+                            service={service}
+                            isSelected={isSelected}
+                            onToggle={() => handleToggleService(service)}
+                          />
+                        </motion.div>
+                      );
+                    })}
+                  </motion.div>
+                </div>
+
+                {/* Desktop: Grid layout for side-by-side comparison */}
+                <div className="hidden lg:block">
+                  <motion.div
+                    className="grid grid-cols-1 lg:grid-cols-3 gap-6"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.2, staggerChildren: 0.1 }}
+                  >
+                    {comboServices.map((service, index) => {
+                      const isSelected = selectedServices.some(s => s.id === service.id);
+                      
+                      return (
+                        <motion.div
+                          key={service.id}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.1 + (index * 0.1) }}
+                        >
+                          <ComboServiceCard
+                            service={service}
+                            isSelected={isSelected}
+                            onToggle={() => handleToggleService(service)}
+                          />
+                        </motion.div>
+                      );
+                    })}
+                  </motion.div>
+                </div>
               </motion.div>
             )}
 

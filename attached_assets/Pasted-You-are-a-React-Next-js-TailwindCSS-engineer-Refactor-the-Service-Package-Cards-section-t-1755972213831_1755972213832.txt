@@ -1,0 +1,53 @@
+You are a React + Next.js + TailwindCSS engineer.  
+Refactor the **Service Package Cards** section to be more **compact and comparison-friendly**.
+
+## Current Issues
+- Each card is very tall, with long bullet lists always expanded.
+- Prices and CTAs are pushed far down → customers must scroll too much.
+- Comparison between plans (General, Periodic, Full) is harder because card heights vary.
+
+## Fixes Needed
+1. **Compact Card Design**
+   - Card height reduced by collapsing long details.
+   - Show only top 3–4 included services by default.
+   - Add a “+ View More” link (expand/collapse) for full list.
+
+2. **Pricing & CTA Placement**
+   - Always pin **Price** and **Book Now / Add** CTA at the bottom of each card, **visible without scrolling**.
+   - Use a sticky footer inside card if content expands.
+
+3. **Card Layout**
+   - Header row:
+     - Title (e.g., General Service)
+     - Badges (Combo, Popular, Save ₹xxx)
+   - Subtitle (1 line only)
+   - Service highlights (3 bullets)
+   - Expandable list hidden until clicked.
+   - Footer row: Price + CTA.
+
+4. **Comparison Optimization**
+   - All cards in one row (`grid-cols-1 sm:grid-cols-2 lg:grid-cols-3`).
+   - Consistent card height (min-h).
+   - Use `flex flex-col justify-between` so price/CTA always align at bottom.
+   - Desktop: side-by-side for easy comparison.
+   - Mobile: swipeable horizontal scroll (snap-x).
+
+5. **Styling**
+   - Cards: glassmorphism `bg-white/5 border border-white/10 rounded-2xl p-4 md:p-6`.
+   - Price: gradient text or bold white.
+   - CTA: gradient button (`from-emerald-500 via-sky-500 to-indigo-500`).
+   - “+ View More” link → `text-xs text-emerald-400 underline cursor-pointer`.
+
+6. **Animations**
+   - Cards: fade-up stagger.
+   - Expand/collapse: smooth height transition (`framer-motion animate`).
+   - CTA hover: glow pulse.
+
+## Deliverables
+- Updated `ServicePackageCard.tsx`:
+  - Compact card with expandable list.
+  - Price + CTA always visible.
+- Grid layout responsive:
+  - Mobile: horizontal scroll (snap).
+  - Desktop: side-by-side comparison.
+- No card exceeds ~450px height collapsed.
