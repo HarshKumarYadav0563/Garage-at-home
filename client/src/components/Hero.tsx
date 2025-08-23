@@ -127,14 +127,6 @@ export function Hero() {
               variants={itemVariants}
               className="flex gap-3 justify-center px-4"
             >
-              <Link href="/book" className="flex-1">
-                <div className="w-full bg-gradient-to-r from-emerald-500 via-sky-500 to-indigo-500 hover:shadow-[0_0_20px_rgba(16,185,129,0.4)] text-white px-4 py-3 rounded-xl font-semibold text-sm shadow-lg transition-all duration-300 flex items-center justify-center cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
-                  data-testid="button-book-now"
-                >
-                  <Zap className="mr-2 w-4 h-4" />
-                  Book Now
-                </div>
-              </Link>
               
               <Link href="/services" className="flex-1">
                 <div className="w-full bg-white/5 border border-white/10 text-gray-200 px-4 py-3 rounded-xl font-semibold text-sm hover:bg-white/10 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 flex items-center justify-center cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
@@ -180,7 +172,7 @@ export function Hero() {
                 <Users className="text-emerald-400 w-3 h-3" />
                 <span className="font-medium">25,000+</span>
               </Link>
-              <Link href="/book" className="flex items-center space-x-1 bg-white/5 text-gray-300 border border-white/10 rounded-full px-3 py-1 hover:bg-white/10 transition-colors duration-200">
+              <Link href="/track" className="flex items-center space-x-1 bg-white/5 text-gray-300 border border-white/10 rounded-full px-3 py-1 hover:bg-white/10 transition-colors duration-200">
                 <Clock className="text-sky-400 w-3 h-3" />
                 <span className="font-medium">2 Hours</span>
               </Link>
@@ -255,14 +247,6 @@ export function Hero() {
               variants={containerVariants}
               className="flex gap-4 mb-8"
             >
-              <Link href="/book">
-                <div className="bg-gradient-to-r from-emerald-500 via-sky-500 to-indigo-500 hover:shadow-[0_0_30px_rgba(16,185,129,0.5)] text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-xl transition-all duration-300 flex items-center justify-center cursor-pointer hover:scale-[1.05] active:scale-[0.95]"
-                  data-testid="button-book-now"
-                >
-                  <Zap className="mr-2 w-5 h-5" />
-                  Book Service Now
-                </div>
-              </Link>
               
               <Link href="/services">
                 <div className="bg-white/5 border border-white/10 text-gray-200 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all duration-300 flex items-center justify-center cursor-pointer hover:scale-[1.05] active:scale-[0.95]"
@@ -308,7 +292,7 @@ export function Hero() {
                 <Users className="text-emerald-400 w-4 h-4" />
                 <span className="font-medium" data-testid="text-customers">25,000+ Services</span>
               </Link>
-              <Link href="/book" className="flex items-center space-x-2 bg-white/5 text-gray-300 border border-white/10 rounded-full px-3 py-1 hover:bg-white/10 transition-colors duration-200">
+              <Link href="/track" className="flex items-center space-x-2 bg-white/5 text-gray-300 border border-white/10 rounded-full px-3 py-1 hover:bg-white/10 transition-colors duration-200">
                 <Clock className="text-sky-400 w-4 h-4" />
                 <span className="font-medium" data-testid="text-service-time">2 Hour Service</span>
               </Link>
