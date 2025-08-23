@@ -1048,16 +1048,8 @@ export default function Services() {
                   </motion.div>
                 )}
 
-                {/* INDIVIDUAL SERVICES DEBUG SECTION */}
-                <div className="mb-16 bg-green-500/20 border-2 border-green-500 p-4 rounded-xl">
-                  <div className="text-green-400 font-bold mb-4">DEBUG: Individual Services Section</div>
-                  <div className="text-white text-sm mb-4">
-                    Services count: {individualServices?.length || 0}
-                  </div>
-                  <div className="text-white text-sm mb-4">
-                    Current step: {currentStep}
-                  </div>
-                  
+                {/* Individual Services */}
+                <div className="mb-16">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
                     <div>
                       <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2">
@@ -1078,20 +1070,20 @@ export default function Services() {
                     </p>
                   </div>
                   
-                  {individualServices && individualServices.length > 0 ? (
-                    <div className="grid grid-cols-1 gap-4">
-                      {individualServices.slice(0, 3).map((service, index) => (
-                        <div key={service.id} className="bg-red-500/50 border-2 border-red-500 p-4 rounded-xl">
-                          <div className="text-white font-bold">Test Card {index + 1}</div>
-                          <div className="text-white">Name: {service.name}</div>
-                          <div className="text-white">ID: {service.id}</div>
-                          <div className="text-white">Price: ₹{service.price}</div>
-                        </div>
-                      ))}
-                    </div>
-                  ) : (
-                    <div className="text-red-400 font-bold">NO INDIVIDUAL SERVICES FOUND!</div>
-                  )}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+                    {individualServices.map((service) => {
+                      const isSelected = selectedServices.some(s => s.id === service.id);
+                      
+                      return (
+                        <BookingServiceCard
+                          key={service.id}
+                          service={service}
+                          isSelected={isSelected}
+                          onToggle={() => handleToggleService(service)}
+                        />
+                      );
+                    })}
+                  </div>
                 </div>
 
                 {/* Enhanced Add-ons Section */}
