@@ -85,10 +85,14 @@ export function BookingServiceCard({
               </motion.div>
               
               <div className="flex-1 min-w-0">
-                <h3 className="text-white font-bold text-lg sm:text-xl mb-1 sm:mb-2 truncate">
+                <h3 className={`font-bold text-lg sm:text-xl mb-1 sm:mb-2 truncate transition-colors duration-300 ${
+                  isSelected ? 'text-white' : 'text-white group-hover:text-white'
+                }`}>
                   {service.name}
                 </h3>
-                <p className="text-gray-300 text-sm leading-relaxed">
+                <p className={`text-sm leading-relaxed transition-colors duration-300 ${
+                  isSelected ? 'text-emerald-100' : 'text-gray-300 group-hover:text-gray-200'
+                }`}>
                   {service.subtitle}
                 </p>
               </div>
@@ -122,9 +126,15 @@ export function BookingServiceCard({
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
           >
-            <div className="bg-gradient-to-r from-white/5 to-white/10 rounded-xl p-4 border border-white/10">
+            <div className={`rounded-xl p-4 border transition-all duration-300 ${
+              isSelected 
+                ? 'bg-gradient-to-r from-emerald-500/20 to-sky-500/20 border-emerald-500/30' 
+                : 'bg-gradient-to-r from-white/5 to-white/10 border-white/10'
+            }`}>
               <div className="text-center">
-                <div className="text-white font-bold">
+                <div className={`font-bold transition-colors duration-300 ${
+                  isSelected ? 'text-white' : 'text-white'
+                }`}>
                   <motion.span 
                     className="text-2xl"
                     whileHover={{ scale: 1.05 }}
