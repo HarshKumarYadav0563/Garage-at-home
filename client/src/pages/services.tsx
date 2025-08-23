@@ -521,6 +521,11 @@ export default function Services() {
               )}
             </motion.div>
 
+            {/* Mobile Booking Summary - Shows at top on mobile */}
+            <div className="lg:hidden mb-8">
+              <BookingSummary isMobile={true} />
+            </div>
+
             <div className="grid lg:grid-cols-4 gap-8">
               {/* Services Section */}
               <div className="lg:col-span-3">
@@ -607,8 +612,8 @@ export default function Services() {
                 </motion.div>
               </div>
 
-              {/* Summary Sidebar */}
-              <div className="lg:col-span-1">
+              {/* Summary Sidebar - Hidden on mobile */}
+              <div className="hidden lg:block lg:col-span-1">
                 <BookingSummary />
               </div>
             </div>

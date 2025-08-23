@@ -51,6 +51,27 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
     );
   }
 
+  // On mobile, always show even if no items to encourage selection
+  if (!hasItems && isMobile) {
+    return (
+      <Card className={`bg-white/5 border-white/10 backdrop-blur-xl ${className}`}>
+        <CardContent className="p-6 text-center">
+          <ShoppingCart className="w-12 h-12 text-emerald-500 mx-auto mb-4" />
+          <h3 className="text-white font-bold text-lg mb-2">Choose Your Service</h3>
+          <p className="text-gray-400 text-sm mb-4">
+            Select services below to see pricing and book
+          </p>
+          <Button 
+            disabled 
+            className="w-full bg-gray-600 text-gray-400 cursor-not-allowed"
+          >
+            Select Services First
+          </Button>
+        </CardContent>
+      </Card>
+    );
+  }
+
   return (
     <motion.div
       initial={isMobile ? { y: 100, opacity: 0 } : { x: 50, opacity: 0 }}
