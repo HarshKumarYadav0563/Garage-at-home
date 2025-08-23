@@ -77,13 +77,13 @@ export function Hero() {
   return (
     <section className="relative min-h-[45vh] sm:min-h-[50vh] lg:min-h-auto flex items-center overflow-hidden bg-gradient-to-br from-gray-950 via-gray-900 to-black pt-16 sm:pt-18 lg:pt-8 lg:pb-12">
       {/* Radial Accent Glows */}
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl" />
         <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-sky-500/20 rounded-full blur-3xl" />
       </div>
       
       {/* Subtle Background Pattern */}
-      <div className="absolute inset-0 opacity-5">
+      <div className="absolute inset-0 opacity-5 pointer-events-none">
         <div
           className="absolute inset-0"
           style={{
@@ -128,27 +128,21 @@ export function Hero() {
               className="flex gap-3 justify-center px-4"
             >
               <Link href="/book" className="flex-1">
-                <motion.div 
-                  whileHover={{ scale: 1.02 }} 
-                  whileTap={{ scale: 0.98 }}
-                  className="w-full bg-gradient-to-r from-emerald-500 via-sky-500 to-indigo-500 hover:shadow-[0_0_20px_rgba(16,185,129,0.4)] text-white px-4 py-3 rounded-xl font-semibold text-sm shadow-lg transition-all duration-300 flex items-center justify-center cursor-pointer"
+                <div className="w-full bg-gradient-to-r from-emerald-500 via-sky-500 to-indigo-500 hover:shadow-[0_0_20px_rgba(16,185,129,0.4)] text-white px-4 py-3 rounded-xl font-semibold text-sm shadow-lg transition-all duration-300 flex items-center justify-center cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
                   data-testid="button-book-now"
                 >
                   <Zap className="mr-2 w-4 h-4" />
                   Book Now
-                </motion.div>
+                </div>
               </Link>
               
               <Link href="/services" className="flex-1">
-                <motion.div 
-                  whileHover={{ scale: 1.02 }} 
-                  whileTap={{ scale: 0.98 }}
-                  className="w-full bg-white/5 border border-white/10 text-gray-200 px-4 py-3 rounded-xl font-semibold text-sm hover:bg-white/10 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 flex items-center justify-center cursor-pointer"
+                <div className="w-full bg-white/5 border border-white/10 text-gray-200 px-4 py-3 rounded-xl font-semibold text-sm hover:bg-white/10 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 flex items-center justify-center cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
                   data-testid="button-view-services"
                 >
                   <Wrench className="mr-2 w-4 h-4" />
                   Services
-                </motion.div>
+                </div>
               </Link>
             </motion.div>
 
@@ -262,29 +256,21 @@ export function Hero() {
               className="flex gap-4 mb-8"
             >
               <Link href="/book">
-                <motion.div 
-                  variants={itemVariants}
-                  whileHover={{ scale: 1.05 }} 
-                  whileTap={{ scale: 0.95 }}
-                  className="bg-gradient-to-r from-emerald-500 via-sky-500 to-indigo-500 hover:shadow-[0_0_30px_rgba(16,185,129,0.5)] text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-xl transition-all duration-300 flex items-center justify-center cursor-pointer"
+                <div className="bg-gradient-to-r from-emerald-500 via-sky-500 to-indigo-500 hover:shadow-[0_0_30px_rgba(16,185,129,0.5)] text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-xl transition-all duration-300 flex items-center justify-center cursor-pointer hover:scale-[1.05] active:scale-[0.95]"
                   data-testid="button-book-now"
                 >
                   <Zap className="mr-2 w-5 h-5" />
                   Book Service Now
-                </motion.div>
+                </div>
               </Link>
               
               <Link href="/services">
-                <motion.div
-                  variants={itemVariants}
-                  whileHover={{ scale: 1.05 }} 
-                  whileTap={{ scale: 0.95 }}
-                  className="bg-white/5 border border-white/10 text-gray-200 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all duration-300 flex items-center justify-center cursor-pointer"
+                <div className="bg-white/5 border border-white/10 text-gray-200 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all duration-300 flex items-center justify-center cursor-pointer hover:scale-[1.05] active:scale-[0.95]"
                   data-testid="button-view-services"
                 >
                   <Wrench className="mr-2 w-5 h-5" />
                   View Services
-                </motion.div>
+                </div>
               </Link>
             </motion.div>
 
