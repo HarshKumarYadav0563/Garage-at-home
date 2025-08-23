@@ -152,7 +152,6 @@ export default function Services() {
     }
   };
 
-  const cityData = CITIES.find(c => c.id === city);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-black relative overflow-hidden">
@@ -461,11 +460,6 @@ export default function Services() {
                         {CITIES.map((cityOption) => (
                           <SelectItem key={cityOption.id} value={cityOption.id} className="text-white">
                             {cityOption.name}
-                            {cityOption.multiplier > 1 && (
-                              <span className="text-xs text-gray-400 ml-2">
-                                +{Math.round((cityOption.multiplier - 1) * 100)}%
-                              </span>
-                            )}
                           </SelectItem>
                         ))}
                       </SelectContent>
@@ -511,14 +505,6 @@ export default function Services() {
                 </div>
               </div>
               
-              {cityData && cityData.multiplier > 1 && (
-                <div className="mt-4 p-3 bg-blue-500/10 border border-blue-500/30 rounded-lg">
-                  <p className="text-blue-300 text-sm">
-                    <Globe className="w-4 h-4 inline mr-2" />
-                    {cityData.name} pricing: +{Math.round((cityData.multiplier - 1) * 100)}% city factor applied
-                  </p>
-                </div>
-              )}
             </motion.div>
 
             <div className="grid lg:grid-cols-4 gap-8">

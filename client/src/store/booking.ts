@@ -61,7 +61,6 @@ interface BookingStore {
   
   // Computed
   getSubtotal: () => { min: number; max: number };
-  getCityMultiplier: () => number;
   getAdjustedPrice: (priceMin: number, priceMax: number) => { min: number; max: number };
 }
 
@@ -152,42 +151,29 @@ export const useBookingStore = create<BookingStore>((set, get) => ({
   }),
   
   // Computed functions
-  getCityMultiplier: () => {
-    const city = get().city;
-    switch (city) {
-      case 'mumbai': return 1.10;
-      case 'delhi': return 1.05;
-      case 'bangalore': return 1.05;
-      case 'other': return 1.00;
-      default: return 1.00;
-    }
-  },
-  
   getAdjustedPrice: (priceMin, priceMax) => {
-    const multiplier = get().getCityMultiplier();
     return {
-      min: Math.round(priceMin * multiplier),
-      max: Math.round(priceMax * multiplier)
+      min: priceMin,
+      max: priceMax
     };
   },
   
   getSubtotal: () => {
     const state = get();
-    const multiplier = state.getCityMultiplier();
     
     let min = 0;
     let max = 0;
     
     // Add services
     state.selectedServices.forEach(service => {
-      min += Math.round(service.priceMin * multiplier);
-      max += Math.round(service.priceMax * multiplier);
+      min += service.priceMin;
+      max += service.priceMax;
     });
     
     // Add addons
     state.selectedAddons.forEach(addon => {
-      min += Math.round(addon.priceMin * multiplier);
-      max += Math.round(addon.priceMax * multiplier);
+      min += addon.priceMin;
+      max += addon.priceMax;
     });
     
     return { min, max };
