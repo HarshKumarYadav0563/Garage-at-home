@@ -1,9 +1,10 @@
 import { motion } from 'framer-motion';
-import { MapPin, Star, Users, Clock, Car, Bike, Wrench, Settings } from 'lucide-react';
+import { MapPin, Star, Users, Clock, Car, Bike, Wrench, Settings, Zap, Shield, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'wouter';
 import { getCurrentLocation } from '@/lib/geo';
 import { useUiStore } from '@/stores/useUiStore';
+import heroImage from '@assets/generated_images/Professional_motorcycle_service_scene_46bd446f.png';
 
 export function Hero() {
   const { addToast } = useUiStore();
@@ -53,17 +54,79 @@ export function Hero() {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-900 dark:to-blue-950 pt-28 sm:pt-32 lg:pt-36">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-5">
+    <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-gray-50 via-blue-50 to-primary-50 dark:from-gray-900 dark:via-blue-950 dark:to-primary-950 pt-28 sm:pt-32 lg:pt-36">
+      {/* Animated Background Pattern */}
+      <motion.div 
+        className="absolute inset-0 opacity-10"
+        animate={{
+          backgroundPosition: ['0% 0%', '100% 100%']
+        }}
+        transition={{
+          duration: 20,
+          repeat: Infinity,
+          ease: "linear"
+        }}
+      >
         <div
           className="absolute inset-0"
           style={{
-            backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(16,185,129,0.15) 1px, transparent 0)',
+            backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(16,185,129,0.3) 1px, transparent 0)',
             backgroundSize: '50px 50px',
           }}
         />
+      </motion.div>
+
+      {/* Floating Particles */}
+      <div className="absolute inset-0 pointer-events-none">
+        {[...Array(15)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-2 h-2 bg-primary-400 rounded-full opacity-30"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              y: [-20, -100, -20],
+              x: [-10, 10, -10],
+              opacity: [0.3, 0.8, 0.3],
+              scale: [0.5, 1, 0.5]
+            }}
+            transition={{
+              duration: 8 + Math.random() * 4,
+              repeat: Infinity,
+              delay: Math.random() * 5,
+              ease: "easeInOut"
+            }}
+          />
+        ))}
       </div>
+
+      {/* Gradient Orbs */}
+      <motion.div
+        className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-primary-400/20 to-blue-400/20 rounded-full blur-3xl"
+        animate={{
+          scale: [1, 1.2, 1],
+          rotate: [0, 180, 360]
+        }}
+        transition={{
+          duration: 15,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
+      <motion.div
+        className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-400/20 to-pink-400/20 rounded-full blur-3xl"
+        animate={{
+          scale: [1.2, 1, 1.2],
+          rotate: [360, 180, 0]
+        }}
+        transition={{
+          duration: 12,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 items-center min-h-[calc(100vh-7rem)] sm:min-h-[calc(100vh-8rem)] lg:min-h-[calc(100vh-9rem)]">
@@ -78,11 +141,48 @@ export function Hero() {
               variants={itemVariants}
               className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4 sm:mb-6"
             >
-              India's First{' '}
-              <span className="bg-gradient-to-r from-primary-600 to-blue-600 bg-clip-text text-transparent block sm:inline">
+              <motion.span
+                className="inline-block"
+                animate={{
+                  y: [0, -5, 0],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              >
+                India's First
+              </motion.span>{' '}
+              <motion.span 
+                className="bg-gradient-to-r from-primary-600 via-blue-600 to-purple-600 bg-clip-text text-transparent block sm:inline"
+                animate={{
+                  backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+                style={{
+                  backgroundSize: '200% 200%'
+                }}
+              >
                 Premium Doorstep
-              </span>
-              <span className="block sm:inline"> Vehicle Service</span>
+              </motion.span>
+              <motion.span 
+                className="block sm:inline"
+                animate={{
+                  y: [0, 5, 0],
+                }}
+                transition={{
+                  duration: 2.5,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              >
+                {' '}Vehicle Service
+              </motion.span>
             </motion.h1>
 
             <motion.p
@@ -103,13 +203,47 @@ export function Hero() {
               className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-6 sm:mb-8 justify-center lg:justify-start"
             >
               <Link href="/book" className="w-full sm:w-auto">
-                <Button
-                  className="w-full sm:w-auto bg-gradient-to-r from-primary-500 to-blue-600 hover:from-primary-600 hover:to-blue-700 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold text-base sm:text-lg shadow-xl hover:shadow-2xl transition-all duration-200 transform hover:scale-105 min-h-[48px] touch-manipulation"
-                  data-testid="button-book-now"
+                <motion.div
+                  whileHover={{
+                    scale: 1.05,
+                    y: -5
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                  animate={{
+                    boxShadow: [
+                      "0 10px 30px rgba(59, 130, 246, 0.3)",
+                      "0 20px 40px rgba(59, 130, 246, 0.4)",
+                      "0 10px 30px rgba(59, 130, 246, 0.3)"
+                    ]
+                  }}
+                  transition={{
+                    boxShadow: { duration: 3, repeat: Infinity }
+                  }}
                 >
-                  <Wrench className="mr-2 w-4 h-4 sm:w-5 sm:h-5" />
-                  Book Service Now
-                </Button>
+                  <Button
+                    className="w-full sm:w-auto bg-gradient-to-r from-primary-500 via-blue-600 to-purple-600 hover:from-primary-600 hover:via-blue-700 hover:to-purple-700 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold text-base sm:text-lg shadow-xl hover:shadow-2xl transition-all duration-300 min-h-[48px] touch-manipulation relative overflow-hidden group"
+                    data-testid="button-book-now"
+                  >
+                    <motion.div
+                      animate={{ rotate: [0, 360] }}
+                      transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                    >
+                      <Zap className="mr-2 w-4 h-4 sm:w-5 sm:h-5" />
+                    </motion.div>
+                    Book Service Now
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent"
+                      animate={{
+                        x: ['-100%', '100%']
+                      }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: "linear"
+                      }}
+                    />
+                  </Button>
+                </motion.div>
               </Link>
               
               <Button
@@ -143,44 +277,133 @@ export function Hero() {
             </motion.div>
           </motion.div>
 
-          {/* Right Floating Icons */}
-          <div className="hidden lg:block relative h-96">
+          {/* Right Hero Image with Floating Elements */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
+            animate={{ opacity: 1, scale: 1, rotate: 0 }}
+            transition={{ duration: 1, delay: 0.5, type: "spring", stiffness: 100 }}
+            className="relative"
+          >
+            {/* Main Hero Image */}
+            <motion.div
+              className="relative overflow-hidden rounded-3xl shadow-2xl"
+              whileHover={{
+                scale: 1.02,
+                rotateY: 5,
+                rotateX: 2
+              }}
+              transition={{ duration: 0.3 }}
+              style={{
+                transformStyle: "preserve-3d",
+                perspective: "1000px"
+              }}
+            >
+              <motion.img
+                src={heroImage}
+                alt="Professional vehicle service"
+                className="w-full h-auto object-cover"
+                animate={{
+                  filter: ["brightness(1)", "brightness(1.1)", "brightness(1)"]
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              />
+              
+              {/* Image Overlay with Gradient */}
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"
+                animate={{
+                  opacity: [0.2, 0.4, 0.2]
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              />
+            </motion.div>
+
+            {/* Floating Service Icons */}
             <motion.div
               variants={floatingVariants}
               animate="floating"
-              className="absolute top-0 right-0 w-24 h-24 bg-white rounded-2xl shadow-lg flex items-center justify-center"
-              style={{ animationDelay: '0s' }}
+              className="absolute -top-4 -right-4 w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl shadow-xl flex items-center justify-center"
+              whileHover={{ scale: 1.1, rotate: 180 }}
             >
-              <Car className="text-4xl text-blue-600 w-12 h-12" />
+              <Car className="text-white w-8 h-8" />
             </motion.div>
 
             <motion.div
               variants={floatingVariants}
               animate="floating"
-              className="absolute top-20 left-10 w-20 h-20 bg-white rounded-2xl shadow-lg flex items-center justify-center"
+              className="absolute top-1/4 -left-4 w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl shadow-xl flex items-center justify-center"
               style={{ animationDelay: '-2s' }}
+              whileHover={{ scale: 1.1, rotate: -180 }}
             >
-              <Bike className="text-3xl text-primary-600 w-10 h-10" />
+              <Bike className="text-white w-6 h-6" />
             </motion.div>
 
             <motion.div
               variants={floatingVariants}
               animate="floating"
-              className="absolute bottom-0 right-16 w-28 h-28 bg-gradient-to-br from-primary-500 to-blue-600 rounded-2xl shadow-xl flex items-center justify-center"
+              className="absolute bottom-1/4 -right-6 w-18 h-18 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl shadow-xl flex items-center justify-center"
               style={{ animationDelay: '-4s' }}
+              whileHover={{ scale: 1.1, rotate: 360 }}
             >
-              <Wrench className="text-4xl text-white w-12 h-12" />
+              <CheckCircle className="text-white w-8 h-8" />
             </motion.div>
 
             <motion.div
               variants={floatingVariants}
               animate="floating"
-              className="absolute bottom-16 left-0 w-16 h-16 bg-white rounded-2xl shadow-lg flex items-center justify-center"
+              className="absolute -bottom-4 left-1/4 w-16 h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl shadow-xl flex items-center justify-center"
               style={{ animationDelay: '-1s' }}
+              whileHover={{ scale: 1.1, rotate: 270 }}
             >
-              <Settings className="text-2xl text-orange-500 w-8 h-8" />
+              <Wrench className="text-white w-6 h-6" />
             </motion.div>
-          </div>
+
+            <motion.div
+              variants={floatingVariants}
+              animate="floating"
+              className="absolute top-3/4 -left-2 w-14 h-14 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl shadow-xl flex items-center justify-center"
+              style={{ animationDelay: '-3s' }}
+              whileHover={{ scale: 1.1, rotate: 90 }}
+            >
+              <Shield className="text-white w-5 h-5" />
+            </motion.div>
+
+            {/* Animated Rings */}
+            <motion.div
+              className="absolute inset-0 border-2 border-primary-400/30 rounded-3xl"
+              animate={{
+                scale: [1, 1.05, 1],
+                opacity: [0.3, 0.6, 0.3]
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            />
+            
+            <motion.div
+              className="absolute inset-0 border border-blue-400/20 rounded-3xl"
+              animate={{
+                scale: [1, 1.08, 1],
+                opacity: [0.2, 0.5, 0.2]
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 1
+              }}
+            />
+          </motion.div>
         </div>
       </div>
     </section>
