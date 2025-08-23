@@ -260,13 +260,13 @@ export function EnhancedTrustBar() {
           )}
         </div>
 
-        {/* Mobile: Always show badges */}
+        {/* Mobile: Always show badges - 3 columns, 2 rows */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.3 }}
-          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 sm:gap-4 md:gap-4 lg:hidden"
+          className="grid grid-cols-3 md:grid-cols-6 gap-3 sm:gap-4 md:gap-4 lg:hidden"
         >
           {trustItems.map((item, index) => {
             const IconComponent = item.icon;
