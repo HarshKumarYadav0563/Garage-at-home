@@ -23,7 +23,7 @@ import { SlotPicker } from '@/components/SlotPicker';
 import { CustomerDetailsForm } from '@/components/CustomerDetailsForm';
 
 // Data & Store
-import { BIKE_SERVICES, CAR_SERVICES, ADDONS, CITIES, ServiceData } from '@/data/bookingServices';
+import { BIKE_SERVICES, CAR_SERVICES, ADDONS, CITIES } from '@/data/bookingServices';
 import { useBookingStore } from '@/store/booking';
 import { apiRequest } from '@/lib/queryClient';
 import { CustomerData } from '@/lib/validators';
@@ -100,8 +100,8 @@ export default function Services() {
     );
   }, [currentServices, searchQuery]);
 
-  // Show all services as packages
-  const allServicePackages = filteredServices;
+  const comboServices = filteredServices.filter(service => service.type === 'combo');
+  const individualServices = filteredServices.filter(service => service.type === 'individual' || !service.type);
 
   // Handle customer details form submission
   const handleCustomerDetailsSubmit = (data: CustomerData) => {
@@ -521,69 +521,114 @@ export default function Services() {
               )}
             </motion.div>
 
-            {/* Mobile Booking Summary - Shows at top on mobile */}
-            <div className="lg:hidden mb-8">
-              <BookingSummary isMobile={true} />
-            </div>
-
             <div className="grid lg:grid-cols-4 gap-8">
               {/* Services Section */}
               <div className="lg:col-span-3">
-                {/* All Service Packages */}
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 1.0 }}
-                  className="mb-12"
-                >
-                  <div className="flex items-center space-x-3 mb-6">
-                    <h2 className="text-2xl font-bold text-white">
-                      {selectedVehicle === 'bike' ? 'Bike' : 'Car'} Service Packages
-                    </h2>
-                    <Badge className="bg-gradient-to-r from-purple-500 to-pink-500 text-white">
-                      Professional Services
-                    </Badge>
-                  </div>
-                  <p className="text-gray-400 text-sm mb-4">
-                    Choose from our comprehensive service packages designed for all your vehicle maintenance needs
-                  </p>
-                  <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3 mb-6">
-                    <p className="text-blue-300 text-xs">
-                      <span className="font-medium">Selection Rule:</span> Choose either one service package OR multiple individual services. They cannot be combined.
-                    </p>
-                  </div>
-                  
+                {/* Combo Services */}
+                {comboServices.length > 0 && (
                   <motion.div
-                    className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6"
-                    variants={{
-                      hidden: { opacity: 0 },
-                      show: {
-                        opacity: 1,
-                        transition: {
-                          staggerChildren: 0.1
-                        }
-                      }
-                    }}
-                    initial="hidden"
-                    animate="show"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 1.0 }}
+                    className="mb-12"
                   >
-                    {allServicePackages.map((service) => {
-                      const isSelected = selectedServices.some(s => s.id === service.id);
-                      const adjustedPrice = getAdjustedPrice(service.priceMin, service.priceMax);
-                      
-                      return (
-                        <ComboServiceCard
-                          key={service.id}
-                          service={service}
-                          isSelected={isSelected}
-                          onToggle={() => handleToggleService(service)}
-                          adjustedPrice={adjustedPrice}
-                          showRange={showPriceRanges}
-                        />
-                      );
-                    })}
+                    <div className="flex items-center space-x-3 mb-6">
+                      <h2 className="text-2xl font-bold text-white">
+                        {selectedVehicle === 'bike' ? 'Bike' : 'Car'} Service Packages
+                      </h2>
+                      <Badge className="bg-gradient-to-r from-purple-500 to-pink-500 text-white">
+                        Best Value
+                      </Badge>
+                    </div>
+                    <p className="text-gray-400 text-sm mb-4">
+                      Complete service packages that include multiple services at discounted rates
+                    </p>
+                    <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3 mb-6">
+                      <p className="text-blue-300 text-xs">
+                        <span className="font-medium">Selection Rule:</span> Choose either one service package OR multiple individual services. They cannot be combined.
+                      </p>
+                    </div>
+                    
+                    <motion.div
+                      className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6"
+                      variants={{
+                        hidden: { opacity: 0 },
+                        show: {
+                          opacity: 1,
+                          transition: {
+                            staggerChildren: 0.15
+                          }
+                        }
+                      }}
+                      initial="hidden"
+                      animate="show"
+                    >
+                      {comboServices.map((service) => {
+                        const isSelected = selectedServices.some(s => s.id === service.id);
+                        const adjustedPrice = getAdjustedPrice(service.priceMin, service.priceMax);
+                        
+                        return (
+                          <ComboServiceCard
+                            key={service.id}
+                            service={service}
+                            isSelected={isSelected}
+                            onToggle={() => handleToggleService(service)}
+                            adjustedPrice={adjustedPrice}
+                            showRange={showPriceRanges}
+                          />
+                        );
+                      })}
+                    </motion.div>
                   </motion.div>
-                </motion.div>
+                )}
+
+                {/* Individual Services */}
+                {individualServices.length > 0 && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 1.2 }}
+                    className="mb-8"
+                  >
+                    <h3 className="text-xl font-bold text-white mb-6">
+                      Individual Services
+                    </h3>
+                    <p className="text-gray-400 text-sm mb-6">
+                      Specific services for targeted maintenance needs - can be combined with each other only
+                    </p>
+                    
+                    <motion.ul
+                      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+                      variants={{
+                        hidden: { opacity: 0 },
+                        show: {
+                          opacity: 1,
+                          transition: {
+                            staggerChildren: 0.1
+                          }
+                        }
+                      }}
+                      initial="hidden"
+                      animate="show"
+                    >
+                      {individualServices.map((service) => {
+                        const isSelected = selectedServices.some(s => s.id === service.id);
+                        const adjustedPrice = getAdjustedPrice(service.priceMin, service.priceMax);
+                        
+                        return (
+                          <BookingServiceCard
+                            key={service.id}
+                            service={service}
+                            isSelected={isSelected}
+                            onToggle={() => handleToggleService(service)}
+                            adjustedPrice={adjustedPrice}
+                            showRange={showPriceRanges}
+                          />
+                        );
+                      })}
+                    </motion.ul>
+                  </motion.div>
+                )}
 
                 {/* Add-ons */}
                 <motion.div
@@ -612,8 +657,8 @@ export default function Services() {
                 </motion.div>
               </div>
 
-              {/* Summary Sidebar - Hidden on mobile */}
-              <div className="hidden lg:block lg:col-span-1">
+              {/* Summary Sidebar */}
+              <div className="lg:col-span-1">
                 <BookingSummary />
               </div>
             </div>
