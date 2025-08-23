@@ -16,7 +16,6 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
     selectedServices,
     selectedAddons,
     getSubtotal,
-    city,
     currentStep,
     setCurrentStep,
     toggleService,
@@ -29,12 +28,6 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
   const subtotal = getSubtotal();
   const hasItems = selectedServices.length > 0 || selectedAddons.length > 0;
 
-  const cityName = {
-    mumbai: 'Mumbai',
-    delhi: 'Delhi', 
-    bangalore: 'Bangalore',
-    other: 'Other'
-  }[city];
 
   if (!hasItems && !isMobile) {
     return (
@@ -77,9 +70,6 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
               <h4 className="text-gray-300 font-medium text-sm mb-3">Services</h4>
               <div className="space-y-3">
                 {selectedServices.map((service) => {
-                  const adjustedMin = service.priceMin;
-                  const adjustedMax = service.priceMax;
-                  
                   return (
                     <motion.div
                       key={service.id}
@@ -91,7 +81,7 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
                           {service.name}
                         </p>
                         <p className="text-gray-400 text-xs">
-                          ₹{adjustedMin.toLocaleString()} - ₹{adjustedMax.toLocaleString()}
+                          ₹{service.price.toLocaleString()}
                         </p>
                       </div>
                       <Button
@@ -115,9 +105,6 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
               <h4 className="text-gray-300 font-medium text-sm mb-3">Add-ons</h4>
               <div className="space-y-3">
                 {selectedAddons.map((addon) => {
-                  const adjustedMin = addon.priceMin;
-                  const adjustedMax = addon.priceMax;
-                  
                   return (
                     <motion.div
                       key={addon.id}
@@ -129,7 +116,7 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
                           {addon.name}
                         </p>
                         <p className="text-gray-400 text-xs">
-                          ₹{adjustedMin.toLocaleString()} - ₹{adjustedMax.toLocaleString()}
+                          ₹{addon.price.toLocaleString()}
                         </p>
                       </div>
                       <Button
@@ -156,7 +143,7 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
                 <div className="flex justify-between items-center">
                   <span className="text-gray-300 text-sm">Estimated Total</span>
                   <span className="text-white font-bold text-lg">
-                    ₹{subtotal.min.toLocaleString()} - ₹{subtotal.max.toLocaleString()}
+                    ₹{subtotal.toLocaleString()}
                   </span>
                 </div>
                 

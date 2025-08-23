@@ -11,16 +11,12 @@ interface BookingServiceCardProps {
   service: ServiceData;
   isSelected: boolean;
   onToggle: () => void;
-  adjustedPrice: { min: number; max: number };
-  showRange: boolean;
 }
 
 export function BookingServiceCard({ 
   service, 
   isSelected, 
-  onToggle, 
-  adjustedPrice, 
-  showRange 
+  onToggle
 }: BookingServiceCardProps) {
   const shouldReduceMotion = useReducedMotion();
   
@@ -128,33 +124,14 @@ export function BookingServiceCard({
           >
             <div className="bg-gradient-to-r from-white/5 to-white/10 rounded-xl p-4 border border-white/10">
               <div className="text-center">
-                {showRange ? (
-                  <div className="text-white font-bold">
-                    <motion.span 
-                      className="text-2xl"
-                      whileHover={{ scale: 1.05 }}
-                    >
-                      ₹{adjustedPrice.min.toLocaleString()}
-                    </motion.span>
-                    <span className="text-gray-400 text-lg mx-2"> - </span>
-                    <motion.span 
-                      className="text-2xl"
-                      whileHover={{ scale: 1.05 }}
-                    >
-                      ₹{adjustedPrice.max.toLocaleString()}
-                    </motion.span>
-                  </div>
-                ) : (
-                  <div className="text-white font-bold">
-                    <span className="text-gray-400 text-sm">starting from </span>
-                    <motion.span 
-                      className="text-2xl block"
-                      whileHover={{ scale: 1.05 }}
-                    >
-                      ₹{adjustedPrice.min.toLocaleString()}
-                    </motion.span>
-                  </div>
-                )}
+                <div className="text-white font-bold">
+                  <motion.span 
+                    className="text-2xl"
+                    whileHover={{ scale: 1.05 }}
+                  >
+                    ₹{service.price.toLocaleString()}
+                  </motion.span>
+                </div>
               </div>
             </div>
           </motion.div>

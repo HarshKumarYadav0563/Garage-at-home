@@ -24,7 +24,7 @@ import { SlotPicker } from '@/components/SlotPicker';
 import { CustomerDetailsForm } from '@/components/CustomerDetailsForm';
 
 // Data & Store
-import { BIKE_SERVICES, CAR_SERVICES, ADDONS, CITIES, ServiceData } from '@/data/bookingServices';
+import { BIKE_SERVICES, CAR_SERVICES, ADDONS, ServiceData } from '@/data/bookingServices';
 import { useBookingStore } from '@/store/booking';
 import { apiRequest } from '@/lib/queryClient';
 import { CustomerData } from '@/lib/validators';
@@ -33,21 +33,16 @@ export default function Services() {
   const {
     selectedVehicle,
     setSelectedVehicle,
-    city,
-    setCity,
     selectedServices,
     selectedAddons,
     toggleService,
     toggleAddon,
     searchQuery,
     setSearchQuery,
-    showPriceRanges,
-    setShowPriceRanges,
     currentStep,
     setCurrentStep,
     selectedSlot,
     customer,
-    getAdjustedPrice,
     clearBooking,
     getSubtotal,
     showSummary,
@@ -514,7 +509,6 @@ export default function Services() {
                     >
                       {comboServices.map((service) => {
                         const isSelected = selectedServices.some(s => s.id === service.id);
-                        const adjustedPrice = getAdjustedPrice(service.priceMin, service.priceMax);
                         
                         return (
                           <ComboServiceCard
@@ -522,8 +516,6 @@ export default function Services() {
                             service={service}
                             isSelected={isSelected}
                             onToggle={() => handleToggleService(service)}
-                            adjustedPrice={adjustedPrice}
-                            showRange={showPriceRanges}
                           />
                         );
                       })}
@@ -576,7 +568,6 @@ export default function Services() {
                     >
                       {individualServices.map((service) => {
                         const isSelected = selectedServices.some(s => s.id === service.id);
-                        const adjustedPrice = getAdjustedPrice(service.priceMin, service.priceMax);
                         
                         return (
                           <BookingServiceCard
@@ -584,8 +575,6 @@ export default function Services() {
                             service={service}
                             isSelected={isSelected}
                             onToggle={() => handleToggleService(service)}
-                            adjustedPrice={adjustedPrice}
-                            showRange={showPriceRanges}
                           />
                         );
                       })}
@@ -636,7 +625,6 @@ export default function Services() {
                   >
                     {ADDONS.map((addon) => {
                       const isSelected = selectedAddons.some(a => a.id === addon.id);
-                      const adjustedPrice = getAdjustedPrice(addon.priceMin, addon.priceMax);
                       
                       return (
                         <AddonChip
@@ -644,8 +632,6 @@ export default function Services() {
                           addon={addon}
                           isSelected={isSelected}
                           onToggle={() => toggleAddon(addon)}
-                          adjustedPrice={adjustedPrice}
-                          showRange={showPriceRanges}
                         />
                       );
                     })}
@@ -683,7 +669,7 @@ export default function Services() {
                       </div>
                       <div className="text-left">
                         <div className="text-sm font-medium">Cart Total</div>
-                        <div className="text-lg font-bold">₹{getSubtotal().min}</div>
+                        <div className="text-lg font-bold">₹{getSubtotal()}</div>
                       </div>
                     </div>
                   </motion.button>

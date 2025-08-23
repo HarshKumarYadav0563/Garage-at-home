@@ -3,8 +3,7 @@ export interface ServiceData {
   name: string;
   subtitle: string;
   vehicleType: 'bike' | 'car';
-  priceMin: number;
-  priceMax: number;
+  price: number;
   icon: string;
   popular?: boolean;
   type?: 'combo' | 'individual';
@@ -15,8 +14,7 @@ export interface ServiceData {
 export interface AddonData {
   id: string;
   name: string;
-  priceMin: number;
-  priceMax: number;
+  price: number;
   description: string;
 }
 
@@ -26,8 +24,7 @@ export const BIKE_SERVICES: ServiceData[] = [
     name: 'General Service',
     subtitle: 'Basic maintenance and inspection combo',
     vehicleType: 'bike',
-    priceMin: 400,
-    priceMax: 600,
+    price: 499,
     icon: 'wrench',
     popular: true,
     type: 'combo',
@@ -47,8 +44,7 @@ export const BIKE_SERVICES: ServiceData[] = [
     name: 'Periodic Service',
     subtitle: 'Comprehensive maintenance package',
     vehicleType: 'bike',
-    priceMin: 700,
-    priceMax: 1000,
+    price: 799,
     icon: 'calendar',
     type: 'combo',
     includedServices: [
@@ -68,8 +64,7 @@ export const BIKE_SERVICES: ServiceData[] = [
     name: 'Full Service',
     subtitle: 'Complete bike overhaul package',
     vehicleType: 'bike',
-    priceMin: 1200,
-    priceMax: 1500,
+    price: 1299,
     icon: 'shield-check',
     type: 'combo',
     includedServices: [
@@ -90,8 +85,7 @@ export const BIKE_SERVICES: ServiceData[] = [
     name: 'Engine Oil Change',
     subtitle: 'Fresh oil and filter replacement',
     vehicleType: 'bike',
-    priceMin: 300,
-    priceMax: 500,
+    price: 399,
     icon: 'droplets',
     type: 'individual'
   },
@@ -100,8 +94,7 @@ export const BIKE_SERVICES: ServiceData[] = [
     name: 'Brake Pad Replacement',
     subtitle: 'New brake pads for safety',
     vehicleType: 'bike',
-    priceMin: 400,
-    priceMax: 700,
+    price: 549,
     icon: 'disc',
     type: 'individual'
   },
@@ -110,8 +103,7 @@ export const BIKE_SERVICES: ServiceData[] = [
     name: 'Clutch Plate Replacement',
     subtitle: 'Smooth gear shifting',
     vehicleType: 'bike',
-    priceMin: 800,
-    priceMax: 1200,
+    price: 999,
     icon: 'settings',
     type: 'individual'
   },
@@ -120,8 +112,7 @@ export const BIKE_SERVICES: ServiceData[] = [
     name: 'Chain & Sprocket Replacement',
     subtitle: 'New chain and sprocket set',
     vehicleType: 'bike',
-    priceMin: 1200,
-    priceMax: 1800,
+    price: 1499,
     icon: 'link',
     type: 'individual'
   },
@@ -130,8 +121,7 @@ export const BIKE_SERVICES: ServiceData[] = [
     name: 'Battery Replacement',
     subtitle: 'New battery with warranty',
     vehicleType: 'bike',
-    priceMin: 1800,
-    priceMax: 2800,
+    price: 2299,
     icon: 'battery',
     type: 'individual'
   },
@@ -140,8 +130,7 @@ export const BIKE_SERVICES: ServiceData[] = [
     name: 'Tyre Replacement',
     subtitle: 'Per tyre with balancing',
     vehicleType: 'bike',
-    priceMin: 1200,
-    priceMax: 2000,
+    price: 1599,
     icon: 'circle',
     type: 'individual'
   },
@@ -150,8 +139,7 @@ export const BIKE_SERVICES: ServiceData[] = [
     name: 'Puncture Repair',
     subtitle: 'Quick puncture fix',
     vehicleType: 'bike',
-    priceMin: 80,
-    priceMax: 150,
+    price: 99,
     icon: 'band-aid',
     type: 'individual'
   },
@@ -160,8 +148,7 @@ export const BIKE_SERVICES: ServiceData[] = [
     name: 'Suspension Service',
     subtitle: 'Smooth ride comfort',
     vehicleType: 'bike',
-    priceMin: 400,
-    priceMax: 800,
+    price: 599,
     icon: 'spring',
     type: 'individual'
   },
@@ -170,8 +157,7 @@ export const BIKE_SERVICES: ServiceData[] = [
     name: 'Electrical Repair',
     subtitle: 'Wiring and component fixes',
     vehicleType: 'bike',
-    priceMin: 150,
-    priceMax: 400,
+    price: 299,
     icon: 'zap',
     type: 'individual'
   },
@@ -180,8 +166,7 @@ export const BIKE_SERVICES: ServiceData[] = [
     name: 'Bike Wash + Polish',
     subtitle: 'Clean and shiny finish',
     vehicleType: 'bike',
-    priceMin: 200,
-    priceMax: 400,
+    price: 299,
     icon: 'sparkles',
     type: 'individual'
   },
@@ -190,8 +175,7 @@ export const BIKE_SERVICES: ServiceData[] = [
     name: 'Painting/Denting',
     subtitle: 'Per panel restoration',
     vehicleType: 'bike',
-    priceMin: 800,
-    priceMax: 2000,
+    price: 1399,
     icon: 'palette',
     type: 'individual'
   },
@@ -200,8 +184,7 @@ export const BIKE_SERVICES: ServiceData[] = [
     name: 'Roadside Assistance',
     subtitle: 'Emergency help 24/7',
     vehicleType: 'bike',
-    priceMin: 300,
-    priceMax: 700,
+    price: 499,
     icon: 'phone-call',
     type: 'individual'
   }
@@ -213,8 +196,7 @@ export const CAR_SERVICES: ServiceData[] = [
     name: 'General Service',
     subtitle: 'Essential maintenance combo package',
     vehicleType: 'car',
-    priceMin: 1000,
-    priceMax: 1800,
+    price: 1399,
     icon: 'wrench',
     popular: true,
     type: 'combo',
@@ -235,8 +217,7 @@ export const CAR_SERVICES: ServiceData[] = [
     name: 'Periodic Service',
     subtitle: 'Comprehensive maintenance package',
     vehicleType: 'car',
-    priceMin: 2500,
-    priceMax: 3500,
+    price: 2999,
     icon: 'calendar',
     type: 'combo',
     includedServices: [
@@ -257,8 +238,7 @@ export const CAR_SERVICES: ServiceData[] = [
     name: 'Major Service',
     subtitle: 'Complete car overhaul package',
     vehicleType: 'car',
-    priceMin: 4000,
-    priceMax: 6000,
+    price: 4999,
     icon: 'shield-check',
     type: 'combo',
     includedServices: [
@@ -280,8 +260,7 @@ export const CAR_SERVICES: ServiceData[] = [
     name: 'Engine Oil Change',
     subtitle: 'Premium oil and filter',
     vehicleType: 'car',
-    priceMin: 800,
-    priceMax: 1200,
+    price: 999,
     icon: 'droplets',
     type: 'individual'
   },
@@ -290,8 +269,7 @@ export const CAR_SERVICES: ServiceData[] = [
     name: 'AC Service',
     subtitle: 'Gas refill and cleaning',
     vehicleType: 'car',
-    priceMin: 1000,
-    priceMax: 1800,
+    price: 1399,
     icon: 'snowflake',
     type: 'individual'
   },
@@ -300,8 +278,7 @@ export const CAR_SERVICES: ServiceData[] = [
     name: 'Brake Pad Replacement',
     subtitle: 'Front/rear brake service',
     vehicleType: 'car',
-    priceMin: 1500,
-    priceMax: 2500,
+    price: 1999,
     icon: 'disc',
     type: 'individual'
   },
@@ -310,8 +287,7 @@ export const CAR_SERVICES: ServiceData[] = [
     name: 'Clutch Overhaul',
     subtitle: 'Complete clutch service',
     vehicleType: 'car',
-    priceMin: 3500,
-    priceMax: 5500,
+    price: 4499,
     icon: 'settings',
     type: 'individual'
   },
@@ -320,8 +296,7 @@ export const CAR_SERVICES: ServiceData[] = [
     name: 'Battery Replacement',
     subtitle: '35-65Ah with warranty',
     vehicleType: 'car',
-    priceMin: 3500,
-    priceMax: 5000,
+    price: 4199,
     icon: 'battery',
     type: 'individual'
   },
@@ -330,8 +305,7 @@ export const CAR_SERVICES: ServiceData[] = [
     name: 'Tyre Replacement',
     subtitle: 'Per tyre with alignment',
     vehicleType: 'car',
-    priceMin: 2500,
-    priceMax: 4000,
+    price: 3199,
     icon: 'circle',
     type: 'individual'
   },
@@ -340,8 +314,7 @@ export const CAR_SERVICES: ServiceData[] = [
     name: 'Wheel Alignment + Balancing',
     subtitle: 'Precise wheel setup',
     vehicleType: 'car',
-    priceMin: 500,
-    priceMax: 900,
+    price: 699,
     icon: 'target',
     type: 'individual'
   },
@@ -350,8 +323,7 @@ export const CAR_SERVICES: ServiceData[] = [
     name: 'Suspension Work',
     subtitle: 'Smooth ride quality',
     vehicleType: 'car',
-    priceMin: 1200,
-    priceMax: 2500,
+    price: 1799,
     icon: 'spring',
     type: 'individual'
   },
@@ -360,8 +332,7 @@ export const CAR_SERVICES: ServiceData[] = [
     name: 'Electrical Repairs',
     subtitle: 'Alternator, starter, wiring',
     vehicleType: 'car',
-    priceMin: 500,
-    priceMax: 1200,
+    price: 849,
     icon: 'zap',
     type: 'individual'
   },
@@ -370,8 +341,7 @@ export const CAR_SERVICES: ServiceData[] = [
     name: 'Car Wash + Interior Cleaning',
     subtitle: 'Complete cleaning service',
     vehicleType: 'car',
-    priceMin: 400,
-    priceMax: 800,
+    price: 599,
     icon: 'sparkles',
     type: 'individual'
   },
@@ -380,8 +350,7 @@ export const CAR_SERVICES: ServiceData[] = [
     name: 'Full Car Detailing',
     subtitle: 'Premium polish and shampoo',
     vehicleType: 'car',
-    priceMin: 1800,
-    priceMax: 3000,
+    price: 2399,
     icon: 'star',
     type: 'individual'
   },
@@ -390,8 +359,7 @@ export const CAR_SERVICES: ServiceData[] = [
     name: 'Painting/Denting',
     subtitle: 'Per panel with color match',
     vehicleType: 'car',
-    priceMin: 1200,
-    priceMax: 2500,
+    price: 1799,
     icon: 'palette',
     type: 'individual'
   },
@@ -400,8 +368,7 @@ export const CAR_SERVICES: ServiceData[] = [
     name: 'Roadside Assistance',
     subtitle: 'Towing and emergency help',
     vehicleType: 'car',
-    priceMin: 700,
-    priceMax: 1500,
+    price: 1099,
     icon: 'phone-call',
     type: 'individual'
   }
@@ -411,46 +378,34 @@ export const ADDONS: AddonData[] = [
   {
     id: 'doorstep-service',
     name: 'Doorstep Service',
-    priceMin: 200,
-    priceMax: 300,
+    price: 249,
     description: 'Service at your location - Required for individual services'
   },
   {
     id: 'pickup-drop',
     name: 'Pickup & Drop',
-    priceMin: 150,
-    priceMax: 300,
+    price: 199,
     description: 'Vehicle pickup and drop service'
   },
   {
     id: 'diagnosis',
     name: 'Diagnosis',
-    priceMin: 200,
-    priceMax: 400,
+    price: 299,
     description: 'Complete diagnostic check'
   },
   {
     id: 'emergency',
     name: 'Emergency 2-Hour',
-    priceMin: 200,
-    priceMax: 400,
+    price: 299,
     description: 'Priority 2-hour service'
   },
   {
     id: 'warranty',
     name: 'Extended Warranty',
-    priceMin: 300,
-    priceMax: 600,
+    price: 449,
     description: 'Additional warranty coverage'
   }
 ];
-
-export const CITIES = [
-  { id: 'mumbai', name: 'Mumbai', multiplier: 1.10 },
-  { id: 'delhi', name: 'Delhi', multiplier: 1.05 },
-  { id: 'bangalore', name: 'Bangalore', multiplier: 1.05 },
-  { id: 'other', name: 'Other', multiplier: 1.00 }
-] as const;
 
 export const TIME_SLOTS = [
   { date: 'today', time: '10-12', label: 'Today 10AM-12PM' },

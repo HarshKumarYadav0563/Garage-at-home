@@ -4,16 +4,14 @@ export interface BookingService {
   id: string;
   name: string;
   vehicleType: 'bike' | 'car';
-  priceMin: number;
-  priceMax: number;
+  price: number;
   type?: 'combo' | 'individual';
 }
 
 export interface BookingAddon {
   id: string;
   name: string;
-  priceMin: number;
-  priceMax: number;
+  price: number;
 }
 
 export interface CustomerDetails {
@@ -32,7 +30,6 @@ export interface TimeSlot {
 interface BookingStore {
   // Selection state
   selectedVehicle: 'bike' | 'car';
-  city: 'mumbai' | 'delhi' | 'bangalore' | 'other';
   selectedServices: BookingService[];
   selectedAddons: BookingAddon[];
   
@@ -44,11 +41,9 @@ interface BookingStore {
   currentStep: 'services' | 'details' | 'confirmation';
   showSummary: boolean;
   searchQuery: string;
-  showPriceRanges: boolean;
   
   // Actions
   setSelectedVehicle: (vehicle: 'bike' | 'car') => void;
-  setCity: (city: 'mumbai' | 'delhi' | 'bangalore' | 'other') => void;
   toggleService: (service: BookingService) => void;
   toggleAddon: (addon: BookingAddon) => void;
   setCustomer: (customer: Partial<CustomerDetails>) => void;
@@ -56,12 +51,10 @@ interface BookingStore {
   setCurrentStep: (step: 'services' | 'details' | 'confirmation') => void;
   setShowSummary: (show: boolean) => void;
   setSearchQuery: (query: string) => void;
-  setShowPriceRanges: (show: boolean) => void;
   clearBooking: () => void;
   
   // Computed
-  getSubtotal: () => { min: number; max: number };
-  getAdjustedPrice: (priceMin: number, priceMax: number) => { min: number; max: number };
+  getSubtotal: () => number;
 }
 
 const initialCustomer: CustomerDetails = {
@@ -74,7 +67,6 @@ const initialCustomer: CustomerDetails = {
 export const useBookingStore = create<BookingStore>((set, get) => ({
   // Initial state
   selectedVehicle: 'bike',
-  city: 'mumbai',
   selectedServices: [],
   selectedAddons: [],
   customer: initialCustomer,
@@ -82,12 +74,9 @@ export const useBookingStore = create<BookingStore>((set, get) => ({
   currentStep: 'services',
   showSummary: false,
   searchQuery: '',
-  showPriceRanges: true,
   
   // Actions
   setSelectedVehicle: (vehicle) => set({ selectedVehicle: vehicle, selectedServices: [] }),
-  
-  setCity: (city) => set({ city }),
   
   toggleService: (service) => set((state) => {
     const exists = state.selectedServices.find(s => s.id === service.id);
@@ -161,21 +150,18 @@ export const useBookingStore = create<BookingStore>((set, get) => ({
   getSubtotal: () => {
     const state = get();
     
-    let min = 0;
-    let max = 0;
+    let total = 0;
     
     // Add services
     state.selectedServices.forEach(service => {
-      min += service.priceMin;
-      max += service.priceMax;
+      total += service.price;
     });
     
     // Add addons
     state.selectedAddons.forEach(addon => {
-      min += addon.priceMin;
-      max += addon.priceMax;
+      total += addon.price;
     });
     
-    return { min, max };
+    return total;
   }
 }));

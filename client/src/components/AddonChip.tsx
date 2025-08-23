@@ -7,16 +7,12 @@ interface AddonChipProps {
   addon: AddonData;
   isSelected: boolean;
   onToggle: () => void;
-  adjustedPrice: { min: number; max: number };
-  showRange: boolean;
 }
 
 export function AddonChip({ 
   addon, 
   isSelected, 
-  onToggle, 
-  adjustedPrice, 
-  showRange 
+  onToggle
 }: AddonChipProps) {
   const shouldReduceMotion = useReducedMotion();
   
@@ -86,18 +82,9 @@ export function AddonChip({
             transition={{ type: "spring", stiffness: 300 }}
           >
             <div className="text-center">
-              {showRange ? (
-                <div className="text-white font-bold">
-                  <span className="text-xl">₹{adjustedPrice.min.toLocaleString()}</span>
-                  <span className="text-gray-400 text-sm mx-2"> - </span>
-                  <span className="text-xl">₹{adjustedPrice.max.toLocaleString()}</span>
-                </div>
-              ) : (
-                <div className="text-white font-bold">
-                  <span className="text-gray-400 text-xs">from </span>
-                  <span className="text-xl">₹{adjustedPrice.min.toLocaleString()}</span>
-                </div>
-              )}
+              <div className="text-white font-bold">
+                <span className="text-xl">₹{addon.price.toLocaleString()}</span>
+              </div>
               <div className="text-xs text-purple-400 mt-1 font-medium">
                 Optional upgrade
               </div>

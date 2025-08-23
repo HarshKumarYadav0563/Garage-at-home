@@ -10,16 +10,12 @@ interface ComboServiceCardProps {
   service: ServiceData;
   isSelected: boolean;
   onToggle: () => void;
-  adjustedPrice: { min: number; max: number };
-  showRange: boolean;
 }
 
 export function ComboServiceCard({ 
   service, 
   isSelected, 
-  onToggle, 
-  adjustedPrice, 
-  showRange 
+  onToggle
 }: ComboServiceCardProps) {
   const shouldReduceMotion = useReducedMotion();
   
@@ -221,33 +217,14 @@ export function ComboServiceCard({
           >
             <div className="bg-gradient-to-r from-emerald-500/10 to-sky-500/10 rounded-xl p-4 border border-emerald-500/20">
               <div className="text-center">
-                {showRange ? (
-                  <div className="text-white font-bold">
-                    <motion.span 
-                      className="text-3xl"
-                      whileHover={{ scale: 1.05 }}
-                    >
-                      ₹{adjustedPrice.min.toLocaleString()}
-                    </motion.span>
-                    <span className="text-gray-400 text-lg mx-2"> - </span>
-                    <motion.span 
-                      className="text-3xl"
-                      whileHover={{ scale: 1.05 }}
-                    >
-                      ₹{adjustedPrice.max.toLocaleString()}
-                    </motion.span>
-                  </div>
-                ) : (
-                  <div className="text-white font-bold">
-                    <span className="text-gray-400 text-sm">starting from </span>
-                    <motion.span 
-                      className="text-3xl block"
-                      whileHover={{ scale: 1.05 }}
-                    >
-                      ₹{adjustedPrice.min.toLocaleString()}
-                    </motion.span>
-                  </div>
-                )}
+                <div className="text-white font-bold">
+                  <motion.span 
+                    className="text-3xl"
+                    whileHover={{ scale: 1.05 }}
+                  >
+                    ₹{service.price.toLocaleString()}
+                  </motion.span>
+                </div>
                 
                 <motion.div 
                   className="text-sm text-emerald-400 mt-2 font-semibold flex items-center justify-center gap-2"
