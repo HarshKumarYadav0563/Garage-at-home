@@ -1,0 +1,85 @@
+You are a senior React + TailwindCSS + Framer Motion engineer.
+Refactor my “How GarageWala Works” section to be visually richer and more animated, without hurting performance.
+
+## Tech
+React (web), TailwindCSS, Framer Motion, (optional) Lottie for subtle vector loops.
+Keep desktop layout great; make mobile compact and lively.
+
+## Visual Style
+- Use a soft **multi-color gradient background** with subtle noise + radial glow:
+  - Background layer: `bg-[radial-gradient(80%_60%_at_20%_0%,rgba(56,189,248,.25),transparent),radial-gradient(70%_50%_at_100%_100%,rgba(99,102,241,.25),transparent)]`
+  - Add `before:` pseudo overlay for a faint grid/noise if simple.
+- **Glassmorphism cards** (translucent): `bg-white/6 border border-white/10 backdrop-blur-xl shadow-[0_8px_30px_rgba(2,6,23,.2)]`
+- Color palette (accent pills/gradients):
+  - Emerald `#10B981`, Indigo `#6366F1`, Sky `#38BDF8`, Amber `#F59E0B`, Violet `#8B5CF6`
+  - Gradients: `from-emerald-500 via-sky-500 to-indigo-600` and `from-amber-400 to-orange-600`
+
+## Layout
+- Wrapper: `section` with `aria-labelledby="how-heading"`, classes:
+  - Mobile: `px-4 pt-10 pb-12`
+  - Desktop: `md:px-10 md:pt-16 md:pb-20 max-w-6xl mx-auto`
+- Headline:
+  - `id="how-heading"`; Tailwind: `text-2xl md:text-4xl font-semibold text-center leading-tight`
+  - Underline gradient bar (animated): a 4px bar that **wipes in** from left on view.
+- Subhead: `text-sm md:text-lg text-white/70 mt-2 text-center max-w-[52ch] mx-auto`
+
+## Cards (Steps)
+- Mobile: `grid grid-cols-2 gap-3 mt-6` (collapse to 1 col under 360px)
+- Desktop: `md:grid-cols-4 md:gap-6`
+- Card container:
+  - `group relative rounded-2xl p-4 md:p-6 bg-white/6 border border-white/10 backdrop-blur-xl`
+  - Add **hover ring**: `hover:ring-1 hover:ring-white/20`
+  - Subtle **3D tilt** on hover (Framer Motion, rotateX/rotateY a few degrees)
+- Icon chip at top:
+  - 56px square on mobile, 64px on desktop: `size-14 md:size-16 rounded-2xl`
+  - Different gradient per step:
+    1) `bg-gradient-to-br from-sky-400 to-indigo-600`
+    2) `from-emerald-400 to-teal-600`
+    3) `from-amber-400 to-orange-600`
+    4) `from-violet-400 to-fuchsia-600`
+  - Add **ring glow** on hover: `after:absolute after:inset-0 after:rounded-2xl after:bg-white/10 after:blur-md after:opacity-0 group-hover:opacity-100 transition`
+- “STEP 0X” label: `text-[10px] md:text-xs uppercase tracking-[0.12em] text-white/60 mt-2`
+- Title: `text-sm md:text-lg font-semibold mt-1`
+- Caption: `text-[12px] md:text-sm text-white/70 mt-1 leading-relaxed line-clamp-3`
+
+## Animations (Framer Motion)
+- Section entrance: parent container uses `whileInView="show"` with `viewport={{ once: true, amount: 0.2 }}`.
+- Staggered fade-up for headline, subhead, grid, then each card:
+  - Container variants: `{ hidden:{opacity:0,y:12}, show:{opacity:1,y:0,transition:{staggerChildren:0.08, delayChildren:0.1}} }`
+  - Item variants: `{ hidden:{opacity:0,y:14}, show:{opacity:1,y:0,transition:{duration:0.35,ease:"easeOut"}} }`
+- Icon micro-loop (subtle float): keyframes on y: `[0,-4,0,2,0]` over 4–6s, repeat: Infinity. **Disable on mobile** with `md:` media or `reduced motion`.
+- Card hover parallax:
+  - `whileHover={{ y: -4, rotateX: 2, rotateY: -2 }} transition={{ type: "spring", stiffness: 220, damping: 18 }}`
+- Animated gradient underline under headline:
+  - A `motion.div` width animates from 0 → 64px on view; color shifts via CSS gradient.
+
+## Optional Lottie (very light)
+- Replace static icon inside chip with tiny Lottie for each step (check size < 40KB).
+- If not using Lottie, use lucide-react icons with `motion` scale on hover.
+
+## Mobile-specific optimizations
+- Reduce vertical spacing: 12–16px rhythm.
+- Clamp captions to 2–3 lines.
+- Keep icons 56px and titles `text-sm`.
+- Prefer **2×2 grid**; if content still tall, offer **horizontal scroll** fallback:
+  - Outer: `-mx-4 px-4 overflow-x-auto no-scrollbar`
+  - Inner: `flex gap-3 w-max` with card `w-[78vw] max-w-[320px]`
+- Disable heavy float/tilt loops on mobile (wrap animations with `md:` or `useReducedMotion`).
+
+## Accessibility
+- Each card is a `<li>` inside `<ul role="list">`.
+- Icons `aria-hidden="true"`, titles as `<h3>` with `id` linked via `aria-labelledby`.
+- Touch targets ≥44px.
+
+## Code Deliverables
+- A single `HowItWorks.tsx` component using:
+  - Tailwind classes above,
+  - Framer Motion variants,
+  - Color gradients per step,
+  - Responsive grid and horizontal-scroll fallback.
+- Keep existing desktop style but enhance with gradients and motion.
+- No regressions in Lighthouse (aim ≥90). Defer heavy assets, use `loading="lazy"` on images if any.
+
+## Acceptance (375×812 & 1440×900)
+- Mobile: compact 2×2, vivid gradients, subtle float on icons disabled or very light, clean spacing.
+- Desktop: 4 columns with hover tilt + glow, animated underline on heading, buttery stagger on scroll-in.

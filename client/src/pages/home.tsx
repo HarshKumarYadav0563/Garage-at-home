@@ -2,11 +2,11 @@ import { Hero } from '@/components/Hero';
 import { TrustBar } from '@/components/TrustBar';
 import { ServiceCard } from '@/components/ServiceCard';
 import { FAQ } from '@/components/FAQ';
+import { HowItWorks } from '@/components/HowItWorks';
 import { motion } from 'framer-motion';
 import { servicePackages } from '@/data/services';
 import { Link } from 'wouter';
 import { Button } from '@/components/ui/button';
-import { Phone, CheckCircle, Wrench, Star } from 'lucide-react';
 
 export default function Home() {
   const bikeServices = servicePackages.filter(s => s.vehicleType === 'bike');
@@ -16,103 +16,7 @@ export default function Home() {
     <div className="min-h-screen">
       <Hero />
       <TrustBar />
-      
-      {/* How It Works Section */}
-      <section id="how-it-works" aria-labelledby="how-heading" className="px-4 pt-8 pb-10 md:py-12 lg:py-24 bg-gradient-to-br from-gray-900 via-blue-900 to-primary-900">
-        <div className="max-w-7xl mx-auto md:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-6 md:mb-12 lg:mb-16"
-          >
-            <h2 id="how-heading" className="text-2xl font-semibold text-center leading-tight text-white md:text-4xl md:leading-tight lg:text-5xl md:font-bold md:mb-4 lg:mb-6">
-              How GarageWala Works
-            </h2>
-            <p className="text-sm text-white/70 mt-2 text-center max-w-[28ch] mx-auto md:text-lg lg:text-xl md:text-white/80 md:max-w-3xl md:mt-4">
-              Get premium vehicle service at your doorstep in 4 simple steps
-            </p>
-          </motion.div>
-
-          <motion.ul
-            className="grid grid-cols-2 gap-3 mt-6 md:grid-cols-4 md:gap-6 lg:gap-8 how-it-works-grid"
-            variants={{
-              show: {
-                transition: {
-                  staggerChildren: 0.06
-                }
-              }
-            }}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
-          >
-            {[
-              {
-                step: "01",
-                title: "Book Online",
-                description: "Choose vehicle type, service needed, and time slot",
-                icon: Phone,
-                color: "from-blue-500 to-purple-600"
-              },
-              {
-                step: "02", 
-                title: "Get Confirmation",
-                description: "Instant confirmation with mechanic details and tracking ID",
-                icon: CheckCircle,
-                color: "from-green-500 to-blue-600"
-              },
-              {
-                step: "03",
-                title: "Mechanic Arrives",
-                description: "Professional mechanic comes to your location with tools",
-                icon: Wrench,
-                color: "from-orange-500 to-red-600"
-              },
-              {
-                step: "04",
-                title: "Service Complete",
-                description: "Quality service with warranty, transparent billing & payment",
-                icon: Star,
-                color: "from-primary-500 to-green-600"
-              }
-            ].map((step, index) => {
-              const IconComponent = step.icon;
-              return (
-                <motion.li
-                  key={index}
-                  variants={{
-                    hidden: { opacity: 0, y: 14 },
-                    show: { opacity: 1, y: 0 }
-                  }}
-                  transition={{ duration: 0.35 }}
-                  className="rounded-2xl p-3 bg-white/5 border border-white/10 backdrop-blur flex flex-col items-center text-center md:bg-white/10 md:p-6 lg:p-8"
-                >
-                  <motion.div 
-                    className={`size-12 rounded-2xl shadow-sm bg-gradient-to-br ${step.color} flex items-center justify-center md:w-16 md:h-16 lg:w-20 lg:h-20 md:mb-4 lg:mb-6`}
-                    whileHover={{ scale: 1.05 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <IconComponent 
-                      className="w-5 h-5 text-white md:w-6 md:h-6 lg:w-8 lg:h-8" 
-                      aria-hidden="true"
-                    />
-                  </motion.div>
-                  <div className="text-[11px] uppercase tracking-wide text-white/60 mt-2 md:text-xs md:text-white/70 md:font-bold">
-                    STEP {step.step}
-                  </div>
-                  <h3 className="text-base font-semibold mt-1 text-white md:text-lg lg:text-xl md:mb-2 lg:mb-3">
-                    {step.title}
-                  </h3>
-                  <p className="text-[12px] text-white/70 mt-1 leading-snug line-clamp-2 md:text-sm lg:text-base md:text-white/80 md:leading-relaxed md:line-clamp-none">
-                    {step.description}
-                  </p>
-                </motion.li>
-              );
-            })}
-          </motion.ul>
-        </div>
-      </section>
+      <HowItWorks />
 
       {/* Competitive Advantages */}
       <section className="py-16 lg:py-24 bg-gray-50">
