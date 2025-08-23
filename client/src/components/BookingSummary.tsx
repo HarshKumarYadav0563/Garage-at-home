@@ -112,7 +112,10 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
                     <Button
                       variant="ghost"
                       size="sm"
-                      onClick={() => setShowSummary(false)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setShowSummary(false);
+                      }}
                       className="text-gray-400 hover:text-white"
                     >
                       <X className="w-4 h-4" />
@@ -157,7 +160,10 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
                       <Button
                         variant="ghost"
                         size="sm"
-                        onClick={() => toggleService(service)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleService(service);
+                        }}
                         className="text-gray-400 hover:text-red-400 ml-2"
                       >
                         <X className={isMobile ? "w-3 h-3" : "w-3 h-3"} />
@@ -192,7 +198,10 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
                       <Button
                         variant="ghost"
                         size="sm"
-                        onClick={() => toggleAddon(addon)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleAddon(addon);
+                        }}
                         className="text-gray-400 hover:text-red-400 ml-2"
                       >
                         <X className="w-3 h-3" />
