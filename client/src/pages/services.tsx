@@ -1048,43 +1048,111 @@ export default function Services() {
                   </motion.div>
                 )}
 
-                {/* Individual Services */}
-                <div className="mb-16">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
+                {/* Enhanced Individual Services with Scroll Animation */}
+                <motion.div
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ duration: 0.8, ease: "easeOut" }}
+                  className="mb-16"
+                >
+                  <motion.div 
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.5 }}
+                    transition={{ delay: 0.2, duration: 0.6 }}
+                    className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4"
+                  >
                     <div>
-                      <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+                      <motion.h3 
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true, amount: 0.5 }}
+                        transition={{ delay: 0.3, duration: 0.6 }}
+                        className="text-2xl sm:text-3xl font-bold text-white mb-2"
+                      >
                         Individual Services
-                      </h3>
-                      <p className="text-gray-300 text-base sm:text-lg">
+                      </motion.h3>
+                      <motion.p 
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true, amount: 0.5 }}
+                        transition={{ delay: 0.4, duration: 0.6 }}
+                        className="text-gray-300 text-base sm:text-lg"
+                      >
                         Precision services for specific maintenance needs
-                      </p>
+                      </motion.p>
                     </div>
-                    <Badge variant="outline" className="text-emerald-400 border-emerald-500/30 self-start sm:self-auto">
-                      {individualServices.length} Services Available
-                    </Badge>
-                  </div>
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true, amount: 0.5 }}
+                      transition={{ delay: 0.5, type: "spring", stiffness: 300 }}
+                    >
+                      <Badge variant="outline" className="text-emerald-400 border-emerald-500/30 self-start sm:self-auto">
+                        {individualServices.length} Services Available
+                      </Badge>
+                    </motion.div>
+                  </motion.div>
                   
-                  <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4 mb-8">
+                  <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.5 }}
+                    transition={{ delay: 0.6, duration: 0.6 }}
+                    className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4 mb-8"
+                  >
                     <p className="text-blue-300 text-sm">
                       <span className="font-medium">Mix & Match:</span> Individual services can be combined with each other. Don't forget to add "Doorstep Service" from add-ons for home service.
                     </p>
-                  </div>
+                  </motion.div>
                   
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+                  <motion.div
+                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8"
+                    variants={{
+                      hidden: { opacity: 0 },
+                      show: {
+                        opacity: 1,
+                        transition: {
+                          staggerChildren: 0.1,
+                          delayChildren: 0.7
+                        }
+                      }
+                    }}
+                    initial="hidden"
+                    whileInView="show"
+                    viewport={{ once: true, amount: 0.2 }}
+                  >
                     {individualServices.map((service) => {
                       const isSelected = selectedServices.some(s => s.id === service.id);
                       
                       return (
-                        <BookingServiceCard
+                        <motion.div
                           key={service.id}
-                          service={service}
-                          isSelected={isSelected}
-                          onToggle={() => handleToggleService(service)}
-                        />
+                          variants={{
+                            hidden: { opacity: 0, y: 30, scale: 0.9 },
+                            show: { 
+                              opacity: 1, 
+                              y: 0, 
+                              scale: 1,
+                              transition: {
+                                type: "spring",
+                                stiffness: 300,
+                                damping: 20
+                              }
+                            }
+                          }}
+                        >
+                          <BookingServiceCard
+                            service={service}
+                            isSelected={isSelected}
+                            onToggle={() => handleToggleService(service)}
+                          />
+                        </motion.div>
                       );
                     })}
-                  </div>
-                </div>
+                  </motion.div>
+                </motion.div>
 
                 {/* Enhanced Add-ons Section */}
                 <motion.div
