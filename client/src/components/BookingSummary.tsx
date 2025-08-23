@@ -39,7 +39,7 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
   console.log('Debug - Subtotal:', subtotal, 'Doorstep Charge:', doorstepCharge, 'Final Total:', finalTotal);
 
 
-  if (!hasItems && !isMobile) {
+  if (!hasItems) {
     return (
       <Card className={`bg-white/5 border-white/10 backdrop-blur-xl ${className}`}>
         <CardContent className="p-6 text-center">
