@@ -105,7 +105,8 @@ export const useBookingStore = create<BookingStore>((set, get) => ({
       newSelectedServices.push(service);
       
       return {
-        selectedServices: newSelectedServices
+        selectedServices: newSelectedServices,
+        showSummary: true // Automatically show summary when service is added
       };
     }
   }),
@@ -118,7 +119,8 @@ export const useBookingStore = create<BookingStore>((set, get) => ({
       };
     } else {
       return {
-        selectedAddons: [...state.selectedAddons, addon]
+        selectedAddons: [...state.selectedAddons, addon],
+        showSummary: true // Automatically show summary when addon is added
       };
     }
   }),
