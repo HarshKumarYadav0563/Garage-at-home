@@ -86,7 +86,7 @@ export function Footer() {
                       key={index}
                       href={href}
                       aria-label={label}
-                      className="w-10 h-10 bg-gray-800 rounded-xl flex items-center justify-center hover:bg-primary-600 transition-all duration-200 hover:scale-110"
+                      className="w-10 h-10 bg-gray-800 dark:bg-gray-700 rounded-xl flex items-center justify-center hover:bg-primary-600 dark:hover:bg-primary-500 transition-all duration-200 hover:scale-110"
                       data-testid={`social-link-${index}`}
                     >
                       <Icon className="w-4 h-4" />
@@ -105,7 +105,7 @@ export function Footer() {
                 viewport={{ once: true }}
                 transition={{ delay: 0.1 }}
               >
-                <h3 className="text-lg font-semibold mb-4 text-white">Our Services</h3>
+                <h3 className="text-lg font-semibold mb-4 text-white dark:text-gray-100">Our Services</h3>
                 <ul className="space-y-2">
                   {services.map((service, index) => (
                     <li key={index}>
@@ -130,7 +130,7 @@ export function Footer() {
                 viewport={{ once: true }}
                 transition={{ delay: 0.2 }}
               >
-                <h3 className="text-lg font-semibold mb-4 text-white">Service Cities</h3>
+                <h3 className="text-lg font-semibold mb-4 text-white dark:text-gray-100">Service Cities</h3>
                 <ul className="space-y-2">
                   {cities.map((city, index) => (
                     <li key={index}>
@@ -145,7 +145,7 @@ export function Footer() {
                       </Link>
                     </li>
                   ))}
-                  <li className="pt-2 border-t border-gray-700">
+                  <li className="pt-2 border-t border-gray-700 dark:border-gray-600">
                     <Link href="/cities">
                       <span className="text-primary-400 hover:text-primary-300 transition-colors cursor-pointer font-medium">
                         View All Cities →
@@ -162,7 +162,7 @@ export function Footer() {
                 viewport={{ once: true }}
                 transition={{ delay: 0.3 }}
               >
-                <h3 className="text-lg font-semibold mb-4 text-white">Company</h3>
+                <h3 className="text-lg font-semibold mb-4 text-white dark:text-gray-100">Company</h3>
                 <ul className="space-y-2">
                   {company.map((item, index) => (
                     <li key={index}>
@@ -185,7 +185,7 @@ export function Footer() {
       </div>
 
       {/* Contact Section */}
-      <div className="border-b border-gray-700">
+      <div className="border-b border-gray-700 dark:border-gray-600">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -194,41 +194,41 @@ export function Footer() {
             transition={{ delay: 0.4 }}
           >
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="bg-gray-800/50 rounded-2xl p-4 border border-gray-700/50 hover:border-primary-500/50 transition-colors">
+              <div className="bg-gray-800/50 dark:bg-gray-700/50 rounded-2xl p-4 border border-gray-700/50 dark:border-gray-600/50 hover:border-primary-500/50 dark:hover:border-primary-400/50 transition-colors">
                 <div className="flex items-center space-x-4">
                   <div className="w-12 h-12 bg-primary-500/20 rounded-xl flex items-center justify-center">
                     <Phone className="text-primary-400 w-5 h-5" />
                   </div>
                   <div>
-                    <div className="font-semibold text-white">Call Us</div>
-                    <div className="text-gray-300 text-sm" data-testid="footer-phone">+91 98765 43210</div>
-                    <div className="text-xs text-gray-400">Available 24/7</div>
+                    <div className="font-semibold text-white dark:text-gray-100">Call Us</div>
+                    <div className="text-gray-300 dark:text-gray-300 text-sm" data-testid="footer-phone">+91 98765 43210</div>
+                    <div className="text-xs text-gray-400 dark:text-gray-400">Available 24/7</div>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-gray-800/50 rounded-2xl p-4 border border-gray-700/50 hover:border-primary-500/50 transition-colors">
+              <div className="bg-gray-800/50 dark:bg-gray-700/50 rounded-2xl p-4 border border-gray-700/50 dark:border-gray-600/50 hover:border-primary-500/50 dark:hover:border-primary-400/50 transition-colors">
                 <div className="flex items-center space-x-4">
                   <div className="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center">
                     <Mail className="text-green-400 w-5 h-5" />
                   </div>
                   <div>
-                    <div className="font-semibold text-white">Email</div>
-                    <div className="text-gray-300 text-sm" data-testid="footer-email">support@garagewala.com</div>
-                    <div className="text-xs text-gray-400">Quick response</div>
+                    <div className="font-semibold text-white dark:text-gray-100">Email</div>
+                    <div className="text-gray-300 dark:text-gray-300 text-sm" data-testid="footer-email">support@garagewala.com</div>
+                    <div className="text-xs text-gray-400 dark:text-gray-400">Quick response</div>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-gray-800/50 rounded-2xl p-4 border border-gray-700/50 hover:border-primary-500/50 transition-colors">
+              <div className="bg-gray-800/50 dark:bg-gray-700/50 rounded-2xl p-4 border border-gray-700/50 dark:border-gray-600/50 hover:border-primary-500/50 dark:hover:border-primary-400/50 transition-colors">
                 <div className="flex items-center space-x-4">
                   <div className="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center">
                     <Clock className="text-blue-400 w-5 h-5" />
                   </div>
                   <div>
-                    <div className="font-semibold text-white">Service Hours</div>
-                    <div className="text-gray-300 text-sm" data-testid="footer-hours">24/7 Available</div>
-                    <div className="text-xs text-gray-400">Emergency support</div>
+                    <div className="font-semibold text-white dark:text-gray-100">Service Hours</div>
+                    <div className="text-gray-300 dark:text-gray-300 text-sm" data-testid="footer-hours">24/7 Available</div>
+                    <div className="text-xs text-gray-400 dark:text-gray-400">Emergency support</div>
                   </div>
                 </div>
               </div>
@@ -246,7 +246,7 @@ export function Footer() {
           transition={{ delay: 0.5 }}
           className="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0"
         >
-          <div className="flex items-center space-x-4 text-gray-400 text-sm">
+          <div className="flex items-center space-x-4 text-gray-400 dark:text-gray-400 text-sm">
             <p data-testid="footer-copyright">
               &copy; 2024 GarageWala. All rights reserved.
             </p>
@@ -260,10 +260,10 @@ export function Footer() {
           
           <div className="flex items-center space-x-6 text-sm">
             <Link href="/privacy">
-              <span className="text-gray-400 hover:text-primary-400 transition-colors cursor-pointer">Privacy Policy</span>
+              <span className="text-gray-400 dark:text-gray-400 hover:text-primary-400 dark:hover:text-primary-300 transition-colors cursor-pointer">Privacy Policy</span>
             </Link>
             <Link href="/terms">
-              <span className="text-gray-400 hover:text-primary-400 transition-colors cursor-pointer">Terms of Service</span>
+              <span className="text-gray-400 dark:text-gray-400 hover:text-primary-400 dark:hover:text-primary-300 transition-colors cursor-pointer">Terms of Service</span>
             </Link>
           </div>
         </motion.div>
