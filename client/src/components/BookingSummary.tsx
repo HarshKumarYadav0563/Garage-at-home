@@ -1,10 +1,11 @@
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion, useReducedMotion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { ArrowRight, X, ShoppingCart } from 'lucide-react';
+import { ArrowRight, X, ShoppingCart, ChevronUp, ChevronDown } from 'lucide-react';
 import { useBookingStore } from '@/store/booking';
+import { useState } from 'react';
 
 interface BookingSummaryProps {
   className?: string;
@@ -28,6 +29,7 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
   
   const shouldReduceMotion = useReducedMotion();
   const subtotal = getSubtotal();
+  const [isCollapsed, setIsCollapsed] = useState(false);
   
   // Calculate doorstep charge manually if function doesn't exist
   const doorstepCharge = subtotal > 0 && subtotal < 999 ? 99 : 0;
@@ -60,19 +62,77 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
     >
       <Card className="bg-white/5 border-white/10 backdrop-blur-xl sticky top-24">
         <CardContent className={isMobile ? "p-3" : "p-6"}>
+          {/* Header with collapse/expand for mobile */}
           <div className={`flex items-center justify-between ${isMobile ? "mb-3" : "mb-6"}`}>
-            <h3 className={`text-white font-bold ${isMobile ? "text-base" : "text-lg"}`}>Booking Summary</h3>
-            {isMobile && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setShowSummary(false)}
-                className="text-gray-400 hover:text-white"
-              >
-                <X className="w-4 h-4" />
-              </Button>
+            {isMobile && isCollapsed ? (
+              /* Collapsed view - show total and expand button */
+              <div className="flex items-center justify-between w-full">
+                <div className="flex items-center space-x-3">
+                  <h3 className="text-white font-bold text-sm">Total: ₹{finalTotal.toLocaleString()}</h3>
+                  {selectedServices.length > 0 && (
+                    <Badge variant="outline" className="text-xs border-emerald-500/30 text-emerald-400">
+                      {selectedServices.length + selectedAddons.length} items
+                    </Badge>
+                  )}
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Button
+                    onClick={() => setCurrentStep('details')}
+                    disabled={selectedServices.length === 0}
+                    className="bg-gradient-to-r from-emerald-500 to-sky-600 hover:from-emerald-600 hover:to-sky-700 text-white py-1 px-3 text-xs font-semibold rounded-lg"
+                  >
+                    Continue
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setIsCollapsed(false)}
+                    className="text-gray-400 hover:text-white"
+                  >
+                    <ChevronUp className="w-4 h-4" />
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              /* Expanded view - normal header */
+              <>
+                <h3 className={`text-white font-bold ${isMobile ? "text-base" : "text-lg"}`}>Booking Summary</h3>
+                <div className="flex items-center space-x-2">
+                  {isMobile && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setIsCollapsed(true)}
+                      className="text-gray-400 hover:text-white"
+                    >
+                      <ChevronDown className="w-4 h-4" />
+                    </Button>
+                  )}
+                  {isMobile && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setShowSummary(false)}
+                      className="text-gray-400 hover:text-white"
+                    >
+                      <X className="w-4 h-4" />
+                    </Button>
+                  )}
+                </div>
+              </>
             )}
           </div>
+
+          {/* Collapsible content for mobile */}
+          <AnimatePresence>
+            {(!isMobile || !isCollapsed) && (
+              <motion.div
+                initial={isMobile ? { height: 0, opacity: 0 } : undefined}
+                animate={isMobile ? { height: 'auto', opacity: 1 } : undefined}
+                exit={isMobile ? { height: 0, opacity: 0 } : undefined}
+                transition={{ duration: 0.3, ease: 'easeInOut' }}
+                style={isMobile ? { overflow: 'hidden' } : undefined}
+              >
 
           {/* Selected Services */}
           {selectedServices.length > 0 && (
@@ -215,6 +275,9 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
               </motion.div>
             </>
           )}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </CardContent>
       </Card>
     </motion.div>
