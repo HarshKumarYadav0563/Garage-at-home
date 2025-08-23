@@ -75,7 +75,7 @@ export function Hero() {
   };
 
   return (
-    <section className="relative min-h-[45vh] sm:min-h-[50vh] lg:min-h-auto flex items-center overflow-hidden bg-gradient-to-br from-gray-950 via-gray-900 to-black pt-16 sm:pt-18 lg:pt-2 lg:pb-12">
+    <section className="relative min-h-[45vh] sm:min-h-[50vh] lg:min-h-auto flex items-center overflow-hidden bg-gradient-to-br from-gray-950 via-gray-900 to-black pt-16 sm:pt-18 lg:pt-6 lg:pb-12">
       {/* Radial Accent Glows */}
       <div className="absolute inset-0">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl" />
