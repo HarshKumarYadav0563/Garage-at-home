@@ -75,13 +75,19 @@ export function Hero() {
   };
 
   return (
-    <section className="relative min-h-[45vh] sm:min-h-[50vh] lg:min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-gray-50 via-blue-50 to-primary-50 pt-24 sm:pt-28 lg:pt-32">
+    <section className="relative min-h-[45vh] sm:min-h-[50vh] lg:min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-gray-950 via-gray-900 to-black pt-24 sm:pt-28 lg:pt-32">
+      {/* Radial Accent Glows */}
+      <div className="absolute inset-0">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-sky-500/20 rounded-full blur-3xl" />
+      </div>
+      
       {/* Subtle Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div
           className="absolute inset-0"
           style={{
-            backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(16,185,129,0.15) 1px, transparent 0)',
+            backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.1) 1px, transparent 0)',
             backgroundSize: '40px 40px',
           }}
         />
@@ -99,10 +105,10 @@ export function Hero() {
             {/* Heading */}
             <motion.h1
               variants={itemVariants}
-              className="text-3xl font-bold leading-tight text-gray-900"
+              className="text-3xl font-bold leading-tight text-white"
             >
               India's First{' '}
-              <span className="bg-gradient-to-r from-primary-600 to-blue-600 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-emerald-400 to-sky-500 bg-clip-text text-transparent">
                 Premium Doorstep
               </span>{' '}
               Vehicle Service
@@ -111,7 +117,7 @@ export function Hero() {
             {/* Subheading */}
             <motion.p
               variants={itemVariants}
-              className="text-base text-gray-600 leading-relaxed px-4"
+              className="text-sm text-gray-400 leading-relaxed px-4"
             >
               Skip the garage visits! Professional mechanics come to your location with all tools & parts.
             </motion.p>
@@ -122,43 +128,45 @@ export function Hero() {
               className="flex gap-3 justify-center px-4"
             >
               <Link href="/book" className="flex-1">
-                <Button
-                  className="w-full bg-gradient-to-r from-primary-500 to-blue-600 hover:from-primary-600 hover:to-blue-700 text-white px-4 py-3 rounded-xl font-semibold text-sm shadow-lg transition-all duration-200"
-                  data-testid="button-book-now"
-                >
-                  <Zap className="mr-2 w-4 h-4" />
-                  Book Now
-                </Button>
+                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                  <Button
+                    className="w-full bg-gradient-to-r from-emerald-500 via-sky-500 to-indigo-500 hover:shadow-[0_0_20px_rgba(16,185,129,0.4)] text-white px-4 py-3 rounded-xl font-semibold text-sm shadow-lg transition-all duration-300"
+                    data-testid="button-book-now"
+                  >
+                    <Zap className="mr-2 w-4 h-4" />
+                    Book Now
+                  </Button>
+                </motion.div>
               </Link>
               
-              <Button
-                onClick={handleUseLocation}
-                variant="outline"
-                className="flex-1 border-2 border-gray-300 text-gray-700 px-4 py-3 rounded-xl font-semibold text-sm hover:border-primary-500 hover:text-primary-600 transition-all duration-200"
-                data-testid="button-use-location"
-              >
-                <MapPin className="mr-2 w-4 h-4" />
-                Location
-              </Button>
+              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="flex-1">
+                <Button
+                  onClick={handleUseLocation}
+                  variant="outline"
+                  className="w-full bg-white/5 border border-white/10 text-gray-200 px-4 py-3 rounded-xl font-semibold text-sm hover:bg-white/10 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300"
+                  data-testid="button-use-location"
+                >
+                  <MapPin className="mr-2 w-4 h-4" />
+                  Location
+                </Button>
+              </motion.div>
             </motion.div>
 
-            {/* Trust Row - Compact Single Row */}
+            {/* Trust Row - Glass Pills */}
             <motion.div
               variants={itemVariants}
-              className="flex items-center justify-center space-x-4 text-xs text-gray-600"
+              className="flex items-center justify-center gap-2 text-xs"
             >
-              <div className="flex items-center space-x-1">
+              <div className="flex items-center space-x-1 bg-white/5 text-gray-300 border border-white/10 rounded-full px-3 py-1">
                 <Star className="text-yellow-400 w-3 h-3" />
                 <span className="font-medium">4.9/5</span>
               </div>
-              <span className="text-gray-300">•</span>
-              <div className="flex items-center space-x-1">
-                <Users className="text-primary-500 w-3 h-3" />
+              <div className="flex items-center space-x-1 bg-white/5 text-gray-300 border border-white/10 rounded-full px-3 py-1">
+                <Users className="text-emerald-400 w-3 h-3" />
                 <span className="font-medium">25,000+</span>
               </div>
-              <span className="text-gray-300">•</span>
-              <div className="flex items-center space-x-1">
-                <Clock className="text-blue-500 w-3 h-3" />
+              <div className="flex items-center space-x-1 bg-white/5 text-gray-300 border border-white/10 rounded-full px-3 py-1">
+                <Clock className="text-sky-400 w-3 h-3" />
                 <span className="font-medium">2 Hours</span>
               </div>
             </motion.div>
@@ -168,20 +176,20 @@ export function Hero() {
               variants={imageVariants}
               className="relative mx-auto max-w-sm"
             >
-              <div className="relative overflow-hidden rounded-2xl shadow-lg">
+              <div className="relative overflow-hidden rounded-2xl shadow-lg border border-white/10">
                 <img
                   src={heroImage}
                   alt="Professional vehicle service"
                   className="w-full h-48 object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
               </div>
               
-              {/* Small Floating Icons */}
+              {/* Small Floating Icons with Bright Gradients and Glow */}
               <motion.div
                 variants={floatingVariants}
                 animate="floating"
-                className="absolute -top-2 -right-2 w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg shadow-lg flex items-center justify-center"
+                className="absolute -top-2 -right-2 w-10 h-10 bg-gradient-to-br from-sky-400 to-indigo-600 rounded-lg shadow-[0_0_12px_rgba(56,189,248,0.4)] flex items-center justify-center"
               >
                 <Car className="text-white w-4 h-4" />
               </motion.div>
@@ -189,7 +197,7 @@ export function Hero() {
               <motion.div
                 variants={floatingVariants}
                 animate="floating"
-                className="absolute -bottom-2 -left-2 w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-600 rounded-lg shadow-lg flex items-center justify-center"
+                className="absolute -bottom-2 -left-2 w-10 h-10 bg-gradient-to-br from-emerald-400 to-teal-600 rounded-lg shadow-[0_0_12px_rgba(16,185,129,0.4)] flex items-center justify-center"
                 style={{ animationDelay: '-3s' }}
               >
                 <Wrench className="text-white w-4 h-4" />
@@ -210,10 +218,10 @@ export function Hero() {
             {/* Heading - Max 2 lines */}
             <motion.h1
               variants={itemVariants}
-              className="text-5xl xl:text-6xl font-bold leading-tight mb-6 text-gray-900"
+              className="text-5xl xl:text-6xl font-bold leading-tight mb-6 text-white"
             >
               India's First{' '}
-              <span className="bg-gradient-to-r from-primary-600 to-blue-600 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-emerald-400 to-sky-500 bg-clip-text text-transparent">
                 Premium Doorstep
               </span>{' '}
               Vehicle Service
@@ -222,20 +230,24 @@ export function Hero() {
             {/* Shorter Subheading */}
             <motion.p
               variants={itemVariants}
-              className="text-xl text-gray-600 mb-8 leading-relaxed"
+              className="text-xl text-gray-400 mb-8 leading-relaxed"
             >
               Skip the garage visits! Professional mechanics come to your location with all tools & parts. Available in Mumbai, Delhi, Bangalore & 12 more cities.
             </motion.p>
 
-            {/* CTAs Side by Side */}
+            {/* CTAs Side by Side with Staggered Animation */}
             <motion.div
-              variants={itemVariants}
+              variants={containerVariants}
               className="flex gap-4 mb-8"
             >
               <Link href="/book">
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <motion.div 
+                  variants={itemVariants}
+                  whileHover={{ scale: 1.05 }} 
+                  whileTap={{ scale: 0.95 }}
+                >
                   <Button
-                    className="bg-gradient-to-r from-primary-500 to-blue-600 hover:from-primary-600 hover:to-blue-700 text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-xl hover:shadow-2xl transition-all duration-300"
+                    className="bg-gradient-to-r from-emerald-500 via-sky-500 to-indigo-500 hover:shadow-[0_0_30px_rgba(16,185,129,0.5)] text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-xl transition-all duration-300"
                     data-testid="button-book-now"
                   >
                     <Zap className="mr-2 w-5 h-5" />
@@ -244,56 +256,62 @@ export function Hero() {
                 </motion.div>
               </Link>
               
-              <Button
-                onClick={handleUseLocation}
-                variant="outline"
-                className="border-2 border-gray-300 text-gray-700 px-8 py-4 rounded-xl font-semibold text-lg hover:border-primary-500 hover:text-primary-600 transition-all duration-200"
-                data-testid="button-use-location"
+              <motion.div
+                variants={itemVariants}
+                whileHover={{ scale: 1.05 }} 
+                whileTap={{ scale: 0.95 }}
               >
-                <MapPin className="mr-2 w-5 h-5" />
-                Use My Location
-              </Button>
+                <Button
+                  onClick={handleUseLocation}
+                  variant="outline"
+                  className="bg-white/5 border border-white/10 text-gray-200 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all duration-300"
+                  data-testid="button-use-location"
+                >
+                  <MapPin className="mr-2 w-5 h-5" />
+                  Use My Location
+                </Button>
+              </motion.div>
             </motion.div>
 
-            {/* Trust Badges Inline */}
+            {/* Trust Badges - Glass Pills */}
             <motion.div
               variants={itemVariants}
-              className="flex items-center space-x-6 text-sm text-gray-600"
+              className="flex items-center space-x-4 text-sm"
             >
-              <div className="flex items-center space-x-2 bg-white/50 px-3 py-2 rounded-lg">
+              <div className="flex items-center space-x-2 bg-white/5 text-gray-300 border border-white/10 rounded-full px-3 py-1">
                 <Star className="text-yellow-400 w-4 h-4" />
                 <span className="font-medium" data-testid="text-rating">4.9/5 Rating</span>
               </div>
-              <div className="flex items-center space-x-2 bg-white/50 px-3 py-2 rounded-lg">
-                <Users className="text-primary-500 w-4 h-4" />
+              <div className="flex items-center space-x-2 bg-white/5 text-gray-300 border border-white/10 rounded-full px-3 py-1">
+                <Users className="text-emerald-400 w-4 h-4" />
                 <span className="font-medium" data-testid="text-customers">25,000+ Services</span>
               </div>
-              <div className="flex items-center space-x-2 bg-white/50 px-3 py-2 rounded-lg">
-                <Clock className="text-blue-500 w-4 h-4" />
+              <div className="flex items-center space-x-2 bg-white/5 text-gray-300 border border-white/10 rounded-full px-3 py-1">
+                <Clock className="text-sky-400 w-4 h-4" />
                 <span className="font-medium" data-testid="text-service-time">2 Hour Service</span>
               </div>
             </motion.div>
           </motion.div>
 
-          {/* Right Image - Limited Width */}
+          {/* Right Image - Limited Width with Enhanced Floating Icons */}
           <motion.div
             variants={imageVariants}
             className="relative max-w-lg ml-auto"
           >
-            <div className="relative overflow-hidden rounded-3xl shadow-2xl">
+            <div className="relative overflow-hidden rounded-3xl shadow-2xl border border-white/10">
               <img
                 src={heroImage}
                 alt="Professional vehicle service"
                 className="w-full h-auto object-cover max-h-96"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
             </div>
             
-            {/* Slow Moving Floating Icons */}
+            {/* Enhanced Floating Icons with Bright Gradients and Glow */}
             <motion.div
               variants={floatingVariants}
               animate="floating"
-              className="absolute -top-4 -right-4 w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl shadow-xl flex items-center justify-center"
+              className="absolute -top-4 -right-4 w-16 h-16 bg-gradient-to-br from-sky-400 to-indigo-600 rounded-2xl shadow-[0_0_12px_rgba(56,189,248,0.5)] flex items-center justify-center"
             >
               <Car className="text-white w-6 h-6" />
             </motion.div>
@@ -301,7 +319,7 @@ export function Hero() {
             <motion.div
               variants={floatingVariants}
               animate="floating"
-              className="absolute top-1/4 -left-4 w-14 h-14 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl shadow-xl flex items-center justify-center"
+              className="absolute top-1/4 -left-4 w-14 h-14 bg-gradient-to-br from-emerald-400 to-teal-600 rounded-2xl shadow-[0_0_12px_rgba(16,185,129,0.5)] flex items-center justify-center"
               style={{ animationDelay: '-4s' }}
             >
               <Bike className="text-white w-5 h-5" />
@@ -310,10 +328,19 @@ export function Hero() {
             <motion.div
               variants={floatingVariants}
               animate="floating"
-              className="absolute -bottom-4 left-1/4 w-14 h-14 bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl shadow-xl flex items-center justify-center"
+              className="absolute -bottom-4 left-1/4 w-14 h-14 bg-gradient-to-br from-orange-400 to-red-500 rounded-2xl shadow-[0_0_12px_rgba(251,146,60,0.5)] flex items-center justify-center"
               style={{ animationDelay: '-2s' }}
             >
               <Wrench className="text-white w-5 h-5" />
+            </motion.div>
+            
+            <motion.div
+              variants={floatingVariants}
+              animate="floating"
+              className="absolute bottom-1/3 -right-3 w-12 h-12 bg-gradient-to-br from-violet-400 to-purple-600 rounded-2xl shadow-[0_0_12px_rgba(139,92,246,0.5)] flex items-center justify-center"
+              style={{ animationDelay: '-6s' }}
+            >
+              <Zap className="text-white w-4 h-4" />
             </motion.div>
           </motion.div>
         </div>
