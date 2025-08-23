@@ -1,0 +1,48 @@
+You are a React + Next.js + TailwindCSS engineer.  
+Refactor the **/services** page layout for better **above-the-fold visibility** on both mobile and desktop.
+
+## Current Issues
+- Hero, tabs, and search bar stack vertically, pushing service packages too low.
+- On mobile: users must scroll to see packages.
+- On desktop: service packages are still hidden under fold.
+
+## Fixes Needed
+1. **Compact Hero**
+   - Reduce vertical padding (`py-4 md:py-8`).
+   - Keep H1 max 2 lines (`text-2xl md:text-4xl font-bold`).
+   - Subtitle max 1–2 lines (`text-sm md:text-base text-gray-400`).
+   - Feature badges (`24/7 Available`, etc.) in a single compact row (`flex flex-wrap gap-2 text-xs md:text-sm`).
+
+2. **Vehicle Tabs + Search**
+   - Place tabs (Bike | Car) and search bar **inline** inside one container.
+   - Desktop: `flex justify-between items-center gap-4`
+   - Mobile: Tabs full width row, Search as second row but compact height.
+   - Add sticky behavior on mobile: when scrolling down, tabs + search remain visible (`sticky top-0 z-20 bg-gray-950/90 backdrop-blur-md`).
+
+3. **Immediate Services Visibility**
+   - Service Packages heading and first 2–3 service cards should be **visible without scrolling**.
+   - Remove excess `mt` spacing.  
+   - Start packages grid right after the tabs/search container with only small gap (`mt-4 md:mt-6`).
+
+4. **Desktop Layout**
+   - Hero + tabs/search stack compactly, service packages grid starts right below, visible in first viewport.
+   - Use responsive grid: `grid-cols-1 sm:grid-cols-2 lg:grid-cols-3`.
+
+5. **Mobile Layout**
+   - Tabs + search in sticky top bar.
+   - Service packages shown immediately below.
+   - First 1–2 cards always visible without scroll.
+
+6. **Animations**
+   - Hero: fade-up compactly.
+   - Tabs/search: slide in from bottom.
+   - Service cards: staggered fade-up, but must be visible in viewport immediately.
+
+## Deliverables
+- Updated `/services/page.tsx`:
+  - Compact hero
+  - Inline vehicle tabs + search
+  - Sticky mobile tabs/search
+  - Service grid visible above the fold on both mobile + desktop
+- No overlap issues
+- Minimal scrolling needed before customer sees actual packages

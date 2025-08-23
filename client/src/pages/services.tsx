@@ -448,20 +448,20 @@ export default function Services() {
         </div>
       </motion.div>
 
-      <div className="relative max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8 py-6 md:py-10">
+      <div className="relative max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8 py-4 md:py-8">
         
-        {/* Compact Hero Section */}
+        {/* Ultra-Compact Hero Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="text-center mb-6"
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="text-center mb-4"
         >
           <motion.h1 
-            className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3"
+            className="text-2xl md:text-4xl font-bold mb-2"
             initial={{ scale: 0.95 }}
             animate={{ scale: 1 }}
-            transition={{ delay: 0.1, duration: 0.4 }}
+            transition={{ delay: 0.1, duration: 0.3 }}
           >
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-200">
               Book Doorstep{' '}
@@ -471,43 +471,43 @@ export default function Services() {
             </span>
           </motion.h1>
           <motion.p 
-            className="text-lg text-gray-300 mb-4"
+            className="text-sm md:text-base text-gray-400 mb-3"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.4 }}
+            transition={{ delay: 0.2, duration: 0.3 }}
           >
             Premium vehicle care with certified mechanics at your doorstep
           </motion.p>
           
-          {/* Compact service badges */}
+          {/* Compact service badges in single row */}
           <motion.div 
-            className="flex flex-wrap justify-center gap-3 mb-6"
+            className="flex flex-wrap justify-center gap-2 mb-4"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.4 }}
+            transition={{ delay: 0.3, duration: 0.3 }}
           >
             {['24/7 Available', 'Quality Assured', 'Doorstep Service'].map((badge) => (
-              <Badge key={badge} variant="outline" className="bg-white/10 border-white/20 text-gray-300">
+              <Badge key={badge} variant="outline" className="bg-white/10 border-white/20 text-gray-300 text-xs md:text-sm px-2 py-1">
                 {badge}
               </Badge>
             ))}
           </motion.div>
         </motion.div>
 
-        {/* Vehicle Selector & Search - Desktop */}
+        {/* Vehicle Selector & Search - Desktop Inline */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.6 }}
-          className="hidden lg:block mb-6"
+          transition={{ delay: 0.2, duration: 0.4 }}
+          className="hidden lg:block mb-4"
         >
-          <div className="bg-white/8 backdrop-blur-xl border border-white/20 rounded-2xl p-3">
-            <div className="flex justify-between items-center gap-3">
+          <div className="bg-white/8 backdrop-blur-xl border border-white/20 rounded-xl p-2">
+            <div className="flex justify-between items-center gap-4">
               {/* Vehicle Toggle */}
-              <div className="flex bg-white/10 rounded-xl p-1">
+              <div className="flex bg-white/10 rounded-lg p-1">
                 <motion.button
                   onClick={() => setSelectedVehicle('bike')}
-                  className={`flex items-center space-x-2 px-6 py-3 rounded-xl font-medium transition-all ${
+                  className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-medium transition-all ${
                     selectedVehicle === 'bike'
                       ? 'bg-emerald-500 text-white shadow-lg'
                       : 'text-gray-300 hover:text-white hover:bg-white/10'
@@ -515,13 +515,13 @@ export default function Services() {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  <Bike className="w-5 h-5" />
-                  <span>Bike Services</span>
+                  <Bike className="w-4 h-4" />
+                  <span>Bike</span>
                 </motion.button>
                 
                 <motion.button
                   onClick={() => setSelectedVehicle('car')}
-                  className={`flex items-center space-x-2 px-6 py-3 rounded-xl font-medium transition-all ${
+                  className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-medium transition-all ${
                     selectedVehicle === 'car'
                       ? 'bg-emerald-500 text-white shadow-lg'
                       : 'text-gray-300 hover:text-white hover:bg-white/10'
@@ -529,73 +529,73 @@ export default function Services() {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  <Car className="w-5 h-5" />
-                  <span>Car Services</span>
+                  <Car className="w-4 h-4" />
+                  <span>Car</span>
                 </motion.button>
               </div>
 
               {/* Search Bar */}
               <div className="relative flex-1 max-w-md">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
                 <Input
                   type="text"
                   placeholder={`Search ${selectedVehicle} services...`}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-12 pr-4 py-3 bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-emerald-500/50 rounded-xl"
+                  className="pl-10 pr-3 py-2 bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-emerald-500/50 rounded-lg h-9"
                 />
               </div>
             </div>
           </div>
         </motion.div>
 
-        {/* Services Section - Immediately Visible */}
+        {/* Services Section - Immediately Visible Above Fold */}
         {currentStep === 'services' && (
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.6 }}
-            className="space-y-8"
+            transition={{ delay: 0.3, duration: 0.4 }}
+            className="mt-4 md:mt-6"
           >
             {/* Combo Services */}
             {comboServices.length > 0 && (
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1, duration: 0.6 }}
-                className="mb-8"
+                transition={{ delay: 0.1, duration: 0.4 }}
+                className="mb-6"
               >
-                <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center justify-between mb-4">
                   <div>
                     <motion.h2 
-                      className="text-2xl md:text-3xl font-bold text-white mb-2"
+                      className="text-xl md:text-2xl font-bold text-white mb-1"
                     >
                       {selectedVehicle === 'bike' ? 'Bike' : 'Car'} Service Packages
                     </motion.h2>
                     <motion.p 
-                      className="text-gray-300 text-base"
+                      className="text-gray-300 text-sm md:text-base"
                     >
                       Comprehensive care bundles with maximum savings
                     </motion.p>
                   </div>
-                  <Badge className="bg-gradient-to-r from-emerald-500 to-sky-500 text-white px-4 py-2">
+                  <Badge className="bg-gradient-to-r from-emerald-500 to-sky-500 text-white px-3 py-1.5">
                     Best Value
                   </Badge>
                 </div>
                 
                 <motion.div 
-                  className="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-4 mb-6"
+                  className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-3 mb-4"
                 >
                   <p className="text-emerald-300 text-sm">
-                    <span className="font-medium">Includes FREE Doorstep Service:</span> All combo packages include complimentary service at your location.
+                    <span className="font-medium">FREE Doorstep Service:</span> All combo packages include complimentary service at your location.
                   </p>
                 </motion.div>
                 
                 <motion.div
-                  className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6"
+                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ delay: 0.2, staggerChildren: 0.1 }}
+                  transition={{ delay: 0.2, staggerChildren: 0.05 }}
                 >
                   {comboServices.map((service, index) => {
                     const isSelected = selectedServices.some(s => s.id === service.id);
@@ -603,9 +603,9 @@ export default function Services() {
                     return (
                       <motion.div
                         key={service.id}
-                        initial={{ opacity: 0, y: 20 }}
+                        initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.3 + (index * 0.1) }}
+                        transition={{ delay: 0.1 + (index * 0.05) }}
                       >
                         <ComboServiceCard
                           service={service}
@@ -621,29 +621,29 @@ export default function Services() {
 
             {/* Individual Services */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.6 }}
-              className="mb-8"
+              transition={{ delay: 0.4, duration: 0.4 }}
+              className="mb-6"
             >
               <motion.div 
-                className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4"
+                className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-3"
               >
                 <div>
-                  <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">
+                  <h3 className="text-xl md:text-2xl font-bold text-white mb-1">
                     Individual Services
                   </h3>
-                  <p className="text-gray-300 text-base">
+                  <p className="text-gray-300 text-sm md:text-base">
                     Precision services for specific maintenance needs
                   </p>
                 </div>
-                <Badge variant="outline" className="text-emerald-400 border-emerald-500/30 self-start sm:self-auto">
+                <Badge variant="outline" className="text-emerald-400 border-emerald-500/30 self-start sm:self-auto text-xs">
                   {individualServices.length} Services Available
                 </Badge>
               </motion.div>
               
               <motion.div 
-                className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4 mb-6"
+                className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3 mb-4"
               >
                 <p className="text-blue-300 text-sm">
                   <span className="font-medium">Mix & Match:</span> Individual services can be combined. Orders below ₹999 include ₹99 doorstep charge.
@@ -651,10 +651,10 @@ export default function Services() {
               </motion.div>
               
               <motion.div
-                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 0.5, staggerChildren: 0.05 }}
+                transition={{ delay: 0.3, staggerChildren: 0.03 }}
               >
                 {individualServices.map((service, index) => {
                   const isSelected = selectedServices.some(s => s.id === service.id);
@@ -662,9 +662,9 @@ export default function Services() {
                   return (
                     <motion.div
                       key={service.id}
-                      initial={{ opacity: 0, y: 20 }}
+                      initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.6 + (index * 0.05) }}
+                      transition={{ delay: 0.2 + (index * 0.03) }}
                     >
                       <BookingServiceCard
                         service={service}
@@ -679,15 +679,15 @@ export default function Services() {
 
             {/* Add-ons Section */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7, duration: 0.6 }}
-              className="mb-8"
+              transition={{ delay: 0.5, duration: 0.4 }}
+              className="mb-6"
             >
-              <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center justify-between mb-4">
                 <div>
-                  <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">Add-ons</h3>
-                  <p className="text-gray-300 text-base">Enhance your service experience</p>
+                  <h3 className="text-xl md:text-2xl font-bold text-white mb-1">Add-ons</h3>
+                  <p className="text-gray-300 text-sm md:text-base">Enhance your service experience</p>
                 </div>
               </div>
               
@@ -695,14 +695,14 @@ export default function Services() {
                 className="flex flex-wrap gap-3"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 0.8, staggerChildren: 0.1 }}
+                transition={{ delay: 0.4, staggerChildren: 0.05 }}
               >
                 {ADDONS.map((addon, index) => (
                   <motion.div
                     key={addon.id}
-                    initial={{ opacity: 0, scale: 0.9 }}
+                    initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.9 + (index * 0.1) }}
+                    transition={{ delay: 0.3 + (index * 0.05) }}
                   >
                     <AddonChip
                       addon={addon}
