@@ -6,6 +6,7 @@ export interface BookingService {
   vehicleType: 'bike' | 'car';
   priceMin: number;
   priceMax: number;
+  type?: 'combo' | 'individual';
 }
 
 export interface BookingAddon {
@@ -96,8 +97,18 @@ export const useBookingStore = create<BookingStore>((set, get) => ({
         selectedServices: state.selectedServices.filter(s => s.id !== service.id)
       };
     } else {
+      let newSelectedServices = [...state.selectedServices];
+      
+      // If selecting a combo service, remove any existing combo services
+      if (service.type === 'combo') {
+        newSelectedServices = newSelectedServices.filter(s => s.type !== 'combo');
+      }
+      
+      // Add the new service
+      newSelectedServices.push(service);
+      
       return {
-        selectedServices: [...state.selectedServices, service]
+        selectedServices: newSelectedServices
       };
     }
   }),

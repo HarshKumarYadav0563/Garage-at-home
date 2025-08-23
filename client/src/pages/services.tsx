@@ -52,6 +52,23 @@ export default function Services() {
 
   const shouldReduceMotion = useReducedMotion();
   const { toast } = useToast();
+
+  // Enhanced toggle service with user feedback
+  const handleToggleService = (service: ServiceData) => {
+    const isCurrentlySelected = selectedServices.some(s => s.id === service.id);
+    const hasComboSelected = selectedServices.some(s => s.type === 'combo');
+    
+    if (!isCurrentlySelected && service.type === 'combo' && hasComboSelected) {
+      const currentCombo = selectedServices.find(s => s.type === 'combo');
+      toast({
+        title: 'Service Package Replaced',
+        description: `${currentCombo?.name} has been replaced with ${service.name}. You can only select one service package at a time.`,
+        duration: 3000,
+      });
+    }
+    
+    toggleService(service);
+  };
   
   // Get current services based on vehicle type
   const currentServices = selectedVehicle === 'bike' ? BIKE_SERVICES : CAR_SERVICES;
@@ -302,9 +319,14 @@ export default function Services() {
                         Best Value
                       </Badge>
                     </div>
-                    <p className="text-gray-400 text-sm mb-6">
+                    <p className="text-gray-400 text-sm mb-4">
                       Complete service packages that include multiple services at discounted rates
                     </p>
+                    <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3 mb-6">
+                      <p className="text-blue-300 text-xs">
+                        <span className="font-medium">Selection Rule:</span> You can only select one service package at a time. Individual services can be added to any package.
+                      </p>
+                    </div>
                     
                     <motion.div
                       className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6"
@@ -329,7 +351,7 @@ export default function Services() {
                             key={service.id}
                             service={service}
                             isSelected={isSelected}
-                            onToggle={() => toggleService(service)}
+                            onToggle={() => handleToggleService(service)}
                             adjustedPrice={adjustedPrice}
                             showRange={showPriceRanges}
                           />
@@ -351,7 +373,7 @@ export default function Services() {
                       Individual Services
                     </h3>
                     <p className="text-gray-400 text-sm mb-6">
-                      Specific services for targeted maintenance needs
+                      Specific services for targeted maintenance needs - can be combined freely with packages
                     </p>
                     
                     <motion.ul
@@ -377,7 +399,7 @@ export default function Services() {
                             key={service.id}
                             service={service}
                             isSelected={isSelected}
-                            onToggle={() => toggleService(service)}
+                            onToggle={() => handleToggleService(service)}
                             adjustedPrice={adjustedPrice}
                             showRange={showPriceRanges}
                           />
