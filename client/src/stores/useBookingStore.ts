@@ -132,7 +132,7 @@ export const useBookingStore = create<BookingStore>()(persist(
       const { selectedServices } = get();
       const isSelected = selectedServices.includes(serviceId);
       
-      console.log('Toggle service:', { serviceId, isSelected, currentServices: selectedServices });
+      console.log('🛒 TOGGLE SERVICE:', { serviceId, isSelected, currentServices: selectedServices });
       
       if (isSelected) {
         const newServices = selectedServices.filter(id => id !== serviceId);

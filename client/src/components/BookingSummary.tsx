@@ -18,7 +18,8 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
     setCurrentStep,
     toggleService,
     showSummary,
-    setShowSummary
+    setShowSummary,
+    selectedVehicle
   } = useBookingStore();
   
   const shouldReduceMotion = useReducedMotion();
@@ -30,6 +31,21 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
   const finalTotal = estimate?.total || 0;
   
   const hasItems = selectedServices.length > 0;
+  
+  // Get service objects from IDs
+  const getServiceById = (id: string) => {
+    // Mock service data - replace with actual service lookup
+    const mockServices = [
+      { id: 'basic-service', name: 'Basic Service', price: 499 },
+      { id: 'premium-service', name: 'Premium Service', price: 999 },
+      { id: 'full-service', name: 'Full Service', price: 1399 },
+      { id: 'combo-basic', name: 'Basic Combo', price: 799 },
+      { id: 'combo-premium', name: 'Premium Combo', price: 1599 }
+    ];
+    return mockServices.find(s => s.id === id) || { id, name: id.replace('-', ' '), price: 599 };
+  };
+  
+  const serviceObjects = selectedServices.map(getServiceById);
 
   // Debug: cart state
   console.log('=== CART DEBUG ===', { hasItems, showFloatingCart, showSummary, subtotal, finalTotal });
@@ -123,7 +139,7 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
               {/* Services List */}
               <div className="p-4 md:p-6 pb-safe">
                 <div className="space-y-3 md:space-y-4 mb-6">
-                  {selectedServices.map((service, index) => (
+                  {serviceObjects.map((service, index) => (
                     <motion.div
                       key={service.id}
                       initial={{ opacity: 0, y: 20 }}
@@ -144,7 +160,7 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
                         <Button
                           variant="ghost"
                           size="sm"
-                          onClick={() => toggleService(service)}
+                          onClick={() => toggleService(service.id)}
                           className="text-gray-400 hover:text-red-400 hover:bg-red-500/10 rounded-full p-1.5 ml-2 flex-shrink-0"
                         >
                           <X className="w-4 h-4" />
@@ -158,7 +174,7 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
                 <div className="bg-gradient-to-r from-emerald-500/10 to-sky-500/10 rounded-xl p-4 md:p-6 border border-emerald-500/20 mb-6">
                   <div className="space-y-3">
                     <div className="flex justify-between items-center">
-                      <span className="text-gray-300 text-sm">Services ({selectedServices.length})</span>
+                      <span className="text-gray-300 text-sm">Services ({serviceObjects.length})</span>
                       <span className="text-white font-medium">₹{subtotal.toLocaleString()}</span>
                     </div>
                     
