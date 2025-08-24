@@ -1,21 +1,36 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Trash2, ArrowRight, ShoppingBag } from 'lucide-react';
+import { X, Trash2, ArrowRight, ShoppingBag, Car, Bike, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useCartStore } from '@/stores/useCartStore';
+import { Badge } from '@/components/ui/badge';
+import { useBookingStore } from '@/stores/useBookingStore';
 import { useEffect } from 'react';
+import { BIKE_SERVICES, CAR_SERVICES } from '@/lib/pricing';
 
 export function CartDrawer() {
-  const { services, total, itemCount, isOpen, close, removeService, clear } = useCartStore();
+  const { 
+    showSummaryDrawer,
+    setShowSummaryDrawer,
+    selectedServices,
+    selectedAddons,
+    selectedVehicle,
+    selectedCity,
+    estimate,
+    setCurrentStep,
+    canProceedToStep,
+    clearBooking,
+    toggleService,
+    toggleAddon
+  } = useBookingStore();
   
   // Close on ESC key and prevent body scroll
   useEffect(() => {
     const handleKeydown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isOpen) {
-        close();
+      if (e.key === 'Escape' && showSummaryDrawer) {
+        setShowSummaryDrawer(false);
       }
     };
     
-    if (isOpen) {
+    if (showSummaryDrawer) {
       window.addEventListener('keydown', handleKeydown);
       document.body.style.overflow = 'hidden';
     }
@@ -24,15 +39,25 @@ export function CartDrawer() {
       window.removeEventListener('keydown', handleKeydown);
       document.body.style.overflow = 'unset';
     };
-  }, [isOpen, close]);
+  }, [showSummaryDrawer, setShowSummaryDrawer]);
   
   const handleContinue = () => {
-    // Simple checkout - could navigate to external checkout or show contact form
-    alert('Checkout functionality can be added here!');
-    close();
+    if (canProceedToStep('model')) {
+      setCurrentStep('model');
+      setShowSummaryDrawer(false);
+    }
   };
   
-  if (!isOpen) return null;
+  const handleClearCart = () => {
+    clearBooking();
+    setShowSummaryDrawer(false);
+  };
+  
+  const hasServices = selectedServices.length > 0;
+  const subtotal = estimate?.subtotal.min || 0;
+  const total = estimate?.total.min || 0;
+  
+  if (!showSummaryDrawer) return null;
   
   return (
     <AnimatePresence>
@@ -43,7 +68,7 @@ export function CartDrawer() {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           className="fixed inset-0 bg-black/60 backdrop-blur-sm"
-          onClick={close}
+          onClick={() => setShowSummaryDrawer(false)}
         />
         
         {/* Mobile: Bottom Sheet */}
@@ -52,16 +77,20 @@ export function CartDrawer() {
           animate={{ y: 0 }}
           exit={{ y: "100%" }}
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
-          className="md:hidden fixed inset-x-0 bottom-0 bg-black/95 backdrop-blur-xl border-t border-white/20 rounded-t-3xl max-h-[85vh] overflow-hidden"
+          className="md:hidden fixed inset-x-0 bottom-0 bg-gray-900/95 backdrop-blur-xl border-t border-white/20 rounded-t-3xl max-h-[85vh] overflow-hidden"
         >
           <CartContent 
-            services={services}
-            total={total}
-            itemCount={itemCount}
-            onClose={close}
-            onRemove={removeService}
-            onClear={clear}
+            selectedServices={selectedServices}
+            selectedAddons={selectedAddons}
+            selectedVehicle={selectedVehicle}
+            selectedCity={selectedCity}
+            estimate={estimate}
+            onClose={() => setShowSummaryDrawer(false)}
+            onRemoveService={toggleService}
+            onRemoveAddon={toggleAddon}
+            onClear={handleClearCart}
             onContinue={handleContinue}
+            canContinue={hasServices}
           />
         </motion.div>
         
@@ -71,16 +100,20 @@ export function CartDrawer() {
           animate={{ x: 0 }}
           exit={{ x: "100%" }}
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
-          className="hidden md:block fixed right-0 top-0 h-full w-96 bg-black/95 backdrop-blur-xl border-l border-white/20 overflow-hidden"
+          className="hidden md:block fixed right-0 top-0 h-full w-96 bg-gray-900/95 backdrop-blur-xl border-l border-white/20 overflow-hidden"
         >
           <CartContent 
-            services={services}
-            total={total}
-            itemCount={itemCount}
-            onClose={close}
-            onRemove={removeService}
-            onClear={clear}
+            selectedServices={selectedServices}
+            selectedAddons={selectedAddons}
+            selectedVehicle={selectedVehicle}
+            selectedCity={selectedCity}
+            estimate={estimate}
+            onClose={() => setShowSummaryDrawer(false)}
+            onRemoveService={toggleService}
+            onRemoveAddon={toggleAddon}
+            onClear={handleClearCart}
             onContinue={handleContinue}
+            canContinue={hasServices}
           />
         </motion.div>
       </div>
@@ -88,117 +121,201 @@ export function CartDrawer() {
   );
 }
 
+// Cart content component for reuse between mobile and desktop
 interface CartContentProps {
-  services: any[];
-  total: number;
-  itemCount: number;
+  selectedServices: string[];
+  selectedAddons: string[];
+  selectedVehicle: string;
+  selectedCity: string;
+  estimate: any;
   onClose: () => void;
-  onRemove: (id: string) => void;
+  onRemoveService: (serviceId: string) => void;
+  onRemoveAddon: (addonId: string) => void;
   onClear: () => void;
   onContinue: () => void;
+  canContinue: boolean;
 }
 
-function CartContent({ services, total, itemCount, onClose, onRemove, onClear, onContinue }: CartContentProps) {
-  if (itemCount === 0) {
-    return (
-      <div className="flex flex-col h-full">
-        <div className="flex items-center justify-between p-6 border-b border-white/10">
-          <h2 id="cart-title" className="text-xl font-bold text-white">Your Cart</h2>
-          <Button variant="ghost" size="sm" onClick={onClose} className="text-gray-400 hover:text-white">
-            <X className="w-5 h-5" />
-          </Button>
-        </div>
-        
-        <div className="flex-1 flex flex-col items-center justify-center p-8 text-center">
-          <div className="w-20 h-20 rounded-full bg-white/5 flex items-center justify-center mb-6">
-            <ShoppingBag className="w-10 h-10 text-gray-400" />
-          </div>
-          <h3 className="text-white text-lg font-semibold mb-2">Cart is empty</h3>
-          <p className="text-gray-400 mb-6">Add some services to get started</p>
-          <Button onClick={onClose} className="bg-gradient-to-r from-emerald-500 to-sky-500">
-            Browse Services
-          </Button>
-        </div>
-      </div>
-    );
-  }
+function CartContent({ 
+  selectedServices,
+  selectedAddons,
+  selectedVehicle,
+  selectedCity,
+  estimate,
+  onClose,
+  onRemoveService,
+  onRemoveAddon,
+  onClear,
+  onContinue,
+  canContinue
+}: CartContentProps) {
+  const allServices = selectedVehicle === 'bike' ? BIKE_SERVICES : CAR_SERVICES;
+  const allAddons: any[] = []; // Addons will be integrated later
   
+  const selectedServiceItems = selectedServices.map(id => 
+    allServices.find(service => service.id === id)
+  ).filter(Boolean);
+  
+  const selectedAddonItems = selectedAddons.map(id => 
+    allAddons.find(addon => addon.id === id)
+  ).filter(Boolean);
+
   return (
     <div className="flex flex-col h-full">
       {/* Header */}
-      <div className="flex items-center justify-between p-6 border-b border-white/10">
-        <div>
-          <h2 id="cart-title" className="text-xl font-bold text-white">Your Cart</h2>
-          <p className="text-sm text-gray-400">{itemCount} service{itemCount !== 1 ? 's' : ''} selected</p>
+      <div className="flex items-center justify-between p-4 border-b border-white/10">
+        <div className="flex items-center gap-3">
+          <ShoppingBag className="w-5 h-5 text-emerald-400" />
+          <h2 id="cart-title" className="text-lg font-semibold text-white">
+            Service Summary
+          </h2>
+          <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30">
+            {selectedServices.length + selectedAddons.length}
+          </Badge>
         </div>
-        <Button variant="ghost" size="sm" onClick={onClose} className="text-gray-400 hover:text-white">
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={onClose}
+          className="text-gray-400 hover:text-white p-2"
+          data-testid="button-close-cart"
+        >
           <X className="w-5 h-5" />
         </Button>
       </div>
-      
-      {/* Services List */}
-      <div className="flex-1 overflow-y-auto">
-        <div className="p-6 space-y-4">
-          {services.map((service, index) => (
-            <motion.div
-              key={service.id}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.1 }}
-              className="bg-white/5 rounded-xl p-4 border border-white/10"
-            >
-              <div className="flex items-start justify-between">
-                <div className="flex-1">
-                  <h4 className="text-white font-medium">{service.name}</h4>
-                  {service.subtitle && (
-                    <p className="text-gray-400 text-sm mt-1">{service.subtitle}</p>
-                  )}
-                  <div className="flex items-center gap-2 mt-2">
-                    <span className="text-emerald-400 font-bold">₹{service.price.toLocaleString()}</span>
-                    <span className="text-xs bg-white/10 px-2 py-1 rounded text-gray-300">
-                      {service.vehicle} • {service.city}
-                    </span>
-                  </div>
-                </div>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => onRemove(service.id)}
-                  className="text-gray-400 hover:text-red-400 hover:bg-red-500/10 ml-3"
-                >
-                  <X className="w-4 h-4" />
-                </Button>
-              </div>
-            </motion.div>
-          ))}
+
+      {/* Vehicle & Location Info */}
+      <div className="p-4 bg-white/5 border-b border-white/10">
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 text-gray-300">
+            {selectedVehicle === 'bike' ? <Bike className="w-4 h-4" /> : <Car className="w-4 h-4" />}
+            <span className="capitalize">{selectedVehicle}</span>
+          </div>
+          <div className="flex items-center gap-2 text-gray-300">
+            <MapPin className="w-4 h-4" />
+            <span className="capitalize">{selectedCity.replace('_', ' ')}</span>
+          </div>
         </div>
       </div>
       
-      {/* Footer */}
-      <div className="p-6 border-t border-white/10 bg-black/50">
-        <div className="flex items-center justify-between mb-4">
-          <span className="text-gray-300">Total</span>
-          <span className="text-white text-xl font-bold">₹{total.toLocaleString()}</span>
-        </div>
-        
-        <div className="space-y-3">
+      {/* Content */}
+      <div className="flex-1 overflow-y-auto">
+        {(selectedServices.length === 0 && selectedAddons.length === 0) ? (
+          <div className="flex flex-col items-center justify-center h-full p-8 text-center">
+            <ShoppingBag className="w-16 h-16 text-gray-600 mb-4" />
+            <h3 className="text-xl font-semibold text-white mb-2">No Services Selected</h3>
+            <p className="text-gray-400">Add some services to get started</p>
+          </div>
+        ) : (
+          <div className="p-4 space-y-4">
+            {/* Selected Services */}
+            {selectedServiceItems.length > 0 && (
+              <div>
+                <h3 className="text-sm font-medium text-gray-300 mb-3">Services</h3>
+                <div className="space-y-2">
+                  {selectedServiceItems.map((service) => (
+                    <motion.div
+                      key={service?.id}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -20 }}
+                      className="flex items-center justify-between p-3 bg-white/5 border border-white/10 rounded-xl"
+                    >
+                      <div className="flex-1">
+                        <h4 className="text-white font-medium">{service?.name}</h4>
+                        <p className="text-gray-400 text-sm">₹{service?.price.min} - ₹{service?.price.max}</p>
+                      </div>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => onRemoveService(service?.id || '')}
+                        className="text-red-400 hover:text-red-300 p-2"
+                        data-testid={`button-remove-service-${service?.id}`}
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Selected Add-ons */}
+            {selectedAddonItems.length > 0 && (
+              <div>
+                <h3 className="text-sm font-medium text-gray-300 mb-3">Add-ons</h3>
+                <div className="space-y-2">
+                  {selectedAddonItems.map((addon) => (
+                    <motion.div
+                      key={addon?.id}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -20 }}
+                      className="flex items-center justify-between p-3 bg-white/5 border border-white/10 rounded-xl"
+                    >
+                      <div className="flex-1">
+                        <h4 className="text-white font-medium">{addon?.name}</h4>
+                        <p className="text-gray-400 text-sm">₹{addon?.price}</p>
+                      </div>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => onRemoveAddon(addon?.id || '')}
+                        className="text-red-400 hover:text-red-300 p-2"
+                        data-testid={`button-remove-addon-${addon?.id}`}
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            )}
+            
+            {/* Pricing Breakdown */}
+            {estimate && (
+              <div className="mt-6 p-4 bg-gradient-to-r from-emerald-500/10 to-sky-500/10 border border-emerald-500/20 rounded-xl">
+                <h3 className="text-white font-medium mb-3">Price Estimate</h3>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between text-gray-300">
+                    <span>Subtotal</span>
+                    <span>₹{estimate.subtotal.min} - ₹{estimate.subtotal.max}</span>
+                  </div>
+                  <div className="flex justify-between text-white font-medium pt-2 border-t border-white/10">
+                    <span>Total</span>
+                    <span>₹{estimate.total.min} - ₹{estimate.total.max}</span>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+      
+      {/* Footer Actions */}
+      <div className="p-4 border-t border-white/10 space-y-3">
+        {canContinue && (
           <Button
-            onClick={onContinue}
-            className="w-full bg-gradient-to-r from-emerald-500 to-sky-500 hover:from-emerald-600 hover:to-sky-600 text-white font-semibold py-3"
-          >
-            <ArrowRight className="w-4 h-4 mr-2" />
-            Continue Booking
-          </Button>
-          
-          <Button
-            variant="outline"
+            variant="ghost"
+            size="sm"
             onClick={onClear}
-            className="w-full border-red-500/20 text-red-400 hover:bg-red-500/10"
+            className="w-full text-red-400 hover:text-red-300 border border-red-400/20 hover:border-red-400/40"
+            data-testid="button-clear-cart"
           >
             <Trash2 className="w-4 h-4 mr-2" />
-            Clear Cart
+            Clear All
           </Button>
-        </div>
+        )}
+        
+        <Button
+          onClick={onContinue}
+          disabled={!canContinue}
+          className="w-full bg-gradient-to-r from-emerald-500 to-sky-500 hover:from-emerald-600 hover:to-sky-600 text-white font-medium py-3 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          data-testid="button-continue-booking"
+        >
+          <span>Continue Booking</span>
+          <ArrowRight className="w-4 h-4 ml-2" />
+        </Button>
       </div>
     </div>
   );

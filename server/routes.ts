@@ -4,6 +4,15 @@ import { storage } from "./storage";
 import { insertLeadSchema, insertWaitlistSchema, bookingRequestSchema } from "@shared/schema";
 import { isNCR, NCR_CITIES } from "@shared/config/serviceAreas";
 import { z } from "zod";
+import { nanoid } from "nanoid";
+
+// In-memory OTP storage (use Redis in production)
+const otpSessions = new Map<string, {
+  phone: string;
+  code: string;
+  expiresAt: Date;
+  verified: boolean;
+}>();
 
 const mechanicSearchSchema = z.object({
   lat: z.number(),
@@ -226,6 +235,107 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(mechanics);
     } catch (error) {
       res.status(500).json({ error: "Failed to fetch mechanics" });
+    }
+  });
+
+  // OTP verification endpoints
+  app.post("/api/otp/send", async (req, res) => {
+    try {
+      const { phone } = z.object({ phone: z.string().min(10) }).parse(req.body);
+      
+      // Generate 6-digit OTP
+      const code = Math.floor(100000 + Math.random() * 900000).toString();
+      const sessionId = nanoid();
+      const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
+      
+      // Store OTP session
+      otpSessions.set(sessionId, {
+        phone,
+        code,
+        expiresAt,
+        verified: false
+      });
+      
+      // In production, send actual SMS here
+      console.log(`OTP for ${phone}: ${code}`);
+      
+      res.json({ 
+        ok: true,
+        sessionId,
+        message: `OTP sent to ${phone}`,
+        // For development only - remove in production
+        debug: { code }
+      });
+    } catch (error) {
+      console.error('Error sending OTP:', error);
+      res.status(500).json({ 
+        ok: false,
+        message: 'Failed to send OTP' 
+      });
+    }
+  });
+
+  app.post("/api/otp/verify", async (req, res) => {
+    try {
+      const { phone, sessionId, code } = z.object({
+        phone: z.string(),
+        sessionId: z.string(),
+        code: z.string().length(6)
+      }).parse(req.body);
+      
+      const session = otpSessions.get(sessionId);
+      
+      if (!session) {
+        res.status(400).json({ 
+          ok: false,
+          message: 'Invalid session' 
+        });
+        return;
+      }
+      
+      if (session.phone !== phone) {
+        res.status(400).json({ 
+          ok: false,
+          message: 'Phone number mismatch' 
+        });
+        return;
+      }
+      
+      if (new Date() > session.expiresAt) {
+        otpSessions.delete(sessionId);
+        res.status(400).json({ 
+          ok: false,
+          message: 'OTP expired' 
+        });
+        return;
+      }
+      
+      if (session.code !== code) {
+        res.status(400).json({ 
+          ok: false,
+          message: 'Invalid OTP' 
+        });
+        return;
+      }
+      
+      // Mark as verified
+      session.verified = true;
+      
+      // Generate OTP token for future verification
+      const otpToken = nanoid();
+      
+      res.json({ 
+        ok: true,
+        verified: true,
+        otpToken,
+        message: 'Phone verified successfully' 
+      });
+    } catch (error) {
+      console.error('Error verifying OTP:', error);
+      res.status(500).json({ 
+        ok: false,
+        message: 'Failed to verify OTP' 
+      });
     }
   });
 
