@@ -669,10 +669,10 @@ export default function Services() {
             animate={{ opacity: 1, x: 0, scale: 1 }}
             exit={{ opacity: 0, x: 100, scale: 0.9 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
-            className="hidden lg:block fixed right-6 top-1/2 -translate-y-1/2 w-80 z-50"
+            className="hidden lg:block fixed right-6 top-6 w-80 z-50"
           >
             <div className="bg-gradient-to-br from-gray-900/95 to-black/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl shadow-black/40">
-              <BookingSummary className="max-h-[80vh] overflow-y-auto" />
+              <BookingSummary />
             </div>
           </motion.div>
         )}
