@@ -148,9 +148,10 @@ export default function ServicesDynamic() {
     const isCurrentlySelected = selectedServices.includes(serviceId);
     toggleService(serviceId);
     
-    // Also update cart
-    const service = currentServices.find(s => s.id === serviceId);
+    // Also update cart - need to find from oldServices since that has the proper structure
+    const service = oldServices.find(s => s.id === serviceId);
     if (service) {
+      console.log('🛒 FOUND SERVICE FOR CART:', service);
       const cartService = {
         id: service.id,
         name: service.name,
@@ -161,7 +162,9 @@ export default function ServicesDynamic() {
         type: service.type
       };
       
+      console.log('🛒 CALLING toggleCartService with:', cartService);
       const wasAdded = toggleCartService(cartService);
+      console.log('🛒 toggleCartService returned:', wasAdded);
       
       if (wasAdded) {
         toast({
@@ -170,6 +173,8 @@ export default function ServicesDynamic() {
           duration: 2000,
         });
       }
+    } else {
+      console.log('🛒 SERVICE NOT FOUND:', serviceId, 'in', oldServices.map(s => s.id));
     }
   };
 
@@ -450,7 +455,7 @@ export default function ServicesDynamic() {
                           <ComboServiceCard
                             service={service}
                             isSelected={isSelected}
-                            onToggle={() => handleToggleService(service)}
+                            onToggle={() => handleToggleService(service.id)}
                           />
                         </motion.div>
                       );
@@ -479,7 +484,7 @@ export default function ServicesDynamic() {
                           <ComboServiceCard
                             service={service}
                             isSelected={isSelected}
-                            onToggle={() => handleToggleService(service)}
+                            onToggle={() => handleToggleService(service.id)}
                           />
                         </motion.div>
                       );
