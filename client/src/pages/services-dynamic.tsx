@@ -16,15 +16,17 @@ import {
 // Components  
 import { BookingServiceCard } from '@/components/ServiceCard';
 import { ComboServiceCard } from '@/components/ComboServiceCard';
-import { BookingSummary } from '@/components/BookingSummary';
-import { SlotPicker } from '@/components/SlotPicker';
+import { SummaryDrawer } from '@/components/SummaryDrawer';
+import { EnhancedServiceCard } from '@/components/EnhancedServiceCard';
+import { EnhancedSlotPicker } from '@/components/EnhancedSlotPicker';
 import { CustomerDetailsForm } from '@/components/CustomerDetailsForm';
 
 // Data & Store
 import { BIKE_SERVICES, CAR_SERVICES, ServiceData } from '@/data/bookingServices';
-import { useBookingStore } from '@/store/booking';
+import { useBookingStore } from '@/stores/useBookingStore';
 import { apiRequest } from '@/lib/queryClient';
 import { CustomerData } from '@/lib/validators';
+import { BIKE_SERVICES as PRICING_BIKE, CAR_SERVICES as PRICING_CAR } from '@/lib/pricing';
 
 // City-aware routing
 import { 
@@ -83,6 +85,8 @@ export default function ServicesDynamic() {
   const {
     selectedVehicle,
     setSelectedVehicle,
+    selectedCity,
+    setSelectedCity,
     selectedServices,
     toggleService,
     searchQuery,
@@ -92,17 +96,22 @@ export default function ServicesDynamic() {
     selectedSlot,
     customer,
     clearBooking,
-    getSubtotal,
+    estimate,
     showSummary,
     setShowSummary
   } = useBookingStore();
 
   // Sync store with URL params
   useEffect(() => {
-    if (params && isValidRoute(vehicleParam, cityParam) && selectedVehicle !== vehicleParam) {
-      setSelectedVehicle(vehicleParam);
+    if (params && isValidRoute(vehicleParam, cityParam)) {
+      if (selectedVehicle !== vehicleParam) {
+        setSelectedVehicle(vehicleParam);
+      }
+      if (selectedCity !== cityParam) {
+        setSelectedCity(cityParam);
+      }
     }
-  }, [vehicleParam, selectedVehicle, params]);
+  }, [vehicleParam, cityParam, selectedVehicle, selectedCity, params]);
 
   const shouldReduceMotion = useReducedMotion();
   
@@ -133,39 +142,20 @@ export default function ServicesDynamic() {
   }, []);
 
   // Enhanced toggle service with user feedback
-  const handleToggleService = (service: ServiceData) => {
-    const isCurrentlySelected = selectedServices.some(s => s.id === service.id);
-    const hasComboSelected = selectedServices.some(s => s.type === 'combo');
-    const hasIndividualSelected = selectedServices.some(s => s.type === 'individual' || !s.type);
+  const handleToggleService = (serviceId: string) => {
+    const isCurrentlySelected = selectedServices.includes(serviceId);
+    toggleService(serviceId);
     
     if (!isCurrentlySelected) {
-      if (service.type === 'combo') {
-        if (hasComboSelected) {
-          const currentCombo = selectedServices.find(s => s.type === 'combo');
-          toast({
-            title: 'Service Package Replaced',
-            description: `${currentCombo?.name} has been replaced with ${service.name}. Only one package can be selected.`,
-            duration: 3000,
-          });
-        } else if (hasIndividualSelected) {
-          const individualCount = selectedServices.filter(s => s.type === 'individual' || !s.type).length;
-          toast({
-            title: 'Individual Services Cleared',
-            description: `${individualCount} individual service${individualCount > 1 ? 's' : ''} cleared. Packages include everything needed.`,
-            duration: 3000,
-          });
-        }
-      } else if (hasComboSelected) {
-        const currentCombo = selectedServices.find(s => s.type === 'combo');
+      const service = currentServices.find(s => s.id === serviceId);
+      if (service) {
         toast({
-          title: 'Package Replaced with Individual Services',
-          description: `${currentCombo?.name} package cleared. You can now select individual services.`,
-          duration: 3000,
+          title: "Service Added!",
+          description: `${service.name} has been added to your booking.`,
+          duration: 2000,
         });
       }
     }
-    
-    toggleService(service);
   };
 
   // Handle vehicle change
@@ -179,18 +169,19 @@ export default function ServicesDynamic() {
   };
   
   // Get current services based on vehicle type
-  const currentServices = currentVehicle === 'bike' ? BIKE_SERVICES : CAR_SERVICES;
+  const currentServices = currentVehicle === 'bike' ? PRICING_BIKE : PRICING_CAR;
+  const oldServices = currentVehicle === 'bike' ? BIKE_SERVICES : CAR_SERVICES;
 
   // Filter and categorize services
   const filteredServices = useMemo(() => {
     return currentServices.filter(service =>
       service.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      service.subtitle.toLowerCase().includes(searchQuery.toLowerCase())
+      service.description.toLowerCase().includes(searchQuery.toLowerCase())
     );
   }, [currentServices, searchQuery]);
 
-  const comboServices = filteredServices.filter(service => service.type === 'combo');
-  const individualServices = filteredServices.filter(service => service.type === 'individual' || !service.type);
+  const comboServices = oldServices.filter(service => service.type === 'combo');
+  const individualServices = filteredServices;
 
   // Handle customer details form submission
   const handleCustomerDetailsSubmit = (data: CustomerData) => {
@@ -508,7 +499,7 @@ export default function ServicesDynamic() {
                 transition={{ delay: 0.2, staggerChildren: 0.03 }}
               >
                 {individualServices.map((service, index) => {
-                  const isSelected = selectedServices.some(s => s.id === service.id);
+                  const isSelected = selectedServices.includes(service.id);
                   
                   return (
                     <motion.div
@@ -517,10 +508,12 @@ export default function ServicesDynamic() {
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: 0.1 + (index * 0.03) }}
                     >
-                      <BookingServiceCard
+                      <EnhancedServiceCard
                         service={service}
+                        city={currentCity}
                         isSelected={isSelected}
-                        onToggle={() => handleToggleService(service)}
+                        onToggle={() => handleToggleService(service.id)}
+                        data-testid={`service-card-${service.id}`}
                       />
                     </motion.div>
                   );
@@ -530,8 +523,8 @@ export default function ServicesDynamic() {
           </motion.div>
         )}
 
-        {/* Booking Summary */}
-        <BookingSummary />
+        {/* Enhanced Summary Drawer */}
+        <SummaryDrawer />
 
         {/* Time Slot Selection */}
         {currentStep === 'details' && !selectedSlot && (
