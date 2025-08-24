@@ -128,7 +128,7 @@ export function HowItWorks() {
     <section 
       id="how-it-works" 
       aria-labelledby="how-heading" 
-      className="relative px-4 pt-16 pb-24 md:px-10 md:pt-24 md:pb-32 overflow-hidden"
+      className="relative px-4 pt-8 pb-16 md:px-10 md:pt-12 md:pb-20 overflow-hidden"
       style={{
         background: `
           radial-gradient(circle at 20% 20%, rgba(34, 197, 94, 0.15) 0%, transparent 50%),
@@ -170,7 +170,7 @@ export function HowItWorks() {
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Header */}
         <motion.div
-          className="text-center mb-16 md:mb-20"
+          className="text-center mb-8 md:mb-12"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -209,7 +209,7 @@ export function HowItWorks() {
         {/* Desktop Layout */}
         <div className="hidden lg:block relative">
           <motion.div 
-            className="grid grid-cols-4 gap-8"
+            className="grid grid-cols-4 gap-4"
             variants={containerVariants}
             initial="hidden"
             whileInView="show"
@@ -225,7 +225,7 @@ export function HowItWorks() {
                   data-testid={`step-card-${step.step}`}
                 >
                   <motion.div
-                    className="relative bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl border border-slate-700/50 rounded-3xl p-8 text-center overflow-hidden"
+                    className="relative bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl border border-slate-700/50 rounded-3xl p-4 text-center overflow-hidden"
                     whileHover={shouldReduceMotion ? {} : { 
                       scale: 1.05,
                       y: -10,
@@ -241,7 +241,7 @@ export function HowItWorks() {
                     <div className="relative z-10">
                       {/* Floating Illustration */}
                       <motion.div
-                        className="relative mb-6 flex justify-center"
+                        className="relative mb-4 flex justify-center"
                         animate={shouldReduceMotion ? {} : floatAnimation}
                         style={{ animationDelay: `${index * 0.3}s` }}
                       >
@@ -268,14 +268,14 @@ export function HowItWorks() {
                       </motion.div>
                       
                       {/* Step Number with Icon */}
-                      <div className="flex items-center justify-center gap-2 mb-4">
+                      <div className="flex items-center justify-center gap-2 mb-3">
                         <div className={`w-8 h-8 rounded-full bg-gradient-to-r ${step.gradient} flex items-center justify-center`}>
                           <IconComponent className="w-4 h-4 text-white" />
                         </div>
                         <span className="text-sm font-medium text-slate-400">STEP {step.step}</span>
                       </div>
                       
-                      <h3 className="text-xl font-bold text-white mb-3">
+                      <h3 className="text-lg font-bold text-white mb-2">
                         {step.title}
                       </h3>
                       
@@ -359,7 +359,7 @@ export function HowItWorks() {
         {/* Tablet Layout */}
         <div className="hidden md:block lg:hidden">
           <motion.div 
-            className="grid grid-cols-2 gap-8"
+            className="grid grid-cols-2 gap-4"
             variants={containerVariants}
             initial="hidden"
             whileInView="show"
@@ -375,7 +375,7 @@ export function HowItWorks() {
                   data-testid={`step-card-${step.step}`}
                 >
                   <motion.div
-                    className="relative bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-6 text-center overflow-hidden"
+                    className="relative bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-4 text-center overflow-hidden"
                     whileHover={shouldReduceMotion ? {} : { 
                       scale: 1.02,
                       y: -5,
@@ -449,7 +449,7 @@ export function HowItWorks() {
               return (
                 <motion.div
                   key={index}
-                  className="relative mb-12 last:mb-0"
+                  className="relative mb-8 last:mb-0"
                   initial={{ 
                     opacity: 0, 
                     x: isLeft ? -50 : 50,
@@ -481,7 +481,7 @@ export function HowItWorks() {
                   {/* Card */}
                   <div className="ml-16">
                     <motion.div
-                      className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-6 overflow-hidden group"
+                      className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-4 overflow-hidden group"
                       whileTap={{ scale: 0.98 }}
                     >
                       <motion.div 
@@ -490,7 +490,7 @@ export function HowItWorks() {
                       
                       <div className="relative z-10">
                         <motion.div
-                          className="w-24 h-24 mx-auto mb-4"
+                          className="w-20 h-20 mx-auto mb-3"
                           animate={shouldReduceMotion ? {} : floatAnimation}
                           style={{ animationDelay: `${index * 0.3}s` }}
                         >
@@ -527,43 +527,21 @@ export function HowItWorks() {
 
         {/* Premium CTA Section */}
         <motion.div
-          className="text-center mt-20 md:mt-24"
-          initial={{ opacity: 0, y: 30 }}
+          className="text-center mt-12 md:mt-16"
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 2, duration: 0.8 }}
+          transition={{ delay: 1, duration: 0.6 }}
         >
           <Link href="/services">
             <motion.div
-              className="group relative inline-flex items-center gap-3 px-10 py-5 bg-gradient-to-r from-emerald-500 via-cyan-500 to-purple-500 text-white font-bold text-lg rounded-2xl shadow-2xl overflow-hidden"
-              whileHover={{ scale: 1.05, y: -2 }}
+              className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-emerald-500 via-cyan-500 to-purple-500 text-white font-bold text-lg rounded-xl shadow-lg"
+              whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               data-testid="book-service-cta"
             >
-              {/* Animated background overlay */}
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-purple-500 via-cyan-500 to-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-              />
-              
-              {/* Glowing border effect */}
-              <motion.div
-                className="absolute inset-0 rounded-2xl"
-                style={{
-                  background: "linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent)",
-                  backgroundSize: "200% 200%"
-                }}
-                animate={{
-                  backgroundPosition: ["0% 0%", "100% 100%"]
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "linear"
-                }}
-              />
-              
-              <span className="relative z-10">Book Your Service Now</span>
-              <ArrowRight className="relative z-10 w-6 h-6 group-hover:translate-x-1 transition-transform duration-300" />
+              <span>Book Your Service Now</span>
+              <ArrowRight className="w-5 h-5" />
             </motion.div>
           </Link>
         </motion.div>
