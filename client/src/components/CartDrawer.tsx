@@ -2,12 +2,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Trash2, ArrowRight, ShoppingBag } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCartStore } from '@/stores/useCartStore';
-import { useBookingStore } from '@/stores/useBookingStore';
 import { useEffect } from 'react';
 
 export function CartDrawer() {
   const { services, total, itemCount, isOpen, close, removeService, clear } = useCartStore();
-  const { setCurrentStep } = useBookingStore();
   
   // Close on ESC key and prevent body scroll
   useEffect(() => {
@@ -29,7 +27,8 @@ export function CartDrawer() {
   }, [isOpen, close]);
   
   const handleContinue = () => {
-    setCurrentStep('services');
+    // Simple checkout - could navigate to external checkout or show contact form
+    alert('Checkout functionality can be added here!');
     close();
   };
   

@@ -20,14 +20,11 @@ import {
 import { BookingServiceCard } from '@/components/ServiceCard';
 import { ComboServiceCard } from '@/components/ComboServiceCard';
 import { EnhancedServiceCard } from '@/components/EnhancedServiceCard';
-import { EnhancedSlotPicker } from '@/components/EnhancedSlotPicker';
-import { CustomerDetailsForm } from '@/components/CustomerDetailsForm';
 
 // Data & Store
 import { BIKE_SERVICES, CAR_SERVICES, ServiceData } from '@/data/bookingServices';
 import { useBookingStore } from '@/stores/useBookingStore';
 import { apiRequest } from '@/lib/queryClient';
-import { CustomerData } from '@/lib/validators';
 import { BIKE_SERVICES as PRICING_BIKE, CAR_SERVICES as PRICING_CAR } from '@/lib/pricing';
 
 // City-aware routing
@@ -96,7 +93,7 @@ export default function ServicesDynamic() {
     currentStep,
     setCurrentStep,
     selectedSlot,
-    customer,
+
     clearBooking,
     estimate,
   } = useBookingStore();
@@ -203,10 +200,6 @@ export default function ServicesDynamic() {
   const comboServices = oldServices.filter(service => service.type === 'combo');
   const individualServices = filteredServices;
 
-  // Handle customer details form submission
-  const handleCustomerDetailsSubmit = (data: CustomerData) => {
-    setCurrentStep('details');
-  };
 
   // Handle final booking submission
   const handleBookingSubmit = async () => {
@@ -224,7 +217,7 @@ export default function ServicesDynamic() {
         vehicle: selectedVehicle,
         services: selectedServices,
         slot: selectedSlot,
-        customer,
+    
         city: currentCity
       };
 
@@ -545,7 +538,7 @@ export default function ServicesDynamic() {
 
 
         {/* Time Slot Selection */}
-        {currentStep === 'details' && !selectedSlot && (
+        {false && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -574,7 +567,7 @@ export default function ServicesDynamic() {
         )}
 
         {/* Customer Details Form */}
-        {currentStep === 'details' && selectedSlot && !customer?.name && (
+        {false && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -587,7 +580,7 @@ export default function ServicesDynamic() {
         )}
 
         {/* Final Review & Submit */}
-        {currentStep === 'details' && selectedSlot && customer?.name && (
+        {false && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -665,7 +658,7 @@ export default function ServicesDynamic() {
         )}
 
         {/* Confirmation Step */}
-        {currentStep === 'confirmation' && (
+        {false && (
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}

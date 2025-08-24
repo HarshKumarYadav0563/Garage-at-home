@@ -20,14 +20,11 @@ import {
 // Components  
 import { BookingServiceCard } from '@/components/ServiceCard';
 import { ComboServiceCard } from '@/components/ComboServiceCard';
-import { SlotPicker } from '@/components/SlotPicker';
-import { CustomerDetailsForm } from '@/components/CustomerDetailsForm';
 
 // Data & Store
 import { BIKE_SERVICES, CAR_SERVICES, ServiceData } from '@/data/bookingServices';
 import { useBookingStore } from '@/stores/useBookingStore';
 import { apiRequest } from '@/lib/queryClient';
-import { CustomerData } from '@/lib/validators';
 
 export default function Services() {
   const {
@@ -37,14 +34,7 @@ export default function Services() {
     toggleService,
     searchQuery,
     setSearchQuery,
-    currentStep,
-    setCurrentStep,
-    selectedSlot,
-    customer,
-    clearBooking,
-    getSubtotal,
-    showSummary,
-    setShowSummary
+    getSubtotal
   } = useBookingStore();
 
   const shouldReduceMotion = useReducedMotion();
@@ -505,7 +495,7 @@ export default function Services() {
         </motion.div>
 
         {/* Services Section - Immediately Visible Above Fold */}
-        {currentStep === 'services' && (
+        {(
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -663,7 +653,7 @@ export default function Services() {
         )}
 
         {/* Desktop Sidebar Summary */}
-        {currentStep === 'services' && (
+        {(
           <div className="hidden lg:block fixed right-8 top-1/2 transform -translate-y-1/2 w-80 z-30">
 
           </div>
@@ -676,7 +666,7 @@ export default function Services() {
           </div>
         )}
 
-        {currentStep === 'details' && (
+        {false && (
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -728,7 +718,7 @@ export default function Services() {
           </motion.div>
         )}
 
-        {currentStep === 'confirmation' && (
+        {false && (
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
