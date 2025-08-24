@@ -5,8 +5,6 @@ import { useCartStore } from '@/stores/useCartStore';
 export function CartButton() {
   const { itemCount, total, isOpen, toggle } = useCartStore();
   
-  console.log('🛒 CART BUTTON RENDER:', { itemCount, total });
-  
   if (itemCount === 0) return null;
   
   return (

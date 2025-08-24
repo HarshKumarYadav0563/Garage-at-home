@@ -51,7 +51,6 @@ export const useCartStore = create<CartStore>()(
         const { services } = get();
         const exists = services.find(s => s.id === service.id);
         if (!exists) {
-          console.log('🛒 ADD SERVICE TO CART:', service);
           set({ services: [...services, service] });
         }
       },

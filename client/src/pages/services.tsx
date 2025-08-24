@@ -33,8 +33,7 @@ export default function Services() {
     selectedServices,
     toggleService,
     searchQuery,
-    setSearchQuery,
-    getSubtotal
+    setSearchQuery
   } = useBookingStore();
 
   const shouldReduceMotion = useReducedMotion();
@@ -118,10 +117,6 @@ export default function Services() {
   const individualServices = filteredServices.filter(service => service.type === 'individual' || !service.type);
   
 
-  // Handle customer details form submission
-  const handleCustomerDetailsSubmit = (data: CustomerData) => {
-    setCurrentStep('details');
-  };
 
   // Handle final booking submission
   const handleBookingSubmit = async () => {
@@ -660,7 +655,7 @@ export default function Services() {
         )}
 
         {/* Mobile Bottom Summary */}
-        {currentStep === 'services' && selectedServices.length > 0 && showSummary && (
+        {false && (
           <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 p-4 bg-gradient-to-t from-black/90 to-transparent backdrop-blur-xl">
 
           </div>
@@ -686,14 +681,14 @@ export default function Services() {
                 {/* Customer Details Form */}
                 <Card className="bg-white/5 border-white/10 backdrop-blur-xl">
                   <CardContent className="p-8">
-                    <CustomerDetailsForm onSubmit={handleCustomerDetailsSubmit} />
+                    <div>Customer details removed</div>
                   </CardContent>
                 </Card>
 
                 {/* Slot Picker */}
                 <Card className="bg-white/5 border-white/10 backdrop-blur-xl">
                   <CardContent className="p-8">
-                    <SlotPicker />
+                    <div>Slot picker removed</div>
                   </CardContent>
                 </Card>
 
