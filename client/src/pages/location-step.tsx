@@ -1,13 +1,14 @@
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
-import { MapPin, Navigation, ArrowLeft, ArrowRight } from 'lucide-react';
+import { MapPin, Navigation, ArrowLeft, ArrowRight, Search } from 'lucide-react';
 import { useBookingStore } from '@/store/booking';
 import { useLocation } from 'wouter';
+import { Loader } from '@googlemaps/js-api-loader';
 
 // NCR cities for validation
 const NCR_CITIES = ['delhi', 'gurugram', 'noida', 'ghaziabad', 'faridabad'];
@@ -19,6 +20,100 @@ export default function LocationStep() {
   const [isLoading, setIsLoading] = useState(false);
   const [manualAddress, setManualAddress] = useState(address.text || '');
   const [pincode, setPincode] = useState(address.pincode || '');
+  const [googleMapsLoaded, setGoogleMapsLoaded] = useState(false);
+  const autocompleteInputRef = useRef<HTMLInputElement>(null);
+  const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
+
+  // Load Google Maps
+  useEffect(() => {
+    const loadGoogleMaps = async () => {
+      if (!import.meta.env.VITE_GOOGLE_MAPS_API_KEY) {
+        console.error('Google Maps API key not found');
+        return;
+      }
+
+      try {
+        const loader = new Loader({
+          apiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
+          version: 'weekly',
+          libraries: ['places', 'geocoding']
+        });
+
+        await loader.load();
+        setGoogleMapsLoaded(true);
+      } catch (error) {
+        console.error('Error loading Google Maps:', error);
+      }
+    };
+
+    loadGoogleMaps();
+  }, []);
+
+  // Initialize autocomplete when Google Maps is loaded
+  useEffect(() => {
+    if (googleMapsLoaded && autocompleteInputRef.current && !autocompleteRef.current) {
+      autocompleteRef.current = new google.maps.places.Autocomplete(
+        autocompleteInputRef.current,
+        {
+          componentRestrictions: { country: 'IN' },
+          fields: ['formatted_address', 'geometry', 'address_components'],
+          types: ['address']
+        }
+      );
+
+      autocompleteRef.current.addListener('place_changed', () => {
+        const place = autocompleteRef.current?.getPlace();
+        if (place && place.geometry && place.geometry.location) {
+          const lat = place.geometry.location.lat();
+          const lng = place.geometry.location.lng();
+          const formattedAddress = place.formatted_address || '';
+          
+          // Extract pincode from address components
+          let pincode = '';
+          let city = '';
+          
+          place.address_components?.forEach((component) => {
+            if (component.types.includes('postal_code')) {
+              pincode = component.long_name;
+            }
+            if (component.types.includes('locality') || component.types.includes('administrative_area_level_2')) {
+              city = component.long_name.toLowerCase();
+            }
+          });
+
+          // Check if location is in NCR
+          const isNcrLocation = NCR_CITIES.some(ncrCity => 
+            city.includes(ncrCity) || formattedAddress.toLowerCase().includes(ncrCity)
+          );
+          
+          if (!isNcrLocation) {
+            toast({
+              title: "Service Area",
+              description: "We currently serve NCR only. Join our waitlist for updates!",
+              variant: "destructive"
+            });
+            return;
+          }
+
+          setAddress({
+            text: formattedAddress,
+            lat,
+            lng,
+            city,
+            pincode
+          });
+          
+          setManualAddress(formattedAddress);
+          setPincode(pincode);
+          
+          toast({
+            title: "Address Selected",
+            description: "Address has been automatically filled from search!"
+          });
+        }
+      });
+    }
+  }, [googleMapsLoaded]);
 
   const handleUseCurrentLocation = async () => {
     setIsLoading(true);
@@ -33,48 +128,83 @@ export default function LocationStep() {
 
       const { latitude, longitude } = position.coords;
       
-      // Reverse geocode to get address
-      const response = await fetch(
-        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&addressdetails=1`
-      );
-      const data = await response.json();
-      
-      const city = data.address?.city || data.address?.town || data.address?.village || '';
-      const addressText = data.display_name || `${latitude}, ${longitude}`;
-      
-      // Check if city is in NCR
-      const isNcrCity = NCR_CITIES.some(ncrCity => 
-        city.toLowerCase().includes(ncrCity) || addressText.toLowerCase().includes(ncrCity)
-      );
-      
-      if (!isNcrCity) {
-        // Show waitlist modal for non-NCR cities
+      if (!googleMapsLoaded) {
         toast({
-          title: "Service Area",
-          description: "We currently serve NCR only. Join our waitlist for updates!",
+          title: "Maps Loading",
+          description: "Please wait for Google Maps to load and try again.",
           variant: "destructive"
         });
         return;
       }
       
-      setAddress({
-        text: addressText,
-        lat: latitude,
-        lng: longitude,
-        city: city.toLowerCase(),
-        pincode: data.address?.postcode || ''
-      });
+      // Use Google Maps Geocoding API for reverse geocoding
+      const geocoder = new google.maps.Geocoder();
+      const latlng = { lat: latitude, lng: longitude };
       
-      toast({
-        title: "Location detected",
-        description: "Your location has been detected successfully!"
+      geocoder.geocode({ location: latlng }, (results, status) => {
+        if (status === 'OK' && results && results[0]) {
+          const result = results[0];
+          const formattedAddress = result.formatted_address;
+          
+          // Extract city and pincode
+          let city = '';
+          let pincode = '';
+          
+          result.address_components?.forEach((component) => {
+            if (component.types.includes('postal_code')) {
+              pincode = component.long_name;
+            }
+            if (component.types.includes('locality') || component.types.includes('administrative_area_level_2')) {
+              city = component.long_name.toLowerCase();
+            }
+          });
+          
+          // Check if city is in NCR
+          const isNcrCity = NCR_CITIES.some(ncrCity => 
+            city.includes(ncrCity) || formattedAddress.toLowerCase().includes(ncrCity)
+          );
+          
+          if (!isNcrCity) {
+            toast({
+              title: "Service Area",
+              description: "We currently serve NCR only. Join our waitlist for updates!",
+              variant: "destructive"
+            });
+            setIsLoading(false);
+            return;
+          }
+          
+          setAddress({
+            text: formattedAddress,
+            lat: latitude,
+            lng: longitude,
+            city,
+            pincode
+          });
+          
+          setManualAddress(formattedAddress);
+          setPincode(pincode);
+          
+          toast({
+            title: "Location detected",
+            description: "Your location has been detected successfully!"
+          });
+          
+          // Navigate to mechanic selection
+          setTimeout(() => {
+            setCurrentStep('mechanic');
+            setLocationRoute('/mechanic');
+          }, 1500);
+          
+        } else {
+          toast({
+            title: "Location Error",
+            description: "Unable to get address for this location.",
+            variant: "destructive"
+          });
+        }
+        setIsLoading(false);
       });
-      
-      // Navigate to mechanic selection
-      setTimeout(() => {
-        setCurrentStep('mechanic');
-        setLocationRoute('/mechanic');
-      }, 1500);
       
     } catch (error) {
       toast({
@@ -82,7 +212,6 @@ export default function LocationStep() {
         description: "Unable to detect location. Please enter manually.",
         variant: "destructive"
       });
-    } finally {
       setIsLoading(false);
     }
   };
@@ -218,15 +347,29 @@ export default function LocationStep() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="address" className="text-gray-300">Address</Label>
-                <Input
-                  id="address"
-                  placeholder="Enter your full address"
-                  value={manualAddress}
-                  onChange={(e) => setManualAddress(e.target.value)}
-                  className="bg-white/5 border-white/10 text-white placeholder:text-gray-400"
-                  data-testid="input-address"
-                />
+                <Label htmlFor="address" className="text-gray-300 flex items-center">
+                  <Search className="w-4 h-4 mr-2" />
+                  Search Address
+                </Label>
+                <div className="relative">
+                  <Input
+                    ref={autocompleteInputRef}
+                    id="address"
+                    placeholder="Start typing your address..."
+                    value={manualAddress}
+                    onChange={(e) => setManualAddress(e.target.value)}
+                    className="bg-white/5 border-white/10 text-white placeholder:text-gray-400 pr-10"
+                    data-testid="input-address"
+                  />
+                  {googleMapsLoaded && (
+                    <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                      <Search className="w-4 h-4 text-gray-400" />
+                    </div>
+                  )}
+                </div>
+                <p className="text-xs text-gray-400">
+                  {googleMapsLoaded ? 'Search will show suggestions as you type' : 'Loading address search...'}
+                </p>
               </div>
               
               <div className="space-y-2">
