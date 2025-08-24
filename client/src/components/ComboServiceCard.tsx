@@ -58,7 +58,7 @@ export function ComboServiceCard({
       onClick={onToggle}
       >
         {/* Service Image */}
-        <div className="relative h-16 md:h-20 overflow-hidden">
+        <div className="relative h-24 md:h-32 overflow-hidden">
           <img 
             src={getServiceImage()} 
             alt={service.name}
