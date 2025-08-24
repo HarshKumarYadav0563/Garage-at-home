@@ -26,6 +26,12 @@ export interface Address {
   lat?: number;
   lng?: number;
   pincode?: string;
+  area?: string;
+  city?: string;
+  coordinates?: {
+    lat: number;
+    lng: number;
+  };
 }
 
 export interface OtpDetails {
@@ -42,6 +48,7 @@ export interface EstimatedTotal {
 interface BookingStore {
   // Route params
   vehicle: 'bike' | 'car' | null;
+  vehicleModel: string;
   city: string;
   
   // Services selection
@@ -51,6 +58,7 @@ interface BookingStore {
   // Customer details
   customer: CustomerDetails;
   address: Address;
+  selectedMechanic: any;
   
   // OTP verification
   otp: OtpDetails;
@@ -59,21 +67,23 @@ interface BookingStore {
   estTotal: EstimatedTotal;
   
   // UI state
-  currentStep: 'services' | 'location' | 'details' | 'otp' | 'tracking';
+  currentStep: 'vehicle' | 'model' | 'services' | 'location' | 'mechanics' | 'details' | 'otp' | 'tracking';
   showSummary: boolean;
   searchQuery: string;
   showPriceRanges: boolean;
   
   // Actions
   setVehicleAndCity: (vehicle: 'bike' | 'car', city: string) => void;
+  setVehicleModel: (model: string) => void;
   addService: (service: BookingService) => void;
   removeService: (serviceId: string) => void;
   addAddon: (addon: BookingAddon) => void;
   removeAddon: (addonId: string) => void;
   setCustomer: (customer: Partial<CustomerDetails>) => void;
   setAddress: (address: Address) => void;
+  setSelectedMechanic: (mechanic: any) => void;
   setOtpDetails: (otp: Partial<OtpDetails>) => void;
-  setCurrentStep: (step: 'services' | 'location' | 'details' | 'otp' | 'tracking') => void;
+  setCurrentStep: (step: 'vehicle' | 'model' | 'services' | 'location' | 'mechanics' | 'details' | 'otp' | 'tracking') => void;
   setShowSummary: (show: boolean) => void;
   setSearchQuery: (query: string) => void;
   setShowPriceRanges: (show: boolean) => void;
@@ -115,20 +125,24 @@ const initialEstTotal: EstimatedTotal = {
 export const useBookingStore = create<BookingStore>((set, get) => ({
   // Initial state
   vehicle: null,
+  vehicleModel: '',
   city: '',
   services: [],
   addons: [],
   customer: initialCustomer,
   address: initialAddress,
+  selectedMechanic: null,
   otp: initialOtp,
   estTotal: initialEstTotal,
-  currentStep: 'services',
+  currentStep: 'vehicle',
   showSummary: false,
   searchQuery: '',
   showPriceRanges: false,
   
   // Actions
   setVehicleAndCity: (vehicle, city) => set({ vehicle, city }),
+  
+  setVehicleModel: (vehicleModel) => set({ vehicleModel }),
   
   addService: (service) => set((state) => {
     // If selecting a combo service, clear ALL other services
@@ -178,6 +192,8 @@ export const useBookingStore = create<BookingStore>((set, get) => ({
   
   setAddress: (address) => set({ address }),
   
+  setSelectedMechanic: (selectedMechanic) => set({ selectedMechanic }),
+  
   setOtpDetails: (otpUpdate) => set((state) => ({
     otp: { ...state.otp, ...otpUpdate }
   })),
@@ -192,14 +208,16 @@ export const useBookingStore = create<BookingStore>((set, get) => ({
   
   clear: () => set({
     vehicle: null,
+    vehicleModel: '',
     city: '',
     services: [],
     addons: [],
     customer: initialCustomer,
     address: initialAddress,
+    selectedMechanic: null,
     otp: initialOtp,
     estTotal: initialEstTotal,
-    currentStep: 'services',
+    currentStep: 'vehicle',
     showSummary: false,
     searchQuery: '',
     showPriceRanges: false

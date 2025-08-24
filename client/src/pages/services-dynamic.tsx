@@ -78,28 +78,43 @@ export default function ServicesDynamic() {
   }, [params, vehicleParam, cityParam]);
 
   const {
-    selectedVehicle,
-    setSelectedVehicle,
-    selectedServices,
-    toggleService,
+    vehicle: selectedVehicle,
+    services: selectedServices,
+    addService,
+    removeService,
     searchQuery,
     setSearchQuery,
     currentStep,
     setCurrentStep,
-    selectedSlot,
     customer,
-    clearBooking,
+    clear: clearBooking,
     getSubtotal,
     showSummary,
     setShowSummary
   } = useBookingStore();
+  
+  // Helper function for service toggle
+  const toggleService = (service: any) => {
+    const isSelected = selectedServices.find(s => s.id === service.id);
+    if (isSelected) {
+      removeService(service.id);
+    } else {
+      addService({
+        id: service.id,
+        name: service.name,
+        vehicleType: selectedVehicle || 'bike',
+        price: service.basePrice,
+        type: service.type
+      });
+    }
+  };
 
   // Sync store with URL params
   useEffect(() => {
     if (params && isValidRoute(vehicleParam, cityParam) && selectedVehicle !== vehicleParam) {
-      setSelectedVehicle(vehicleParam);
+      setVehicleAndCity(vehicleParam as 'bike' | 'car', cityParam);
     }
-  }, [vehicleParam, selectedVehicle, params]);
+  }, [vehicleParam, selectedVehicle, params, setVehicleAndCity]);
 
   const shouldReduceMotion = useReducedMotion();
   
@@ -560,7 +575,7 @@ export default function ServicesDynamic() {
         )}
 
         {/* Customer Details Form */}
-        {currentStep === 'details' && selectedSlot && !customer?.name && (
+        {currentStep === 'details' && selectedServices.length > 0 && !customer?.name && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -573,7 +588,7 @@ export default function ServicesDynamic() {
         )}
 
         {/* Final Review & Submit */}
-        {currentStep === 'details' && selectedSlot && customer?.name && (
+        {currentStep === 'details' && selectedServices.length > 0 && customer?.name && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -602,14 +617,12 @@ export default function ServicesDynamic() {
                     </div>
                   </div>
 
-                  {selectedSlot && (
-                    <div>
-                      <h3 className="font-semibold text-white mb-2">Appointment</h3>
-                      <p className="text-gray-300">
-                        {selectedSlot.date} at {selectedSlot.time}
-                      </p>
-                    </div>
-                  )}
+                  <div>
+                    <h3 className="font-semibold text-white mb-2">Appointment</h3>
+                    <p className="text-gray-300">
+                      Auto-scheduled time slot (Mechanic will confirm)
+                    </p>
+                  </div>
 
                   {customer && (
                     <div>

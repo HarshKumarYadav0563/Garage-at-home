@@ -11,7 +11,11 @@ import { Toast } from "@/components/Toast";
 // Pages
 import Home from "@/pages/home";
 import Services from "@/pages/services";
+import ServicesDisplay from "@/pages/services-display";
 import ServicesDynamic from "@/pages/services-dynamic";
+import VehicleSelection from "@/pages/vehicle-selection";
+import VehicleModel from "@/pages/vehicle-model";
+import MechanicsSelection from "@/pages/mechanics-selection";
 import LocationStep from "@/pages/location-step";
 import DetailsStep from "@/pages/details-step";
 import OtpStep from "@/pages/otp-step";
@@ -44,8 +48,12 @@ function Router() {
         <Switch>
           <Route path="/" component={Home} />
           <Route path="/services/:vehicle/:city" component={ServicesDynamic} />
-          <Route path="/services" component={Services} />
+          <Route path="/services" component={ServicesDisplay} />
+          <Route path="/book" component={VehicleSelection} />
+          <Route path="/book/model" component={VehicleModel} />
+          <Route path="/book/services" component={Services} />
           <Route path="/book/location" component={LocationStep} />
+          <Route path="/book/mechanics" component={MechanicsSelection} />
           <Route path="/book/details" component={DetailsStep} />
           <Route path="/book/otp" component={OtpStep} />
           <Route path="/waitlist" component={Waitlist} />
