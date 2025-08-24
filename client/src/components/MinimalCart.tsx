@@ -17,21 +17,22 @@ export function MinimalCart() {
     <div 
       style={{
         position: 'fixed',
-        bottom: '20px',
-        right: '20px',
+        top: '100px',
+        left: '20px',
         backgroundColor: '#ef4444',
         color: 'white',
-        padding: '12px',
-        borderRadius: '8px',
-        zIndex: 99999,
-        fontSize: '14px',
+        padding: '15px',
+        borderRadius: '12px',
+        zIndex: 999999,
+        fontSize: '16px',
         fontWeight: 'bold',
-        border: '2px solid white',
-        boxShadow: '0 4px 20px rgba(0,0,0,0.5)'
+        border: '3px solid yellow',
+        boxShadow: '0 8px 30px rgba(255,255,0,0.8)',
+        transform: 'scale(1.2)'
       }}
     >
-      CART: {selectedServices.length} items
-      {estimate && <div>₹{String(estimate.total)}</div>}
+      🛒 CART: {selectedServices.length} items
+      {estimate && <div>TOTAL: ₹{String(estimate.total)}</div>}
     </div>
   );
 }
