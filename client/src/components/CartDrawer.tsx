@@ -29,7 +29,7 @@ export function CartDrawer() {
   }, [isOpen, close]);
   
   const handleContinue = () => {
-    setCurrentStep('customer');
+    setCurrentStep('services');
     close();
   };
   

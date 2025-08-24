@@ -99,8 +99,6 @@ export default function ServicesDynamic() {
     customer,
     clearBooking,
     estimate,
-    showSummary,
-    setShowSummary
   } = useBookingStore();
 
   // Sync store with URL params
