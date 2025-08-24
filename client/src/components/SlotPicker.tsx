@@ -1,201 +1,140 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import { motion, useReducedMotion } from 'framer-motion';
+import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Calendar, Clock, CheckCircle } from 'lucide-react';
-import { TimeSlot } from '@/stores/useBookingStore';
-import { format, addDays, setHours, setMinutes, isAfter } from 'date-fns';
+import { Clock, Calendar } from 'lucide-react';
+import { TIME_SLOTS } from '@/data/bookingServices';
+import { useBookingStore, TimeSlot } from '@/store/booking';
 
-// Time slots configuration
-const TIME_SLOTS = [
-  { start: 10, end: 12, label: '10:00 AM - 12:00 PM' },
-  { start: 12, end: 14, label: '12:00 PM - 2:00 PM' },
-  { start: 14, end: 16, label: '2:00 PM - 4:00 PM' },
-  { start: 16, end: 18, label: '4:00 PM - 6:00 PM' },
-];
+export function SlotPicker() {
+  const { selectedSlot, setSelectedSlot } = useBookingStore();
+  const shouldReduceMotion = useReducedMotion();
 
-interface SlotPickerProps {
-  value?: TimeSlot;
-  onChange: (slot: TimeSlot) => void;
-}
+  const todaySlots = TIME_SLOTS.filter(slot => slot.date === 'today');
+  const tomorrowSlots = TIME_SLOTS.filter(slot => slot.date === 'tomorrow');
 
-export function SlotPicker({ value, onChange }: SlotPickerProps) {
-  const [selectedDate, setSelectedDate] = useState<'today' | 'tomorrow'>(value?.date || 'today');
-  const [selectedTime, setSelectedTime] = useState<string>(value?.startTime || '');
-
-  const today = new Date();
-  const tomorrow = addDays(today, 1);
-
-  const isSlotDisabled = (date: 'today' | 'tomorrow', startHour: number): boolean => {
-    const slotDate = date === 'today' ? today : tomorrow;
-    const slotTime = setMinutes(setHours(slotDate, startHour), 0);
-    return isAfter(new Date(), slotTime);
-  };
-
-  const handleSlotSelect = (date: 'today' | 'tomorrow', timeSlot: typeof TIME_SLOTS[0]) => {
-    const slotDate = date === 'today' ? today : tomorrow;
-    const startTime = setMinutes(setHours(slotDate, timeSlot.start), 0);
-    const endTime = setMinutes(setHours(slotDate, timeSlot.end), 0);
-
-    const slot: TimeSlot = {
-      date,
-      startTime: `${timeSlot.start.toString().padStart(2, '0')}:00`,
-      endTime: `${timeSlot.end.toString().padStart(2, '0')}:00`,
-      startISO: startTime.toISOString(),
-      endISO: endTime.toISOString(),
-      label: `${format(slotDate, 'MMM dd')} • ${timeSlot.label}`
+  const handleSlotSelect = (slot: typeof TIME_SLOTS[number]) => {
+    const timeSlot: TimeSlot = {
+      date: slot.date,
+      time: slot.time,
+      label: slot.label
     };
-
-    setSelectedDate(date);
-    setSelectedTime(slot.startTime);
-    onChange(slot);
-  };
-
-  const getAvailableSlotsCount = (date: 'today' | 'tomorrow'): number => {
-    return TIME_SLOTS.filter(slot => !isSlotDisabled(date, slot.start)).length;
+    setSelectedSlot(timeSlot);
   };
 
   return (
     <div className="space-y-6">
-      <Card className="bg-white/5 border-white/10 backdrop-blur-xl">
-        <CardHeader>
-          <CardTitle className="text-white flex items-center gap-2">
-            <Calendar className="w-5 h-5" />
-            Choose Service Time
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          {/* Date Selection */}
-          <div>
-            <label className="text-sm font-medium text-gray-300 mb-3 block">
-              Select Date
-            </label>
-            <div className="grid grid-cols-2 gap-3">
-              {[
-                { key: 'today' as const, date: today, label: 'Today' },
-                { key: 'tomorrow' as const, date: tomorrow, label: 'Tomorrow' }
-              ].map(({ key, date, label }) => {
-                const availableSlots = getAvailableSlotsCount(key);
-                const isSelected = selectedDate === key;
-                
-                return (
-                  <motion.button
-                    key={key}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    onClick={() => setSelectedDate(key)}
-                    disabled={availableSlots === 0}
-                    className={`p-4 rounded-xl border transition-all text-left ${
-                      isSelected
-                        ? 'bg-gradient-to-r from-emerald-500/20 to-sky-500/20 border-emerald-500/40'
-                        : availableSlots > 0
-                        ? 'bg-white/5 border-white/20 hover:border-white/40'
-                        : 'bg-white/5 border-white/10 opacity-50 cursor-not-allowed'
-                    }`}
-                    data-testid={`button-date-${key}`}
-                  >
-                    <div className="text-white font-medium">{label}</div>
-                    <div className="text-gray-400 text-sm">
-                      {format(date, 'MMM dd, yyyy')}
-                    </div>
-                    <div className="mt-2">
-                      {availableSlots > 0 ? (
-                        <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30">
-                          {availableSlots} slots available
-                        </Badge>
-                      ) : (
-                        <Badge variant="secondary" className="bg-gray-500/20 text-gray-400">
-                          No slots available
-                        </Badge>
-                      )}
-                    </div>
-                  </motion.button>
-                );
-              })}
-            </div>
-          </div>
+      <div>
+        <h3 className="text-white font-semibold text-lg mb-4 flex items-center space-x-2">
+          <Calendar className="w-5 h-5" />
+          <span>Select Time Slot</span>
+        </h3>
+        <p className="text-gray-400 text-sm mb-6">
+          Choose a convenient time for our mechanic to visit you
+        </p>
+      </div>
 
-          {/* Time Selection */}
-          <div>
-            <label className="text-sm font-medium text-gray-300 mb-3 block">
-              Select Time Slot
-            </label>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {TIME_SLOTS.map((timeSlot) => {
-                const isDisabled = isSlotDisabled(selectedDate, timeSlot.start);
-                const isSelected = selectedTime === `${timeSlot.start.toString().padStart(2, '0')}:00`;
-                
-                return (
-                  <motion.button
-                    key={timeSlot.label}
-                    whileHover={!isDisabled ? { scale: 1.02 } : {}}
-                    whileTap={!isDisabled ? { scale: 0.98 } : {}}
-                    onClick={() => !isDisabled && handleSlotSelect(selectedDate, timeSlot)}
-                    disabled={isDisabled}
-                    className={`p-4 rounded-xl border transition-all text-left ${
-                      isSelected
-                        ? 'bg-gradient-to-r from-emerald-500/20 to-sky-500/20 border-emerald-500/40'
-                        : !isDisabled
-                        ? 'bg-white/5 border-white/20 hover:border-white/40'
-                        : 'bg-white/5 border-white/10 opacity-50 cursor-not-allowed'
-                    }`}
-                    data-testid={`button-slot-${timeSlot.start}-${timeSlot.end}`}
-                  >
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <div className="text-white font-medium flex items-center gap-2">
-                          <Clock className="w-4 h-4" />
-                          {timeSlot.label}
-                        </div>
-                        <div className="text-gray-400 text-sm mt-1">
-                          {isDisabled 
-                            ? 'Not available' 
-                            : isSelected 
-                            ? 'Selected' 
-                            : 'Available'
-                          }
-                        </div>
-                      </div>
-                      {isSelected && (
-                        <CheckCircle className="w-5 h-5 text-emerald-400" />
-                      )}
-                    </div>
-                  </motion.button>
-                );
-              })}
-            </div>
-          </div>
+      {/* Today Slots */}
+      <div>
+        <div className="flex items-center space-x-2 mb-4">
+          <h4 className="text-gray-300 font-medium">Today</h4>
+          <Badge variant="secondary" className="bg-emerald-500/20 text-emerald-400 text-xs">
+            Same Day
+          </Badge>
+        </div>
+        <div className="grid grid-cols-2 gap-3">
+          {todaySlots.map((slot) => {
+            const isSelected = selectedSlot?.date === slot.date && selectedSlot?.time === slot.time;
+            
+            return (
+              <motion.div
+                key={`${slot.date}-${slot.time}`}
+                whileHover={shouldReduceMotion ? {} : { 
+                  scale: 1.02,
+                  transition: { type: "spring", stiffness: 400 }
+                }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <Card
+                  className={`cursor-pointer transition-all duration-300 ${
+                    isSelected 
+                      ? 'bg-gradient-to-r from-emerald-500/20 to-sky-500/20 border-emerald-500/50 shadow-lg shadow-emerald-500/20' 
+                      : 'bg-white/5 border-white/10 hover:bg-white/8 hover:border-white/20'
+                  }`}
+                  onClick={() => handleSlotSelect(slot)}
+                >
+                  <CardContent className="p-4 text-center">
+                    <Clock className={`w-5 h-5 mx-auto mb-2 ${isSelected ? 'text-emerald-400' : 'text-gray-400'}`} />
+                    <p className={`text-sm font-medium ${isSelected ? 'text-white' : 'text-gray-300'}`}>
+                      {slot.time.replace('-', ' - ')}
+                    </p>
+                    <p className={`text-xs ${isSelected ? 'text-emerald-300' : 'text-gray-500'}`}>
+                      {slot.time === '10-12' && 'Morning'}
+                      {slot.time === '12-2' && 'Afternoon'}
+                      {slot.time === '2-4' && 'Afternoon'}
+                      {slot.time === '4-6' && 'Evening'}
+                    </p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            );
+          })}
+        </div>
+      </div>
 
-          {/* Selected Summary */}
-          {value && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="p-4 bg-gradient-to-r from-emerald-500/10 to-sky-500/10 border border-emerald-500/20 rounded-xl"
-            >
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-white font-medium">Selected Slot</p>
-                  <p className="text-gray-300 text-sm">{value.label}</p>
-                </div>
-                <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30">
-                  ✓ Confirmed
-                </Badge>
-              </div>
-            </motion.div>
-          )}
+      {/* Tomorrow Slots */}
+      <div>
+        <h4 className="text-gray-300 font-medium mb-4">Tomorrow</h4>
+        <div className="grid grid-cols-2 gap-3">
+          {tomorrowSlots.map((slot) => {
+            const isSelected = selectedSlot?.date === slot.date && selectedSlot?.time === slot.time;
+            
+            return (
+              <motion.div
+                key={`${slot.date}-${slot.time}`}
+                whileHover={shouldReduceMotion ? {} : { 
+                  scale: 1.02,
+                  transition: { type: "spring", stiffness: 400 }
+                }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <Card
+                  className={`cursor-pointer transition-all duration-300 ${
+                    isSelected 
+                      ? 'bg-gradient-to-r from-emerald-500/20 to-sky-500/20 border-emerald-500/50 shadow-lg shadow-emerald-500/20' 
+                      : 'bg-white/5 border-white/10 hover:bg-white/8 hover:border-white/20'
+                  }`}
+                  onClick={() => handleSlotSelect(slot)}
+                >
+                  <CardContent className="p-4 text-center">
+                    <Clock className={`w-5 h-5 mx-auto mb-2 ${isSelected ? 'text-emerald-400' : 'text-gray-400'}`} />
+                    <p className={`text-sm font-medium ${isSelected ? 'text-white' : 'text-gray-300'}`}>
+                      {slot.time.replace('-', ' - ')}
+                    </p>
+                    <p className={`text-xs ${isSelected ? 'text-emerald-300' : 'text-gray-500'}`}>
+                      {slot.time === '10-12' && 'Morning'}
+                      {slot.time === '12-2' && 'Afternoon'}
+                      {slot.time === '2-4' && 'Afternoon'}
+                      {slot.time === '4-6' && 'Evening'}
+                    </p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            );
+          })}
+        </div>
+      </div>
 
-          {/* Important Notes */}
-          <div className="p-3 bg-white/5 border border-white/10 rounded-xl">
-            <p className="text-gray-300 text-sm">
-              <strong>Service Duration:</strong> 1-2 hours depending on services selected
-              <br />
-              <strong>Note:</strong> Our mechanic will arrive at the selected time slot
-            </p>
-          </div>
-        </CardContent>
-      </Card>
+      {selectedSlot && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="p-4 bg-emerald-500/10 border border-emerald-500/30 rounded-xl"
+        >
+          <p className="text-emerald-300 text-sm font-medium">
+            Selected: {selectedSlot.label}
+          </p>
+        </motion.div>
+      )}
     </div>
   );
 }

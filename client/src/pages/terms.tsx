@@ -167,9 +167,9 @@ export default function Terms() {
                 If you have any questions about these terms of service, please contact our legal team.
               </p>
               <div className="space-y-2">
-                <p className="font-medium">Email: legal@garageathome.com</p>
+                <p className="font-medium">Email: legal@garagewala.com</p>
                 <p className="font-medium">Phone: +91 98765 43210</p>
-                <p className="font-medium">Address: 123 Service Street, Connaught Place, New Delhi 110001</p>
+                <p className="font-medium">Address: 123 Service Street, Ranchi, Jharkhand 834001</p>
                 <p className="text-sm text-gray-600 mt-4">
                   Business hours: Monday to Sunday, 9:00 AM to 6:00 PM
                 </p>

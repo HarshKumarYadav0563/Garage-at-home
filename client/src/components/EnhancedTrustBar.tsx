@@ -33,8 +33,8 @@ const trustItems = [
   },
   {
     icon: Award,
-    value: "5",
-    label: "Delhi NCR Cities",
+    value: "15+",
+    label: "Cities Covered",
     color: "from-rose-400 to-red-600",
     delay: 0.4
   },

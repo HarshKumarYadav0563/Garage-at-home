@@ -76,7 +76,7 @@ export default function Refund() {
     {
       step: 1,
       title: 'Contact Customer Support',
-      description: 'Call +91 98765 43210 or email support@garageathome.com with your tracking ID and issue details.'
+      description: 'Call +91 98765 43210 or email support@garagewala.com with your tracking ID and issue details.'
     },
     {
       step: 2,
@@ -224,7 +224,7 @@ export default function Refund() {
                 <div>
                   <h4 className="font-semibold mb-2">Contact Information</h4>
                   <p className="text-sm text-gray-600 mb-1">📞 Phone: +91 98765 43210</p>
-                  <p className="text-sm text-gray-600 mb-1">📧 Email: support@garageathome.com</p>
+                  <p className="text-sm text-gray-600 mb-1">📧 Email: support@garagewala.com</p>
                   <p className="text-sm text-gray-600">🕒 Hours: 24/7 Support Available</p>
                 </div>
                 <div>

@@ -1,18 +1,8 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertLeadSchema, insertWaitlistSchema, bookingRequestSchema } from "@shared/schema";
-import { isNCR, NCR_CITIES } from "@shared/config/serviceAreas";
+import { insertLeadSchema } from "@shared/schema";
 import { z } from "zod";
-import { nanoid } from "nanoid";
-
-// In-memory OTP storage (use Redis in production)
-const otpSessions = new Map<string, {
-  phone: string;
-  code: string;
-  expiresAt: Date;
-  verified: boolean;
-}>();
 
 const mechanicSearchSchema = z.object({
   lat: z.number(),
@@ -82,65 +72,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Create comprehensive booking
-  app.post("/api/leads", async (req, res) => {
-    try {
-      const bookingData = bookingRequestSchema.parse(req.body);
-      
-      // Validate city is in NCR
-      if (!isNCR(bookingData.city)) {
-        res.status(400).json({ 
-          ok: false, 
-          reason: "OUT_OF_AREA",
-          message: "Service is currently available only in Delhi-NCR area"
-        });
-        return;
-      }
-      
-      // Rate limiting by phone (basic)
-      const recentBookings = await storage.getLeads();
-      const phoneBookings = recentBookings.filter(lead => 
-        lead.customerPhone === bookingData.customer.phone &&
-        lead.createdAt && 
-        new Date().getTime() - new Date(lead.createdAt).getTime() < 3600000 // 1 hour
-      );
-      
-      if (phoneBookings.length >= 3) {
-        res.status(429).json({ 
-          ok: false,
-          reason: "RATE_LIMITED",
-          message: "Too many bookings from this number. Please try again later."
-        });
-        return;
-      }
-      
-      const result = await storage.createBooking(bookingData);
-      
-      res.status(201).json({ 
-        ok: true, 
-        trackingId: result.trackingId,
-        message: 'Booking received successfully. A mechanic will contact you shortly.'
-      });
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        res.status(400).json({ 
-          ok: false,
-          reason: "VALIDATION_ERROR",
-          message: "Invalid booking data", 
-          details: error.errors 
-        });
-      } else {
-        console.error('Error creating booking:', error);
-        res.status(500).json({ 
-          ok: false,
-          reason: "INTERNAL_ERROR",
-          message: 'Failed to create booking' 
-        });
-      }
-    }
-  });
-
-  // Legacy booking endpoint (keep for compatibility)
+  // Create booking (new booking flow)
   app.post("/api/booking", async (req, res) => {
     try {
       const { nanoid } = await import('nanoid');
@@ -157,34 +89,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error('Error creating booking:', error);
       res.status(500).json({ error: 'Failed to create booking' });
-    }
-  });
-
-  // Waitlist endpoint
-  app.post("/api/waitlist", async (req, res) => {
-    try {
-      const waitlistData = insertWaitlistSchema.parse(req.body);
-      
-      await storage.addToWaitlist(waitlistData);
-      
-      res.status(201).json({ 
-        ok: true,
-        message: `Thank you for your interest! We'll notify you when we launch in ${waitlistData.city}.`
-      });
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        res.status(400).json({ 
-          ok: false,
-          message: "Invalid waitlist data", 
-          details: error.errors 
-        });
-      } else {
-        console.error('Error adding to waitlist:', error);
-        res.status(500).json({ 
-          ok: false,
-          message: 'Failed to add to waitlist' 
-        });
-      }
     }
   });
 
@@ -238,107 +142,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // OTP verification endpoints
-  app.post("/api/otp/send", async (req, res) => {
-    try {
-      const { phone } = z.object({ phone: z.string().min(10) }).parse(req.body);
-      
-      // Generate 6-digit OTP
-      const code = Math.floor(100000 + Math.random() * 900000).toString();
-      const sessionId = nanoid();
-      const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
-      
-      // Store OTP session
-      otpSessions.set(sessionId, {
-        phone,
-        code,
-        expiresAt,
-        verified: false
-      });
-      
-      // In production, send actual SMS here
-      console.log(`OTP for ${phone}: ${code}`);
-      
-      res.json({ 
-        ok: true,
-        sessionId,
-        message: `OTP sent to ${phone}`,
-        // For development only - remove in production
-        debug: { code }
-      });
-    } catch (error) {
-      console.error('Error sending OTP:', error);
-      res.status(500).json({ 
-        ok: false,
-        message: 'Failed to send OTP' 
-      });
-    }
-  });
-
-  app.post("/api/otp/verify", async (req, res) => {
-    try {
-      const { phone, sessionId, code } = z.object({
-        phone: z.string(),
-        sessionId: z.string(),
-        code: z.string().length(6)
-      }).parse(req.body);
-      
-      const session = otpSessions.get(sessionId);
-      
-      if (!session) {
-        res.status(400).json({ 
-          ok: false,
-          message: 'Invalid session' 
-        });
-        return;
-      }
-      
-      if (session.phone !== phone) {
-        res.status(400).json({ 
-          ok: false,
-          message: 'Phone number mismatch' 
-        });
-        return;
-      }
-      
-      if (new Date() > session.expiresAt) {
-        otpSessions.delete(sessionId);
-        res.status(400).json({ 
-          ok: false,
-          message: 'OTP expired' 
-        });
-        return;
-      }
-      
-      if (session.code !== code) {
-        res.status(400).json({ 
-          ok: false,
-          message: 'Invalid OTP' 
-        });
-        return;
-      }
-      
-      // Mark as verified
-      session.verified = true;
-      
-      // Generate OTP token for future verification
-      const otpToken = nanoid();
-      
-      res.json({ 
-        ok: true,
-        verified: true,
-        otpToken,
-        message: 'Phone verified successfully' 
-      });
-    } catch (error) {
-      console.error('Error verifying OTP:', error);
-      res.status(500).json({ 
-        ok: false,
-        message: 'Failed to verify OTP' 
-      });
-    }
-  });
-
   // Simulate status progression for demo
   app.post("/api/track/:trackingId/progress", async (req, res) => {
     try {
@@ -376,32 +179,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
     } catch (error) {
       res.status(500).json({ error: "Failed to update status" });
-    }
-  });
-
-  // SEO endpoints
-  app.get("/sitemap.xml", (req, res) => {
-    try {
-      // Import here to avoid issues with client-side code
-      const { generateXMLSitemap } = require('../client/src/utils/sitemap');
-      const sitemap = generateXMLSitemap();
-      res.set('Content-Type', 'application/xml');
-      res.send(sitemap);
-    } catch (error) {
-      console.error('Error generating sitemap:', error);
-      res.status(500).send('Error generating sitemap');
-    }
-  });
-
-  app.get("/robots.txt", (req, res) => {
-    try {
-      const { generateRobotsTxt } = require('../client/src/utils/sitemap');
-      const robots = generateRobotsTxt();
-      res.set('Content-Type', 'text/plain');
-      res.send(robots);
-    } catch (error) {
-      console.error('Error generating robots.txt:', error);
-      res.status(500).send('Error generating robots.txt');
     }
   });
 

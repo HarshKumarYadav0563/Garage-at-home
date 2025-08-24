@@ -50,6 +50,18 @@ export function BookingServiceCard({
           }}
         />
         
+        {service.popular && (
+          <motion.div 
+            className="absolute -top-2 left-4 z-10"
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.2, type: "spring", stiffness: 500 }}
+          >
+            <Badge className="bg-gradient-to-r from-emerald-500 to-sky-500 text-white text-xs px-3 py-1.5 shadow-lg">
+              Popular
+            </Badge>
+          </motion.div>
+        )}
         
         <CardContent className="p-4 sm:p-6 h-full flex flex-col relative z-10">
           <div className="flex flex-col sm:flex-row sm:items-start justify-between mb-6 gap-4">

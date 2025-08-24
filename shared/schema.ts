@@ -63,18 +63,6 @@ export const statusUpdates = pgTable("status_updates", {
   timestamp: timestamp("timestamp").defaultNow(),
 });
 
-// Waitlist table
-export const waitlist = pgTable("waitlist", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  name: text("name").notNull(),
-  phone: text("phone").notNull(),
-  email: text("email"),
-  city: text("city").notNull(),
-  vehicleType: text("vehicle_type"),
-  notes: text("notes"),
-  createdAt: timestamp("created_at").defaultNow(),
-});
-
 // Insert schemas
 export const insertServiceSchema = createInsertSchema(services).omit({ id: true });
 export const insertMechanicSchema = createInsertSchema(mechanics).omit({ id: true });
@@ -85,56 +73,14 @@ export const insertLeadSchema = createInsertSchema(leads).omit({
   updatedAt: true 
 });
 export const insertStatusUpdateSchema = createInsertSchema(statusUpdates).omit({ id: true });
-export const insertWaitlistSchema = createInsertSchema(waitlist).omit({ id: true, createdAt: true });
-
-// New booking schemas
-export const bookingRequestSchema = z.object({
-  vehicle: z.enum(['bike', 'car']),
-  city: z.string().min(1),
-  services: z.array(z.object({
-    id: z.string(),
-    title: z.string(),
-    priceMin: z.number(),
-    priceMax: z.number()
-  })).min(1),
-  addons: z.array(z.object({
-    id: z.string(),
-    title: z.string(),
-    priceMin: z.number(),
-    priceMax: z.number()
-  })).optional().default([]),
-  estTotal: z.object({
-    min: z.number(),
-    max: z.number()
-  }),
-  customer: z.object({
-    name: z.string().min(2).max(60),
-    phone: z.string().regex(/^[+]?[91]?[0-9]{10}$/),
-    email: z.string().email().optional(),
-    contactPref: z.enum(['call', 'whatsapp'])
-  }),
-  address: z.object({
-    text: z.string().min(5),
-    lat: z.number().optional(),
-    lng: z.number().optional(),
-    pincode: z.string().optional()
-  }),
-  slot: z.object({
-    startISO: z.string(),
-    endISO: z.string()
-  })
-});
 
 // Types
 export type Service = typeof services.$inferSelect;
 export type Mechanic = typeof mechanics.$inferSelect;
 export type Lead = typeof leads.$inferSelect;
 export type StatusUpdate = typeof statusUpdates.$inferSelect;
-export type Waitlist = typeof waitlist.$inferSelect;
 
 export type InsertService = z.infer<typeof insertServiceSchema>;
 export type InsertMechanic = z.infer<typeof insertMechanicSchema>;
 export type InsertLead = z.infer<typeof insertLeadSchema>;
 export type InsertStatusUpdate = z.infer<typeof insertStatusUpdateSchema>;
-export type InsertWaitlist = z.infer<typeof insertWaitlistSchema>;
-export type BookingRequest = z.infer<typeof bookingRequestSchema>;

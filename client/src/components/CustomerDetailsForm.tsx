@@ -1,172 +1,197 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { User, Phone, Mail, MessageCircle, ChevronRight } from 'lucide-react';
-import { CustomerData } from '@/stores/useBookingStore';
-
-const customerSchema = z.object({
-  name: z.string().min(2, 'Name must be at least 2 characters'),
-  phone: z.string().regex(/^[6-9]\d{9}$/, 'Please enter a valid 10-digit phone number'),
-  email: z.string().email('Please enter a valid email').optional().or(z.literal('')),
-  contactPreference: z.enum(['call', 'whatsapp']),
-});
-
-type CustomerFormData = z.infer<typeof customerSchema>;
+import { Textarea } from '@/components/ui/textarea';
+import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/components/ui/form';
+import { User, Phone, MapPin, Hash, ArrowRight } from 'lucide-react';
+import { customerSchema, CustomerData } from '@/lib/validators';
+import { useBookingStore } from '@/store/booking';
 
 interface CustomerDetailsFormProps {
-  value?: CustomerData;
-  onChange: (customer: CustomerData) => void;
-  onContinue: () => void;
+  onSubmit: (data: CustomerData) => void;
 }
 
-export function CustomerDetailsForm({ value, onChange, onContinue }: CustomerDetailsFormProps) {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    watch,
-    setValue
-  } = useForm<CustomerFormData>({
+export function CustomerDetailsForm({ onSubmit }: CustomerDetailsFormProps) {
+  const { customer, setCustomer, city } = useBookingStore();
+  const shouldReduceMotion = useReducedMotion();
+
+  const form = useForm<CustomerData>({
     resolver: zodResolver(customerSchema),
-    defaultValues: {
-      name: value?.name || '',
-      phone: value?.phone || '',
-      email: value?.email || '',
-      contactPreference: value?.contactPreference || 'call'
-    }
+    defaultValues: customer,
+    mode: 'onChange'
   });
 
-  const contactPreference = watch('contactPreference');
-
-  const onSubmit = (data: CustomerFormData) => {
-    onChange(data);
-    onContinue();
+  const handleSubmit = (data: CustomerData) => {
+    setCustomer(data);
+    onSubmit(data);
   };
+
+  const cityName = {
+    mumbai: 'Mumbai',
+    delhi: 'Delhi',
+    bangalore: 'Bangalore', 
+    other: 'Other'
+  }[city];
 
   return (
     <div className="space-y-6">
-      <Card className="bg-white/5 border-white/10 backdrop-blur-xl">
-        <CardHeader>
-          <CardTitle className="text-white flex items-center gap-2">
-            <User className="w-5 h-5" />
-            Contact Details
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-            {/* Name */}
+      <div>
+        <h3 className="text-white font-semibold text-lg mb-2">Customer Details</h3>
+        <p className="text-gray-400 text-sm">
+          Provide your details so our mechanic can reach you
+        </p>
+      </div>
+
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
+          {/* Name Field */}
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-gray-300 flex items-center space-x-2">
+                  <User className="w-4 h-4" />
+                  <span>Full Name</span>
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    placeholder="Enter your full name"
+                    className="bg-white/5 border-white/10 text-white placeholder:text-gray-400 focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50"
+                    onChange={(e) => {
+                      field.onChange(e);
+                      setCustomer({ name: e.target.value });
+                    }}
+                  />
+                </FormControl>
+                <FormMessage className="text-red-400" />
+              </FormItem>
+            )}
+          />
+
+          {/* Phone Field */}
+          <FormField
+            control={form.control}
+            name="phone"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-gray-300 flex items-center space-x-2">
+                  <Phone className="w-4 h-4" />
+                  <span>Phone Number</span>
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    type="tel"
+                    placeholder="+91 98765 43210"
+                    className="bg-white/5 border-white/10 text-white placeholder:text-gray-400 focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50"
+                    onChange={(e) => {
+                      field.onChange(e);
+                      setCustomer({ phone: e.target.value });
+                    }}
+                  />
+                </FormControl>
+                <FormMessage className="text-red-400" />
+              </FormItem>
+            )}
+          />
+
+          {/* Address Field */}
+          <FormField
+            control={form.control}
+            name="address"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-gray-300 flex items-center space-x-2">
+                  <MapPin className="w-4 h-4" />
+                  <span>Complete Address</span>
+                </FormLabel>
+                <FormControl>
+                  <Textarea
+                    {...field}
+                    placeholder="Enter your complete address with landmarks"
+                    rows={3}
+                    className="bg-white/5 border-white/10 text-white placeholder:text-gray-400 focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50 resize-none"
+                    onChange={(e) => {
+                      field.onChange(e);
+                      setCustomer({ address: e.target.value });
+                    }}
+                  />
+                </FormControl>
+                <FormMessage className="text-red-400" />
+              </FormItem>
+            )}
+          />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* City (auto-filled) */}
             <div>
-              <Label className="text-gray-300 text-sm font-medium">
-                Full Name *
-              </Label>
+              <label className="text-gray-300 text-sm font-medium flex items-center space-x-2 mb-2">
+                <MapPin className="w-4 h-4" />
+                <span>City</span>
+              </label>
               <Input
-                {...register('name')}
-                placeholder="Enter your full name"
-                className="mt-2 bg-white/5 border-white/10 text-white placeholder:text-gray-400"
-                data-testid="input-customer-name"
+                value={cityName}
+                disabled
+                className="bg-white/5 border-white/10 text-gray-400"
               />
-              {errors.name && (
-                <p className="text-red-400 text-sm mt-1">{errors.name.message}</p>
+            </div>
+
+            {/* Pincode Field */}
+            <FormField
+              control={form.control}
+              name="pincode"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-gray-300 flex items-center space-x-2">
+                    <Hash className="w-4 h-4" />
+                    <span>Pincode (Optional)</span>
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      placeholder="400001"
+                      maxLength={6}
+                      className="bg-white/5 border-white/10 text-white placeholder:text-gray-400 focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50"
+                      onChange={(e) => {
+                        field.onChange(e);
+                        setCustomer({ pincode: e.target.value });
+                      }}
+                    />
+                  </FormControl>
+                  <FormMessage className="text-red-400" />
+                </FormItem>
               )}
-            </div>
+            />
+          </div>
 
-            {/* Phone */}
-            <div>
-              <Label className="text-gray-300 text-sm font-medium">
-                Phone Number *
-              </Label>
-              <div className="relative mt-2">
-                <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-                <Input
-                  {...register('phone')}
-                  placeholder="9876543210"
-                  maxLength={10}
-                  className="pl-10 bg-white/5 border-white/10 text-white placeholder:text-gray-400"
-                  data-testid="input-customer-phone"
-                />
-              </div>
-              {errors.phone && (
-                <p className="text-red-400 text-sm mt-1">{errors.phone.message}</p>
-              )}
-              <p className="text-gray-500 text-xs mt-1">
-                We'll send OTP to verify this number
-              </p>
-            </div>
-
-            {/* Email (Optional) */}
-            <div>
-              <Label className="text-gray-300 text-sm font-medium">
-                Email Address <span className="text-gray-500">(Optional)</span>
-              </Label>
-              <div className="relative mt-2">
-                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-                <Input
-                  {...register('email')}
-                  type="email"
-                  placeholder="your@email.com"
-                  className="pl-10 bg-white/5 border-white/10 text-white placeholder:text-gray-400"
-                  data-testid="input-customer-email"
-                />
-              </div>
-              {errors.email && (
-                <p className="text-red-400 text-sm mt-1">{errors.email.message}</p>
-              )}
-            </div>
-
-            {/* Contact Preference */}
-            <div>
-              <Label className="text-gray-300 text-sm font-medium mb-3 block">
-                Preferred Contact Method *
-              </Label>
-              <RadioGroup
-                value={contactPreference}
-                onValueChange={(value) => setValue('contactPreference', value as 'call' | 'whatsapp')}
-                className="grid grid-cols-2 gap-3"
-              >
-                <div>
-                  <RadioGroupItem value="call" id="call" className="peer sr-only" />
-                  <Label
-                    htmlFor="call"
-                    className="flex items-center gap-3 p-4 bg-white/5 border border-white/20 rounded-xl cursor-pointer peer-checked:border-emerald-500/40 peer-checked:bg-emerald-500/10 transition-all hover:border-white/40"
-                    data-testid="option-contact-call"
-                  >
-                    <Phone className="w-5 h-5 text-gray-400" />
-                    <span className="text-white">Phone Call</span>
-                  </Label>
-                </div>
-                <div>
-                  <RadioGroupItem value="whatsapp" id="whatsapp" className="peer sr-only" />
-                  <Label
-                    htmlFor="whatsapp"
-                    className="flex items-center gap-3 p-4 bg-white/5 border border-white/20 rounded-xl cursor-pointer peer-checked:border-emerald-500/40 peer-checked:bg-emerald-500/10 transition-all hover:border-white/40"
-                    data-testid="option-contact-whatsapp"
-                  >
-                    <MessageCircle className="w-5 h-5 text-gray-400" />
-                    <span className="text-white">WhatsApp</span>
-                  </Label>
-                </div>
-              </RadioGroup>
-            </div>
-
-            {/* Submit Button */}
+          {/* Submit Button */}
+          <motion.div
+            whileHover={shouldReduceMotion ? {} : { scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="pt-4"
+          >
             <Button
               type="submit"
-              className="w-full bg-gradient-to-r from-emerald-500 to-sky-500 hover:from-emerald-600 hover:to-sky-600 text-white font-medium py-3 rounded-xl transition-all"
-              data-testid="button-continue-details"
+              disabled={!form.formState.isValid}
+              className="w-full bg-gradient-to-r from-emerald-500 to-sky-600 hover:from-emerald-600 hover:to-sky-700 text-white py-3 rounded-xl font-semibold shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <span>Continue to Address</span>
-              <ChevronRight className="w-4 h-4 ml-2" />
+              <span className="flex items-center justify-center space-x-2">
+                <span>Continue to Slot Selection</span>
+                <motion.div
+                  animate={{ x: [0, 3, 0] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                >
+                  <ArrowRight className="w-4 h-4" />
+                </motion.div>
+              </span>
             </Button>
-          </form>
-        </CardContent>
-      </Card>
+          </motion.div>
+        </form>
+      </Form>
     </div>
   );
 }

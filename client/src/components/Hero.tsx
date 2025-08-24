@@ -77,13 +77,13 @@ export function Hero() {
   return (
     <section className="relative min-h-[45vh] sm:min-h-[50vh] lg:min-h-auto flex items-center overflow-hidden bg-gradient-to-br from-gray-950 via-gray-900 to-black pt-16 sm:pt-18 lg:pt-8 lg:pb-12">
       {/* Radial Accent Glows */}
-      <div className="absolute inset-0 pointer-events-none">
+      <div className="absolute inset-0">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl" />
         <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-sky-500/20 rounded-full blur-3xl" />
       </div>
       
       {/* Subtle Background Pattern */}
-      <div className="absolute inset-0 opacity-5 pointer-events-none">
+      <div className="absolute inset-0 opacity-5">
         <div
           className="absolute inset-0"
           style={{
@@ -122,95 +122,53 @@ export function Hero() {
               Skip the garage visits! Professional mechanics come to your location with all tools & parts.
             </motion.p>
 
-            {/* Primary CTAs - Mobile */}
+            {/* CTAs - Side by Side */}
             <motion.div
               variants={itemVariants}
-              className="flex gap-2 justify-center px-4 mb-4"
+              className="flex gap-3 justify-center px-4"
             >
-              <Link href="/services" className="flex-1">
-                <div className="w-full bg-gradient-to-r from-emerald-500 via-sky-500 to-indigo-500 hover:shadow-[0_0_20px_rgba(16,185,129,0.4)] text-white px-4 py-3 rounded-xl font-semibold text-sm shadow-lg transition-all duration-300 flex items-center justify-center cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
-                  data-testid="button-view-services"
-                >
-                  <Wrench className="mr-2 w-4 h-4" />
-                  Services
-                </div>
+              <Link href="/book" className="flex-1">
+                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                  <Button
+                    className="w-full bg-gradient-to-r from-emerald-500 via-sky-500 to-indigo-500 hover:shadow-[0_0_20px_rgba(16,185,129,0.4)] text-white px-4 py-3 rounded-xl font-semibold text-sm shadow-lg transition-all duration-300"
+                    data-testid="button-book-now"
+                  >
+                    <Zap className="mr-2 w-4 h-4" />
+                    Book Now
+                  </Button>
+                </motion.div>
               </Link>
-              <Link href="/contact" className="flex-1">
-                <div className="w-full bg-white/5 border border-white/10 text-gray-200 px-4 py-3 rounded-xl font-semibold text-sm hover:bg-white/10 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 flex items-center justify-center cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
-                  data-testid="button-contact"
+              
+              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="flex-1">
+                <Button
+                  onClick={handleUseLocation}
+                  variant="outline"
+                  className="w-full bg-white/5 border border-white/10 text-gray-200 px-4 py-3 rounded-xl font-semibold text-sm hover:bg-white/10 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300"
+                  data-testid="button-use-location"
                 >
-                  <Users className="mr-2 w-4 h-4" />
-                  Contact
-                </div>
-              </Link>
+                  <MapPin className="mr-2 w-4 h-4" />
+                  Location
+                </Button>
+              </motion.div>
             </motion.div>
 
-            {/* Secondary CTAs - Mobile */}
-            <motion.div
-              variants={itemVariants}
-              className="flex gap-2 justify-center px-4"
-            >
-              <Link href="/pricing" className="flex-1">
-                <div className="w-full bg-white/5 border border-white/10 text-gray-200 px-3 py-2 rounded-lg font-medium text-xs hover:bg-white/10 transition-all duration-300 flex items-center justify-center cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
-                  data-testid="button-pricing"
-                >
-                  Pricing
-                </div>
-              </Link>
-              <Link href="/track" className="flex-1">
-                <div className="w-full bg-white/5 border border-white/10 text-gray-200 px-3 py-2 rounded-lg font-medium text-xs hover:bg-white/10 transition-all duration-300 flex items-center justify-center cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
-                  data-testid="button-track"
-                >
-                  Track
-                </div>
-              </Link>
-              <Link href="/terms" className="flex-1">
-                <div className="w-full bg-white/5 border border-white/10 text-gray-200 px-3 py-2 rounded-lg font-medium text-xs hover:bg-white/10 transition-all duration-300 flex items-center justify-center cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
-                  data-testid="button-terms"
-                >
-                  Terms
-                </div>
-              </Link>
-            </motion.div>
-
-            {/* Quick Links - Mobile */}
-            <motion.div
-              variants={itemVariants}
-              className="flex items-center justify-center gap-4 text-xs mb-4"
-            >
-              <Link href="/services/bike" className="text-gray-400 hover:text-emerald-400 transition-colors duration-200 flex items-center gap-1">
-                <Bike className="w-3 h-3" />
-                <span>Bike</span>
-              </Link>
-              <Link href="/services/car" className="text-gray-400 hover:text-sky-400 transition-colors duration-200 flex items-center gap-1">
-                <Car className="w-3 h-3" />
-                <span>Car</span>
-              </Link>
-              <Link href="/pricing" className="text-gray-400 hover:text-emerald-400 transition-colors duration-200">
-                Pricing
-              </Link>
-              <Link href="/track" className="text-gray-400 hover:text-sky-400 transition-colors duration-200">
-                Track
-              </Link>
-            </motion.div>
-
-            {/* Trust Row - Glass Pills - Now Clickable */}
+            {/* Trust Row - Glass Pills */}
             <motion.div
               variants={itemVariants}
               className="flex items-center justify-center gap-2 text-xs"
             >
-              <Link href="/contact" className="flex items-center space-x-1 bg-white/5 text-gray-300 border border-white/10 rounded-full px-3 py-1 hover:bg-white/10 transition-colors duration-200">
+              <div className="flex items-center space-x-1 bg-white/5 text-gray-300 border border-white/10 rounded-full px-3 py-1">
                 <Star className="text-yellow-400 w-3 h-3" />
                 <span className="font-medium">4.9/5</span>
-              </Link>
-              <Link href="/services" className="flex items-center space-x-1 bg-white/5 text-gray-300 border border-white/10 rounded-full px-3 py-1 hover:bg-white/10 transition-colors duration-200">
+              </div>
+              <div className="flex items-center space-x-1 bg-white/5 text-gray-300 border border-white/10 rounded-full px-3 py-1">
                 <Users className="text-emerald-400 w-3 h-3" />
                 <span className="font-medium">25,000+</span>
-              </Link>
-              <Link href="/track" className="flex items-center space-x-1 bg-white/5 text-gray-300 border border-white/10 rounded-full px-3 py-1 hover:bg-white/10 transition-colors duration-200">
+              </div>
+              <div className="flex items-center space-x-1 bg-white/5 text-gray-300 border border-white/10 rounded-full px-3 py-1">
                 <Clock className="text-sky-400 w-3 h-3" />
                 <span className="font-medium">2 Hours</span>
-              </Link>
+              </div>
             </motion.div>
 
             {/* Small Image */}
@@ -274,113 +232,64 @@ export function Hero() {
               variants={itemVariants}
               className="text-xl text-gray-400 mb-8 leading-relaxed"
             >
-              Skip the garage visits! Professional mechanics come to your location with all tools & parts. Available across all Delhi NCR cities with same-day service.
+              Skip the garage visits! Professional mechanics come to your location with all tools & parts. Available in Mumbai, Delhi, Bangalore & 12 more cities.
             </motion.p>
 
-            {/* Primary CTAs - Desktop */}
+            {/* CTAs Side by Side with Staggered Animation */}
             <motion.div
               variants={containerVariants}
-              className="flex gap-4 mb-6"
+              className="flex gap-4 mb-8"
             >
-              <Link href="/services">
-                <div className="bg-gradient-to-r from-emerald-500 via-sky-500 to-indigo-500 hover:shadow-[0_0_30px_rgba(16,185,129,0.5)] text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-xl transition-all duration-300 flex items-center justify-center cursor-pointer hover:scale-[1.05] active:scale-[0.95]"
-                  data-testid="button-view-services"
+              <Link href="/book">
+                <motion.div 
+                  variants={itemVariants}
+                  whileHover={{ scale: 1.05 }} 
+                  whileTap={{ scale: 0.95 }}
                 >
-                  <Wrench className="mr-2 w-5 h-5" />
-                  View Services
-                </div>
+                  <Button
+                    className="bg-gradient-to-r from-emerald-500 via-sky-500 to-indigo-500 hover:shadow-[0_0_30px_rgba(16,185,129,0.5)] text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-xl transition-all duration-300"
+                    data-testid="button-book-now"
+                  >
+                    <Zap className="mr-2 w-5 h-5" />
+                    Book Service Now
+                  </Button>
+                </motion.div>
               </Link>
               
-              <Link href="/contact">
-                <div className="bg-white/5 border border-white/10 text-gray-200 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all duration-300 flex items-center justify-center cursor-pointer hover:scale-[1.05] active:scale-[0.95]"
-                  data-testid="button-contact"
+              <motion.div
+                variants={itemVariants}
+                whileHover={{ scale: 1.05 }} 
+                whileTap={{ scale: 0.95 }}
+              >
+                <Button
+                  onClick={handleUseLocation}
+                  variant="outline"
+                  className="bg-white/5 border border-white/10 text-gray-200 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all duration-300"
+                  data-testid="button-use-location"
                 >
-                  <Users className="mr-2 w-5 h-5" />
-                  Contact Us
-                </div>
-              </Link>
-              
-              <Link href="/pricing">
-                <div className="bg-white/5 border border-white/10 text-gray-200 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all duration-300 flex items-center justify-center cursor-pointer hover:scale-[1.05] active:scale-[0.95]"
-                  data-testid="button-pricing"
-                >
-                  <Star className="mr-2 w-5 h-5" />
-                  Pricing
-                </div>
-              </Link>
+                  <MapPin className="mr-2 w-5 h-5" />
+                  Use My Location
+                </Button>
+              </motion.div>
             </motion.div>
 
-            {/* Secondary Action Buttons - Desktop */}
-            <motion.div
-              variants={itemVariants}
-              className="flex gap-3 mb-6"
-            >
-              <Link href="/track">
-                <div className="bg-white/5 border border-white/10 text-gray-300 px-6 py-2 rounded-lg font-medium text-sm hover:bg-white/10 transition-all duration-300 flex items-center justify-center cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
-                  data-testid="button-track"
-                >
-                  <Clock className="mr-2 w-4 h-4" />
-                  Track Service
-                </div>
-              </Link>
-              
-              <Link href="/terms">
-                <div className="bg-white/5 border border-white/10 text-gray-300 px-6 py-2 rounded-lg font-medium text-sm hover:bg-white/10 transition-all duration-300 flex items-center justify-center cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
-                  data-testid="button-terms"
-                >
-                  Terms & Conditions
-                </div>
-              </Link>
-              
-              <Link href="/refund">
-                <div className="bg-white/5 border border-white/10 text-gray-300 px-6 py-2 rounded-lg font-medium text-sm hover:bg-white/10 transition-all duration-300 flex items-center justify-center cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
-                  data-testid="button-refund"
-                >
-                  Refund Policy
-                </div>
-              </Link>
-            </motion.div>
-
-            {/* Service Category Links */}
-            <motion.div
-              variants={itemVariants}
-              className="flex items-center gap-6 text-sm mb-6"
-            >
-              <Link href="/services/bike" className="text-gray-400 hover:text-emerald-400 transition-colors duration-200 flex items-center gap-2">
-                <Bike className="w-4 h-4" />
-                <span>Bike Services</span>
-              </Link>
-              <Link href="/services/car" className="text-gray-400 hover:text-sky-400 transition-colors duration-200 flex items-center gap-2">
-                <Car className="w-4 h-4" />
-                <span>Car Services</span>
-              </Link>
-              <Link href="/services/maintenance" className="text-gray-400 hover:text-emerald-400 transition-colors duration-200 flex items-center gap-2">
-                <Wrench className="w-4 h-4" />
-                <span>Maintenance</span>
-              </Link>
-              <Link href="/services/emergency" className="text-gray-400 hover:text-red-400 transition-colors duration-200 flex items-center gap-2">
-                <Zap className="w-4 h-4" />
-                <span>Emergency</span>
-              </Link>
-            </motion.div>
-
-            {/* Trust Badges - Glass Pills - Now Clickable */}
+            {/* Trust Badges - Glass Pills */}
             <motion.div
               variants={itemVariants}
               className="flex items-center space-x-4 text-sm"
             >
-              <Link href="/contact" className="flex items-center space-x-2 bg-white/5 text-gray-300 border border-white/10 rounded-full px-3 py-1 hover:bg-white/10 transition-colors duration-200">
+              <div className="flex items-center space-x-2 bg-white/5 text-gray-300 border border-white/10 rounded-full px-3 py-1">
                 <Star className="text-yellow-400 w-4 h-4" />
                 <span className="font-medium" data-testid="text-rating">4.9/5 Rating</span>
-              </Link>
-              <Link href="/services" className="flex items-center space-x-2 bg-white/5 text-gray-300 border border-white/10 rounded-full px-3 py-1 hover:bg-white/10 transition-colors duration-200">
+              </div>
+              <div className="flex items-center space-x-2 bg-white/5 text-gray-300 border border-white/10 rounded-full px-3 py-1">
                 <Users className="text-emerald-400 w-4 h-4" />
                 <span className="font-medium" data-testid="text-customers">25,000+ Services</span>
-              </Link>
-              <Link href="/track" className="flex items-center space-x-2 bg-white/5 text-gray-300 border border-white/10 rounded-full px-3 py-1 hover:bg-white/10 transition-colors duration-200">
+              </div>
+              <div className="flex items-center space-x-2 bg-white/5 text-gray-300 border border-white/10 rounded-full px-3 py-1">
                 <Clock className="text-sky-400 w-4 h-4" />
                 <span className="font-medium" data-testid="text-service-time">2 Hour Service</span>
-              </Link>
+              </div>
             </motion.div>
           </motion.div>
 

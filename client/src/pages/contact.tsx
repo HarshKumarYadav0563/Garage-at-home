@@ -73,7 +73,7 @@ export default function Contact() {
     {
       icon: Mail,
       title: 'Email Us',
-      value: 'support@garageathome.com',
+      value: 'support@garagewala.com',
       description: 'We reply within 24 hours',
       color: 'from-sky-400 to-blue-600'
     },
@@ -87,8 +87,8 @@ export default function Contact() {
     {
       icon: MapPin,
       title: 'Service Areas',
-      value: 'Delhi, Gurugram, Noida, Ghaziabad, Faridabad',
-      description: 'Complete Delhi NCR coverage',
+      value: 'Mumbai, Delhi, Bangalore',
+      description: 'Expanding to more cities soon',
       color: 'from-violet-400 to-pink-600'
     }
   ];
@@ -327,7 +327,7 @@ export default function Contact() {
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.7 }}
                       >
-                        Delhi • Gurugram • Noida • Ghaziabad • Faridabad
+                        Mumbai • Delhi • Bangalore • Pune • Chennai
                       </motion.p>
                       <motion.div
                         className="mt-4 flex justify-center space-x-2"

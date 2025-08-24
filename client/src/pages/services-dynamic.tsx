@@ -6,26 +6,25 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
-import { CartButton } from '@/components/CartButton';
-import { CartDrawer } from '@/components/CartDrawer';
-import { useCartStore } from '@/stores/useCartStore';
 import { 
   Wrench, Car, Bike, ArrowRight, Shield, Clock, 
   Search, MapPin, Calendar, CheckCircle, ArrowLeft,
   User, Hash, Globe, ToggleLeft, ToggleRight, Star,
-  X, ChevronLeft, ChevronRight
+  ShoppingCart, X, ChevronLeft, ChevronRight
 } from 'lucide-react';
 
 // Components  
 import { BookingServiceCard } from '@/components/ServiceCard';
 import { ComboServiceCard } from '@/components/ComboServiceCard';
-import { EnhancedServiceCard } from '@/components/EnhancedServiceCard';
+import { BookingSummary } from '@/components/BookingSummary';
+import { SlotPicker } from '@/components/SlotPicker';
+import { CustomerDetailsForm } from '@/components/CustomerDetailsForm';
 
 // Data & Store
 import { BIKE_SERVICES, CAR_SERVICES, ServiceData } from '@/data/bookingServices';
-import { useBookingStore } from '@/stores/useBookingStore';
+import { useBookingStore } from '@/store/booking';
 import { apiRequest } from '@/lib/queryClient';
-import { BIKE_SERVICES as PRICING_BIKE, CAR_SERVICES as PRICING_CAR } from '@/lib/pricing';
+import { CustomerData } from '@/lib/validators';
 
 // City-aware routing
 import { 
@@ -39,9 +38,6 @@ import {
   type NCRCity,
   type VehicleType
 } from '@shared/config/serviceAreas';
-
-// SEO
-import { SEO, generateServiceSchema, generateLocalBusinessSchema } from '@/components/SEO';
 
 export default function ServicesDynamic() {
   const [, params] = useRoute('/services/:vehicle/:city');
@@ -84,25 +80,26 @@ export default function ServicesDynamic() {
   const {
     selectedVehicle,
     setSelectedVehicle,
-    selectedCity,
-    setSelectedCity,
     selectedServices,
     toggleService,
     searchQuery,
     setSearchQuery,
+    currentStep,
+    setCurrentStep,
+    selectedSlot,
+    customer,
+    clearBooking,
+    getSubtotal,
+    showSummary,
+    setShowSummary
   } = useBookingStore();
 
   // Sync store with URL params
   useEffect(() => {
-    if (params && isValidRoute(vehicleParam, cityParam)) {
-      if (selectedVehicle !== vehicleParam) {
-        setSelectedVehicle(vehicleParam);
-      }
-      if (selectedCity !== cityParam) {
-        setSelectedCity(cityParam);
-      }
+    if (params && isValidRoute(vehicleParam, cityParam) && selectedVehicle !== vehicleParam) {
+      setSelectedVehicle(vehicleParam);
     }
-  }, [vehicleParam, cityParam, selectedVehicle, selectedCity, params]);
+  }, [vehicleParam, selectedVehicle, params]);
 
   const shouldReduceMotion = useReducedMotion();
   
@@ -133,35 +130,39 @@ export default function ServicesDynamic() {
   }, []);
 
   // Enhanced toggle service with user feedback
-  const { toggleService: toggleCartService } = useCartStore();
-  
-  const handleToggleService = (serviceId: string) => {
-    const isCurrentlySelected = selectedServices.includes(serviceId);
-    toggleService(serviceId);
+  const handleToggleService = (service: ServiceData) => {
+    const isCurrentlySelected = selectedServices.some(s => s.id === service.id);
+    const hasComboSelected = selectedServices.some(s => s.type === 'combo');
+    const hasIndividualSelected = selectedServices.some(s => s.type === 'individual' || !s.type);
     
-    // Also update cart - need to find from oldServices since that has the proper structure
-    const service = oldServices.find(s => s.id === serviceId);
-    if (service) {
-      const cartService = {
-        id: service.id,
-        name: service.name,
-        subtitle: service.subtitle,
-        price: service.price,
-        vehicle: currentVehicle,
-        city: currentCity,
-        type: service.type
-      };
-      
-      const wasAdded = toggleCartService(cartService);
-      
-      if (wasAdded) {
+    if (!isCurrentlySelected) {
+      if (service.type === 'combo') {
+        if (hasComboSelected) {
+          const currentCombo = selectedServices.find(s => s.type === 'combo');
+          toast({
+            title: 'Service Package Replaced',
+            description: `${currentCombo?.name} has been replaced with ${service.name}. Only one package can be selected.`,
+            duration: 3000,
+          });
+        } else if (hasIndividualSelected) {
+          const individualCount = selectedServices.filter(s => s.type === 'individual' || !s.type).length;
+          toast({
+            title: 'Individual Services Cleared',
+            description: `${individualCount} individual service${individualCount > 1 ? 's' : ''} cleared. Packages include everything needed.`,
+            duration: 3000,
+          });
+        }
+      } else if (hasComboSelected) {
+        const currentCombo = selectedServices.find(s => s.type === 'combo');
         toast({
-          title: "Service Added!",
-          description: `${service.name} has been added to your cart.`,
-          duration: 2000,
+          title: 'Package Replaced with Individual Services',
+          description: `${currentCombo?.name} package cleared. You can now select individual services.`,
+          duration: 3000,
         });
       }
     }
+    
+    toggleService(service);
   };
 
   // Handle vehicle change
@@ -175,20 +176,23 @@ export default function ServicesDynamic() {
   };
   
   // Get current services based on vehicle type
-  const currentServices = currentVehicle === 'bike' ? PRICING_BIKE : PRICING_CAR;
-  const oldServices = currentVehicle === 'bike' ? BIKE_SERVICES : CAR_SERVICES;
+  const currentServices = currentVehicle === 'bike' ? BIKE_SERVICES : CAR_SERVICES;
 
   // Filter and categorize services
   const filteredServices = useMemo(() => {
     return currentServices.filter(service =>
       service.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      service.description.toLowerCase().includes(searchQuery.toLowerCase())
+      service.subtitle.toLowerCase().includes(searchQuery.toLowerCase())
     );
   }, [currentServices, searchQuery]);
 
-  const comboServices = oldServices.filter(service => service.type === 'combo');
-  const individualServices = filteredServices;
+  const comboServices = filteredServices.filter(service => service.type === 'combo');
+  const individualServices = filteredServices.filter(service => service.type === 'individual' || !service.type);
 
+  // Handle customer details form submission
+  const handleCustomerDetailsSubmit = (data: CustomerData) => {
+    setCurrentStep('details');
+  };
 
   // Handle final booking submission
   const handleBookingSubmit = async () => {
@@ -206,7 +210,7 @@ export default function ServicesDynamic() {
         vehicle: selectedVehicle,
         services: selectedServices,
         slot: selectedSlot,
-    
+        customer,
         city: currentCity
       };
 
@@ -437,7 +441,7 @@ export default function ServicesDynamic() {
                           <ComboServiceCard
                             service={service}
                             isSelected={isSelected}
-                            onToggle={() => handleToggleService(service.id)}
+                            onToggle={() => handleToggleService(service)}
                           />
                         </motion.div>
                       );
@@ -466,7 +470,7 @@ export default function ServicesDynamic() {
                           <ComboServiceCard
                             service={service}
                             isSelected={isSelected}
-                            onToggle={() => handleToggleService(service.id)}
+                            onToggle={() => handleToggleService(service)}
                           />
                         </motion.div>
                       );
@@ -501,7 +505,7 @@ export default function ServicesDynamic() {
                 transition={{ delay: 0.2, staggerChildren: 0.03 }}
               >
                 {individualServices.map((service, index) => {
-                  const isSelected = selectedServices.includes(service.id);
+                  const isSelected = selectedServices.some(s => s.id === service.id);
                   
                   return (
                     <motion.div
@@ -510,12 +514,10 @@ export default function ServicesDynamic() {
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: 0.1 + (index * 0.03) }}
                     >
-                      <EnhancedServiceCard
+                      <BookingServiceCard
                         service={service}
-                        city={currentCity}
                         isSelected={isSelected}
-                        onToggle={() => handleToggleService(service.id)}
-                        data-testid={`service-card-${service.id}`}
+                        onToggle={() => handleToggleService(service)}
                       />
                     </motion.div>
                   );
@@ -525,9 +527,11 @@ export default function ServicesDynamic() {
           </motion.div>
         )}
 
+        {/* Booking Summary */}
+        <BookingSummary />
 
         {/* Time Slot Selection */}
-        {false && (
+        {currentStep === 'details' && !selectedSlot && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -556,7 +560,7 @@ export default function ServicesDynamic() {
         )}
 
         {/* Customer Details Form */}
-        {false && (
+        {currentStep === 'details' && selectedSlot && !customer?.name && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -569,7 +573,7 @@ export default function ServicesDynamic() {
         )}
 
         {/* Final Review & Submit */}
-        {false && (
+        {currentStep === 'details' && selectedSlot && customer?.name && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -647,7 +651,7 @@ export default function ServicesDynamic() {
         )}
 
         {/* Confirmation Step */}
-        {false && (
+        {currentStep === 'confirmation' && (
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -838,10 +842,6 @@ export default function ServicesDynamic() {
           </div>
         </motion.div>
       </div>
-      
-      {/* Cart Components */}
-      <CartButton />
-      <CartDrawer />
     </div>
   );
 }

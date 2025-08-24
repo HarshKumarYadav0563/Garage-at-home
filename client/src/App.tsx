@@ -12,6 +12,7 @@ import { Toast } from "@/components/Toast";
 import Home from "@/pages/home";
 import Services from "@/pages/services";
 import ServicesDynamic from "@/pages/services-dynamic";
+import Book from "@/pages/book";
 import Track from "@/pages/track";
 import Contact from "@/pages/contact";
 import Pricing from "@/pages/pricing";
@@ -41,7 +42,8 @@ function Router() {
           <Route path="/services/:vehicle/:city" component={ServicesDynamic} />
           <Route path="/services" component={Services} />
           <Route path="/pricing" component={Pricing} />
-            <Route path="/track/:trackingId?" component={Track} />
+          <Route path="/book" component={Book} />
+          <Route path="/track/:trackingId?" component={Track} />
           <Route path="/contact" component={Contact} />
           <Route path="/how-it-works" component={HowItWorks} />
           <Route path="/bike-service/:city" component={CityLanding} />

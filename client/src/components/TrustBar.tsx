@@ -4,7 +4,7 @@ export function TrustBar() {
   const stats = [
     { number: '500+', label: 'Professional Mechanics', color: 'text-primary-600' },
     { number: '25k+', label: 'Doorstep Services', color: 'text-blue-600' },
-    { number: '5', label: 'Delhi NCR Cities', color: 'text-orange-600' },
+    { number: '15+', label: 'Cities Covered', color: 'text-orange-600' },
     { number: '4.9★', label: 'Customer Rating', color: 'text-green-600' },
   ];
 

@@ -8,23 +8,25 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Separator } from '@/components/ui/separator';
 import { Switch } from '@/components/ui/switch';
 import { useToast } from '@/hooks/use-toast';
-import { CartButton } from '@/components/CartButton';
-import { CartDrawer } from '@/components/CartDrawer';
 import { 
   Wrench, Car, Bike, ArrowRight, Shield, Clock, 
   Search, MapPin, Calendar, CheckCircle, ArrowLeft,
   User, Hash, Globe, ToggleLeft, ToggleRight, Star,
-  X
+  ShoppingCart, X
 } from 'lucide-react';
 
 // Components  
 import { BookingServiceCard } from '@/components/ServiceCard';
 import { ComboServiceCard } from '@/components/ComboServiceCard';
+import { BookingSummary } from '@/components/BookingSummary';
+import { SlotPicker } from '@/components/SlotPicker';
+import { CustomerDetailsForm } from '@/components/CustomerDetailsForm';
 
 // Data & Store
 import { BIKE_SERVICES, CAR_SERVICES, ServiceData } from '@/data/bookingServices';
-import { useBookingStore } from '@/stores/useBookingStore';
+import { useBookingStore } from '@/store/booking';
 import { apiRequest } from '@/lib/queryClient';
+import { CustomerData } from '@/lib/validators';
 
 export default function Services() {
   const {
@@ -33,7 +35,15 @@ export default function Services() {
     selectedServices,
     toggleService,
     searchQuery,
-    setSearchQuery
+    setSearchQuery,
+    currentStep,
+    setCurrentStep,
+    selectedSlot,
+    customer,
+    clearBooking,
+    getSubtotal,
+    showSummary,
+    setShowSummary
   } = useBookingStore();
 
   const shouldReduceMotion = useReducedMotion();
@@ -117,6 +127,10 @@ export default function Services() {
   const individualServices = filteredServices.filter(service => service.type === 'individual' || !service.type);
   
 
+  // Handle customer details form submission
+  const handleCustomerDetailsSubmit = (data: CustomerData) => {
+    setCurrentStep('details');
+  };
 
   // Handle final booking submission
   const handleBookingSubmit = async () => {
@@ -490,7 +504,7 @@ export default function Services() {
         </motion.div>
 
         {/* Services Section - Immediately Visible Above Fold */}
-        {(
+        {currentStep === 'services' && (
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -648,20 +662,20 @@ export default function Services() {
         )}
 
         {/* Desktop Sidebar Summary */}
-        {(
+        {currentStep === 'services' && (
           <div className="hidden lg:block fixed right-8 top-1/2 transform -translate-y-1/2 w-80 z-30">
-
+            <BookingSummary className="max-h-[80vh] overflow-y-auto" />
           </div>
         )}
 
         {/* Mobile Bottom Summary */}
-        {false && (
+        {currentStep === 'services' && selectedServices.length > 0 && showSummary && (
           <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 p-4 bg-gradient-to-t from-black/90 to-transparent backdrop-blur-xl">
-
+            <BookingSummary isMobile={true} className="max-h-[60vh] overflow-y-auto" />
           </div>
         )}
 
-        {false && (
+        {currentStep === 'details' && (
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -681,14 +695,14 @@ export default function Services() {
                 {/* Customer Details Form */}
                 <Card className="bg-white/5 border-white/10 backdrop-blur-xl">
                   <CardContent className="p-8">
-                    <div>Customer details removed</div>
+                    <CustomerDetailsForm onSubmit={handleCustomerDetailsSubmit} />
                   </CardContent>
                 </Card>
 
                 {/* Slot Picker */}
                 <Card className="bg-white/5 border-white/10 backdrop-blur-xl">
                   <CardContent className="p-8">
-                    <div>Slot picker removed</div>
+                    <SlotPicker />
                   </CardContent>
                 </Card>
 
@@ -713,7 +727,7 @@ export default function Services() {
           </motion.div>
         )}
 
-        {false && (
+        {currentStep === 'confirmation' && (
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -757,10 +771,6 @@ export default function Services() {
           </motion.div>
         )}
       </div>
-      
-      {/* Cart Components */}
-      <CartButton />
-      <CartDrawer />
     </div>
   );
 }

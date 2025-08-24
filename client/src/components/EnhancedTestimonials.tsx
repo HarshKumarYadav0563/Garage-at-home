@@ -6,7 +6,7 @@ const testimonials = [
   {
     id: 1,
     name: "Rajesh Kumar",
-    location: "Gurugram",
+    location: "Mumbai",
     rating: 5,
     review: "Amazing service! The mechanic came right to my office parking. Fixed my bike's brake issue in 30 minutes. Much better than wasting whole day at garage.",
     service: "Bike Brake Service",
@@ -26,7 +26,7 @@ const testimonials = [
   {
     id: 3,
     name: "Arjun Patel",
-    location: "Noida", 
+    location: "Bangalore", 
     rating: 5,
     review: "Booked at 10 AM, mechanic arrived at 12 PM. Real-time tracking was excellent. Quality of service is far better than local garages.",
     service: "Engine Service",
