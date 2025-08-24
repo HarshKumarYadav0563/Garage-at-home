@@ -2,7 +2,7 @@ import { motion, useReducedMotion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { ArrowRight, X, ShoppingCart } from 'lucide-react';
-import { useBookingStore } from '@/store/booking';
+import { useBookingStore } from '@/stores/useBookingStore';
 import { useEffect, useState } from 'react';
 
 interface BookingSummaryProps {
@@ -13,9 +13,7 @@ interface BookingSummaryProps {
 export function BookingSummary({ className = '', isMobile = false }: BookingSummaryProps) {
   const {
     selectedServices,
-    getSubtotal,
-    getDoortepCharge,
-    getFinalTotal,
+    estimate,
     currentStep,
     setCurrentStep,
     toggleService,
@@ -24,17 +22,17 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
   } = useBookingStore();
   
   const shouldReduceMotion = useReducedMotion();
-  const subtotal = getSubtotal();
   const [showFloatingCart, setShowFloatingCart] = useState(false);
   
-  // Calculate doorstep charge manually if function doesn't exist
-  const doorstepCharge = subtotal > 0 && subtotal < 999 ? 99 : 0;
-  const finalTotal = subtotal + doorstepCharge;
+  // Use estimate from store
+  const subtotal = estimate?.subtotal || 0;
+  const doorstepCharge = estimate?.doorstepCharge || 0;
+  const finalTotal = estimate?.total || 0;
   
   const hasItems = selectedServices.length > 0;
 
   // Debug: cart state
-  console.log('=== CART DEBUG ===', { hasItems, showFloatingCart, subtotal, finalTotal });
+  console.log('=== CART DEBUG ===', { hasItems, showFloatingCart, showSummary, subtotal, finalTotal });
 
   // Show/hide floating cart based on items
   useEffect(() => {
