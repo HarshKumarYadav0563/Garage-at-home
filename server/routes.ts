@@ -1,7 +1,8 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertLeadSchema } from "@shared/schema";
+import { insertLeadSchema, insertWaitlistSchema, bookingRequestSchema } from "@shared/schema";
+import { isNCR, NCR_CITIES } from "@shared/config/serviceAreas";
 import { z } from "zod";
 
 const mechanicSearchSchema = z.object({
@@ -72,7 +73,65 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Create booking (new booking flow)
+  // Create comprehensive booking
+  app.post("/api/leads", async (req, res) => {
+    try {
+      const bookingData = bookingRequestSchema.parse(req.body);
+      
+      // Validate city is in NCR
+      if (!isNCR(bookingData.city)) {
+        res.status(400).json({ 
+          ok: false, 
+          reason: "OUT_OF_AREA",
+          message: "Service is currently available only in Delhi-NCR area"
+        });
+        return;
+      }
+      
+      // Rate limiting by phone (basic)
+      const recentBookings = await storage.getLeads();
+      const phoneBookings = recentBookings.filter(lead => 
+        lead.customerPhone === bookingData.customer.phone &&
+        lead.createdAt && 
+        new Date().getTime() - new Date(lead.createdAt).getTime() < 3600000 // 1 hour
+      );
+      
+      if (phoneBookings.length >= 3) {
+        res.status(429).json({ 
+          ok: false,
+          reason: "RATE_LIMITED",
+          message: "Too many bookings from this number. Please try again later."
+        });
+        return;
+      }
+      
+      const result = await storage.createBooking(bookingData);
+      
+      res.status(201).json({ 
+        ok: true, 
+        trackingId: result.trackingId,
+        message: 'Booking received successfully. A mechanic will contact you shortly.'
+      });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        res.status(400).json({ 
+          ok: false,
+          reason: "VALIDATION_ERROR",
+          message: "Invalid booking data", 
+          details: error.errors 
+        });
+      } else {
+        console.error('Error creating booking:', error);
+        res.status(500).json({ 
+          ok: false,
+          reason: "INTERNAL_ERROR",
+          message: 'Failed to create booking' 
+        });
+      }
+    }
+  });
+
+  // Legacy booking endpoint (keep for compatibility)
   app.post("/api/booking", async (req, res) => {
     try {
       const { nanoid } = await import('nanoid');
@@ -89,6 +148,34 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error('Error creating booking:', error);
       res.status(500).json({ error: 'Failed to create booking' });
+    }
+  });
+
+  // Waitlist endpoint
+  app.post("/api/waitlist", async (req, res) => {
+    try {
+      const waitlistData = insertWaitlistSchema.parse(req.body);
+      
+      await storage.addToWaitlist(waitlistData);
+      
+      res.status(201).json({ 
+        ok: true,
+        message: `Thank you for your interest! We'll notify you when we launch in ${waitlistData.city}.`
+      });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        res.status(400).json({ 
+          ok: false,
+          message: "Invalid waitlist data", 
+          details: error.errors 
+        });
+      } else {
+        console.error('Error adding to waitlist:', error);
+        res.status(500).json({ 
+          ok: false,
+          message: 'Failed to add to waitlist' 
+        });
+      }
     }
   });
 

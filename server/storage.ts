@@ -1,4 +1,4 @@
-import { type Service, type Mechanic, type Lead, type StatusUpdate, type InsertService, type InsertMechanic, type InsertLead, type InsertStatusUpdate } from "@shared/schema";
+import { type Service, type Mechanic, type Lead, type StatusUpdate, type Waitlist, type InsertService, type InsertMechanic, type InsertLead, type InsertStatusUpdate, type InsertWaitlist, type BookingRequest } from "@shared/schema";
 import { randomUUID } from "crypto";
 
 export interface IStorage {
@@ -20,6 +20,7 @@ export interface IStorage {
   
   // Leads
   createLead(lead: InsertLead): Promise<Lead & { trackingId: string }>;
+  createBooking(booking: BookingRequest): Promise<{ trackingId: string }>;
   getLeadByTrackingId(trackingId: string): Promise<Lead | undefined>;
   getLeads(): Promise<Lead[]>;
   updateLeadStatus(trackingId: string, status: string): Promise<void>;
@@ -27,6 +28,10 @@ export interface IStorage {
   // Status Updates
   addStatusUpdate(update: InsertStatusUpdate): Promise<StatusUpdate>;
   getStatusUpdatesByLeadId(leadId: string): Promise<StatusUpdate[]>;
+  
+  // Waitlist
+  addToWaitlist(waitlist: InsertWaitlist): Promise<Waitlist>;
+  getWaitlistEntries(): Promise<Waitlist[]>;
 }
 
 export class MemStorage implements IStorage {
@@ -34,12 +39,14 @@ export class MemStorage implements IStorage {
   private mechanics: Map<string, Mechanic>;
   private leads: Map<string, Lead>;
   private statusUpdates: Map<string, StatusUpdate>;
+  private waitlist: Map<string, Waitlist>;
 
   constructor() {
     this.services = new Map();
     this.mechanics = new Map();
     this.leads = new Map();
     this.statusUpdates = new Map();
+    this.waitlist = new Map();
     this.seedData();
   }
 
@@ -221,12 +228,59 @@ export class MemStorage implements IStorage {
       lat: leadData.lat || null,
       lng: leadData.lng || null,
       serviceId: leadData.serviceId || null,
+      vehicleBrand: leadData.vehicleBrand || null,
+      vehicleModel: leadData.vehicleModel || null,
+      mechanicId: leadData.mechanicId || null,
+      slotStart: leadData.slotStart || null,
+      slotEnd: leadData.slotEnd || null,
+      totalAmount: leadData.totalAmount || null,
+      notes: leadData.notes || null,
       status: "pending",
       createdAt: new Date(),
       updatedAt: new Date(),
     };
     this.leads.set(id, lead);
     return { ...lead, trackingId };
+  }
+
+  async createBooking(booking: BookingRequest): Promise<{ trackingId: string }> {
+    const { nanoid } = await import('nanoid');
+    const id = randomUUID();
+    const trackingId = `GW-${nanoid(6).toUpperCase()}`;
+    
+    // Convert booking to lead format
+    const leadData: Lead = {
+      id,
+      trackingId,
+      customerName: booking.customer.name,
+      customerPhone: booking.customer.phone,
+      address: booking.address.text,
+      lat: booking.address.lat ? booking.address.lat.toString() : null,
+      lng: booking.address.lng ? booking.address.lng.toString() : null,
+      vehicleType: booking.vehicle,
+      vehicleBrand: null,
+      vehicleModel: null,
+      serviceId: booking.services[0]?.id || null,
+      mechanicId: null,
+      slotStart: new Date(booking.slot.startISO),
+      slotEnd: new Date(booking.slot.endISO),
+      status: "received",
+      totalAmount: booking.estTotal.max.toString(),
+      notes: `Services: ${booking.services.map(s => s.title).join(', ')}. Addons: ${booking.addons?.map(a => a.title).join(', ') || 'None'}. Contact: ${booking.customer.contactPref}`,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+    
+    this.leads.set(id, leadData);
+    
+    // Add initial status update
+    await this.addStatusUpdate({
+      leadId: id,
+      status: "received",
+      message: "Your booking has been received. We'll assign a mechanic and contact you shortly."
+    });
+    
+    return { trackingId };
   }
 
   async getLeadByTrackingId(trackingId: string): Promise<Lead | undefined> {
@@ -264,6 +318,26 @@ export class MemStorage implements IStorage {
     return Array.from(this.statusUpdates.values())
       .filter(update => update.leadId === leadId)
       .sort((a, b) => new Date(a.timestamp!).getTime() - new Date(b.timestamp!).getTime());
+  }
+
+  async addToWaitlist(waitlistData: InsertWaitlist): Promise<Waitlist> {
+    const id = randomUUID();
+    const waitlistEntry: Waitlist = {
+      id,
+      ...waitlistData,
+      email: waitlistData.email || null,
+      vehicleType: waitlistData.vehicleType || null,
+      notes: waitlistData.notes || null,
+      createdAt: new Date(),
+    };
+    this.waitlist.set(id, waitlistEntry);
+    return waitlistEntry;
+  }
+
+  async getWaitlistEntries(): Promise<Waitlist[]> {
+    return Array.from(this.waitlist.values()).sort((a, b) => 
+      new Date(b.createdAt!).getTime() - new Date(a.createdAt!).getTime()
+    );
   }
 }
 
