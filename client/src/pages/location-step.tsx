@@ -72,7 +72,7 @@ export default function LocationStep() {
           let pincode = '';
           let city = '';
           
-          place.address_components?.forEach((component) => {
+          place.address_components?.forEach((component: google.maps.GeocoderAddressComponent) => {
             if (component.types.includes('postal_code')) {
               pincode = component.long_name;
             }
@@ -141,7 +141,7 @@ export default function LocationStep() {
       const geocoder = new google.maps.Geocoder();
       const latlng = { lat: latitude, lng: longitude };
       
-      geocoder.geocode({ location: latlng }, (results, status) => {
+      geocoder.geocode({ location: latlng }, (results: google.maps.GeocoderResult[] | null, status: google.maps.GeocoderStatus) => {
         if (status === 'OK' && results && results[0]) {
           const result = results[0];
           const formattedAddress = result.formatted_address;
@@ -150,7 +150,7 @@ export default function LocationStep() {
           let city = '';
           let pincode = '';
           
-          result.address_components?.forEach((component) => {
+          result.address_components?.forEach((component: google.maps.GeocoderAddressComponent) => {
             if (component.types.includes('postal_code')) {
               pincode = component.long_name;
             }
@@ -376,12 +376,18 @@ export default function LocationStep() {
                 <Label htmlFor="pincode" className="text-gray-300">Pincode</Label>
                 <Input
                   id="pincode"
-                  placeholder="Enter pincode"
+                  placeholder="Pincode will auto-fill from address"
                   value={pincode}
                   onChange={(e) => setPincode(e.target.value)}
                   className="bg-white/5 border-white/10 text-white placeholder:text-gray-400"
                   data-testid="input-pincode"
+                  readOnly={!!pincode && pincode.length === 6}
                 />
+                {pincode && (
+                  <p className="text-xs text-emerald-400">
+                    ✓ Pincode auto-filled from address
+                  </p>
+                )}
               </div>
               
               <Button
