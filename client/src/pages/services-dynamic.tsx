@@ -19,7 +19,9 @@ import { ComboServiceCard } from '@/components/ComboServiceCard';
 import { EnhancedServiceCard } from '@/components/EnhancedServiceCard';
 import { EnhancedSlotPicker } from '@/components/EnhancedSlotPicker';
 import { CustomerDetailsForm } from '@/components/CustomerDetailsForm';
-import { CartIcon } from '@/components/CartIcon';
+import { CartFab } from '@/components/CartFab';
+import { CartDrawer } from '@/components/CartDrawer';
+import { useCartStore } from '@/stores/useCartStore';
 
 // Data & Store
 import { BIKE_SERVICES, CAR_SERVICES, ServiceData } from '@/data/bookingServices';
@@ -142,16 +144,31 @@ export default function ServicesDynamic() {
   }, []);
 
   // Enhanced toggle service with user feedback
+  const { toggleService: toggleCartService } = useCartStore();
+  
   const handleToggleService = (serviceId: string) => {
     const isCurrentlySelected = selectedServices.includes(serviceId);
     toggleService(serviceId);
     
-    if (!isCurrentlySelected) {
-      const service = currentServices.find(s => s.id === serviceId);
-      if (service) {
+    // Also update cart store
+    const service = currentServices.find(s => s.id === serviceId);
+    if (service) {
+      const cartService = {
+        id: service.id,
+        title: service.name,
+        subtitle: service.subtitle,
+        priceMin: typeof service.price === 'number' ? service.price : service.price?.min || 0,
+        priceMax: typeof service.price === 'number' ? service.price : service.price?.max || 0,
+        vehicle: currentVehicle,
+        city: currentCity,
+        type: service.type
+      };
+      toggleCartService(cartService);
+      
+      if (!isCurrentlySelected) {
         toast({
           title: "Service Added!",
-          description: `${service.name} has been added to your booking.`,
+          description: `${service.name} has been added to your cart.`,
           duration: 2000,
         });
       }
@@ -837,8 +854,9 @@ export default function ServicesDynamic() {
         </motion.div>
       </div>
       
-      {/* Cart Icon */}
-      <CartIcon />
+      {/* Cart System */}
+      <CartFab />
+      <CartDrawer />
     </div>
   );
 }
