@@ -88,22 +88,7 @@ export function ComboServiceCard({
               }}
             >
               <Badge className="bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 text-white text-xs px-3 py-1.5 shadow-lg shadow-orange-500/30">
-                <motion.span
-                  animate={{ 
-                    textShadow: [
-                      "0 0 0px rgba(255,255,255,0.5)",
-                      "0 0 10px rgba(255,255,255,0.8)",
-                      "0 0 0px rgba(255,255,255,0.5)"
-                    ]
-                  }}
-                  transition={{ 
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                >
-                  {service.savings}
-                </motion.span>
+                {service.savings}
               </Badge>
             </motion.div>
           )}
