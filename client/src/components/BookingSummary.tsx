@@ -14,26 +14,26 @@ interface BookingSummaryProps {
 
 export function BookingSummary({ className = '', isMobile = false }: BookingSummaryProps) {
   const {
-    services: selectedServices,
+    selectedServices,
     getSubtotal,
     getDoortepCharge,
     getFinalTotal,
     currentStep,
     setCurrentStep,
-    removeService,
+    toggleService,
     showSummary,
     setShowSummary
   } = useBookingStore();
   
   const shouldReduceMotion = useReducedMotion();
-  const subtotal = getSubtotal() || 0;
+  const subtotal = getSubtotal();
   const [isCollapsed, setIsCollapsed] = useState(false);
   
   // Calculate doorstep charge manually if function doesn't exist
   const doorstepCharge = subtotal > 0 && subtotal < 999 ? 99 : 0;
   const finalTotal = subtotal + doorstepCharge;
   
-  const hasItems = selectedServices && selectedServices.length > 0;
+  const hasItems = selectedServices.length > 0;
 
   // Debug: log values
   console.log('Debug - Subtotal:', subtotal, 'Doorstep Charge:', doorstepCharge, 'Final Total:', finalTotal);
@@ -66,8 +66,8 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
               /* Collapsed view - show total and expand button */
               <div className="flex items-center justify-between w-full">
                 <div className="flex items-center space-x-3">
-                  <h3 className="text-white font-bold text-sm">Total: ₹{(finalTotal || 0).toLocaleString()}</h3>
-                  {selectedServices && selectedServices.length > 0 && (
+                  <h3 className="text-white font-bold text-sm">Total: ₹{finalTotal.toLocaleString()}</h3>
+                  {selectedServices.length > 0 && (
                     <Badge variant="outline" className="text-xs border-emerald-500/30 text-emerald-400">
                       {selectedServices.length} items
                     </Badge>
@@ -75,8 +75,8 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
                 </div>
                 <div className="flex items-center space-x-2">
                   <Button
-                    onClick={() => setCurrentStep('location')}
-                    disabled={!selectedServices || selectedServices.length === 0}
+                    onClick={() => setCurrentStep('details')}
+                    disabled={selectedServices.length === 0}
                     className="bg-gradient-to-r from-emerald-500 to-sky-600 hover:from-emerald-600 hover:to-sky-700 text-white py-1 px-3 text-xs font-semibold rounded-lg"
                   >
                     Continue
@@ -136,7 +136,7 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
               >
 
           {/* Selected Services */}
-          {selectedServices && selectedServices.length > 0 && (
+          {selectedServices.length > 0 && (
             <div className={isMobile ? "mb-3" : "mb-6"}>
               <h4 className={`text-gray-300 font-medium ${isMobile ? "text-xs mb-2" : "text-sm mb-3"}`}>Services</h4>
               <div className={isMobile ? "space-y-2" : "space-y-3"}>
@@ -152,7 +152,7 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
                           {service.name}
                         </p>
                         <p className={`text-gray-400 ${isMobile ? "text-xs" : "text-xs"}`}>
-                          ₹{(service.price || 0).toLocaleString()}
+                          ₹{service.price.toLocaleString()}
                         </p>
                       </div>
                       <Button
@@ -160,7 +160,7 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
                         size="sm"
                         onClick={(e) => {
                           e.stopPropagation();
-                          removeService(service.id);
+                          toggleService(service);
                         }}
                         className="text-gray-400 hover:text-red-400 ml-2"
                       >
@@ -183,7 +183,7 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
                 <div className="flex justify-between items-center">
                   <span className={`text-gray-300 ${isMobile ? "text-xs" : "text-sm"}`}>Services Total</span>
                   <span className={`text-white font-medium ${isMobile ? "text-xs" : "text-sm"}`}>
-                    ₹{(subtotal || 0).toLocaleString()}
+                    ₹{subtotal.toLocaleString()}
                   </span>
                 </div>
                 
@@ -199,7 +199,7 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
                 <div className={`border-t border-gray-700 ${isMobile ? "pt-1" : "pt-2"} flex justify-between items-center`}>
                   <span className={`text-gray-300 font-medium ${isMobile ? "text-sm" : "text-sm"}`}>Final Total</span>
                   <span className={`text-white font-bold ${isMobile ? "text-base" : "text-lg"}`}>
-                    ₹{(finalTotal || 0).toLocaleString()}
+                    ₹{finalTotal.toLocaleString()}
                   </span>
                 </div>
                 
@@ -228,8 +228,8 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
                 whileTap={{ scale: 0.98 }}
               >
                 <Button
-                  onClick={() => setCurrentStep('location')}
-                  disabled={!selectedServices || selectedServices.length === 0}
+                  onClick={() => setCurrentStep('details')}
+                  disabled={selectedServices.length === 0}
                   className={`w-full bg-gradient-to-r from-emerald-500 to-sky-600 hover:from-emerald-600 hover:to-sky-700 text-white rounded-xl font-semibold shadow-lg transition-all duration-300 ${isMobile ? "py-2 text-sm" : "py-3"}`}
                 >
                   <span className="flex items-center justify-center space-x-2">

@@ -30,41 +30,21 @@ import { CustomerData } from '@/lib/validators';
 
 export default function Services() {
   const {
-    vehicle: selectedVehicle,
-    setVehicleAndCity,
-    services: selectedServices,
-    addService,
-    removeService,
+    selectedVehicle,
+    setSelectedVehicle,
+    selectedServices,
+    toggleService,
     searchQuery,
     setSearchQuery,
     currentStep,
     setCurrentStep,
+    selectedSlot,
     customer,
-    clear: clearBooking,
+    clearBooking,
     getSubtotal,
     showSummary,
     setShowSummary
   } = useBookingStore();
-  
-  // Helper function to maintain compatibility
-  const setSelectedVehicle = (vehicle: 'bike' | 'car') => {
-    setVehicleAndCity(vehicle, 'delhi');
-  };
-  
-  const toggleService = (service: any) => {
-    const isSelected = selectedServices.find(s => s.id === service.id);
-    if (isSelected) {
-      removeService(service.id);
-    } else {
-      addService({
-        id: service.id,
-        name: service.name,
-        vehicleType: selectedVehicle || 'bike',
-        price: service.basePrice,
-        type: service.type
-      });
-    }
-  };
 
   const shouldReduceMotion = useReducedMotion();
   const { toast } = useToast();
@@ -98,21 +78,21 @@ export default function Services() {
 
   // Enhanced toggle service with user feedback
   const handleToggleService = (service: ServiceData) => {
-    const isCurrentlySelected = selectedServices ? selectedServices.some(s => s.id === service.id) : false;
-    const hasComboSelected = selectedServices ? selectedServices.some(s => s.type === 'combo') : false;
-    const hasIndividualSelected = selectedServices ? selectedServices.some(s => s.type === 'individual' || !s.type) : false;
+    const isCurrentlySelected = selectedServices.some(s => s.id === service.id);
+    const hasComboSelected = selectedServices.some(s => s.type === 'combo');
+    const hasIndividualSelected = selectedServices.some(s => s.type === 'individual' || !s.type);
     
     if (!isCurrentlySelected) {
       if (service.type === 'combo') {
         if (hasComboSelected) {
-          const currentCombo = selectedServices ? selectedServices.find(s => s.type === 'combo') : null;
+          const currentCombo = selectedServices.find(s => s.type === 'combo');
           toast({
             title: 'Service Package Replaced',
             description: `${currentCombo?.name} has been replaced with ${service.name}. Only one package can be selected.`,
             duration: 3000,
           });
         } else if (hasIndividualSelected) {
-          const individualCount = selectedServices ? selectedServices.filter(s => s.type === 'individual' || !s.type).length : 0;
+          const individualCount = selectedServices.filter(s => s.type === 'individual' || !s.type).length;
           toast({
             title: 'Individual Services Cleared',
             description: `${individualCount} individual service${individualCount > 1 ? 's' : ''} cleared. Packages include everything needed.`,
@@ -120,7 +100,7 @@ export default function Services() {
           });
         }
       } else if (hasComboSelected) {
-        const currentCombo = selectedServices ? selectedServices.find(s => s.type === 'combo') : null;
+        const currentCombo = selectedServices.find(s => s.type === 'combo');
         toast({
           title: 'Package Replaced with Individual Services',
           description: `${currentCombo?.name} package cleared. You can now select individual services.`,
@@ -133,7 +113,7 @@ export default function Services() {
   };
   
   // Get current services based on vehicle type
-  const currentServices = (selectedVehicle === 'bike' || !selectedVehicle) ? BIKE_SERVICES : CAR_SERVICES;
+  const currentServices = selectedVehicle === 'bike' ? BIKE_SERVICES : CAR_SERVICES;
 
   // Filter and categorize services
   const filteredServices = useMemo(() => {
@@ -152,19 +132,47 @@ export default function Services() {
     setCurrentStep('details');
   };
 
-  // Handle final booking submission - now handled in new flow
+  // Handle final booking submission
   const handleBookingSubmit = async () => {
-    if (!selectedServices || selectedServices.length === 0) {
+    if (!selectedSlot || selectedServices.length === 0) {
       toast({
         title: "Missing Information",
-        description: "Please select services",
+        description: "Please select services and a time slot",
         variant: "destructive"
       });
       return;
     }
 
-    // Navigate to new booking flow
-    window.location.href = '/book/location';
+    try {
+      const bookingData = {
+        vehicle: selectedVehicle,
+        services: selectedServices,
+        addons: selectedAddons,
+        slot: selectedSlot,
+        customer
+      };
+
+      const response = await fetch('/api/booking', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(bookingData)
+      }).then(res => res.json());
+
+      toast({
+        title: "Booking Confirmed!",
+        description: `Your booking ${response.trackingId} has been received. We'll contact you shortly.`,
+      });
+
+      setCurrentStep('confirmation');
+    } catch (error) {
+      toast({
+        title: "Booking Failed",
+        description: "Please try again or contact support",
+        variant: "destructive"
+      });
+    }
   };
 
 
@@ -699,7 +707,7 @@ export default function Services() {
                 </Card>
 
                 {/* Final Submit */}
-                {customer.name && customer.phone && (
+                {selectedSlot && customer.name && customer.phone && customer.address && (
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -719,7 +727,7 @@ export default function Services() {
           </motion.div>
         )}
 
-        {false && (
+        {currentStep === 'confirmation' && (
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}

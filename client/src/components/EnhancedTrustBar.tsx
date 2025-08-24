@@ -137,7 +137,7 @@ export function EnhancedTrustBar() {
       <div className="absolute inset-0 overflow-hidden">
         {Array.from({ length: 15 }).map((_, i) => (
           <motion.div
-            key={`particle-${i}`}
+            key={i}
             className="absolute w-1 h-1 bg-white/20 rounded-full"
             style={{
               left: `${Math.random() * 100}%`,
@@ -197,7 +197,7 @@ export function EnhancedTrustBar() {
             >
               {Array.from({ length: 6 }).map((_, index) => (
                 <motion.div
-                  key={`desktop-placeholder-${index}`}
+                  key={`placeholder-${index}`}
                   className="text-center"
                   initial={{ opacity: 0.3 }}
                   animate={{ 
@@ -481,6 +481,11 @@ export function EnhancedTrustBar() {
                     initial={{ scale: 0 }}
                     whileInView={{ scale: 1 }}
                     viewport={{ once: true }}
+                    transition={{ 
+                      delay: item.delay + 0.3, 
+                      type: "spring", 
+                      stiffness: 300 
+                    }}
                     whileHover={{ 
                       scale: 1.1,
                       textShadow: "0 0 15px rgba(255,255,255,0.8)"
@@ -501,14 +506,14 @@ export function EnhancedTrustBar() {
                   </motion.div>
 
                   {/* Ultra compact label with shimmer effect */}
-                  <motion.div
+                  <motion.p
                     className="text-xs sm:text-xs md:text-sm text-gray-300 font-medium leading-tight px-1 sm:px-0 relative overflow-hidden"
                     initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: item.delay + 0.5 }}
                   >
-                    <div>{item.label}</div>
+                    {item.label}
                     {/* Shimmer overlay */}
                     <motion.div
                       className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12"
@@ -520,7 +525,7 @@ export function EnhancedTrustBar() {
                         repeatDelay: 4
                       }}
                     />
-                  </motion.div>
+                  </motion.p>
 
                   {/* Magical morphing underline */}
                   <motion.div

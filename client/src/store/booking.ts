@@ -17,78 +17,43 @@ export interface BookingAddon {
 export interface CustomerDetails {
   name: string;
   phone: string;
-  email?: string;
-  contactPref: 'phone' | 'email' | 'both';
+  address: string;
+  pincode: string;
 }
 
-export interface Address {
-  text: string;
-  lat?: number;
-  lng?: number;
-  pincode?: string;
-  area?: string;
-  city?: string;
-  coordinates?: {
-    lat: number;
-    lng: number;
-  };
-}
-
-export interface OtpDetails {
-  phone: string;
-  sessionId?: string;
-  verified: boolean;
-}
-
-export interface EstimatedTotal {
-  min: number;
-  max: number;
+export interface TimeSlot {
+  date: 'today' | 'tomorrow';
+  time: '10-12' | '12-2' | '2-4' | '4-6';
+  label: string;
 }
 
 interface BookingStore {
-  // Route params
-  vehicle: 'bike' | 'car' | null;
-  vehicleModel: string;
-  city: string;
-  
-  // Services selection
-  services: BookingService[];
-  addons: BookingAddon[];
+  // Selection state
+  selectedVehicle: 'bike' | 'car';
+  selectedServices: BookingService[];
+  selectedAddons: BookingAddon[];
   
   // Customer details
   customer: CustomerDetails;
-  address: Address;
-  selectedMechanic: any;
-  
-  // OTP verification
-  otp: OtpDetails;
-  
-  // Estimated total
-  estTotal: EstimatedTotal;
+  selectedSlot: TimeSlot | null;
   
   // UI state
-  currentStep: 'vehicle' | 'model' | 'services' | 'location' | 'mechanics' | 'details' | 'otp' | 'tracking';
+  currentStep: 'services' | 'details' | 'confirmation';
   showSummary: boolean;
   searchQuery: string;
   showPriceRanges: boolean;
   
   // Actions
-  setVehicleAndCity: (vehicle: 'bike' | 'car', city: string) => void;
-  setVehicleModel: (model: string) => void;
-  addService: (service: BookingService) => void;
-  removeService: (serviceId: string) => void;
-  addAddon: (addon: BookingAddon) => void;
-  removeAddon: (addonId: string) => void;
+  setSelectedVehicle: (vehicle: 'bike' | 'car') => void;
+  toggleService: (service: BookingService) => void;
+  toggleAddon: (addon: BookingAddon) => void;
   setCustomer: (customer: Partial<CustomerDetails>) => void;
-  setAddress: (address: Address) => void;
-  setSelectedMechanic: (mechanic: any) => void;
-  setOtpDetails: (otp: Partial<OtpDetails>) => void;
-  setCurrentStep: (step: 'vehicle' | 'model' | 'services' | 'location' | 'mechanics' | 'details' | 'otp' | 'tracking') => void;
+  setSelectedSlot: (slot: TimeSlot | null) => void;
+  setCurrentStep: (step: 'services' | 'details' | 'confirmation') => void;
   setShowSummary: (show: boolean) => void;
   setSearchQuery: (query: string) => void;
   setShowPriceRanges: (show: boolean) => void;
-  clear: () => void;
-  hydrate: (data: Partial<BookingStore>) => void;
+  clearBooking: () => void;
   
   // Computed
   getSubtotal: () => number;
@@ -100,103 +65,74 @@ interface BookingStore {
 const initialCustomer: CustomerDetails = {
   name: '',
   phone: '',
-  email: '',
-  contactPref: 'phone'
-};
-
-const initialAddress: Address = {
-  text: '',
-  lat: undefined,
-  lng: undefined,
+  address: '',
   pincode: ''
-};
-
-const initialOtp: OtpDetails = {
-  phone: '',
-  sessionId: undefined,
-  verified: false
-};
-
-const initialEstTotal: EstimatedTotal = {
-  min: 0,
-  max: 0
 };
 
 export const useBookingStore = create<BookingStore>((set, get) => ({
   // Initial state
-  vehicle: null,
-  vehicleModel: '',
-  city: '',
-  services: [],
-  addons: [],
+  selectedVehicle: 'bike',
+  selectedServices: [],
+  selectedAddons: [],
   customer: initialCustomer,
-  address: initialAddress,
-  selectedMechanic: null,
-  otp: initialOtp,
-  estTotal: initialEstTotal,
-  currentStep: 'vehicle',
+  selectedSlot: null,
+  currentStep: 'services',
   showSummary: false,
   searchQuery: '',
   showPriceRanges: false,
   
   // Actions
-  setVehicleAndCity: (vehicle, city) => set({ vehicle, city }),
+  setSelectedVehicle: (vehicle) => set((state) => {
+    if (state.selectedVehicle === vehicle) return state; // Prevent unnecessary updates
+    return { selectedVehicle: vehicle, selectedServices: [] };
+  }),
   
-  setVehicleModel: (vehicleModel) => set({ vehicleModel }),
-  
-  addService: (service) => set((state) => {
-    // If selecting a combo service, clear ALL other services
-    if (service.type === 'combo') {
+  toggleService: (service) => set((state) => {
+    const exists = state.selectedServices.find(s => s.id === service.id);
+    if (exists) {
       return {
-        services: [service],
-        showSummary: true
+        selectedServices: state.selectedServices.filter(s => s.id !== service.id)
       };
     } else {
-      // If selecting an individual service, remove any existing combo services
-      const filteredServices = state.services.filter(s => s.type !== 'combo');
-      const exists = filteredServices.find(s => s.id === service.id);
+      let newSelectedServices = [...state.selectedServices];
       
-      if (exists) {
-        return state; // Service already selected
+      if (service.type === 'combo') {
+        // If selecting a combo service, clear ALL other services (combos and individuals)
+        newSelectedServices = [];
+      } else {
+        // If selecting an individual service, remove any existing combo services
+        newSelectedServices = newSelectedServices.filter(s => s.type !== 'combo');
       }
       
+      // Add the new service
+      newSelectedServices.push(service);
+      
       return {
-        services: [...filteredServices, service],
-        showSummary: true
+        selectedServices: newSelectedServices,
+        showSummary: true // Automatically show summary when service is added
       };
     }
   }),
   
-  removeService: (serviceId) => set((state) => ({
-    services: state.services.filter(s => s.id !== serviceId)
-  })),
-  
-  addAddon: (addon) => set((state) => {
-    const exists = state.addons.find(a => a.id === addon.id);
+  toggleAddon: (addon) => set((state) => {
+    const exists = state.selectedAddons.find(a => a.id === addon.id);
     if (exists) {
-      return state;
+      return {
+        selectedAddons: state.selectedAddons.filter(a => a.id !== addon.id)
+      };
+    } else {
+      return {
+        selectedAddons: [...state.selectedAddons, addon],
+        showSummary: true // Automatically show summary when addon is added
+      };
     }
-    return {
-      addons: [...state.addons, addon],
-      showSummary: true
-    };
   }),
-  
-  removeAddon: (addonId) => set((state) => ({
-    addons: state.addons.filter(a => a.id !== addonId)
-  })),
   
   setCustomer: (customerUpdate) => set((state) => ({
     customer: { ...state.customer, ...customerUpdate }
   })),
   
-  setAddress: (address) => set({ address }),
-  
-  setSelectedMechanic: (selectedMechanic) => set({ selectedMechanic }),
-  
-  setOtpDetails: (otpUpdate) => set((state) => ({
-    otp: { ...state.otp, ...otpUpdate }
-  })),
+  setSelectedSlot: (slot) => set({ selectedSlot: slot }),
   
   setCurrentStep: (step) => set({ currentStep: step }),
   
@@ -206,53 +142,36 @@ export const useBookingStore = create<BookingStore>((set, get) => ({
   
   setShowPriceRanges: (show) => set({ showPriceRanges: show }),
   
-  clear: () => set({
-    vehicle: null,
-    vehicleModel: '',
-    city: '',
-    services: [],
-    addons: [],
+  clearBooking: () => set({
+    selectedServices: [],
+    selectedAddons: [],
     customer: initialCustomer,
-    address: initialAddress,
-    selectedMechanic: null,
-    otp: initialOtp,
-    estTotal: initialEstTotal,
-    currentStep: 'vehicle',
-    showSummary: false,
-    searchQuery: '',
-    showPriceRanges: false
+    selectedSlot: null,
+    currentStep: 'services'
   }),
-  
-  hydrate: (data) => set((state) => ({ ...state, ...data })),
   
   // Computed functions
-  getAdjustedPrice: (priceMin, priceMax) => ({
-    min: priceMin,
-    max: priceMax
-  }),
+  getAdjustedPrice: (priceMin, priceMax) => {
+    return {
+      min: priceMin,
+      max: priceMax
+    };
+  },
   
   getSubtotal: () => {
     const state = get();
     
     let total = 0;
     
-    // Add services - with null safety
-    if (state.services && Array.isArray(state.services)) {
-      state.services.forEach(service => {
-        if (service && typeof service.price === 'number') {
-          total += service.price;
-        }
-      });
-    }
+    // Add services
+    state.selectedServices.forEach(service => {
+      total += service.price;
+    });
     
-    // Add addons - with null safety
-    if (state.addons && Array.isArray(state.addons)) {
-      state.addons.forEach(addon => {
-        if (addon && typeof addon.price === 'number') {
-          total += addon.price;
-        }
-      });
-    }
+    // Add addons
+    state.selectedAddons.forEach(addon => {
+      total += addon.price;
+    });
     
     return total;
   },

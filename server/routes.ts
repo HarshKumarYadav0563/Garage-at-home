@@ -49,161 +49,46 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Create lead (updated for new booking flow)
+  // Create lead
   app.post("/api/leads", async (req, res) => {
     try {
-      const leadSchema = z.object({
-        vehicle: z.enum(['bike', 'car']),
-        city: z.string(),
-        services: z.array(z.object({
-          id: z.string(),
-          name: z.string(),
-          price: z.number()
-        })),
-        addons: z.array(z.object({
-          id: z.string(),
-          name: z.string(),
-          price: z.number()
-        })).optional(),
-        estTotal: z.object({
-          min: z.number(),
-          max: z.number()
-        }),
-        customer: z.object({
-          name: z.string().min(2),
-          phone: z.string().regex(/^[6-9]\d{9}$/),
-          email: z.string().email().optional(),
-          contactPref: z.enum(['phone', 'email', 'both'])
-        }),
-        address: z.object({
-          text: z.string().min(5),
-          lat: z.number().optional(),
-          lng: z.number().optional(),
-          pincode: z.string().optional()
-        }),
-        otpToken: z.string()
-      });
-      
-      const leadData = leadSchema.parse(req.body);
-      
-      // Validate NCR cities
-      const ncrCities = ['delhi', 'gurugram', 'noida', 'ghaziabad', 'faridabad'];
-      if (!ncrCities.includes(leadData.city.toLowerCase())) {
-        return res.status(400).json({ error: "Service not available in your city", availableCities: ncrCities });
-      }
-      
-      const { nanoid } = await import('nanoid');
-      const trackingId = `GW-${nanoid(8).toUpperCase()}`;
-      
-      // Create lead with automatic slot assignment
-      const leadForStorage = {
-        customerName: leadData.customer.name,
-        customerPhone: leadData.customer.phone,
-        customerEmail: leadData.customer.email || '',
-        address: leadData.address.text,
-        lat: leadData.address.lat || 0,
-        lng: leadData.address.lng || 0,
-        vehicleType: leadData.vehicle,
-        vehicleBrand: '',
-        vehicleModel: '',
-        serviceId: leadData.services[0]?.id || '',
-        mechanicId: '',
-        trackingId,
-        estTotal: leadData.estTotal.max
-      };
-      
-      const lead = await storage.createLead(leadForStorage);
+      const leadData = insertLeadSchema.parse(req.body);
+      const lead = await storage.createLead(leadData);
       
       // Add initial status update
       await storage.addStatusUpdate({
         leadId: lead.id,
         status: "confirmed",
-        message: "Your booking has been confirmed. A mechanic will be assigned shortly."
+        message: "Your booking has been confirmed and assigned to a mechanic"
       });
 
-      res.json({ trackingId });
+      res.json({ trackingId: lead.trackingId });
     } catch (error) {
       if (error instanceof z.ZodError) {
-        res.status(400).json({ error: "Invalid booking data", details: error.errors });
+        res.status(400).json({ error: "Invalid lead data", details: error.errors });
       } else {
-        res.status(500).json({ error: "Failed to create booking" });
+        res.status(500).json({ error: "Failed to create lead" });
       }
     }
   });
 
-  // OTP Send
-  app.post("/api/otp/send", async (req, res) => {
+  // Create booking (new booking flow)
+  app.post("/api/booking", async (req, res) => {
     try {
-      const { phone } = z.object({ phone: z.string().regex(/^[6-9]\d{9}$/, "Invalid Indian phone number") }).parse(req.body);
-      
       const { nanoid } = await import('nanoid');
-      const sessionId = nanoid(16);
       
-      // In production, send actual OTP via SMS service
-      console.log(`Sending OTP to ${phone} with sessionId: ${sessionId}`);
+      // Generate tracking ID
+      const trackingId = `GW-${nanoid(8).toUpperCase()}`;
       
-      res.json({ sessionId });
+      // Mock response for booking submission
+      res.status(201).json({ 
+        ok: true, 
+        trackingId,
+        message: 'Booking received successfully. A mechanic will contact you shortly.'
+      });
     } catch (error) {
-      if (error instanceof z.ZodError) {
-        res.status(400).json({ error: "Invalid phone number", details: error.errors });
-      } else {
-        res.status(500).json({ error: "Failed to send OTP" });
-      }
-    }
-  });
-
-  // OTP Verify
-  app.post("/api/otp/verify", async (req, res) => {
-    try {
-      const { phone, sessionId, code } = z.object({
-        phone: z.string().regex(/^[6-9]\d{9}$/, "Invalid Indian phone number"),
-        sessionId: z.string(),
-        code: z.string().length(6, "OTP must be 6 digits")
-      }).parse(req.body);
-      
-      // Mock verification - in production, verify against stored OTP
-      const isValidOtp = code === "123456" || code === "000000"; // Accept test codes
-      
-      if (isValidOtp) {
-        const { nanoid } = await import('nanoid');
-        const otpToken = nanoid(32);
-        
-        res.json({ verified: true, otpToken });
-      } else {
-        res.status(400).json({ verified: false, error: "Invalid OTP" });
-      }
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        res.status(400).json({ error: "Invalid request data", details: error.errors });
-      } else {
-        res.status(500).json({ error: "Failed to verify OTP" });
-      }
-    }
-  });
-
-  // Waitlist
-  app.post("/api/waitlist", async (req, res) => {
-    try {
-      const { name, phone, city, email } = z.object({
-        name: z.string().min(2, "Name must be at least 2 characters"),
-        phone: z.string().regex(/^[6-9]\d{9}$/, "Invalid Indian phone number"),
-        city: z.string().min(1, "City is required"),
-        email: z.string().email("Invalid email").optional()
-      }).parse(req.body);
-      
-      const { nanoid } = await import('nanoid');
-      const id = nanoid(8);
-      
-      // In production, store in database
-      console.log(`Added to waitlist: ${name}, ${phone}, ${city}, ${email}`);
-      
-      res.json({ ok: true, id });
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        res.status(400).json({ error: "Invalid data", details: error.errors });
-      } else {
-        res.status(500).json({ error: "Failed to add to waitlist" });
-      }
+      console.error('Error creating booking:', error);
+      res.status(500).json({ error: 'Failed to create booking' });
     }
   });
 
