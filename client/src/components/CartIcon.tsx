@@ -11,8 +11,15 @@ export function CartIcon() {
   const hasItems = selectedServices.length > 0;
   const total = estimate?.total || 0;
   
-  // Mock service lookup - replace with actual service data
-  const getServiceById = (id: string) => {
+  // Get service object - handle both string IDs and service objects
+  const getServiceById = (item: any) => {
+    // If it's already a service object, return it
+    if (typeof item === 'object' && item.id) {
+      return item;
+    }
+    
+    // If it's a string ID, look it up
+    const id = typeof item === 'string' ? item : item.toString();
     const services = [
       { id: 'basic-service', name: 'Basic Service', price: 499 },
       { id: 'premium-service', name: 'Premium Service', price: 999 },
@@ -91,8 +98,9 @@ export function CartIcon() {
 
               {/* Services List */}
               <div className="p-6 space-y-4">
-                {selectedServices.map((serviceId, index) => {
-                  const service = getServiceById(serviceId);
+                {selectedServices.map((serviceItem, index) => {
+                  const service = getServiceById(serviceItem);
+                  const serviceId = service.id;
                   return (
                     <motion.div
                       key={serviceId}
