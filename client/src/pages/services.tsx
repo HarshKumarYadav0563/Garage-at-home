@@ -409,43 +409,90 @@ export default function Services() {
         transition={{ delay: 0.5, duration: 0.6 }}
       >
         <div className="max-w-7xl mx-auto px-4 py-3">
-          <div className="flex items-center justify-between gap-3">
-            {/* Vehicle Toggle */}
-            <div className="flex bg-white/10 rounded-xl p-1">
-              <button
-                onClick={() => setSelectedVehicle('bike')}
-                className={`px-3 py-2 rounded-lg text-sm font-medium transition-all ${
-                  selectedVehicle === 'bike'
-                    ? 'bg-emerald-500 text-white'
-                    : 'text-gray-300 hover:text-white'
-                }`}
-              >
-                <Bike className="w-4 h-4 inline mr-1" />
-                Bike
-              </button>
-              <button
-                onClick={() => setSelectedVehicle('car')}
-                className={`px-3 py-2 rounded-lg text-sm font-medium transition-all ${
-                  selectedVehicle === 'car'
-                    ? 'bg-emerald-500 text-white'
-                    : 'text-gray-300 hover:text-white'
-                }`}
-              >
-                <Car className="w-4 h-4 inline mr-1" />
-                Car
-              </button>
+          <div className="space-y-3">
+            {/* First Row: Vehicle Toggle & Search */}
+            <div className="flex items-center justify-between gap-3">
+              {/* Vehicle Toggle */}
+              <div className="flex bg-white/10 rounded-xl p-1">
+                <button
+                  onClick={() => setSelectedVehicle('bike')}
+                  className={`px-3 py-2 rounded-lg text-sm font-medium transition-all ${
+                    selectedVehicle === 'bike'
+                      ? 'bg-emerald-500 text-white'
+                      : 'text-gray-300 hover:text-white'
+                  }`}
+                >
+                  <Bike className="w-4 h-4 inline mr-1" />
+                  Bike
+                </button>
+                <button
+                  onClick={() => setSelectedVehicle('car')}
+                  className={`px-3 py-2 rounded-lg text-sm font-medium transition-all ${
+                    selectedVehicle === 'car'
+                      ? 'bg-emerald-500 text-white'
+                      : 'text-gray-300 hover:text-white'
+                  }`}
+                >
+                  <Car className="w-4 h-4 inline mr-1" />
+                  Car
+                </button>
+              </div>
+
+              {/* Search */}
+              <div className="flex-1 relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <Input
+                  type="text"
+                  placeholder={`Search ${selectedVehicle} services...`}
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-10 bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-emerald-500/50 rounded-lg h-10"
+                />
+              </div>
             </div>
 
-            {/* Search */}
-            <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-              <Input
-                type="text"
-                placeholder={`Search ${selectedVehicle} services...`}
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-emerald-500/50 rounded-lg h-10"
-              />
+            {/* Second Row: Brand & Model Selection */}
+            <div className="flex items-center gap-3">
+              {/* Brand Selection */}
+              <div className="flex-1">
+                <Select 
+                  value={selectedBrand} 
+                  onValueChange={(value) => {
+                    setSelectedBrand(value);
+                  }}
+                >
+                  <SelectTrigger className="w-full bg-white/10 border-white/20 text-white h-10">
+                    <SelectValue placeholder="Select Brand" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {getBrandsForVehicleType(selectedVehicle).map((brand) => (
+                      <SelectItem key={brand.id} value={brand.id}>
+                        {brand.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Model Selection */}
+              <div className="flex-1">
+                <Select 
+                  value={selectedModel} 
+                  onValueChange={setSelectedModel}
+                  disabled={!selectedBrand}
+                >
+                  <SelectTrigger className="w-full bg-white/10 border-white/20 text-white h-10">
+                    <SelectValue placeholder="Select Model" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {getModelsForBrand(selectedBrand, selectedVehicle).map((model) => (
+                      <SelectItem key={model.id} value={model.id}>
+                        {model.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
           </div>
         </div>
