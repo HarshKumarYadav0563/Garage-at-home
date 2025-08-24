@@ -33,8 +33,8 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
   
   const hasItems = selectedServices.length > 0;
 
-  // Debug: log values
-  console.log('Debug - Subtotal:', subtotal, 'Doorstep Charge:', doorstepCharge, 'Final Total:', finalTotal);
+  // Debug: cart state
+  console.log('=== CART DEBUG ===', { hasItems, showFloatingCart, subtotal, finalTotal });
 
   // Show/hide floating cart based on items
   useEffect(() => {
