@@ -403,7 +403,7 @@ export default function Services() {
       
       {/* Sticky Mobile Controls */}
       <motion.div 
-        className="lg:hidden sticky top-0 z-40 bg-gray-900/80 backdrop-blur-xl border-b border-white/10"
+        className="lg:hidden sticky top-0 z-40 bg-gray-900/90 backdrop-blur-xl border-b border-white/20"
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.5, duration: 0.6 }}
@@ -413,13 +413,13 @@ export default function Services() {
             {/* First Row: Vehicle Toggle & Search */}
             <div className="flex items-center justify-between gap-3">
               {/* Vehicle Toggle */}
-              <div className="flex bg-white/10 rounded-xl p-1">
+              <div className="flex bg-white/15 rounded-xl p-1">
                 <button
                   onClick={() => setSelectedVehicle('bike')}
-                  className={`px-3 py-2 rounded-lg text-sm font-medium transition-all ${
+                  className={`px-3 py-2 rounded-lg text-sm font-semibold transition-all ${
                     selectedVehicle === 'bike'
-                      ? 'bg-emerald-500 text-white'
-                      : 'text-gray-300 hover:text-white'
+                      ? 'bg-emerald-500 text-white shadow-lg'
+                      : 'text-white/90 hover:text-white hover:bg-white/10'
                   }`}
                 >
                   <Bike className="w-4 h-4 inline mr-1" />
@@ -427,10 +427,10 @@ export default function Services() {
                 </button>
                 <button
                   onClick={() => setSelectedVehicle('car')}
-                  className={`px-3 py-2 rounded-lg text-sm font-medium transition-all ${
+                  className={`px-3 py-2 rounded-lg text-sm font-semibold transition-all ${
                     selectedVehicle === 'car'
-                      ? 'bg-emerald-500 text-white'
-                      : 'text-gray-300 hover:text-white'
+                      ? 'bg-emerald-500 text-white shadow-lg'
+                      : 'text-white/90 hover:text-white hover:bg-white/10'
                   }`}
                 >
                   <Car className="w-4 h-4 inline mr-1" />
@@ -440,13 +440,13 @@ export default function Services() {
 
               {/* Search */}
               <div className="flex-1 relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-300" />
                 <Input
                   type="text"
                   placeholder={`Search ${selectedVehicle} services...`}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-emerald-500/50 rounded-lg h-10"
+                  className="pl-10 bg-white/15 border-white/30 text-white placeholder:text-gray-300 focus:border-emerald-500/50 rounded-lg h-10 font-medium"
                 />
               </div>
             </div>
@@ -461,7 +461,7 @@ export default function Services() {
                     setSelectedBrand(value);
                   }}
                 >
-                  <SelectTrigger className="w-full bg-white/10 border-white/20 text-white h-10">
+                  <SelectTrigger className="w-full bg-white/15 border-white/30 text-white h-10 font-medium">
                     <SelectValue placeholder="Select Brand" />
                   </SelectTrigger>
                   <SelectContent>
@@ -481,7 +481,7 @@ export default function Services() {
                   onValueChange={setSelectedModel}
                   disabled={!selectedBrand}
                 >
-                  <SelectTrigger className="w-full bg-white/10 border-white/20 text-white h-10">
+                  <SelectTrigger className="w-full bg-white/15 border-white/30 text-white h-10 font-medium">
                     <SelectValue placeholder="Select Model" />
                   </SelectTrigger>
                   <SelectContent>
