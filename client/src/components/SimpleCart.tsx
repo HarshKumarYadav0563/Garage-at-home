@@ -22,12 +22,14 @@ export function SimpleCart() {
   const hasItems = selectedServices.length > 0;
   const canContinue = canProceedToStep('customer');
 
-  // Debug logging
-  console.log('Cart Debug:', {
+  // Debug logging - always show cart state
+  console.log('=== CART STATE DEBUG ===', {
     hasItems,
+    selectedServicesCount: selectedServices.length,
     selectedServices,
     showSummary,
-    estimate
+    estimate: estimate ? `₹${estimate.total}` : 'none',
+    shouldShowButton: hasItems && !showSummary
   });
 
   const handleContinue = () => {
@@ -41,15 +43,18 @@ export function SimpleCart() {
     toggleService(serviceId);
   };
 
-  // Always show if there are items, regardless of showSummary initially
+  // Always show cart when items exist
   if (!hasItems) {
+    console.log('=== CART HIDDEN: No items selected ===');
     return null;
   }
 
+  console.log('=== CART RENDERING ===', { hasItems, showSummary });
+
   return (
     <>
-      {/* Floating Cart Button - Always visible when has items and summary not shown */}
-      {!showSummary && hasItems && (
+      {/* Floating Cart Button - Always show when has items */}
+      {hasItems && !showSummary && (
         <motion.div
           initial={{ scale: 0, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
