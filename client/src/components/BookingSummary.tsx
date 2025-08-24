@@ -26,7 +26,7 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
   } = useBookingStore();
   
   const shouldReduceMotion = useReducedMotion();
-  const subtotal = getSubtotal();
+  const subtotal = getSubtotal() || 0;
   const [isCollapsed, setIsCollapsed] = useState(false);
   
   // Calculate doorstep charge manually if function doesn't exist
@@ -66,7 +66,7 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
               /* Collapsed view - show total and expand button */
               <div className="flex items-center justify-between w-full">
                 <div className="flex items-center space-x-3">
-                  <h3 className="text-white font-bold text-sm">Total: ₹{finalTotal.toLocaleString()}</h3>
+                  <h3 className="text-white font-bold text-sm">Total: ₹{(finalTotal || 0).toLocaleString()}</h3>
                   {selectedServices && selectedServices.length > 0 && (
                     <Badge variant="outline" className="text-xs border-emerald-500/30 text-emerald-400">
                       {selectedServices.length} items
@@ -152,7 +152,7 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
                           {service.name}
                         </p>
                         <p className={`text-gray-400 ${isMobile ? "text-xs" : "text-xs"}`}>
-                          ₹{service.price.toLocaleString()}
+                          ₹{(service.price || 0).toLocaleString()}
                         </p>
                       </div>
                       <Button
@@ -183,7 +183,7 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
                 <div className="flex justify-between items-center">
                   <span className={`text-gray-300 ${isMobile ? "text-xs" : "text-sm"}`}>Services Total</span>
                   <span className={`text-white font-medium ${isMobile ? "text-xs" : "text-sm"}`}>
-                    ₹{subtotal.toLocaleString()}
+                    ₹{(subtotal || 0).toLocaleString()}
                   </span>
                 </div>
                 
@@ -199,7 +199,7 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
                 <div className={`border-t border-gray-700 ${isMobile ? "pt-1" : "pt-2"} flex justify-between items-center`}>
                   <span className={`text-gray-300 font-medium ${isMobile ? "text-sm" : "text-sm"}`}>Final Total</span>
                   <span className={`text-white font-bold ${isMobile ? "text-base" : "text-lg"}`}>
-                    ₹{finalTotal.toLocaleString()}
+                    ₹{(finalTotal || 0).toLocaleString()}
                   </span>
                 </div>
                 

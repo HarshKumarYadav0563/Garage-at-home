@@ -218,15 +218,23 @@ export const useBookingStore = create<BookingStore>((set, get) => ({
     
     let total = 0;
     
-    // Add services
-    state.services.forEach(service => {
-      total += service.price;
-    });
+    // Add services - with null safety
+    if (state.services && Array.isArray(state.services)) {
+      state.services.forEach(service => {
+        if (service && typeof service.price === 'number') {
+          total += service.price;
+        }
+      });
+    }
     
-    // Add addons
-    state.addons.forEach(addon => {
-      total += addon.price;
-    });
+    // Add addons - with null safety
+    if (state.addons && Array.isArray(state.addons)) {
+      state.addons.forEach(addon => {
+        if (addon && typeof addon.price === 'number') {
+          total += addon.price;
+        }
+      });
+    }
     
     return total;
   },
