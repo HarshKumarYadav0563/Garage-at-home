@@ -95,23 +95,6 @@ export function ComboServiceCard({
             )}
           </div>
           
-          {/* Savings Badge with Animation */}
-          {service.savings && (
-            <motion.div
-              initial={{ scale: 0, opacity: 0, x: 20 }}
-              animate={{ scale: 1, opacity: 1, x: 0 }}
-              transition={{ delay: 0.3, type: "spring", stiffness: 400 }}
-              whileHover={{ 
-                scale: 1.1, 
-                rotate: [0, -2, 2, 0],
-                transition: { duration: 0.3 }
-              }}
-            >
-              <Badge className="bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 text-white text-xs px-2 py-1 shadow-lg shadow-orange-500/30">
-                {service.savings}
-              </Badge>
-            </motion.div>
-          )}
         </div>
         
         <CardContent className="p-3 md:p-4 pt-4 h-full flex flex-col justify-between">
