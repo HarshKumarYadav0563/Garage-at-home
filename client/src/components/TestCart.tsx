@@ -11,12 +11,15 @@ export function TestCart() {
     length: selectedServices.length
   });
   
-  // Force show always for testing
+  // Force show always for testing with higher z-index
   return (
-    <div className="fixed bottom-6 right-6 z-50 bg-red-500 p-4 rounded-full text-white">
+    <div 
+      className="fixed bottom-4 right-4 bg-red-500 p-3 rounded-lg text-white text-sm font-bold shadow-2xl" 
+      style={{ zIndex: 9999 }}
+    >
       <div className="flex items-center space-x-2">
-        <ShoppingCart className="w-5 h-5" />
-        <span>TEST CART ({selectedServices.length})</span>
+        <ShoppingCart className="w-4 h-4" />
+        <span>TEST ({selectedServices.length})</span>
         {estimate && <span>₹{String(estimate.total)}</span>}
       </div>
     </div>

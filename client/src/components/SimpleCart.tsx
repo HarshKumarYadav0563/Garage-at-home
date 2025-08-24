@@ -58,14 +58,15 @@ export function SimpleCart() {
         <motion.div
           initial={{ scale: 0, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          className="fixed bottom-6 right-6 z-50"
+          className="fixed bottom-4 right-4"
+          style={{ zIndex: 9999 }}
         >
           <Button
             onClick={() => setShowSummary(true)}
-            className="bg-gradient-to-r from-emerald-500 to-sky-500 hover:from-emerald-600 hover:to-sky-600 text-white rounded-full p-4 shadow-lg shadow-emerald-500/25"
+            className="bg-gradient-to-r from-emerald-500 to-sky-500 hover:from-emerald-600 hover:to-sky-600 text-white rounded-full p-3 shadow-lg shadow-emerald-500/25 text-sm"
             data-testid="cart-button"
           >
-            <ShoppingCart className="w-5 h-5 mr-2" />
+            <ShoppingCart className="w-4 h-4 mr-2" />
             <span className="font-semibold">{selectedServices.length}</span>
             {estimate && (
               <span className="ml-2 font-bold">₹{estimate.total}</span>
@@ -83,7 +84,8 @@ export function SimpleCart() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
+              className="fixed inset-0 bg-black/50 backdrop-blur-sm"
+              style={{ zIndex: 9998 }}
               onClick={() => setShowSummary(false)}
             />
             
@@ -93,7 +95,8 @@ export function SimpleCart() {
               animate={{ y: 0 }}
               exit={{ y: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 500 }}
-              className="fixed inset-x-0 bottom-0 z-50 bg-gradient-to-t from-gray-950 via-gray-900 to-gray-800 border-t border-white/20 backdrop-blur-xl rounded-t-3xl shadow-2xl"
+              className="fixed inset-x-0 bottom-0 bg-gradient-to-t from-gray-950 via-gray-900 to-gray-800 border-t border-white/20 backdrop-blur-xl rounded-t-3xl shadow-2xl"
+              style={{ zIndex: 9999 }}
             >
               <div className="p-6 max-h-[80vh] overflow-y-auto">
                 {/* Header */}
