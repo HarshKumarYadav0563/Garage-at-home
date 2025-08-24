@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { MapPin, Star, Users, Clock, Car, Bike, Wrench, Zap } from 'lucide-react';
+import { HelpCircle, Star, Users, Clock, Car, Bike, Wrench, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'wouter';
 import { getCurrentLocation } from '@/lib/geo';
@@ -9,20 +9,16 @@ import heroImage from '@assets/generated_images/Professional_motorcycle_service_
 export function Hero() {
   const { addToast } = useUiStore();
 
-  const handleUseLocation = async () => {
-    try {
-      const location = await getCurrentLocation();
+  const handleHowItWorks = () => {
+    // Scroll to how it works section or show modal
+    const element = document.getElementById('how-it-works');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    } else {
       addToast({
-        type: 'success',
-        title: 'Location detected',
-        message: `Searching for mechanics near you...`
-      });
-      // In production, this would redirect to booking with location pre-filled
-    } catch (error) {
-      addToast({
-        type: 'error',
-        title: 'Location access denied',
-        message: 'Please allow location access or enter your address manually'
+        type: 'info',
+        title: 'How it Works',
+        message: '1. Select service → 2. Choose location → 3. Pick time slot → 4. Mechanic arrives!'
       });
     }
   };
@@ -127,7 +123,7 @@ export function Hero() {
               variants={itemVariants}
               className="flex gap-3 justify-center px-4"
             >
-              <Link href="/book" className="flex-1">
+              <Link href="/services" className="flex-1">
                 <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                   <Button
                     className="w-full bg-gradient-to-r from-emerald-500 via-sky-500 to-indigo-500 hover:shadow-[0_0_20px_rgba(16,185,129,0.4)] text-white px-4 py-3 rounded-xl font-semibold text-sm shadow-lg transition-all duration-300"
@@ -141,13 +137,13 @@ export function Hero() {
               
               <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="flex-1">
                 <Button
-                  onClick={handleUseLocation}
+                  onClick={handleHowItWorks}
                   variant="outline"
                   className="w-full bg-white/5 border border-white/10 text-gray-200 px-4 py-3 rounded-xl font-semibold text-sm hover:bg-white/10 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300"
-                  data-testid="button-use-location"
+                  data-testid="button-how-it-works"
                 >
-                  <MapPin className="mr-2 w-4 h-4" />
-                  Location
+                  <HelpCircle className="mr-2 w-4 h-4" />
+                  How it Works
                 </Button>
               </motion.div>
             </motion.div>
@@ -240,7 +236,7 @@ export function Hero() {
               variants={containerVariants}
               className="flex gap-4 mb-8"
             >
-              <Link href="/book">
+              <Link href="/services">
                 <motion.div 
                   variants={itemVariants}
                   whileHover={{ scale: 1.05 }} 
@@ -262,13 +258,13 @@ export function Hero() {
                 whileTap={{ scale: 0.95 }}
               >
                 <Button
-                  onClick={handleUseLocation}
+                  onClick={handleHowItWorks}
                   variant="outline"
                   className="bg-white/5 border border-white/10 text-gray-200 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all duration-300"
-                  data-testid="button-use-location"
+                  data-testid="button-how-it-works"
                 >
-                  <MapPin className="mr-2 w-5 h-5" />
-                  Use My Location
+                  <HelpCircle className="mr-2 w-5 h-5" />
+                  How it Works
                 </Button>
               </motion.div>
             </motion.div>
