@@ -20,6 +20,7 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
     selectedVehicle,
     selectedBrand,
     selectedModel,
+    selectedMechanic,
     getSubtotal,
     getDoortepCharge,
     getFinalTotal,
@@ -171,6 +172,42 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
                 <p className={`text-gray-400 ${isMobile ? "text-xs" : "text-xs"} capitalize`}>
                   {selectedVehicle}
                 </p>
+              </div>
+            </div>
+          )}
+
+          {/* Selected Mechanic */}
+          {selectedMechanic && (
+            <div className={isMobile ? "mb-3" : "mb-4"}>
+              <h4 className={`text-gray-300 font-medium ${isMobile ? "text-xs mb-1" : "text-sm mb-2"}`}>Mechanic</h4>
+              <div className={`${isMobile ? "p-2" : "p-3"} bg-white/3 rounded-lg`}>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className={`text-white font-medium ${isMobile ? "text-xs" : "text-sm"}`}>
+                      {selectedMechanic.name}
+                    </p>
+                    <div className="flex items-center space-x-2 mt-1">
+                      <div className="flex items-center space-x-1">
+                        <span className="text-yellow-400 text-xs">★</span>
+                        <span className={`text-gray-400 ${isMobile ? "text-xs" : "text-xs"}`}>
+                          {selectedMechanic.rating} ({selectedMechanic.reviewCount})
+                        </span>
+                      </div>
+                      <span className={`text-gray-400 ${isMobile ? "text-xs" : "text-xs"}`}>•</span>
+                      <span className={`text-emerald-400 ${isMobile ? "text-xs" : "text-xs"}`}>
+                        {selectedMechanic.distance} km away
+                      </span>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p className={`text-green-400 ${isMobile ? "text-xs" : "text-xs"} font-medium`}>
+                      {selectedMechanic.isAvailable ? 'Available' : 'Busy'}
+                    </p>
+                    <p className={`text-gray-400 ${isMobile ? "text-xs" : "text-xs"}`}>
+                      {selectedMechanic.responseTime}
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           )}

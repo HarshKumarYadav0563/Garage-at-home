@@ -70,6 +70,12 @@ export default function LocationStep() {
         description: "Your location has been detected successfully!"
       });
       
+      // Navigate to mechanic selection
+      setTimeout(() => {
+        setCurrentStep('mechanic');
+        setLocationRoute('/mechanic');
+      }, 1500);
+      
     } catch (error) {
       toast({
         title: "Location Error",
@@ -121,6 +127,12 @@ export default function LocationStep() {
       title: "Address saved",
       description: "Your address has been saved successfully!"
     });
+    
+    // Navigate to mechanic selection
+    setTimeout(() => {
+      setCurrentStep('mechanic');
+      setLocationRoute('/mechanic');
+    }, 1500);
   };
 
   const handleContinue = () => {

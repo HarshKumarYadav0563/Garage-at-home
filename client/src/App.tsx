@@ -13,6 +13,7 @@ import Home from "@/pages/home";
 import Services from "@/pages/services";
 import ServicesDynamic from "@/pages/services-dynamic";
 import LocationStep from "@/pages/location-step";
+import MechanicStep from "@/pages/mechanic-step";
 import DetailsStep from "@/pages/details-step";
 import OTPStep from "@/pages/otp-step";
 import Book from "@/pages/book";
@@ -22,7 +23,6 @@ import Pricing from "@/pages/pricing";
 import HowItWorks from "@/pages/how-it-works";
 import CityLanding from "@/pages/city-landing";
 import Admin from "@/pages/admin";
-import Mechanic from "@/pages/mechanic";
 import Privacy from "@/pages/privacy";
 import Terms from "@/pages/terms";
 import Refund from "@/pages/refund";
@@ -45,6 +45,7 @@ function Router() {
           <Route path="/services/:vehicle/:city" component={ServicesDynamic} />
           <Route path="/services" component={Services} />
           <Route path="/location" component={LocationStep} />
+          <Route path="/mechanic" component={MechanicStep} />
           <Route path="/details" component={DetailsStep} />
           <Route path="/otp" component={OTPStep} />
           <Route path="/pricing" component={Pricing} />
@@ -54,7 +55,6 @@ function Router() {
           <Route path="/how-it-works" component={HowItWorks} />
           <Route path="/bike-service/:city" component={CityLanding} />
           <Route path="/admin" component={Admin} />
-          <Route path="/mechanic" component={Mechanic} />
           <Route path="/privacy" component={Privacy} />
           <Route path="/terms" component={Terms} />
           <Route path="/refund" component={Refund} />

@@ -43,11 +43,26 @@ export interface EstTotal {
   max: number;
 }
 
+export interface Mechanic {
+  id: string;
+  name: string;
+  rating: number;
+  reviewCount: number;
+  distance: number; // in km
+  specialization: string[];
+  experience: number; // in years
+  profileImage?: string;
+  isAvailable: boolean;
+  completedJobs: number;
+  responseTime: string; // e.g., "Within 30 mins"
+}
+
 interface BookingStore {
   // Selection state
   selectedVehicle: 'bike' | 'car';
   selectedBrand: string;
   selectedModel: string;
+  selectedMechanic: Mechanic | null;
   selectedServices: BookingService[];
   selectedAddons: BookingAddon[];
   
@@ -61,15 +76,18 @@ interface BookingStore {
   trackingId: string | null;
   
   // UI state
-  currentStep: 'services' | 'location' | 'details' | 'otp' | 'tracking';
+  currentStep: 'services' | 'location' | 'mechanic' | 'details' | 'otp' | 'tracking';
   showSummary: boolean;
   searchQuery: string;
   showPriceRanges: boolean;
+  nearbyMechanics: Mechanic[];
   
   // Actions
   setSelectedVehicle: (vehicle: 'bike' | 'car') => void;
   setSelectedBrand: (brand: string) => void;
   setSelectedModel: (model: string) => void;
+  setSelectedMechanic: (mechanic: Mechanic) => void;
+  setNearbyMechanics: (mechanics: Mechanic[]) => void;
   toggleService: (service: BookingService) => void;
   toggleAddon: (addon: BookingAddon) => void;
   setAddress: (address: Partial<AddressDetails>) => void;
@@ -77,7 +95,7 @@ interface BookingStore {
   setOTP: (otp: Partial<OTPDetails>) => void;
   setEstTotal: (total: EstTotal) => void;
   setTrackingId: (id: string) => void;
-  setCurrentStep: (step: 'services' | 'location' | 'details' | 'otp' | 'tracking') => void;
+  setCurrentStep: (step: 'services' | 'location' | 'mechanic' | 'details' | 'otp' | 'tracking') => void;
   setShowSummary: (show: boolean) => void;
   setSearchQuery: (query: string) => void;
   setShowPriceRanges: (show: boolean) => void;
@@ -118,8 +136,10 @@ export const useBookingStore = create<BookingStore>((set, get) => ({
   selectedVehicle: 'bike',
   selectedBrand: '',
   selectedModel: '',
+  selectedMechanic: null,
   selectedServices: [],
   selectedAddons: [],
+  nearbyMechanics: [],
   address: initialAddress,
   customer: initialCustomer,
   otp: initialOTP,
@@ -148,6 +168,14 @@ export const useBookingStore = create<BookingStore>((set, get) => ({
   
   setSelectedModel: (model) => set((state) => ({
     selectedModel: model
+  })),
+  
+  setSelectedMechanic: (mechanic) => set((state) => ({
+    selectedMechanic: mechanic
+  })),
+  
+  setNearbyMechanics: (mechanics) => set((state) => ({
+    nearbyMechanics: mechanics
   })),
   
   toggleService: (service) => set((state) => {
@@ -223,8 +251,10 @@ export const useBookingStore = create<BookingStore>((set, get) => ({
   clearBooking: () => set({
     selectedBrand: '',
     selectedModel: '',
+    selectedMechanic: null,
     selectedServices: [],
     selectedAddons: [],
+    nearbyMechanics: [],
     address: initialAddress,
     customer: initialCustomer,
     otp: initialOTP,
