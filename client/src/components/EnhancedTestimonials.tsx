@@ -188,7 +188,7 @@ export function EnhancedTestimonials() {
                 >
                   {[...Array(testimonial.rating)].map((_, i) => (
                     <motion.div
-                      key={i}
+                      key={`star-${testimonial.id}-${i}`}
                       variants={starVariants}
                       transition={{ delay: index * 0.1 + i * 0.1 }}
                     >

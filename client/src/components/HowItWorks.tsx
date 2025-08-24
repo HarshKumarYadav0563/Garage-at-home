@@ -143,7 +143,7 @@ export function HowItWorks() {
       <div className="absolute inset-0 overflow-hidden">
         {[...Array(20)].map((_, i) => (
           <motion.div
-            key={i}
+            key={`bg-particle-${i}`}
             className="absolute w-1 h-1 bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-full opacity-60"
             style={{
               left: `${Math.random() * 100}%`,
