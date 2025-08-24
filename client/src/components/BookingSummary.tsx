@@ -43,7 +43,7 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
 
   if (!hasItems) {
     return (
-      <Card className={`bg-white/5 border-white/10 backdrop-blur-xl ${className}`}>
+      <Card className={`bg-white/3 border-white/10 backdrop-blur-xl ${className}`}>
         <CardContent className="p-6 text-center">
           <ShoppingCart className="w-12 h-12 text-gray-500 mx-auto mb-4" />
           <p className="text-gray-400 text-sm">
@@ -60,8 +60,8 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
       animate={isMobile ? { y: 0, opacity: 1 } : { x: 0, opacity: 1 }}
       className={className}
     >
-      <Card className="bg-white/5 border-white/10 backdrop-blur-xl sticky top-24">
-        <CardContent className={isMobile ? "p-3" : "p-6"}>
+      <Card className={`bg-white/3 border-white/10 backdrop-blur-xl ${isMobile ? 'sticky top-24' : 'sticky top-4 max-h-[calc(100vh-2rem)]'} overflow-hidden`}>
+        <CardContent className={`${isMobile ? "p-3" : "p-4"} ${!isMobile ? 'max-h-[calc(100vh-4rem)] overflow-y-auto' : ''}`}>
           {/* Header with collapse/expand for mobile */}
           <div className={`flex items-center justify-between ${isMobile ? "mb-3" : "mb-6"}`}>
             {isMobile && isCollapsed ? (
@@ -150,7 +150,7 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
                     <motion.div
                       key={service.id}
                       layout
-                      className={`flex items-center justify-between ${isMobile ? "p-2" : "p-3"} bg-white/5 rounded-lg`}
+                      className={`flex items-center justify-between ${isMobile ? "p-2" : "p-3"} bg-white/3 rounded-lg`}
                     >
                       <div className="flex-1 min-w-0">
                         <p className={`text-white font-medium truncate ${isMobile ? "text-xs" : "text-sm"}`}>
@@ -215,7 +215,7 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
                 )}
                 
                 {!isMobile && doorstepCharge > 0 && (
-                  <div className="text-xs text-yellow-400 bg-yellow-500/10 rounded p-2">
+                  <div className="text-xs text-yellow-400 bg-yellow-500/5 rounded p-2">
                     ℹ️ Doorstep charge applies for orders below ₹999
                   </div>
                 )}
