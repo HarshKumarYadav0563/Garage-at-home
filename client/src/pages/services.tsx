@@ -446,7 +446,7 @@ export default function Services() {
         </div>
       </motion.div>
 
-      <div className="relative max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8 py-4 md:py-8">
+      <div className="relative max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8 py-2 md:py-4">
         
 
         {/* Vehicle Selector & Search - Desktop Inline */}
@@ -454,7 +454,7 @@ export default function Services() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.4 }}
-          className="hidden lg:block mb-4"
+          className="hidden lg:block mb-3"
         >
           <div className="bg-white/8 backdrop-blur-xl border border-white/20 rounded-xl p-2">
             <div className="flex justify-between items-center gap-4">
@@ -510,7 +510,7 @@ export default function Services() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.4 }}
-            className="mt-4 md:mt-6"
+            className="mt-2 md:mt-3"
           >
             {/* Combo Services */}
             {comboServices.length > 0 && (
@@ -518,9 +518,9 @@ export default function Services() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1, duration: 0.4 }}
-                className="mb-6"
+                className="mb-4"
               >
-                <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center justify-between mb-3">
                   <div>
                     <motion.h2 
                       className="text-xl md:text-2xl font-bold text-white mb-1"
@@ -542,7 +542,7 @@ export default function Services() {
                 {/* Mobile: Horizontal scroll with snap */}
                 <div className="lg:hidden">
                   <motion.div
-                    className="flex gap-4 overflow-x-auto snap-x snap-mandatory py-2 px-1 scrollbar-hide"
+                    className="flex gap-3 overflow-x-auto snap-x snap-mandatory py-1 px-1 scrollbar-hide"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.2, staggerChildren: 0.05 }}
@@ -553,7 +553,7 @@ export default function Services() {
                       return (
                         <motion.div
                           key={service.id}
-                          className="min-w-[300px] max-w-[300px] snap-start"
+                          className="min-w-[280px] max-w-[280px] snap-start"
                           initial={{ opacity: 0, x: 20 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: 0.1 + (index * 0.05) }}
@@ -572,7 +572,7 @@ export default function Services() {
                 {/* Desktop: Grid layout for side-by-side comparison */}
                 <div className="hidden lg:block">
                   <motion.div
-                    className="grid grid-cols-1 lg:grid-cols-3 gap-6"
+                    className="grid grid-cols-1 lg:grid-cols-3 gap-4"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.2, staggerChildren: 0.1 }}
@@ -605,10 +605,10 @@ export default function Services() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.4 }}
-              className="mb-6"
+              className="mb-4"
             >
               <motion.div 
-                className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-3"
+                className="flex flex-col sm:flex-row sm:items-center justify-between mb-3 gap-2"
               >
                 <div>
                   <h3 className="text-xl md:text-2xl font-bold text-white mb-1">
@@ -624,7 +624,7 @@ export default function Services() {
               </motion.div>
               
               <motion.div 
-                className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3 mb-4"
+                className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-2 mb-3"
               >
                 <p className="text-blue-300 text-sm">
                   <span className="font-medium">Mix & Match:</span> Individual services can be combined. Orders below ₹999 include ₹99 doorstep charge.
@@ -632,7 +632,7 @@ export default function Services() {
               </motion.div>
               
               <motion.div
-                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.3, staggerChildren: 0.03 }}
