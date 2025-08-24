@@ -132,16 +132,18 @@ export const useBookingStore = create<BookingStore>()(persist(
       const { selectedServices } = get();
       const isSelected = selectedServices.includes(serviceId);
       
+      console.log('Toggle service:', { serviceId, isSelected, currentServices: selectedServices });
+      
       if (isSelected) {
         const newServices = selectedServices.filter(id => id !== serviceId);
         set({ 
           selectedServices: newServices,
-          showSummary: false // Hide cart if no services left
+          showSummary: newServices.length > 0 ? false : false // Hide cart if no services left
         });
       } else {
         set({ 
           selectedServices: [...selectedServices, serviceId],
-          showSummary: true // Show cart when service is added
+          showSummary: false // Start with floating button, not modal
         });
       }
       
