@@ -48,12 +48,26 @@ export function SummaryDrawer({ className = '', onContinue }: SummaryDrawerProps
     toggleAddon(addonId);
   };
 
-  if (!hasItems) {
-    return null;
-  }
-
   return (
     <>
+      {/* Floating Cart Button - shows when items exist but summary is hidden */}
+      {hasItems && !showSummary && (
+        <motion.div
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          className="fixed bottom-6 right-6 z-40 lg:hidden"
+        >
+          <Button
+            onClick={() => setShowSummary(true)}
+            className="bg-gradient-to-r from-emerald-500 to-sky-500 hover:from-emerald-600 hover:to-sky-600 text-white rounded-full p-4 shadow-lg shadow-emerald-500/25"
+            data-testid="floating-cart-button"
+          >
+            <ShoppingCart className="w-6 h-6 mr-2" />
+            <span className="font-semibold">{selectedServices.length}</span>
+          </Button>
+        </motion.div>
+      )}
+
       {/* Mobile Bottom Sheet */}
       <div className="lg:hidden">
         <AnimatePresence>

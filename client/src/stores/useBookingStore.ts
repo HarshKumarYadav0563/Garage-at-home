@@ -130,12 +130,15 @@ export const useBookingStore = create<BookingStore>()(persist(
       const isSelected = selectedServices.includes(serviceId);
       
       if (isSelected) {
+        const newServices = selectedServices.filter(id => id !== serviceId);
         set({ 
-          selectedServices: selectedServices.filter(id => id !== serviceId)
+          selectedServices: newServices,
+          showSummary: newServices.length > 0 // Hide summary if no services left
         });
       } else {
         set({ 
-          selectedServices: [...selectedServices, serviceId]
+          selectedServices: [...selectedServices, serviceId],
+          showSummary: true // Show summary when service is added
         });
       }
       
