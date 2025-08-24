@@ -33,6 +33,7 @@ export default function Services() {
     selectedVehicle,
     setSelectedVehicle,
     selectedServices,
+    selectedAddons,
     toggleService,
     searchQuery,
     setSearchQuery,
@@ -662,7 +663,7 @@ export default function Services() {
         )}
 
         {/* Desktop Sidebar Summary */}
-        {currentStep === 'services' && (
+        {currentStep === 'services' && selectedServices.length > 0 && (
           <div className="hidden lg:block fixed right-8 top-1/2 transform -translate-y-1/2 w-80 z-30">
             <BookingSummary className="max-h-[80vh] overflow-y-auto" />
           </div>
