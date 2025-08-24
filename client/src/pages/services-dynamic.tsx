@@ -6,6 +6,9 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
+import { CartButton } from '@/components/CartButton';
+import { CartDrawer } from '@/components/CartDrawer';
+import { useCartStore } from '@/stores/useCartStore';
 import { 
   Wrench, Car, Bike, ArrowRight, Shield, Clock, 
   Search, MapPin, Calendar, CheckCircle, ArrowLeft,
@@ -141,16 +144,31 @@ export default function ServicesDynamic() {
   }, []);
 
   // Enhanced toggle service with user feedback
+  const { toggleService: toggleCartService } = useCartStore();
+  
   const handleToggleService = (serviceId: string) => {
     const isCurrentlySelected = selectedServices.includes(serviceId);
     toggleService(serviceId);
     
-    if (!isCurrentlySelected) {
-      const service = currentServices.find(s => s.id === serviceId);
-      if (service) {
+    // Also update cart
+    const service = currentServices.find(s => s.id === serviceId);
+    if (service) {
+      const cartService = {
+        id: service.id,
+        name: service.name,
+        subtitle: service.subtitle,
+        price: service.price,
+        vehicle: currentVehicle,
+        city: currentCity,
+        type: service.type
+      };
+      
+      const wasAdded = toggleCartService(cartService);
+      
+      if (wasAdded) {
         toast({
           title: "Service Added!",
-          description: `${service.name} has been added to your booking.`,
+          description: `${service.name} has been added to your cart.`,
           duration: 2000,
         });
       }
@@ -836,6 +854,9 @@ export default function ServicesDynamic() {
         </motion.div>
       </div>
       
+      {/* Cart Components */}
+      <CartButton />
+      <CartDrawer />
     </div>
   );
 }

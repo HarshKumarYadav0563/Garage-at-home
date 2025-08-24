@@ -8,6 +8,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Separator } from '@/components/ui/separator';
 import { Switch } from '@/components/ui/switch';
 import { useToast } from '@/hooks/use-toast';
+import { CartButton } from '@/components/CartButton';
+import { CartDrawer } from '@/components/CartDrawer';
 import { 
   Wrench, Car, Bike, ArrowRight, Shield, Clock, 
   Search, MapPin, Calendar, CheckCircle, ArrowLeft,
@@ -770,6 +772,10 @@ export default function Services() {
           </motion.div>
         )}
       </div>
+      
+      {/* Cart Components */}
+      <CartButton />
+      <CartDrawer />
     </div>
   );
 }
