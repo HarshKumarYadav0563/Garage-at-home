@@ -136,12 +136,12 @@ export const useBookingStore = create<BookingStore>()(persist(
         const newServices = selectedServices.filter(id => id !== serviceId);
         set({ 
           selectedServices: newServices,
-          cartState: newServices.length > 0 ? 'collapsed' : 'hidden'
+          showSummary: false // Hide cart if no services left
         });
       } else {
         set({ 
           selectedServices: [...selectedServices, serviceId],
-          cartState: 'collapsed' // Show collapsed cart when service is added
+          showSummary: true // Show cart when service is added
         });
       }
       
