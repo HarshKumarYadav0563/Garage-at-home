@@ -249,7 +249,7 @@ export function HowItWorks() {
                           <img 
                             src={step.illustration}
                             alt={`${step.title} illustration`}
-                            className="w-24 h-24 md:w-28 md:h-28 object-contain drop-shadow-2xl"
+                            className="w-32 h-32 md:w-40 md:h-40 object-contain drop-shadow-2xl"
                             loading="lazy"
                           />
                           <motion.div 
@@ -395,7 +395,7 @@ export function HowItWorks() {
                         <img 
                           src={step.illustration}
                           alt={`${step.title} illustration`}
-                          className="w-20 h-20 object-contain drop-shadow-xl"
+                          className="w-28 h-28 object-contain drop-shadow-xl"
                           loading="lazy"
                         />
                       </motion.div>
@@ -490,7 +490,7 @@ export function HowItWorks() {
                       
                       <div className="relative z-10">
                         <motion.div
-                          className="w-16 h-16 mx-auto mb-4"
+                          className="w-24 h-24 mx-auto mb-4"
                           animate={shouldReduceMotion ? {} : floatAnimation}
                           style={{ animationDelay: `${index * 0.3}s` }}
                         >
