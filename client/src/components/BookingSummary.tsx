@@ -30,6 +30,7 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
   const shouldReduceMotion = useReducedMotion();
   const subtotal = getSubtotal();
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isDesktopCollapsed, setIsDesktopCollapsed] = useState(false);
   
   // Calculate doorstep charge manually if function doesn't exist
   const doorstepCharge = subtotal > 0 && subtotal < 999 ? 99 : 0;
@@ -64,13 +65,13 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
         <CardContent className={isMobile ? "p-3" : "p-4"}>
           {/* Header with collapse/expand for mobile */}
           <div className={`flex items-center justify-between ${isMobile ? "mb-3" : "mb-6"}`}>
-            {isMobile && isCollapsed ? (
+            {(isMobile && isCollapsed) || (!isMobile && isDesktopCollapsed) ? (
               /* Collapsed view - show total and expand button */
               <div className="flex items-center justify-between w-full">
                 <div className="flex items-center space-x-3">
-                  <h3 className="text-white font-bold text-sm">Total: ₹{finalTotal.toLocaleString()}</h3>
+                  <h3 className={`text-white font-bold ${isMobile ? "text-sm" : "text-base"}`}>Total: ₹{finalTotal.toLocaleString()}</h3>
                   {selectedServices.length > 0 && (
-                    <Badge variant="outline" className="text-xs border-emerald-500/30 text-emerald-400">
+                    <Badge variant="outline" className={`border-emerald-500/30 text-emerald-400 ${isMobile ? "text-xs" : "text-sm"}`}>
                       {selectedServices.length} items
                     </Badge>
                   )}
@@ -82,14 +83,20 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
                       setLocation('/location');
                     }}
                     disabled={selectedServices.length === 0}
-                    className="bg-gradient-to-r from-emerald-500 via-sky-500 to-indigo-600 hover:from-emerald-600 hover:via-sky-600 hover:to-indigo-700 text-white py-1 px-3 text-xs font-semibold rounded-lg"
+                    className={`bg-gradient-to-r from-emerald-500 via-sky-500 to-indigo-600 hover:from-emerald-600 hover:via-sky-600 hover:to-indigo-700 text-white font-semibold rounded-lg ${isMobile ? "py-1 px-3 text-xs" : "py-2 px-4 text-sm"}`}
                   >
                     Continue
                   </Button>
                   <Button
                     variant="ghost"
                     size="sm"
-                    onClick={() => setIsCollapsed(false)}
+                    onClick={() => {
+                      if (isMobile) {
+                        setIsCollapsed(false);
+                      } else {
+                        setIsDesktopCollapsed(false);
+                      }
+                    }}
                     className="text-gray-400 hover:text-white"
                   >
                     <ChevronUp className="w-4 h-4" />
@@ -101,16 +108,20 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
               <>
                 <h3 className={`text-white font-bold ${isMobile ? "text-base" : "text-lg"}`}>Booking Summary</h3>
                 <div className="flex items-center space-x-2">
-                  {isMobile && (
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => setIsCollapsed(true)}
-                      className="text-gray-400 hover:text-white"
-                    >
-                      <ChevronDown className="w-4 h-4" />
-                    </Button>
-                  )}
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => {
+                      if (isMobile) {
+                        setIsCollapsed(true);
+                      } else {
+                        setIsDesktopCollapsed(true);
+                      }
+                    }}
+                    className="text-gray-400 hover:text-white"
+                  >
+                    <ChevronDown className="w-4 h-4" />
+                  </Button>
                   {isMobile && (
                     <Button
                       variant="ghost"
@@ -129,15 +140,15 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
             )}
           </div>
 
-          {/* Collapsible content for mobile */}
+          {/* Collapsible content for both mobile and desktop */}
           <AnimatePresence>
-            {(!isMobile || !isCollapsed) && (
+            {(!isMobile || !isCollapsed) && (!isDesktopCollapsed || isMobile) && (
               <motion.div
-                initial={isMobile ? { height: 0, opacity: 0 } : undefined}
-                animate={isMobile ? { height: 'auto', opacity: 1 } : undefined}
-                exit={isMobile ? { height: 0, opacity: 0 } : undefined}
+                initial={(isMobile || !isMobile) ? { height: 0, opacity: 0 } : undefined}
+                animate={(isMobile || !isMobile) ? { height: 'auto', opacity: 1 } : undefined}
+                exit={(isMobile || !isMobile) ? { height: 0, opacity: 0 } : undefined}
                 transition={{ duration: 0.3, ease: 'easeInOut' }}
-                style={isMobile ? { overflow: 'hidden' } : undefined}
+                style={{ overflow: 'hidden' }}
               >
 
           {/* Selected Services */}
