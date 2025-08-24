@@ -17,6 +17,7 @@ import {
 import { BookingServiceCard } from '@/components/ServiceCard';
 import { ComboServiceCard } from '@/components/ComboServiceCard';
 import { SimpleCart } from '@/components/SimpleCart';
+import { TestCart } from '@/components/TestCart';
 import { EnhancedServiceCard } from '@/components/EnhancedServiceCard';
 import { EnhancedSlotPicker } from '@/components/EnhancedSlotPicker';
 import { CustomerDetailsForm } from '@/components/CustomerDetailsForm';
@@ -525,6 +526,9 @@ export default function ServicesDynamic() {
 
         {/* Simple Cart */}
         <SimpleCart />
+        
+        {/* Test Cart - Always Visible */}
+        <TestCart />
 
         {/* Time Slot Selection */}
         {currentStep === 'details' && !selectedSlot && (
