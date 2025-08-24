@@ -122,8 +122,8 @@ export function Hero() {
               variants={itemVariants}
               className="flex gap-3 justify-center px-4"
             >
-              <Link href="/services" className="flex-1">
-                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="flex-1">
+                <Link href="/services" className="block w-full">
                   <Button
                     className="w-full bg-gradient-to-r from-emerald-500 via-sky-500 to-indigo-500 hover:shadow-[0_0_20px_rgba(16,185,129,0.4)] text-white px-4 py-3 rounded-xl font-semibold text-sm shadow-lg transition-all duration-300"
                     data-testid="button-book-now"
@@ -131,8 +131,8 @@ export function Hero() {
                     <Zap className="mr-2 w-4 h-4" />
                     Book Now
                   </Button>
-                </motion.div>
-              </Link>
+                </Link>
+              </motion.div>
               
               <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="flex-1">
                 <Button
@@ -235,12 +235,12 @@ export function Hero() {
               variants={containerVariants}
               className="flex gap-4 mb-8"
             >
-              <Link href="/services">
-                <motion.div 
-                  variants={itemVariants}
-                  whileHover={{ scale: 1.05 }} 
-                  whileTap={{ scale: 0.95 }}
-                >
+              <motion.div 
+                variants={itemVariants}
+                whileHover={{ scale: 1.05 }} 
+                whileTap={{ scale: 0.95 }}
+              >
+                <Link href="/services" className="block">
                   <Button
                     className="bg-gradient-to-r from-emerald-500 via-sky-500 to-indigo-500 hover:shadow-[0_0_30px_rgba(16,185,129,0.5)] text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-xl transition-all duration-300"
                     data-testid="button-book-now"
@@ -248,8 +248,8 @@ export function Hero() {
                     <Zap className="mr-2 w-5 h-5" />
                     Book Service Now
                   </Button>
-                </motion.div>
-              </Link>
+                </Link>
+              </motion.div>
               
               <motion.div
                 variants={itemVariants}
