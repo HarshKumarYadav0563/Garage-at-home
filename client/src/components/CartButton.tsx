@@ -23,10 +23,20 @@ export function CartButton() {
   const hasItems = selectedServices.length > 0;
   const canContinue = canProceedToStep('customer');
 
+  // Debug logging
+  console.log('=== CART BUTTON DEBUG ===', {
+    hasItems,
+    selectedServices,
+    estimate: estimate ? `₹${estimate.total}` : 'none'
+  });
+
   // Don't render anything if no items
   if (!hasItems) {
+    console.log('Cart hidden: no items');
     return null;
   }
+  
+  console.log('Cart should be visible!');
 
   const handleContinue = () => {
     if (canContinue) {
@@ -42,7 +52,15 @@ export function CartButton() {
   return (
     <>
       {/* Floating Cart Button */}
-      <div className="fixed bottom-4 right-4" style={{ zIndex: 1000 }}>
+      <div 
+        className="fixed bottom-4 right-4" 
+        style={{ 
+          zIndex: 9999,
+          backgroundColor: 'red', // Temporary visibility test
+          padding: '2px',
+          borderRadius: '50%'
+        }}
+      >
         <Button
           onClick={() => setIsOpen(true)}
           className="bg-emerald-500 hover:bg-emerald-600 text-white rounded-full h-14 w-14 p-0 shadow-xl"
