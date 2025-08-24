@@ -223,7 +223,7 @@ export function ComboServiceCard({
                     animate={{ scale: 1 }}
                   >
                     <Check className="w-4 h-4" />
-                    <span>Added to Cart</span>
+                    <span>Selected</span>
                   </motion.div>
                 ) : (
                   <motion.div 

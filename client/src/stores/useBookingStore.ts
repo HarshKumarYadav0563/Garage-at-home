@@ -44,7 +44,6 @@ export interface BookingStore {
   selectedServices: string[];
   selectedAddons: string[];
   searchQuery: string;
-  showSummary: boolean;
   
   // Step 2: Customer Details
   customer?: CustomerData;
@@ -62,7 +61,6 @@ export interface BookingStore {
   // UI State
   isSubmitting: boolean;
   trackingId?: string;
-  cartState: 'hidden' | 'collapsed' | 'expanded';
   
   // Actions
   setCurrentStep: (step: BookingStep) => void;
@@ -71,8 +69,6 @@ export interface BookingStore {
   toggleService: (serviceId: string) => void;
   toggleAddon: (addonId: string) => void;
   setSearchQuery: (query: string) => void;
-  setShowSummary: (show: boolean) => void;
-  setCartState: (state: 'hidden' | 'collapsed' | 'expanded') => void;
   setCustomer: (customer: CustomerData) => void;
   setAddress: (address: AddressData) => void;
   setSelectedSlot: (slot: TimeSlot) => void;
@@ -94,8 +90,6 @@ const defaultState = {
   selectedServices: [],
   selectedAddons: [],
   searchQuery: '',
-  showSummary: false,
-  cartState: 'hidden' as const,
   customer: undefined,
   address: undefined,
   selectedSlot: undefined,
@@ -137,13 +131,11 @@ export const useBookingStore = create<BookingStore>()(persist(
       if (isSelected) {
         const newServices = selectedServices.filter(id => id !== serviceId);
         set({ 
-          selectedServices: newServices,
-          showSummary: newServices.length > 0 ? false : false // Hide cart if no services left
+          selectedServices: newServices
         });
       } else {
         set({ 
-          selectedServices: [...selectedServices, serviceId],
-          showSummary: false // Start with floating button, not modal
+          selectedServices: [...selectedServices, serviceId]
         });
       }
       
@@ -169,9 +161,6 @@ export const useBookingStore = create<BookingStore>()(persist(
     
     setSearchQuery: (query) => set({ searchQuery: query }),
     
-    setShowSummary: (show) => set({ showSummary: show }),
-    
-    setCartState: (state) => set({ cartState: state }),
     
     // Customer details
     setCustomer: (customer) => set({ customer }),

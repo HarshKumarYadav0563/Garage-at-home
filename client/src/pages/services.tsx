@@ -12,14 +12,12 @@ import {
   Wrench, Car, Bike, ArrowRight, Shield, Clock, 
   Search, MapPin, Calendar, CheckCircle, ArrowLeft,
   User, Hash, Globe, ToggleLeft, ToggleRight, Star,
-  ShoppingCart, X
+  X
 } from 'lucide-react';
 
 // Components  
 import { BookingServiceCard } from '@/components/ServiceCard';
 import { ComboServiceCard } from '@/components/ComboServiceCard';
-import { CartFab } from '@/components/CartFab';
-import { CartDrawer } from '@/components/CartDrawer';
 import { SlotPicker } from '@/components/SlotPicker';
 import { CustomerDetailsForm } from '@/components/CustomerDetailsForm';
 
@@ -665,16 +663,14 @@ export default function Services() {
         {/* Desktop Sidebar Summary */}
         {currentStep === 'services' && (
           <div className="hidden lg:block fixed right-8 top-1/2 transform -translate-y-1/2 w-80 z-30">
-            <CartFab />
-            <CartDrawer />
+
           </div>
         )}
 
         {/* Mobile Bottom Summary */}
         {currentStep === 'services' && selectedServices.length > 0 && showSummary && (
           <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 p-4 bg-gradient-to-t from-black/90 to-transparent backdrop-blur-xl">
-            <CartFab />
-            <CartDrawer />
+
           </div>
         )}
 
