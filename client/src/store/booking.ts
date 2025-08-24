@@ -44,6 +44,8 @@ export interface EstTotal {
 interface BookingStore {
   // Selection state
   selectedVehicle: 'bike' | 'car';
+  selectedBrand: string;
+  selectedModel: string;
   selectedServices: BookingService[];
   selectedAddons: BookingAddon[];
   
@@ -64,6 +66,8 @@ interface BookingStore {
   
   // Actions
   setSelectedVehicle: (vehicle: 'bike' | 'car') => void;
+  setSelectedBrand: (brand: string) => void;
+  setSelectedModel: (model: string) => void;
   toggleService: (service: BookingService) => void;
   toggleAddon: (addon: BookingAddon) => void;
   setAddress: (address: Partial<AddressDetails>) => void;
@@ -110,6 +114,8 @@ const initialOTP: OTPDetails = {
 export const useBookingStore = create<BookingStore>((set, get) => ({
   // Initial state
   selectedVehicle: 'bike',
+  selectedBrand: '',
+  selectedModel: '',
   selectedServices: [],
   selectedAddons: [],
   address: initialAddress,
@@ -125,8 +131,22 @@ export const useBookingStore = create<BookingStore>((set, get) => ({
   // Actions
   setSelectedVehicle: (vehicle) => set((state) => {
     if (state.selectedVehicle === vehicle) return state; // Prevent unnecessary updates
-    return { selectedVehicle: vehicle, selectedServices: [] };
+    return { 
+      selectedVehicle: vehicle, 
+      selectedBrand: '', // Clear brand when switching vehicle type
+      selectedModel: '', // Clear model when switching vehicle type
+      selectedServices: [] 
+    };
   }),
+  
+  setSelectedBrand: (brand) => set((state) => ({
+    selectedBrand: brand,
+    selectedModel: '' // Clear model when changing brand
+  })),
+  
+  setSelectedModel: (model) => set((state) => ({
+    selectedModel: model
+  })),
   
   toggleService: (service) => set((state) => {
     const exists = state.selectedServices.find(s => s.id === service.id);
@@ -194,6 +214,8 @@ export const useBookingStore = create<BookingStore>((set, get) => ({
   setShowPriceRanges: (show) => set({ showPriceRanges: show }),
   
   clearBooking: () => set({
+    selectedBrand: '',
+    selectedModel: '',
     selectedServices: [],
     selectedAddons: [],
     address: initialAddress,

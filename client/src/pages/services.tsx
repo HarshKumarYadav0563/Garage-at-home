@@ -24,6 +24,7 @@ import { CustomerDetailsForm } from '@/components/CustomerDetailsForm';
 
 // Data & Store
 import { BIKE_SERVICES, CAR_SERVICES, ServiceData } from '@/data/bookingServices';
+import { getBrandsForVehicleType, getModelsForBrand } from '@/data/vehicleData';
 import { useBookingStore } from '@/store/booking';
 import { apiRequest } from '@/lib/queryClient';
 import { CustomerData } from '@/lib/validators';
@@ -32,6 +33,10 @@ export default function Services() {
   const {
     selectedVehicle,
     setSelectedVehicle,
+    selectedBrand,
+    setSelectedBrand,
+    selectedModel,
+    setSelectedModel,
     selectedServices,
     selectedAddons,
     toggleService,
@@ -457,7 +462,7 @@ export default function Services() {
           className="hidden lg:block mb-3"
         >
           <div className="bg-white/8 backdrop-blur-xl border border-white/20 rounded-xl p-2">
-            <div className="flex justify-between items-center gap-4">
+            <div className="flex justify-between items-center gap-3">
               {/* Vehicle Toggle */}
               <div className="flex bg-white/10 rounded-lg p-1">
                 <motion.button
@@ -487,6 +492,47 @@ export default function Services() {
                   <Car className="w-4 h-4" />
                   <span>Car</span>
                 </motion.button>
+              </div>
+
+              {/* Brand Selection */}
+              <div className="relative">
+                <Select 
+                  value={selectedBrand} 
+                  onValueChange={(value) => {
+                    setSelectedBrand(value);
+                  }}
+                >
+                  <SelectTrigger className="w-40 bg-white/10 border-white/20 text-white h-9">
+                    <SelectValue placeholder="Select Brand" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {getBrandsForVehicleType(selectedVehicle).map((brand) => (
+                      <SelectItem key={brand.id} value={brand.id}>
+                        {brand.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Model Selection */}
+              <div className="relative">
+                <Select 
+                  value={selectedModel} 
+                  onValueChange={setSelectedModel}
+                  disabled={!selectedBrand}
+                >
+                  <SelectTrigger className="w-48 bg-white/10 border-white/20 text-white h-9">
+                    <SelectValue placeholder="Select Model" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {getModelsForBrand(selectedBrand, selectedVehicle).map((model) => (
+                      <SelectItem key={model.id} value={model.id}>
+                        {model.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
 
               {/* Search Bar */}
