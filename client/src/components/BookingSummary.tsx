@@ -14,7 +14,7 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
   const {
     selectedServices,
     getSubtotal,
-    getDoorstepCharge,
+    getDoortepCharge,
     getFinalTotal,
     currentStep,
     setCurrentStep,
@@ -27,12 +27,14 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
   const subtotal = getSubtotal();
   const [showFloatingCart, setShowFloatingCart] = useState(false);
   
-  // Use proper doorstep charge calculation from store
-  const doorstepCharge = getDoorstepCharge ? getDoorstepCharge() : (subtotal > 0 && subtotal < 999 ? 99 : 0);
-  const finalTotal = getFinalTotal ? getFinalTotal() : subtotal + doorstepCharge;
+  // Calculate doorstep charge manually if function doesn't exist
+  const doorstepCharge = subtotal > 0 && subtotal < 999 ? 99 : 0;
+  const finalTotal = subtotal + doorstepCharge;
   
   const hasItems = selectedServices.length > 0;
 
+  // Debug: log values
+  console.log('Debug - Subtotal:', subtotal, 'Doorstep Charge:', doorstepCharge, 'Final Total:', finalTotal);
 
   // Show/hide floating cart based on items
   useEffect(() => {
@@ -53,25 +55,13 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
             animate={{ opacity: 1, scale: 1, x: 0 }}
             exit={{ opacity: 0, scale: 0, x: 100 }}
             transition={{ type: "spring", stiffness: 500, damping: 30 }}
-            className="fixed bottom-16 right-4 md:bottom-6 md:right-6 z-50"
-            style={{
-              // Ensure visibility on all mobile devices
-              position: 'fixed',
-              pointerEvents: 'auto',
-              touchAction: 'manipulation'
-            }}
+            className="fixed bottom-6 right-6 z-40"
           >
             <motion.button
               onClick={() => setShowSummary(true)}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="bg-gradient-to-r from-emerald-500 to-sky-500 text-white rounded-full p-4 shadow-2xl hover:shadow-emerald-500/25 transition-all duration-300 border border-white/20 min-w-[64px] min-h-[64px] flex items-center justify-center active:scale-95"
-              style={{
-                // Mobile touch optimization
-                touchAction: 'manipulation',
-                WebkitTapHighlightColor: 'transparent',
-                userSelect: 'none'
-              }}
+              className="bg-gradient-to-r from-emerald-500 to-sky-500 text-white rounded-full p-4 shadow-2xl hover:shadow-emerald-500/25 transition-all duration-300 border border-white/20"
             >
               <div className="flex items-center space-x-3">
                 <div className="relative">
@@ -79,14 +69,14 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
                   <motion.div
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
-                    className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center min-w-[20px]"
+                    className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center"
                   >
                     {selectedServices.length}
                   </motion.div>
                 </div>
-                <div className="text-right hidden lg:block">
+                <div className="text-right">
                   <div className="text-xs text-white/80">Total</div>
-                  <div className="font-bold text-base">₹{finalTotal.toLocaleString()}</div>
+                  <div className="font-bold">₹{finalTotal.toLocaleString()}</div>
                 </div>
               </div>
             </motion.button>
@@ -104,7 +94,7 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40"
+              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
               onClick={() => setShowSummary(false)}
             />
             
@@ -114,16 +104,11 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="fixed top-0 right-0 w-full sm:max-w-md h-full bg-gradient-to-br from-gray-900/98 to-black/98 border-l border-white/10 backdrop-blur-xl z-50 overflow-y-auto"
-              style={{
-                // Mobile performance optimization
-                WebkitOverflowScrolling: 'touch',
-                overflowScrolling: 'touch'
-              }}
+              className="fixed top-0 right-0 w-full max-w-md h-full bg-gradient-to-br from-gray-900 to-black border-l border-white/10 backdrop-blur-xl z-50 overflow-y-auto"
             >
               {/* Header */}
-              <div className="flex items-center justify-between p-4 md:p-6 border-b border-white/10 sticky top-0 bg-gradient-to-r from-gray-900 to-black backdrop-blur-xl z-10">
-                <h2 className="text-lg md:text-xl font-bold text-white flex items-center space-x-2">
+              <div className="flex items-center justify-between p-6 border-b border-white/10">
+                <h2 className="text-xl font-bold text-white flex items-center space-x-2">
                   <ShoppingCart className="w-5 h-5 text-emerald-400" />
                   <span>Your Cart</span>
                 </h2>
@@ -131,38 +116,38 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
                   variant="ghost"
                   size="sm"
                   onClick={() => setShowSummary(false)}
-                  className="text-gray-400 hover:text-white hover:bg-white/10 rounded-full p-2 -mr-2"
+                  className="text-gray-400 hover:text-white hover:bg-white/10 rounded-full p-2"
                 >
                   <X className="w-5 h-5" />
                 </Button>
               </div>
 
               {/* Services List */}
-              <div className="p-4 md:p-6 pb-safe">
-                <div className="space-y-3 md:space-y-4 mb-6">
+              <div className="p-6">
+                <div className="space-y-4 mb-6">
                   {selectedServices.map((service, index) => (
                     <motion.div
                       key={service.id}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.05 }}
-                      className="bg-white/5 rounded-xl p-3 md:p-4 border border-white/10"
+                      className="bg-white/5 rounded-xl p-4 border border-white/10"
                     >
                       <div className="flex items-start justify-between">
-                        <div className="flex-1 min-w-0">
-                          <h4 className="text-white font-semibold text-sm mb-1 truncate">{service.name}</h4>
+                        <div className="flex-1">
+                          <h4 className="text-white font-semibold text-sm mb-1">{service.name}</h4>
                           <p className="text-gray-400 text-xs mb-2 line-clamp-2">
                             Professional service with quality assurance
                           </p>
                           <div className="flex items-center justify-between">
-                            <span className="text-emerald-400 font-bold text-base md:text-lg">₹{service.price.toLocaleString()}</span>
+                            <span className="text-emerald-400 font-bold text-lg">₹{service.price.toLocaleString()}</span>
                           </div>
                         </div>
                         <Button
                           variant="ghost"
                           size="sm"
                           onClick={() => toggleService(service)}
-                          className="text-gray-400 hover:text-red-400 hover:bg-red-500/10 rounded-full p-1.5 ml-2 flex-shrink-0"
+                          className="text-gray-400 hover:text-red-400 hover:bg-red-500/10 rounded-full p-1 ml-3"
                         >
                           <X className="w-4 h-4" />
                         </Button>
@@ -172,16 +157,16 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
                 </div>
 
                 {/* Pricing Summary */}
-                <div className="bg-gradient-to-r from-emerald-500/10 to-sky-500/10 rounded-xl p-4 md:p-6 border border-emerald-500/20 mb-6">
+                <div className="bg-gradient-to-r from-emerald-500/10 to-sky-500/10 rounded-xl p-6 border border-emerald-500/20 mb-6">
                   <div className="space-y-3">
                     <div className="flex justify-between items-center">
-                      <span className="text-gray-300 text-sm">Services ({selectedServices.length})</span>
+                      <span className="text-gray-300">Services ({selectedServices.length})</span>
                       <span className="text-white font-medium">₹{subtotal.toLocaleString()}</span>
                     </div>
                     
                     {doorstepCharge > 0 && (
                       <div className="flex justify-between items-center">
-                        <span className="text-gray-300 text-sm">Doorstep Charge</span>
+                        <span className="text-gray-300">Doorstep Charge</span>
                         <span className="text-yellow-400 font-medium">₹{doorstepCharge}</span>
                       </div>
                     )}
@@ -189,8 +174,8 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
                     <Separator className="bg-white/20" />
                     
                     <div className="flex justify-between items-center">
-                      <span className="text-white font-semibold text-base md:text-lg">Total Amount</span>
-                      <span className="text-emerald-400 font-bold text-xl md:text-2xl">₹{finalTotal.toLocaleString()}</span>
+                      <span className="text-white font-semibold text-lg">Total Amount</span>
+                      <span className="text-emerald-400 font-bold text-2xl">₹{finalTotal.toLocaleString()}</span>
                     </div>
                     
                     {doorstepCharge > 0 && (
@@ -202,34 +187,34 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
                 </div>
 
                 {/* Action Buttons */}
-                <div className="space-y-3 mb-6">
+                <div className="space-y-3">
                   <Button
                     onClick={() => {
                       setCurrentStep('details');
                       setShowSummary(false);
                     }}
-                    className="w-full bg-gradient-to-r from-emerald-500 to-sky-500 hover:from-emerald-600 hover:to-sky-600 text-white py-3 md:py-4 text-base md:text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+                    className="w-full bg-gradient-to-r from-emerald-500 to-sky-500 hover:from-emerald-600 hover:to-sky-600 text-white py-4 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
                   >
                     <motion.div
                       className="flex items-center justify-center space-x-2"
                       whileHover={{ scale: 1.02 }}
                     >
                       <span>Proceed to Book</span>
-                      <ArrowRight className="w-4 h-4 md:w-5 md:h-5" />
+                      <ArrowRight className="w-5 h-5" />
                     </motion.div>
                   </Button>
                   
                   <Button
                     variant="outline"
                     onClick={() => setShowSummary(false)}
-                    className="w-full border-white/20 text-white hover:bg-white/10 py-2 md:py-3 rounded-xl"
+                    className="w-full border-white/20 text-white hover:bg-white/10 py-3 rounded-xl"
                   >
                     Continue Shopping
                   </Button>
                 </div>
 
                 {/* Fine Print */}
-                <div className="text-xs text-gray-500 text-center space-y-1 pb-4">
+                <div className="text-xs text-gray-500 text-center mt-6 space-y-1">
                   <p>*Prices exclude GST</p>
                   <p>*Final amount may vary based on actual work</p>
                 </div>

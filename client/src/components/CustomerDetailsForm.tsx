@@ -14,7 +14,7 @@ interface CustomerDetailsFormProps {
 }
 
 export function CustomerDetailsForm({ onSubmit }: CustomerDetailsFormProps) {
-  const { customer, setCustomer } = useBookingStore();
+  const { customer, setCustomer, city } = useBookingStore();
   const shouldReduceMotion = useReducedMotion();
 
   const form = useForm<CustomerData>({
@@ -28,8 +28,12 @@ export function CustomerDetailsForm({ onSubmit }: CustomerDetailsFormProps) {
     onSubmit(data);
   };
 
-  // For now, we'll use a generic location since we don't have city state
-  const cityName = 'Delhi NCR';
+  const cityName = {
+    mumbai: 'Mumbai',
+    delhi: 'Delhi',
+    bangalore: 'Bangalore', 
+    other: 'Other'
+  }[city];
 
   return (
     <div className="space-y-6">
