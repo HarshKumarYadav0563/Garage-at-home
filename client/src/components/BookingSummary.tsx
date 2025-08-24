@@ -60,7 +60,7 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
       animate={isMobile ? { y: 0, opacity: 1 } : { x: 0, opacity: 1 }}
       className={className}
     >
-      <Card className={`bg-white/3 border-white/10 backdrop-blur-xl ${isMobile ? 'sticky top-24' : 'fixed bottom-6 left-1/2 transform -translate-x-1/2 w-96 max-w-[90vw] z-50 shadow-2xl'} overflow-hidden`}>
+      <Card className={`bg-white/3 border-white/10 backdrop-blur-xl ${isMobile ? 'sticky top-24' : 'mt-8'} overflow-hidden`}>
         <CardContent className={isMobile ? "p-3" : "p-4"}>
           {/* Header with collapse/expand for mobile */}
           <div className={`flex items-center justify-between ${isMobile ? "mb-3" : "mb-6"}`}>
