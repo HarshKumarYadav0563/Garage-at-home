@@ -10,17 +10,7 @@ export function Hero() {
   const [, setLocation] = useLocation();
 
   const handleHowItWorks = () => {
-    // Scroll to how it works section or show modal
-    const element = document.getElementById('how-it-works');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    } else {
-      addToast({
-        type: 'info',
-        title: 'How it Works',
-        message: '1. Select service → 2. Choose location → 3. Pick time slot → 4. Mechanic arrives!'
-      });
-    }
+    setLocation('/how-it-works');
   };
 
   const containerVariants = {
