@@ -16,12 +16,10 @@ import {
 // Components  
 import { BookingServiceCard } from '@/components/ServiceCard';
 import { ComboServiceCard } from '@/components/ComboServiceCard';
-import { SimpleCart } from '@/components/SimpleCart';
-import { TestCart } from '@/components/TestCart';
-import { MinimalCart } from '@/components/MinimalCart';
 import { EnhancedServiceCard } from '@/components/EnhancedServiceCard';
 import { EnhancedSlotPicker } from '@/components/EnhancedSlotPicker';
 import { CustomerDetailsForm } from '@/components/CustomerDetailsForm';
+import { CartButton } from '@/components/CartButton';
 
 // Data & Store
 import { BIKE_SERVICES, CAR_SERVICES, ServiceData } from '@/data/bookingServices';
@@ -525,14 +523,6 @@ export default function ServicesDynamic() {
           </motion.div>
         )}
 
-        {/* Simple Cart */}
-        <SimpleCart />
-        
-        {/* Test Cart - Always Visible */}
-        <TestCart />
-        
-        {/* Minimal Cart - Basic styling */}
-        <MinimalCart />
 
         {/* Time Slot Selection */}
         {currentStep === 'details' && !selectedSlot && (
@@ -846,6 +836,9 @@ export default function ServicesDynamic() {
           </div>
         </motion.div>
       </div>
+      
+      {/* Cart Button */}
+      <CartButton />
     </div>
   );
 }
