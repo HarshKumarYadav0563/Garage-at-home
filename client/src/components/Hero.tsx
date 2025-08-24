@@ -2,7 +2,6 @@ import { motion } from 'framer-motion';
 import { HelpCircle, Star, Users, Clock, Car, Bike, Wrench, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'wouter';
-import { getCurrentLocation } from '@/lib/geo';
 import { useUiStore } from '@/stores/useUiStore';
 import heroImage from '@assets/generated_images/Professional_motorcycle_service_scene_46bd446f.png';
 
