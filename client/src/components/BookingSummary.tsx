@@ -53,28 +53,40 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
             animate={{ opacity: 1, scale: 1, x: 0 }}
             exit={{ opacity: 0, scale: 0, x: 100 }}
             transition={{ type: "spring", stiffness: 500, damping: 30 }}
-            className="fixed bottom-20 right-4 md:bottom-6 md:right-6 z-40"
+            className="fixed bottom-16 right-4 md:bottom-6 md:right-6 z-50"
+            style={{
+              // Ensure visibility on all mobile devices
+              position: 'fixed',
+              pointerEvents: 'auto',
+              touchAction: 'manipulation'
+            }}
           >
             <motion.button
               onClick={() => setShowSummary(true)}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="bg-gradient-to-r from-emerald-500 to-sky-500 text-white rounded-full p-3 md:p-4 shadow-2xl hover:shadow-emerald-500/25 transition-all duration-300 border border-white/20"
+              className="bg-gradient-to-r from-emerald-500 to-sky-500 text-white rounded-full p-4 shadow-2xl hover:shadow-emerald-500/25 transition-all duration-300 border border-white/20 min-w-[64px] min-h-[64px] flex items-center justify-center active:scale-95"
+              style={{
+                // Mobile touch optimization
+                touchAction: 'manipulation',
+                WebkitTapHighlightColor: 'transparent',
+                userSelect: 'none'
+              }}
             >
-              <div className="flex items-center space-x-2 md:space-x-3">
+              <div className="flex items-center space-x-3">
                 <div className="relative">
-                  <ShoppingCart className="w-5 h-5 md:w-6 md:h-6" />
+                  <ShoppingCart className="w-6 h-6" />
                   <motion.div
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
-                    className="absolute -top-1 -right-1 md:-top-2 md:-right-2 bg-red-500 text-white text-xs font-bold rounded-full w-4 h-4 md:w-5 md:h-5 flex items-center justify-center"
+                    className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center min-w-[20px]"
                   >
                     {selectedServices.length}
                   </motion.div>
                 </div>
-                <div className="text-right hidden sm:block">
+                <div className="text-right hidden lg:block">
                   <div className="text-xs text-white/80">Total</div>
-                  <div className="font-bold text-sm md:text-base">₹{finalTotal.toLocaleString()}</div>
+                  <div className="font-bold text-base">₹{finalTotal.toLocaleString()}</div>
                 </div>
               </div>
             </motion.button>
@@ -92,7 +104,7 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40"
               onClick={() => setShowSummary(false)}
             />
             
@@ -102,7 +114,12 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="fixed top-0 right-0 w-full sm:max-w-md h-full bg-gradient-to-br from-gray-900 to-black border-l border-white/10 backdrop-blur-xl z-50 overflow-y-auto safe-area-inset-right"
+              className="fixed top-0 right-0 w-full sm:max-w-md h-full bg-gradient-to-br from-gray-900/98 to-black/98 border-l border-white/10 backdrop-blur-xl z-50 overflow-y-auto"
+              style={{
+                // Mobile performance optimization
+                WebkitOverflowScrolling: 'touch',
+                overflowScrolling: 'touch'
+              }}
             >
               {/* Header */}
               <div className="flex items-center justify-between p-4 md:p-6 border-b border-white/10 sticky top-0 bg-gradient-to-r from-gray-900 to-black backdrop-blur-xl z-10">
