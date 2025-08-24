@@ -74,12 +74,12 @@ export const useBookingStore = create<BookingStore>()(persist(
         selectedAddons: [],
         estimate: undefined
       });
-      get().calculateEstimate();
+      
     },
     
     setSelectedCity: (city) => {
       set({ selectedCity: city });
-      get().calculateEstimate();
+      
     },
     
     toggleService: (serviceId) => {
@@ -98,7 +98,7 @@ export const useBookingStore = create<BookingStore>()(persist(
         });
       }
       
-      get().calculateEstimate();
+      
     },
     
     toggleAddon: (addonId) => {
@@ -115,7 +115,7 @@ export const useBookingStore = create<BookingStore>()(persist(
         });
       }
       
-      get().calculateEstimate();
+      
     },
     
     setSearchQuery: (query) => set({ searchQuery: query }),

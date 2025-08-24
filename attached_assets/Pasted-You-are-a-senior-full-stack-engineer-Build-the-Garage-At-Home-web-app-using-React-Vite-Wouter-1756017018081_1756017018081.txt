@@ -1,0 +1,135 @@
+You are a senior full-stack engineer.
+Build the Garage At Home web app using **React (Vite) + Wouter** on the frontend and **Express** on the backend.
+
+Goal: Implement the full **booking flow** with **NCR-only** serviceability, deep links like `/services/:vehicle/:city`, cart, OTP verification, and dark UI.
+
+──────────────────────────────── Frontend (React + Vite + Wouter)
+Tech
+- React + Vite (TypeScript)
+- **Wouter** for routing (no Next.js)
+- TailwindCSS (dark theme)
+- Framer Motion (animations)
+- React Hook Form + Zod (forms/validation)
+- Zustand (state for cart/booking)
+
+Routes (Wouter)
+- `/` → Home (compact hero + CTA to default `/services/bike/delhi`)
+- `/services/:vehicle/:city` → Main booking page (all steps inline)
+  - `vehicle` ∈ {bike, car}
+  - `city` ∈ {delhi, gurugram, noida, ghaziabad, faridabad}
+  - If invalid city → open Waitlist modal (do not allow booking)
+- `/track/:trackingId` → Live status page
+
+Config
+- `src/config/serviceAreas.ts`:
+  - NCR cities array, alias map (gurgaon→gurugram, ggn→gurugram)
+  - helpers: `normalizeCity`, `isNcr(slug)`, `cityFactor(slug)`
+- `src/data/services.ts`:
+  - Affordable ranges for Bike & Car (as previously listed)
+  - Add-ons (Pickup&Drop, Diagnosis, Emergency 2-hr, Warranty)
+- `src/lib/pricing.ts`: apply city multipliers, compute est totals
+
+State (Zustand)
+- `useBookingStore`:
+  - vehicle, city
+  - services[] / addons[]
+  - model {make, model, variant?}
+  - customer {name, phone, email?, contactPref}
+  - address {text, lat?, lng?, pincode?}
+  - slot {startISO, endISO}
+  - otp {phone, sessionId?, verified}
+  - selectors: estTotal {min, max} (city-adjusted)
+  - actions: add/remove/toggle service, clear, hydrate (localStorage)
+
+UI/UX (Dark, animated)
+- Global theme: `bg-gradient-to-b from-gray-950 via-gray-900 to-black`
+- Glass cards: `bg-white/5 border border-white/10 backdrop-blur-xl rounded-2xl`
+- Primary gradient: `from-emerald-500 via-sky-500 to-indigo-600`
+- Animations: fade-up on scroll, stagger cards, sliding drawers; respect prefers-reduced-motion
+
+Booking Flow (inline on `/services/:vehicle/:city`)
+STEP 1 — Select Services
+- Sticky top controls: vehicle tabs + city pills + search
+- **Service cards visible above the fold**
+- “Add” toggles; “View details” collapsible list
+- On first add → show **Cart FAB** (floating button with count + est total)
+
+STEP 2 — Summary / Total
+- Click Cart FAB → **Summary Drawer** (mobile bottom sheet / desktop right sidebar)
+- List selected services & add-ons, est total ₹min–₹max, city factor note
+- CTA: **Continue → Vehicle Model**
+
+STEP 3 — Select Vehicle Model
+- Make → Model → Variant (dependent selects; searchable)
+- Quick chips for popular makes
+- Require make+model; save chip to summary
+
+STEP 4 — Detect Location & Fill Details
+- Buttons: **Use My Location**, **Search Address**, or manual address+pincode
+- Auto-set city from URL; if geolocate outside NCR → show Waitlist modal
+- Customer form (RHF+Zod):
+  - name (2–60), phone (India regex), email?, contactPref (Call/WhatsApp)
+- Slot picker: Today/Tomorrow with 10–12, 12–2, 2–4, 4–6 (disable past slots)
+- CTA: **Proceed to OTP**
+
+STEP 5 — Book & OTP Verify
+- Call backend `POST /api/otp/send { phone }` → { sessionId }
+- Show 6-digit OTP input; resend after 30s
+- Verify via `POST /api/otp/verify { phone, sessionId, code }` → { verified, otpToken }
+- If verified → `POST /api/leads` with full payload (vehicle, city, model, services/addons, totals, customer, address, slot, otpToken)
+- Response `{ trackingId }` → navigate to `/track/:trackingId`
+
+STEP 6 — Confirmation
+- Success screen with tracking link + what happens next
+- Toast + optional WhatsApp deep link
+
+Components to Build
+- `ServiceCard`, `AddonChip`, `CartFab`, `SummaryDrawer`
+- `VehicleTabs`, `CityPills`, `SearchBar`
+- `ModelPicker` (3-level select)
+- `AddressPicker` (use-my-location + search/manual)
+- `SlotPicker`, `OtpDialog`, `RatingBadge`
+- `WaitlistModal`
+
+Accessibility
+- Proper roles/labels, focus traps for dialogs, 44px tap targets, keyboard nav
+
+SEO (static best-effort without SSR)
+- Set `<title>` + `<meta>` per route (vehicle+city)
+- Inject JSON-LD (LocalBusiness + AggregateRating 4.9 / 25,000) via `<script type="application/ld+json">`
+- Inline rating microdata under H1
+
+──────────────────────────────── Backend (Express)
+Tech
+- Node + Express (TypeScript)
+- CORS, Helmet, rate-limit
+- In-memory or simple SQLite/Prisma for mock data (leads, waitlist)
+
+API Endpoints
+- `POST /api/otp/send`  → { sessionId }
+  - Validate phone, throttle by IP/phone
+  - Simulate OTP send; store code in memory keyed by sessionId (dev only)
+- `POST /api/otp/verify` → { verified, otpToken? }
+  - Check code; return short-lived otpToken (JWT or random id)
+- `POST /api/leads` → { trackingId }
+  - Require otpToken; validate city ∈ NCR; store lead; return trackingId `GW-XXXXXX`
+- `GET /api/track/:id` → { status, mechanic?, eta? }
+  - Simulate status progression: Received → Assigned → OnTheWay → InProgress → Done
+- `POST /api/waitlist` → { ok: true, id }
+- `POST /api/mechanics/search` (optional) → ranked list by distance/rating/availability
+
+Validation (server)
+- Zod or express-validator for all endpoints
+- India phone regex; NCR city guard; rate limit OTP (e.g., 3/min)
+
+Integration
+- Frontend baseURL env: `VITE_API_URL`
+- All fetches with Axios; handle errors and show toasts
+
+──────────────────────────────── Acceptance
+- First service cards visible without scroll; Cart FAB appears on add
+- Drawer shows items + est total; Continue progresses steps
+- Vehicle model required; address inside NCR; slot required
+- OTP required before creating lead; success → `/track/:trackingId`
+- Mobile: sticky controls + bottom drawer; Desktop: two-pane with right sidebar
+- Dark, animated, accessible; no console errors
