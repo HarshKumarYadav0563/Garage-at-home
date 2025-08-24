@@ -19,7 +19,7 @@ import { ComboServiceCard } from '@/components/ComboServiceCard';
 import { EnhancedServiceCard } from '@/components/EnhancedServiceCard';
 import { EnhancedSlotPicker } from '@/components/EnhancedSlotPicker';
 import { CustomerDetailsForm } from '@/components/CustomerDetailsForm';
-import { BookingSummary } from '@/components/BookingSummary';
+import { CartIcon } from '@/components/CartIcon';
 
 // Data & Store
 import { BIKE_SERVICES, CAR_SERVICES, ServiceData } from '@/data/bookingServices';
@@ -837,8 +837,8 @@ export default function ServicesDynamic() {
         </motion.div>
       </div>
       
-      {/* Booking Summary with Cart */}
-      <BookingSummary />
+      {/* Cart Icon */}
+      <CartIcon />
     </div>
   );
 }
