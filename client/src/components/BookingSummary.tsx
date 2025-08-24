@@ -7,6 +7,7 @@ import { ArrowRight, X, ShoppingCart, ChevronUp, ChevronDown } from 'lucide-reac
 import { useBookingStore } from '@/store/booking';
 import { useLocation } from 'wouter';
 import { useState } from 'react';
+import { getBrandsForVehicleType } from '@/data/vehicleData';
 
 interface BookingSummaryProps {
   className?: string;
@@ -16,6 +17,9 @@ interface BookingSummaryProps {
 export function BookingSummary({ className = '', isMobile = false }: BookingSummaryProps) {
   const {
     selectedServices,
+    selectedVehicle,
+    selectedBrand,
+    selectedModel,
     getSubtotal,
     getDoortepCharge,
     getFinalTotal,
@@ -151,6 +155,26 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
                 style={{ overflow: 'hidden' }}
               >
 
+          {/* Vehicle Details */}
+          {selectedBrand && selectedModel && (
+            <div className={isMobile ? "mb-3" : "mb-4"}>
+              <h4 className={`text-gray-300 font-medium ${isMobile ? "text-xs mb-1" : "text-sm mb-2"}`}>Vehicle</h4>
+              <div className={`${isMobile ? "p-2" : "p-3"} bg-white/3 rounded-lg`}>
+                <p className={`text-white font-medium ${isMobile ? "text-xs" : "text-sm"}`}>
+                  {(() => {
+                    const brands = getBrandsForVehicleType(selectedVehicle);
+                    const brand = brands.find(b => b.id === selectedBrand);
+                    const model = brand?.models.find(m => m.id === selectedModel);
+                    return `${brand?.name || selectedBrand} ${model?.name || selectedModel}`;
+                  })()} 
+                </p>
+                <p className={`text-gray-400 ${isMobile ? "text-xs" : "text-xs"} capitalize`}>
+                  {selectedVehicle}
+                </p>
+              </div>
+            </div>
+          )}
+
           {/* Selected Services */}
           {selectedServices.length > 0 && (
             <div className={isMobile ? "mb-3" : "mb-6"}>
@@ -167,6 +191,16 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
                         <p className={`text-white font-medium truncate ${isMobile ? "text-xs" : "text-sm"}`}>
                           {service.name}
                         </p>
+                        {service.vehicleBrand && service.vehicleModel && (
+                          <p className={`text-emerald-400 ${isMobile ? "text-xs" : "text-xs"} truncate`}>
+                            {(() => {
+                              const brands = getBrandsForVehicleType(service.vehicleType);
+                              const brand = brands.find(b => b.id === service.vehicleBrand);
+                              const model = brand?.models.find(m => m.id === service.vehicleModel);
+                              return `${brand?.name || service.vehicleBrand} ${model?.name || service.vehicleModel}`;
+                            })()} 
+                          </p>
+                        )}
                         <p className={`text-gray-400 ${isMobile ? "text-xs" : "text-xs"}`}>
                           ₹{service.price.toLocaleString()}
                         </p>

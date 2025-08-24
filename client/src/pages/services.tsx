@@ -88,6 +88,16 @@ export default function Services() {
     const hasComboSelected = selectedServices.some(s => s.type === 'combo');
     const hasIndividualSelected = selectedServices.some(s => s.type === 'individual' || !s.type);
     
+    // Check if brand and model are selected before adding a new service
+    if (!isCurrentlySelected && (!selectedBrand || !selectedModel)) {
+      toast({
+        title: 'Vehicle Details Required',
+        description: 'Please select your vehicle brand and model first to proceed with service selection.',
+        duration: 4000,
+      });
+      return;
+    }
+    
     if (!isCurrentlySelected) {
       if (service.type === 'combo') {
         if (hasComboSelected) {
