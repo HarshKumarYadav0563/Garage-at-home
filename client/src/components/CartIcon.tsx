@@ -112,7 +112,7 @@ export function CartIcon() {
                       <div className="flex items-center justify-between">
                         <div>
                           <h4 className="text-white font-medium">{service.name}</h4>
-                          <p className="text-emerald-400 font-bold">₹{service.price}</p>
+                          <p className="text-emerald-400 font-bold">₹{typeof service.price === 'number' ? service.price : service.price?.min || 0}</p>
                         </div>
                         <Button
                           variant="ghost"
@@ -132,7 +132,7 @@ export function CartIcon() {
               <div className="p-6 border-t border-white/10 bg-gradient-to-r from-emerald-500/10 to-sky-500/10">
                 <div className="flex items-center justify-between mb-4">
                   <span className="text-white font-medium">Total</span>
-                  <span className="text-emerald-400 text-2xl font-bold">₹{total}</span>
+                  <span className="text-emerald-400 text-2xl font-bold">₹{typeof total === 'number' ? total : 0}</span>
                 </div>
                 <Button className="w-full bg-gradient-to-r from-emerald-500 to-sky-500 hover:from-emerald-600 hover:to-sky-600 text-white font-medium py-3 rounded-xl">
                   Proceed to Checkout
