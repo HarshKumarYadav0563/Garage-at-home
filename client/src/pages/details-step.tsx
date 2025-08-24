@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useToast } from '@/hooks/use-toast';
 import { ArrowLeft, ArrowRight, User, Phone, Mail, MessageSquare } from 'lucide-react';
 import { useBookingStore } from '@/store/booking';
+import { useLocation } from 'wouter';
 
 const customerDetailsSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters').max(60, 'Name must be less than 60 characters'),
@@ -25,6 +26,7 @@ type CustomerDetailsForm = z.infer<typeof customerDetailsSchema>;
 export default function DetailsStep() {
   const { toast } = useToast();
   const { customer, address, setCustomer, setCurrentStep } = useBookingStore();
+  const [, setLocationRoute] = useLocation();
 
   const form = useForm<CustomerDetailsForm>({
     resolver: zodResolver(customerDetailsSchema),
@@ -50,6 +52,7 @@ export default function DetailsStep() {
     });
 
     setCurrentStep('otp');
+    setLocationRoute('/otp');
   };
 
   return (
@@ -63,7 +66,10 @@ export default function DetailsStep() {
         >
           <Button
             variant="ghost"
-            onClick={() => setCurrentStep('location')}
+            onClick={() => {
+              setCurrentStep('location');
+              setLocationRoute('/location');
+            }}
             className="text-gray-300 hover:text-white mb-4"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />

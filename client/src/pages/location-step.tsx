@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { MapPin, Navigation, ArrowLeft, ArrowRight } from 'lucide-react';
 import { useBookingStore } from '@/store/booking';
+import { useLocation } from 'wouter';
 
 // NCR cities for validation
 const NCR_CITIES = ['delhi', 'gurugram', 'noida', 'ghaziabad', 'faridabad'];
@@ -14,6 +15,7 @@ const NCR_CITIES = ['delhi', 'gurugram', 'noida', 'ghaziabad', 'faridabad'];
 export default function LocationStep() {
   const { toast } = useToast();
   const { address, setAddress, setCurrentStep } = useBookingStore();
+  const [, setLocationRoute] = useLocation();
   const [isLoading, setIsLoading] = useState(false);
   const [manualAddress, setManualAddress] = useState(address.text || '');
   const [pincode, setPincode] = useState(address.pincode || '');
@@ -131,6 +133,7 @@ export default function LocationStep() {
       return;
     }
     setCurrentStep('details');
+    setLocationRoute('/details');
   };
 
   return (
@@ -144,7 +147,10 @@ export default function LocationStep() {
         >
           <Button
             variant="ghost"
-            onClick={() => setCurrentStep('services')}
+            onClick={() => {
+              setCurrentStep('services');
+              setLocationRoute('/services');
+            }}
             className="text-gray-300 hover:text-white mb-4"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />

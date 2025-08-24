@@ -169,7 +169,10 @@ export default function OTPStep() {
         >
           <Button
             variant="ghost"
-            onClick={() => setCurrentStep('details')}
+            onClick={() => {
+              setCurrentStep('details');
+              setLocation('/details');
+            }}
             className="text-gray-300 hover:text-white mb-4"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />

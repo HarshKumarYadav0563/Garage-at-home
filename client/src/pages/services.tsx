@@ -684,54 +684,6 @@ export default function Services() {
           </div>
         )}
 
-        {currentStep === 'location' && (
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="max-w-4xl mx-auto"
-          >
-            {/* Import and render location step component inline or redirect */}
-            <div className="text-center py-12">
-              <p className="text-gray-400">Redirecting to location step...</p>
-            </div>
-          </motion.div>
-        )}
-
-        {currentStep === 'details' && (
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="max-w-4xl mx-auto"
-          >
-            <div className="text-center py-12">
-              <p className="text-gray-400">Redirecting to details step...</p>
-            </div>
-          </motion.div>
-        )}
-
-        {currentStep === 'otp' && (
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="max-w-4xl mx-auto"
-          >
-            <div className="text-center py-12">
-              <p className="text-gray-400">Redirecting to OTP verification...</p>
-            </div>
-          </motion.div>
-        )}
-
-        {currentStep === 'tracking' && (
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="max-w-4xl mx-auto"
-          >
-            <div className="text-center py-12">
-              <p className="text-gray-400">Redirecting to tracking...</p>
-            </div>
-          </motion.div>
-        )}
 
         {/* Legacy details form (keeping for backward compatibility) */}
         {false && (
