@@ -231,6 +231,7 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
               <motion.div
                 whileHover={shouldReduceMotion ? {} : { scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
+                className={!isMobile ? "mb-8" : ""}
               >
                 <Button
                   onClick={() => {
