@@ -16,7 +16,6 @@ import LocationStep from "@/pages/location-step";
 import MechanicStep from "@/pages/mechanic-step";
 import DetailsStep from "@/pages/details-step";
 import OTPStep from "@/pages/otp-step";
-import Book from "@/pages/book";
 import Track from "@/pages/track";
 import Contact from "@/pages/contact";
 import Pricing from "@/pages/pricing";
@@ -49,7 +48,6 @@ function Router() {
           <Route path="/details" component={DetailsStep} />
           <Route path="/otp" component={OTPStep} />
           <Route path="/pricing" component={Pricing} />
-          <Route path="/book" component={Book} />
           <Route path="/track/:trackingId?" component={Track} />
           <Route path="/contact" component={Contact} />
           <Route path="/how-it-works" component={HowItWorks} />

@@ -404,7 +404,7 @@ export function Header() {
                 </motion.div>
               </Link>
               
-              <Link href="/book">
+              <Link href="/services">
                 <motion.div
                   whileHover={{ 
                     scale: 1.05,
@@ -639,7 +639,7 @@ export function Header() {
                     </Button>
                   </Link>
                   
-                  <Link href="/book" onClick={() => setMobileMenuOpen(false)}>
+                  <Link href="/services" onClick={() => setMobileMenuOpen(false)}>
                     <motion.div
                       whileHover={{ 
                         scale: 1.02,
