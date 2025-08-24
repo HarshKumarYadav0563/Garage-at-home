@@ -63,11 +63,11 @@ export function BookingServiceCard({
           </motion.div>
         )}
         
-        <CardContent className="p-4 sm:p-6 h-full flex flex-col relative z-10">
-          <div className="flex flex-col sm:flex-row sm:items-start justify-between mb-6 gap-4">
-            <div className="flex items-center space-x-3 sm:space-x-4 flex-1">
+        <CardContent className="p-3 sm:p-4 h-full flex flex-col relative z-10">
+          <div className="flex flex-col sm:flex-row sm:items-start justify-between mb-4 gap-2">
+            <div className="flex items-center space-x-2 sm:space-x-3 flex-1">
               <motion.div
-                className={`w-12 h-12 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center transition-all duration-500 ${
+                className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center transition-all duration-500 ${
                   isSelected 
                     ? 'bg-gradient-to-br from-emerald-500 to-sky-600 shadow-lg shadow-emerald-500/30' 
                     : 'bg-gradient-to-br from-gray-600/50 to-gray-700/50 group-hover:from-emerald-500/30 group-hover:to-sky-600/30'
@@ -79,18 +79,18 @@ export function BookingServiceCard({
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.6, type: "spring", stiffness: 300 }}
               >
-                <IconComponent className={`w-6 h-6 sm:w-8 sm:h-8 transition-colors duration-300 ${
+                <IconComponent className={`w-5 h-5 sm:w-6 sm:h-6 transition-colors duration-300 ${
                   isSelected ? 'text-white' : 'text-gray-300 group-hover:text-white'
                 }`} />
               </motion.div>
               
               <div className="flex-1 min-w-0">
-                <h3 className={`font-bold text-lg sm:text-xl mb-1 sm:mb-2 truncate transition-colors duration-300 ${
+                <h3 className={`font-bold text-base sm:text-lg mb-1 truncate transition-colors duration-300 ${
                   isSelected ? 'text-white' : 'text-white group-hover:text-white'
                 }`}>
                   {service.name}
                 </h3>
-                <p className={`text-sm leading-relaxed transition-colors duration-300 ${
+                <p className={`text-xs sm:text-sm leading-tight transition-colors duration-300 ${
                   isSelected ? 'text-white' : 'text-gray-300 group-hover:text-gray-200'
                 }`}>
                   {service.subtitle}
@@ -101,7 +101,7 @@ export function BookingServiceCard({
             <motion.div
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
-              className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all duration-300 ${
+              className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
                 isSelected 
                   ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/30' 
                   : 'bg-white/10 text-gray-400 group-hover:bg-white/20 hover:text-white'
@@ -112,9 +112,9 @@ export function BookingServiceCard({
                 transition={{ duration: 0.3 }}
               >
                 {isSelected ? (
-                  <Check className="w-6 h-6" />
+                  <Check className="w-4 h-4 sm:w-5 sm:h-5" />
                 ) : (
-                  <Plus className="w-5 h-5 sm:w-6 sm:h-6" />
+                  <Plus className="w-4 h-4 sm:w-5 sm:h-5" />
                 )}
               </motion.div>
             </motion.div>
@@ -126,7 +126,7 @@ export function BookingServiceCard({
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
           >
-            <div className={`rounded-xl p-4 border transition-all duration-300 ${
+            <div className={`rounded-lg p-3 border transition-all duration-300 ${
               isSelected 
                 ? 'bg-gradient-to-r from-emerald-500/20 to-sky-500/20 border-emerald-500/30' 
                 : 'bg-gradient-to-r from-white/5 to-white/10 border-white/10'
@@ -136,7 +136,7 @@ export function BookingServiceCard({
                   isSelected ? 'text-white' : 'text-white'
                 }`}>
                   <motion.span 
-                    className="text-2xl"
+                    className="text-xl sm:text-2xl"
                     whileHover={{ scale: 1.05 }}
                   >
                     ₹{service.price.toLocaleString()}
