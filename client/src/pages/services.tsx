@@ -662,11 +662,19 @@ export default function Services() {
           </motion.div>
         )}
 
-        {/* Desktop Sidebar Summary */}
+        {/* Desktop Floating Cart */}
         {currentStep === 'services' && selectedServices.length > 0 && (
-          <div className="hidden lg:block fixed right-8 top-1/2 transform -translate-y-1/2 w-80 z-30">
-            <BookingSummary className="max-h-[80vh] overflow-y-auto" />
-          </div>
+          <motion.div 
+            initial={{ opacity: 0, x: 100, scale: 0.9 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            exit={{ opacity: 0, x: 100, scale: 0.9 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            className="hidden lg:block fixed right-6 top-1/2 transform -translate-y-1/2 w-80 z-50"
+          >
+            <div className="bg-gradient-to-br from-gray-900/95 to-black/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl shadow-black/40">
+              <BookingSummary className="max-h-[80vh] overflow-y-auto" />
+            </div>
+          </motion.div>
         )}
 
         {/* Mobile Bottom Summary */}
