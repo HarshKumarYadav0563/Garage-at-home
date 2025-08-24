@@ -16,7 +16,7 @@ import {
 // Components  
 import { BookingServiceCard } from '@/components/ServiceCard';
 import { ComboServiceCard } from '@/components/ComboServiceCard';
-import { SummaryDrawer } from '@/components/SummaryDrawer';
+import { CollapsibleCart } from '@/components/CollapsibleCart';
 import { EnhancedServiceCard } from '@/components/EnhancedServiceCard';
 import { EnhancedSlotPicker } from '@/components/EnhancedSlotPicker';
 import { CustomerDetailsForm } from '@/components/CustomerDetailsForm';
@@ -523,8 +523,8 @@ export default function ServicesDynamic() {
           </motion.div>
         )}
 
-        {/* Enhanced Summary Drawer */}
-        <SummaryDrawer />
+        {/* Collapsible Cart */}
+        <CollapsibleCart />
 
         {/* Time Slot Selection */}
         {currentStep === 'details' && !selectedSlot && (

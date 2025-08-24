@@ -62,6 +62,7 @@ export interface BookingStore {
   // UI State
   isSubmitting: boolean;
   trackingId?: string;
+  cartState: 'hidden' | 'collapsed' | 'expanded';
   
   // Actions
   setCurrentStep: (step: BookingStep) => void;
@@ -71,6 +72,7 @@ export interface BookingStore {
   toggleAddon: (addonId: string) => void;
   setSearchQuery: (query: string) => void;
   setShowSummary: (show: boolean) => void;
+  setCartState: (state: 'hidden' | 'collapsed' | 'expanded') => void;
   setCustomer: (customer: CustomerData) => void;
   setAddress: (address: AddressData) => void;
   setSelectedSlot: (slot: TimeSlot) => void;
@@ -93,6 +95,7 @@ const defaultState = {
   selectedAddons: [],
   searchQuery: '',
   showSummary: false,
+  cartState: 'hidden' as const,
   customer: undefined,
   address: undefined,
   selectedSlot: undefined,
@@ -133,12 +136,12 @@ export const useBookingStore = create<BookingStore>()(persist(
         const newServices = selectedServices.filter(id => id !== serviceId);
         set({ 
           selectedServices: newServices,
-          showSummary: newServices.length > 0 // Hide summary if no services left
+          cartState: newServices.length > 0 ? 'collapsed' : 'hidden'
         });
       } else {
         set({ 
           selectedServices: [...selectedServices, serviceId],
-          showSummary: true // Show summary when service is added
+          cartState: 'collapsed' // Show collapsed cart when service is added
         });
       }
       
@@ -165,6 +168,8 @@ export const useBookingStore = create<BookingStore>()(persist(
     setSearchQuery: (query) => set({ searchQuery: query }),
     
     setShowSummary: (show) => set({ showSummary: show }),
+    
+    setCartState: (state) => set({ cartState: state }),
     
     // Customer details
     setCustomer: (customer) => set({ customer }),

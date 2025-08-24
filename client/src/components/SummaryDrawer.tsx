@@ -55,7 +55,7 @@ export function SummaryDrawer({ className = '', onContinue }: SummaryDrawerProps
         <motion.div
           initial={{ scale: 0, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          className="fixed bottom-6 right-6 z-40 lg:hidden"
+          className="fixed bottom-8 right-6 z-40 lg:hidden"
         >
           <Button
             onClick={() => setShowSummary(true)}
@@ -72,21 +72,35 @@ export function SummaryDrawer({ className = '', onContinue }: SummaryDrawerProps
       <div className="lg:hidden">
         <AnimatePresence>
           {showSummary && (
-            <motion.div
-              initial={{ y: '100%' }}
-              animate={{ y: 0 }}
-              exit={{ y: '100%' }}
-              transition={{ type: 'spring', damping: 25, stiffness: 500 }}
-              className="fixed inset-x-0 bottom-0 z-50 bg-gradient-to-t from-gray-950 via-gray-900 to-gray-800 border-t border-white/20 backdrop-blur-xl"
-            >
-              <div className="p-4 max-h-[80vh] overflow-y-auto">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-bold text-white">Booking Summary</h3>
+            <>
+              {/* Backdrop */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40"
+                onClick={() => setShowSummary(false)}
+              />
+              
+              {/* Cart Modal */}
+              <motion.div
+                initial={{ y: '100%' }}
+                animate={{ y: 0 }}
+                exit={{ y: '100%' }}
+                transition={{ type: 'spring', damping: 25, stiffness: 500 }}
+                className="fixed inset-x-0 bottom-0 z-50 bg-gradient-to-t from-gray-950 via-gray-900 to-gray-800 border-t border-white/20 backdrop-blur-xl rounded-t-3xl shadow-2xl shadow-black/50"
+              >
+              <div className="p-6 max-h-[70vh] overflow-y-auto">
+                {/* Drag Handle */}
+                <div className="w-12 h-1 bg-gray-600 rounded-full mx-auto mb-4"></div>
+                
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-xl font-bold text-white">Your Cart</h3>
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={() => setShowSummary(false)}
-                    className="text-gray-400 hover:text-white"
+                    className="text-gray-400 hover:text-white p-2"
                     data-testid="close-summary"
                   >
                     <X className="w-5 h-5" />
@@ -115,7 +129,8 @@ export function SummaryDrawer({ className = '', onContinue }: SummaryDrawerProps
                   </Button>
                 </div>
               </div>
-            </motion.div>
+              </motion.div>
+            </>
           )}
         </AnimatePresence>
       </div>
