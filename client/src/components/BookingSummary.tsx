@@ -75,9 +75,9 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
                 </div>
                 <div className="flex items-center space-x-2">
                   <Button
-                    onClick={() => setCurrentStep('details')}
+                    onClick={() => setCurrentStep('location')}
                     disabled={selectedServices.length === 0}
-                    className="bg-gradient-to-r from-emerald-500 to-sky-600 hover:from-emerald-600 hover:to-sky-700 text-white py-1 px-3 text-xs font-semibold rounded-lg"
+                    className="bg-gradient-to-r from-emerald-500 via-sky-500 to-indigo-600 hover:from-emerald-600 hover:via-sky-600 hover:to-indigo-700 text-white py-1 px-3 text-xs font-semibold rounded-lg"
                   >
                     Continue
                   </Button>
@@ -228,12 +228,12 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
                 whileTap={{ scale: 0.98 }}
               >
                 <Button
-                  onClick={() => setCurrentStep('details')}
+                  onClick={() => setCurrentStep('location')}
                   disabled={selectedServices.length === 0}
-                  className={`w-full bg-gradient-to-r from-emerald-500 to-sky-600 hover:from-emerald-600 hover:to-sky-700 text-white rounded-xl font-semibold shadow-lg transition-all duration-300 ${isMobile ? "py-2 text-sm" : "py-3"}`}
+                  className={`w-full bg-gradient-to-r from-emerald-500 via-sky-500 to-indigo-600 hover:from-emerald-600 hover:via-sky-600 hover:to-indigo-700 text-white rounded-xl font-semibold shadow-lg transition-all duration-300 ${isMobile ? "py-2 text-sm" : "py-3"}`}
                 >
                   <span className="flex items-center justify-center space-x-2">
-                    <span>Continue to Details</span>
+                    <span>Continue to Location</span>
                     <motion.div
                       animate={{ x: [0, 3, 0] }}
                       transition={{ duration: 1.5, repeat: Infinity }}

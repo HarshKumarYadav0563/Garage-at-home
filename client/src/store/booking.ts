@@ -17,14 +17,28 @@ export interface BookingAddon {
 export interface CustomerDetails {
   name: string;
   phone: string;
-  address: string;
-  pincode: string;
+  email?: string;
+  contactPref: 'phone' | 'email' | 'whatsapp';
 }
 
-export interface TimeSlot {
-  date: 'today' | 'tomorrow';
-  time: '10-12' | '12-2' | '2-4' | '4-6';
-  label: string;
+export interface AddressDetails {
+  text: string;
+  lat?: number;
+  lng?: number;
+  pincode?: string;
+  city?: string;
+}
+
+export interface OTPDetails {
+  phone: string;
+  sessionId?: string;
+  verified: boolean;
+  code?: string;
+}
+
+export interface EstTotal {
+  min: number;
+  max: number;
 }
 
 interface BookingStore {
@@ -33,12 +47,17 @@ interface BookingStore {
   selectedServices: BookingService[];
   selectedAddons: BookingAddon[];
   
-  // Customer details
+  // Location and customer details
+  address: AddressDetails;
   customer: CustomerDetails;
-  selectedSlot: TimeSlot | null;
+  otp: OTPDetails;
+  estTotal: EstTotal;
+  
+  // Tracking
+  trackingId: string | null;
   
   // UI state
-  currentStep: 'services' | 'details' | 'confirmation';
+  currentStep: 'services' | 'location' | 'details' | 'otp' | 'tracking';
   showSummary: boolean;
   searchQuery: string;
   showPriceRanges: boolean;
@@ -47,13 +66,17 @@ interface BookingStore {
   setSelectedVehicle: (vehicle: 'bike' | 'car') => void;
   toggleService: (service: BookingService) => void;
   toggleAddon: (addon: BookingAddon) => void;
+  setAddress: (address: Partial<AddressDetails>) => void;
   setCustomer: (customer: Partial<CustomerDetails>) => void;
-  setSelectedSlot: (slot: TimeSlot | null) => void;
-  setCurrentStep: (step: 'services' | 'details' | 'confirmation') => void;
+  setOTP: (otp: Partial<OTPDetails>) => void;
+  setEstTotal: (total: EstTotal) => void;
+  setTrackingId: (id: string) => void;
+  setCurrentStep: (step: 'services' | 'location' | 'details' | 'otp' | 'tracking') => void;
   setShowSummary: (show: boolean) => void;
   setSearchQuery: (query: string) => void;
   setShowPriceRanges: (show: boolean) => void;
   clearBooking: () => void;
+  hydrate: (data: Partial<BookingStore>) => void;
   
   // Computed
   getSubtotal: () => number;
@@ -65,8 +88,23 @@ interface BookingStore {
 const initialCustomer: CustomerDetails = {
   name: '',
   phone: '',
-  address: '',
-  pincode: ''
+  email: '',
+  contactPref: 'phone'
+};
+
+const initialAddress: AddressDetails = {
+  text: '',
+  lat: undefined,
+  lng: undefined,
+  pincode: '',
+  city: ''
+};
+
+const initialOTP: OTPDetails = {
+  phone: '',
+  sessionId: undefined,
+  verified: false,
+  code: ''
 };
 
 export const useBookingStore = create<BookingStore>((set, get) => ({
@@ -74,8 +112,11 @@ export const useBookingStore = create<BookingStore>((set, get) => ({
   selectedVehicle: 'bike',
   selectedServices: [],
   selectedAddons: [],
+  address: initialAddress,
   customer: initialCustomer,
-  selectedSlot: null,
+  otp: initialOTP,
+  estTotal: { min: 0, max: 0 },
+  trackingId: null,
   currentStep: 'services',
   showSummary: false,
   searchQuery: '',
@@ -128,11 +169,21 @@ export const useBookingStore = create<BookingStore>((set, get) => ({
     }
   }),
   
+  setAddress: (addressUpdate) => set((state) => ({
+    address: { ...state.address, ...addressUpdate }
+  })),
+  
   setCustomer: (customerUpdate) => set((state) => ({
     customer: { ...state.customer, ...customerUpdate }
   })),
   
-  setSelectedSlot: (slot) => set({ selectedSlot: slot }),
+  setOTP: (otpUpdate) => set((state) => ({
+    otp: { ...state.otp, ...otpUpdate }
+  })),
+  
+  setEstTotal: (total) => set({ estTotal: total }),
+  
+  setTrackingId: (id) => set({ trackingId: id }),
   
   setCurrentStep: (step) => set({ currentStep: step }),
   
@@ -145,10 +196,15 @@ export const useBookingStore = create<BookingStore>((set, get) => ({
   clearBooking: () => set({
     selectedServices: [],
     selectedAddons: [],
+    address: initialAddress,
     customer: initialCustomer,
-    selectedSlot: null,
+    otp: initialOTP,
+    estTotal: { min: 0, max: 0 },
+    trackingId: null,
     currentStep: 'services'
   }),
+  
+  hydrate: (data) => set((state) => ({ ...state, ...data })),
   
   // Computed functions
   getAdjustedPrice: (priceMin, priceMax) => {

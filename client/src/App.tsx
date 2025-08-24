@@ -12,6 +12,9 @@ import { Toast } from "@/components/Toast";
 import Home from "@/pages/home";
 import Services from "@/pages/services";
 import ServicesDynamic from "@/pages/services-dynamic";
+import LocationStep from "@/pages/location-step";
+import DetailsStep from "@/pages/details-step";
+import OTPStep from "@/pages/otp-step";
 import Book from "@/pages/book";
 import Track from "@/pages/track";
 import Contact from "@/pages/contact";
@@ -41,6 +44,9 @@ function Router() {
           <Route path="/" component={Home} />
           <Route path="/services/:vehicle/:city" component={ServicesDynamic} />
           <Route path="/services" component={Services} />
+          <Route path="/location" component={LocationStep} />
+          <Route path="/details" component={DetailsStep} />
+          <Route path="/otp" component={OTPStep} />
           <Route path="/pricing" component={Pricing} />
           <Route path="/book" component={Book} />
           <Route path="/track/:trackingId?" component={Track} />

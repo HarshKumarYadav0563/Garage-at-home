@@ -49,10 +49,111 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Create lead
+  // OTP endpoints
+  app.post("/api/otp/send", async (req, res) => {
+    const { phone } = req.body;
+    
+    if (!phone || !/^[6-9]\d{9}$/.test(phone)) {
+      return res.status(400).json({ error: 'Invalid phone number' });
+    }
+    
+    try {
+      // Generate session ID and OTP
+      const sessionId = Math.random().toString(36).substring(2, 15);
+      const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
+      
+      // Store OTP in memory (in production, use Redis or similar)
+      (global as any).otpStore = (global as any).otpStore || {};
+      (global as any).otpStore[sessionId] = {
+        phone,
+        code: otpCode,
+        timestamp: Date.now(),
+        verified: false
+      };
+      
+      // In production, send SMS via Twilio/SMS service
+      console.log(`OTP for ${phone}: ${otpCode}`);
+      
+      res.json({ sessionId, message: 'OTP sent successfully' });
+    } catch (error) {
+      console.error('Error sending OTP:', error);
+      res.status(500).json({ error: 'Failed to send OTP' });
+    }
+  });
+
+  app.post("/api/otp/verify", async (req, res) => {
+    const { phone, sessionId, code } = req.body;
+    
+    if (!phone || !sessionId || !code) {
+      return res.status(400).json({ error: 'Missing required fields' });
+    }
+    
+    try {
+      (global as any).otpStore = (global as any).otpStore || {};
+      const otpData = (global as any).otpStore[sessionId];
+      
+      if (!otpData) {
+        return res.status(400).json({ error: 'Invalid session' });
+      }
+      
+      if (otpData.phone !== phone) {
+        return res.status(400).json({ error: 'Phone number mismatch' });
+      }
+      
+      // Check if OTP expired (5 minutes)
+      if (Date.now() - otpData.timestamp > 5 * 60 * 1000) {
+        delete (global as any).otpStore[sessionId];
+        return res.status(400).json({ error: 'OTP expired' });
+      }
+      
+      if (otpData.code !== code) {
+        return res.status(400).json({ error: 'Invalid OTP' });
+      }
+      
+      // Mark as verified and generate token
+      otpData.verified = true;
+      const otpToken = Math.random().toString(36).substring(2, 15);
+      (global as any).otpStore[`token_${otpToken}`] = { phone, verified: true, timestamp: Date.now() };
+      
+      res.json({ verified: true, otpToken });
+    } catch (error) {
+      console.error('Error verifying OTP:', error);
+      res.status(500).json({ error: 'Failed to verify OTP' });
+    }
+  });
+
+  // Create lead (enhanced for new flow)
   app.post("/api/leads", async (req, res) => {
     try {
-      const leadData = insertLeadSchema.parse(req.body);
+      const { vehicle, city, services, addons, estTotal, customer, address, otpToken } = req.body;
+      
+      // Verify OTP token if provided
+      if (otpToken) {
+        (global as any).otpStore = (global as any).otpStore || {};
+        const tokenData = (global as any).otpStore[`token_${otpToken}`];
+        if (!tokenData || !tokenData.verified || tokenData.phone !== customer.phone) {
+          return res.status(400).json({ error: 'Invalid or expired OTP token' });
+        }
+      }
+      
+      // Validate NCR city
+      const ncrCities = ['delhi', 'gurugram', 'noida', 'ghaziabad', 'faridabad'];
+      if (city && !ncrCities.includes(city?.toLowerCase())) {
+        return res.status(400).json({ error: 'Service not available in this city' });
+      }
+      
+      const leadData = {
+        customerName: customer.name,
+        customerPhone: customer.phone,
+        address: address.text,
+        lat: address.lat,
+        lng: address.lng,
+        vehicleType: vehicle,
+        serviceId: services[0]?.id, // Primary service
+        totalAmount: estTotal?.max || estTotal?.min || services.reduce((sum: number, s: any) => sum + s.price, 0),
+        status: 'pending'
+      };
+      
       const lead = await storage.createLead(leadData);
       
       // Add initial status update
@@ -67,6 +168,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (error instanceof z.ZodError) {
         res.status(400).json({ error: "Invalid lead data", details: error.errors });
       } else {
+        console.error('Error creating lead:', error);
         res.status(500).json({ error: "Failed to create lead" });
       }
     }

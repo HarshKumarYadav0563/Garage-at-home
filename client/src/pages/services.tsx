@@ -39,8 +39,8 @@ export default function Services() {
     setSearchQuery,
     currentStep,
     setCurrentStep,
-    selectedSlot,
     customer,
+    address,
     clearBooking,
     getSubtotal,
     showSummary,
@@ -133,12 +133,12 @@ export default function Services() {
     setCurrentStep('details');
   };
 
-  // Handle final booking submission
+  // Handle final booking submission (legacy)
   const handleBookingSubmit = async () => {
-    if (!selectedSlot || selectedServices.length === 0) {
+    if (selectedServices.length === 0) {
       toast({
         title: "Missing Information",
-        description: "Please select services and a time slot",
+        description: "Please select services",
         variant: "destructive"
       });
       return;
@@ -149,8 +149,8 @@ export default function Services() {
         vehicle: selectedVehicle,
         services: selectedServices,
         addons: selectedAddons,
-        slot: selectedSlot,
-        customer
+        customer,
+        address
       };
 
       const response = await fetch('/api/booking', {
@@ -166,7 +166,7 @@ export default function Services() {
         description: `Your booking ${response.trackingId} has been received. We'll contact you shortly.`,
       });
 
-      setCurrentStep('confirmation');
+      setCurrentStep('tracking');
     } catch (error) {
       toast({
         title: "Booking Failed",
@@ -684,7 +684,57 @@ export default function Services() {
           </div>
         )}
 
+        {currentStep === 'location' && (
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="max-w-4xl mx-auto"
+          >
+            {/* Import and render location step component inline or redirect */}
+            <div className="text-center py-12">
+              <p className="text-gray-400">Redirecting to location step...</p>
+            </div>
+          </motion.div>
+        )}
+
         {currentStep === 'details' && (
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="max-w-4xl mx-auto"
+          >
+            <div className="text-center py-12">
+              <p className="text-gray-400">Redirecting to details step...</p>
+            </div>
+          </motion.div>
+        )}
+
+        {currentStep === 'otp' && (
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="max-w-4xl mx-auto"
+          >
+            <div className="text-center py-12">
+              <p className="text-gray-400">Redirecting to OTP verification...</p>
+            </div>
+          </motion.div>
+        )}
+
+        {currentStep === 'tracking' && (
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="max-w-4xl mx-auto"
+          >
+            <div className="text-center py-12">
+              <p className="text-gray-400">Redirecting to tracking...</p>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Legacy details form (keeping for backward compatibility) */}
+        {false && (
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -716,7 +766,7 @@ export default function Services() {
                 </Card>
 
                 {/* Final Submit */}
-                {selectedSlot && customer.name && customer.phone && customer.address && (
+                {customer.name && customer.phone && address.text && (
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -736,7 +786,7 @@ export default function Services() {
           </motion.div>
         )}
 
-        {currentStep === 'confirmation' && (
+        {currentStep === 'tracking' && (
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}

@@ -1,306 +1,305 @@
-import { useState, useEffect } from 'react';
-import { useParams } from 'wouter';
-import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
-import { Check, Clock, Truck, Wrench, Flag, Phone, Copy } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { useRoute } from 'wouter';
+import { useQuery } from '@tanstack/react-query';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { useUiStore } from '@/stores/useUiStore';
-import { apiRequest } from '@/lib/queryClient';
+import { 
+  CheckCircle, 
+  Clock, 
+  MapPin, 
+  User, 
+  Phone, 
+  Wrench,
+  Car,
+  Bike,
+  ArrowLeft,
+  RefreshCw
+} from 'lucide-react';
 
-export default function Track() {
-  const { trackingId: urlTrackingId } = useParams();
-  const [inputTrackingId, setInputTrackingId] = useState(urlTrackingId || '');
-  const [searchTrackingId, setSearchTrackingId] = useState(urlTrackingId || '');
-  const { addToast } = useUiStore();
+interface TrackingData {
+  id: string;
+  trackingId: string;
+  status: string;
+  customerName: string;
+  customerPhone: string;
+  address: string;
+  vehicleType: string;
+  services: Array<{
+    id: string;
+    name: string;
+    price: number;
+  }>;
+  mechanic?: {
+    name: string;
+    phone: string;
+    rating: number;
+  };
+  totalAmount: number;
+  createdAt: string;
+  estimatedArrival?: string;
+}
 
-  const { data: trackingData, isLoading, error } = useQuery({
-    queryKey: searchTrackingId ? [`/api/track/${searchTrackingId}`] : [],
-    enabled: !!searchTrackingId,
+const statusSteps = [
+  { key: 'pending', label: 'Received', icon: CheckCircle, color: 'emerald' },
+  { key: 'confirmed', label: 'Confirmed', icon: CheckCircle, color: 'emerald' },
+  { key: 'assigned', label: 'Assigned', icon: User, color: 'blue' },
+  { key: 'on_the_way', label: 'On the way', icon: MapPin, color: 'yellow' },
+  { key: 'in_progress', label: 'In progress', icon: Wrench, color: 'orange' },
+  { key: 'completed', label: 'Completed', icon: CheckCircle, color: 'green' }
+];
+
+export default function TrackPage() {
+  const [, params] = useRoute('/track/:trackingId');
+  const trackingId = params?.trackingId;
+
+  const { data: trackingData, isLoading, error, refetch } = useQuery({
+    queryKey: ['/api/track', trackingId],
+    queryFn: async () => {
+      const response = await fetch(`/api/track/${trackingId}`);
+      if (!response.ok) {
+        throw new Error('Booking not found');
+      }
+      return response.json() as Promise<TrackingData>;
+    },
+    enabled: !!trackingId,
+    refetchInterval: 30000, // Refresh every 30 seconds
   });
 
-  useEffect(() => {
-    if (urlTrackingId) {
-      setInputTrackingId(urlTrackingId);
-      setSearchTrackingId(urlTrackingId);
-    }
-  }, [urlTrackingId]);
+  if (!trackingId) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold mb-4">Invalid Tracking ID</h1>
+          <p className="text-gray-400">Please check your tracking ID and try again.</p>
+        </div>
+      </div>
+    );
+  }
 
-  const handleSearch = () => {
-    if (inputTrackingId.trim()) {
-      setSearchTrackingId(inputTrackingId.trim());
-    }
-  };
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-400 mx-auto mb-4"></div>
+          <p className="text-gray-400">Loading your booking details...</p>
+        </div>
+      </div>
+    );
+  }
 
-  const copyTrackingId = () => {
-    if (trackingData?.lead?.trackingId) {
-      navigator.clipboard.writeText(trackingData.lead.trackingId);
-      addToast({
-        type: 'success',
-        title: 'Copied!',
-        message: 'Tracking ID copied to clipboard'
-      });
-    }
-  };
+  if (error || !trackingData) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold mb-4">Booking Not Found</h1>
+          <p className="text-gray-400 mb-6">We couldn't find a booking with ID: {trackingId}</p>
+          <Button 
+            onClick={() => window.location.href = '/services'}
+            className="bg-gradient-to-r from-emerald-500 via-sky-500 to-indigo-600"
+          >
+            Book New Service
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case 'confirmed':
-      case 'pending':
-        return <Check className="w-6 h-6" />;
-      case 'assigned':
-        return <Clock className="w-6 h-6" />;
-      case 'on_the_way':
-        return <Truck className="w-6 h-6" />;
-      case 'in_progress':
-        return <Wrench className="w-6 h-6" />;
-      case 'completed':
-        return <Flag className="w-6 h-6" />;
-      default:
-        return <Clock className="w-6 h-6" />;
-    }
-  };
-
-  const getStatusColor = (status: string, isActive: boolean) => {
-    if (!isActive) return 'bg-gray-300 dark:bg-gray-600 text-gray-600 dark:text-gray-300';
-    
-    switch (status) {
-      case 'confirmed':
-      case 'pending':
-        return 'bg-green-500 dark:bg-green-600 text-white';
-      case 'assigned':
-        return 'bg-blue-500 dark:bg-blue-600 text-white animate-pulse';
-      case 'on_the_way':
-        return 'bg-blue-500 dark:bg-blue-600 text-white animate-pulse';
-      case 'in_progress':
-        return 'bg-orange-500 dark:bg-orange-600 text-white animate-pulse';
-      case 'completed':
-        return 'bg-green-500 dark:bg-green-600 text-white';
-      default:
-        return 'bg-gray-500 dark:bg-gray-600 text-white';
-    }
-  };
-
-  const statusSteps = [
-    { key: 'confirmed', label: 'Service Confirmed', message: 'Your booking has been confirmed' },
-    { key: 'assigned', label: 'Mechanic Assigned', message: 'A mechanic has been assigned to your request' },
-    { key: 'on_the_way', label: 'On The Way', message: 'Mechanic is heading to your location' },
-    { key: 'in_progress', label: 'In Progress', message: 'Service work is being performed' },
-    { key: 'completed', label: 'Completed', message: 'Service has been completed successfully' },
-  ];
+  const currentStepIndex = statusSteps.findIndex(step => step.key === trackingData.status);
+  const VehicleIcon = trackingData.vehicleType === 'car' ? Car : Bike;
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pt-20 lg:pt-24">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white">
+      <div className="container mx-auto px-4 py-8 max-w-4xl">
+        {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-8"
+          className="mb-8"
         >
-          <h1 className="text-3xl lg:text-4xl font-bold mb-4 dark:text-gray-100">Track Your Service</h1>
-          <p className="text-gray-600 dark:text-gray-300">Enter your tracking ID to see real-time service updates</p>
+          <Button
+            variant="ghost"
+            onClick={() => window.location.href = '/services'}
+            className="text-gray-300 hover:text-white mb-4"
+          >
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Book Another Service
+          </Button>
+          
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-bold mb-2">Track Your Service</h1>
+              <p className="text-gray-400">Booking ID: {trackingData.trackingId}</p>
+            </div>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => refetch()}
+              className="border-white/20 text-white hover:bg-white/10"
+              data-testid="button-refresh"
+            >
+              <RefreshCw className="w-4 h-4 mr-2" />
+              Refresh
+            </Button>
+          </div>
         </motion.div>
 
-        {/* Search Section */}
-        <Card className="mb-8">
-          <CardContent className="p-6">
-            <div className="flex gap-4">
-              <div className="flex-1">
-                <Label htmlFor="trackingId" className="text-sm font-medium mb-2 block dark:text-gray-200">
-                  Tracking ID
-                </Label>
-                <Input
-                  id="trackingId"
-                  placeholder="Enter tracking ID (e.g., GW12345678)"
-                  value={inputTrackingId}
-                  onChange={(e) => setInputTrackingId(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-                  className="px-4 py-3 rounded-xl"
-                  data-testid="input-tracking-id"
-                />
-              </div>
-              <div className="flex items-end">
-                <Button
-                  onClick={handleSearch}
-                  className="px-6 py-3 rounded-xl bg-gradient-to-r from-primary-500 to-blue-600 hover:from-primary-600 hover:to-blue-700"
-                  data-testid="button-track-order"
-                >
-                  Track Order
-                </Button>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Loading State */}
-        {isLoading && (
-          <div className="text-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto"></div>
-            <p className="mt-4 text-gray-600 dark:text-gray-300">Loading tracking information...</p>
-          </div>
-        )}
-
-        {/* Error State */}
-        {error && (
-          <Card className="border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-900/20">
-            <CardContent className="p-6 text-center">
-              <div className="text-red-600 dark:text-red-400 mb-2">Tracking ID not found</div>
-              <p className="text-gray-600 dark:text-gray-300">Please check your tracking ID and try again</p>
-            </CardContent>
-          </Card>
-        )}
-
-        {/* Tracking Information */}
-        {trackingData && trackingData.lead && (
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Status Timeline */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="space-y-6"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="lg:col-span-2"
           >
-            {/* Tracking ID Display */}
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="text-lg font-semibold mb-2 dark:text-gray-100">Tracking ID</h3>
-                    <div className="flex items-center space-x-2">
-                      <span className="font-mono text-lg text-primary-600" data-testid="tracking-id-display">
-                        {trackingData.lead.trackingId}
-                      </span>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={copyTrackingId}
-                        className="p-1"
-                        data-testid="button-copy-tracking-id"
-                      >
-                        <Copy className="w-4 h-4" />
-                      </Button>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-sm text-gray-600 dark:text-gray-300">Status</div>
-                    <div className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${
-                      trackingData.lead?.status === 'completed' ? 'bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-300' :
-                      trackingData.lead?.status === 'in_progress' ? 'bg-orange-100 dark:bg-orange-900/20 text-orange-800 dark:text-orange-300' :
-                      'bg-blue-100 dark:bg-blue-900/20 text-blue-800 dark:text-blue-300'
-                    }`} data-testid="current-status">
-                      {trackingData.lead?.status?.replace('_', ' ').toUpperCase()}
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Status Timeline */}
-            <Card>
-              <CardContent className="p-8">
-                <h3 className="text-xl font-bold mb-6 dark:text-gray-100">Service Progress</h3>
-                
-                <div className="space-y-6">
-                  {statusSteps.map((step, index) => {
-                    const isCompleted = trackingData.statusUpdates?.some((update: any) => 
-                      update.status === step.key
-                    );
-                    const isActive = trackingData.lead?.status === step.key;
-                    const statusUpdate = trackingData.statusUpdates?.find((update: any) => 
-                      update.status === step.key
-                    );
-
-                    return (
-                      <div key={step.key} className="flex items-start">
-                        <div className={`w-12 h-12 rounded-full flex items-center justify-center mr-6 ${
-                          getStatusColor(step.key, isCompleted || isActive)
-                        }`}>
-                          {getStatusIcon(step.key)}
-                        </div>
-                        <div className="flex-1">
-                          <h4 className={`font-semibold text-lg ${isActive ? 'text-primary-600 dark:text-primary-400' : 'dark:text-gray-100'}`}>
-                            {step.label}
-                          </h4>
-                          <p className="text-gray-600 dark:text-gray-300 mb-1">
-                            {statusUpdate?.message || step.message}
-                          </p>
-                          {statusUpdate?.timestamp && (
-                            <p className="text-sm text-gray-500 dark:text-gray-400">
-                              {new Date(statusUpdate.timestamp).toLocaleString()}
-                            </p>
-                          )}
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Mechanic Information */}
-            {trackingData?.mechanic && (
-              <Card>
-                <CardContent className="p-6">
-                  <h3 className="text-lg font-semibold mb-4 dark:text-gray-100">Your Mechanic</h3>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center">
-                      <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-green-600 rounded-full flex items-center justify-center text-white font-semibold mr-4">
-                        {trackingData.mechanic?.name?.split(' ').map((n: string) => n[0]).join('').toUpperCase()}
-                      </div>
-                      <div>
-                        <h4 className="font-semibold dark:text-gray-100" data-testid="mechanic-name">
-                          {trackingData.mechanic?.name}
-                        </h4>
-                        <p className="text-sm text-gray-600 dark:text-gray-300">
-                          Rating: {trackingData.mechanic?.ratingAvg}/5 ⭐ | {trackingData.mechanic?.jobsDone}+ jobs completed
-                        </p>
-                      </div>
-                    </div>
-                    <Button
-                      className="bg-green-500 hover:bg-green-600 text-white"
-                      data-testid="button-call-mechanic"
+            <Card className="bg-white/5 border-white/10 backdrop-blur-xl">
+              <CardHeader>
+                <CardTitle className="text-white">Service Status</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                {statusSteps.map((step, index) => {
+                  const isCompleted = index <= currentStepIndex;
+                  const isCurrent = index === currentStepIndex;
+                  const StepIcon = step.icon;
+                  
+                  return (
+                    <motion.div
+                      key={step.key}
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      className="flex items-center space-x-4"
                     >
-                      <Phone className="w-4 h-4 mr-2" />
-                      Call
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            )}
-
-            {/* Service Details */}
-            <Card>
-              <CardContent className="p-6">
-                <h3 className="text-lg font-semibold mb-4 dark:text-gray-100">Service Details</h3>
-                <div className="grid md:grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <span className="text-gray-600 dark:text-gray-300">Vehicle:</span>
-                    <span className="ml-2 font-medium dark:text-gray-100">
-                      {trackingData.lead?.vehicleBrand} {trackingData.lead?.vehicleModel} ({trackingData.lead?.vehicleType})
-                    </span>
-                  </div>
-                  <div>
-                    <span className="text-gray-600 dark:text-gray-300">Address:</span>
-                    <span className="ml-2 font-medium dark:text-gray-100">{trackingData.lead?.address}</span>
-                  </div>
-                  {trackingData.lead?.slotStart && (
-                    <div>
-                      <span className="text-gray-600 dark:text-gray-300">Scheduled Time:</span>
-                      <span className="ml-2 font-medium dark:text-gray-100">
-                        {new Date(trackingData.lead?.slotStart).toLocaleString()}
-                      </span>
-                    </div>
-                  )}
-                  {trackingData.lead?.totalAmount && (
-                    <div>
-                      <span className="text-gray-600 dark:text-gray-300">Amount:</span>
-                      <span className="ml-2 font-medium dark:text-gray-100">₹{trackingData.lead?.totalAmount}</span>
-                    </div>
-                  )}
-                </div>
+                      <div className={`
+                        w-10 h-10 rounded-full flex items-center justify-center
+                        ${isCompleted 
+                          ? `bg-${step.color}-500/20 border-${step.color}-500` 
+                          : 'bg-gray-700 border-gray-600'
+                        } border-2 transition-colors
+                      `}>
+                        <StepIcon className={`
+                          w-5 h-5 
+                          ${isCompleted ? `text-${step.color}-400` : 'text-gray-400'}
+                        `} />
+                      </div>
+                      
+                      <div className="flex-1">
+                        <p className={`
+                          font-medium 
+                          ${isCompleted ? 'text-white' : 'text-gray-400'}
+                        `}>
+                          {step.label}
+                        </p>
+                        {isCurrent && (
+                          <p className="text-sm text-gray-400 mt-1">
+                            Current status
+                          </p>
+                        )}
+                      </div>
+                      
+                      {isCurrent && (
+                        <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">
+                          Current
+                        </Badge>
+                      )}
+                    </motion.div>
+                  );
+                })}
               </CardContent>
             </Card>
           </motion.div>
-        )}
+
+          {/* Booking Details */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="space-y-6"
+          >
+            {/* Service Summary */}
+            <Card className="bg-white/5 border-white/10 backdrop-blur-xl">
+              <CardHeader>
+                <CardTitle className="text-white flex items-center">
+                  <VehicleIcon className="w-5 h-5 mr-2 text-emerald-400" />
+                  Service Details
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <p className="text-gray-400 text-sm">Vehicle</p>
+                  <p className="text-white capitalize">{trackingData.vehicleType}</p>
+                </div>
+                
+                <div>
+                  <p className="text-gray-400 text-sm">Services</p>
+                  <div className="space-y-1">
+                    {trackingData.services.map(service => (
+                      <p key={service.id} className="text-white text-sm">
+                        {service.name} - ₹{service.price}
+                      </p>
+                    ))}
+                  </div>
+                </div>
+                
+                <div className="border-t border-gray-700 pt-2">
+                  <p className="text-gray-400 text-sm">Total Amount</p>
+                  <p className="text-white font-bold">₹{trackingData.totalAmount.toLocaleString()}</p>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Contact Info */}
+            <Card className="bg-white/5 border-white/10 backdrop-blur-xl">
+              <CardHeader>
+                <CardTitle className="text-white">Contact Information</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <p className="text-gray-400 text-sm">Customer</p>
+                  <p className="text-white">{trackingData.customerName}</p>
+                  <p className="text-gray-400 text-sm">{trackingData.customerPhone}</p>
+                </div>
+                
+                <div>
+                  <p className="text-gray-400 text-sm">Service Address</p>
+                  <p className="text-white text-sm">{trackingData.address}</p>
+                </div>
+                
+                {trackingData.mechanic && (
+                  <div className="border-t border-gray-700 pt-4">
+                    <p className="text-gray-400 text-sm">Assigned Mechanic</p>
+                    <p className="text-white">{trackingData.mechanic.name}</p>
+                    <div className="flex items-center space-x-2 mt-1">
+                      <div className="flex">
+                        {[...Array(5)].map((_, i) => (
+                          <span
+                            key={i}
+                            className={`text-xs ${
+                              i < trackingData.mechanic!.rating ? 'text-yellow-400' : 'text-gray-600'
+                            }`}
+                          >
+                            ★
+                          </span>
+                        ))}
+                      </div>
+                      <span className="text-gray-400 text-xs">
+                        {trackingData.mechanic.rating}/5
+                      </span>
+                    </div>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="w-full mt-2 border-white/20 text-white hover:bg-white/10"
+                      data-testid="button-call-mechanic"
+                    >
+                      <Phone className="w-4 h-4 mr-2" />
+                      Call Mechanic
+                    </Button>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </motion.div>
+        </div>
       </div>
     </div>
   );
