@@ -134,17 +134,17 @@ export function Hero() {
                 </Button>
               </div>
               
-              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="flex-1">
+              <div className="flex-1">
                 <Button
                   onClick={handleHowItWorks}
                   variant="outline"
-                  className="w-full bg-white/5 border border-white/10 text-gray-200 px-4 py-3 rounded-xl font-semibold text-sm hover:bg-white/10 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300"
+                  className="w-full bg-white/5 border border-white/10 text-gray-200 px-4 py-3 rounded-xl font-semibold text-sm hover:bg-white/10 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 cursor-pointer relative z-10"
                   data-testid="button-how-it-works"
                 >
                   <HelpCircle className="mr-2 w-4 h-4" />
                   How it Works
                 </Button>
-              </motion.div>
+              </div>
             </motion.div>
 
             {/* Trust Row - Glass Pills */}
@@ -246,21 +246,17 @@ export function Hero() {
                 </Button>
               </div>
               
-              <motion.div
-                variants={itemVariants}
-                whileHover={{ scale: 1.05 }} 
-                whileTap={{ scale: 0.95 }}
-              >
+              <div>
                 <Button
                   onClick={handleHowItWorks}
                   variant="outline"
-                  className="bg-white/5 border border-white/10 text-gray-200 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all duration-300"
+                  className="bg-white/5 border border-white/10 text-gray-200 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all duration-300 cursor-pointer relative z-10"
                   data-testid="button-how-it-works"
                 >
                   <HelpCircle className="mr-2 w-5 h-5" />
                   How it Works
                 </Button>
-              </motion.div>
+              </div>
             </motion.div>
 
             {/* Trust Badges - Glass Pills */}
