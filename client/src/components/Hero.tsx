@@ -1,12 +1,13 @@
 import { motion } from 'framer-motion';
 import { HelpCircle, Star, Users, Clock, Car, Bike, Wrench, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Link } from 'wouter';
+import { Link, useLocation } from 'wouter';
 import { useUiStore } from '@/stores/useUiStore';
 import heroImage from '@assets/generated_images/Professional_motorcycle_service_scene_46bd446f.png';
 
 export function Hero() {
   const { addToast } = useUiStore();
+  const [, setLocation] = useLocation();
 
   const handleHowItWorks = () => {
     // Scroll to how it works section or show modal
@@ -122,17 +123,16 @@ export function Hero() {
               variants={itemVariants}
               className="flex gap-3 justify-center px-4"
             >
-              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="flex-1">
-                <Link href="/services" className="block w-full">
-                  <Button
-                    className="w-full bg-gradient-to-r from-emerald-500 via-sky-500 to-indigo-500 hover:shadow-[0_0_20px_rgba(16,185,129,0.4)] text-white px-4 py-3 rounded-xl font-semibold text-sm shadow-lg transition-all duration-300"
-                    data-testid="button-book-now"
-                  >
-                    <Zap className="mr-2 w-4 h-4" />
-                    Book Now
-                  </Button>
-                </Link>
-              </motion.div>
+              <div className="flex-1">
+                <Button
+                  onClick={() => setLocation('/services')}
+                  className="w-full bg-gradient-to-r from-emerald-500 via-sky-500 to-indigo-500 hover:shadow-[0_0_20px_rgba(16,185,129,0.4)] text-white px-4 py-3 rounded-xl font-semibold text-sm shadow-lg transition-all duration-300 cursor-pointer relative z-10"
+                  data-testid="button-book-now"
+                >
+                  <Zap className="mr-2 w-4 h-4" />
+                  Book Now
+                </Button>
+              </div>
               
               <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="flex-1">
                 <Button
@@ -235,21 +235,16 @@ export function Hero() {
               variants={containerVariants}
               className="flex gap-4 mb-8"
             >
-              <motion.div 
-                variants={itemVariants}
-                whileHover={{ scale: 1.05 }} 
-                whileTap={{ scale: 0.95 }}
-              >
-                <Link href="/services" className="block">
-                  <Button
-                    className="bg-gradient-to-r from-emerald-500 via-sky-500 to-indigo-500 hover:shadow-[0_0_30px_rgba(16,185,129,0.5)] text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-xl transition-all duration-300"
-                    data-testid="button-book-now"
-                  >
-                    <Zap className="mr-2 w-5 h-5" />
-                    Book Service Now
-                  </Button>
-                </Link>
-              </motion.div>
+              <div>
+                <Button
+                  onClick={() => setLocation('/services')}
+                  className="bg-gradient-to-r from-emerald-500 via-sky-500 to-indigo-500 hover:shadow-[0_0_30px_rgba(16,185,129,0.5)] text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-xl transition-all duration-300 cursor-pointer relative z-10"
+                  data-testid="button-book-now"
+                >
+                  <Zap className="mr-2 w-5 h-5" />
+                  Book Service Now
+                </Button>
+              </div>
               
               <motion.div
                 variants={itemVariants}
