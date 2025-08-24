@@ -14,7 +14,7 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
   const {
     selectedServices,
     getSubtotal,
-    getDoortepCharge,
+    getDoorstepCharge,
     getFinalTotal,
     currentStep,
     setCurrentStep,
@@ -27,14 +27,12 @@ export function BookingSummary({ className = '', isMobile = false }: BookingSumm
   const subtotal = getSubtotal();
   const [showFloatingCart, setShowFloatingCart] = useState(false);
   
-  // Calculate doorstep charge manually if function doesn't exist
-  const doorstepCharge = subtotal > 0 && subtotal < 999 ? 99 : 0;
-  const finalTotal = subtotal + doorstepCharge;
+  // Use proper doorstep charge calculation from store
+  const doorstepCharge = getDoorstepCharge ? getDoorstepCharge() : (subtotal > 0 && subtotal < 999 ? 99 : 0);
+  const finalTotal = getFinalTotal ? getFinalTotal() : subtotal + doorstepCharge;
   
   const hasItems = selectedServices.length > 0;
 
-  // Debug: log values
-  console.log('Debug - Subtotal:', subtotal, 'Doorstep Charge:', doorstepCharge, 'Final Total:', finalTotal);
 
   // Show/hide floating cart based on items
   useEffect(() => {

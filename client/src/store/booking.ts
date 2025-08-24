@@ -58,7 +58,7 @@ interface BookingStore {
   // Computed
   getSubtotal: () => number;
   getAdjustedPrice: (priceMin: number, priceMax: number) => { min: number; max: number };
-  getDoortepCharge: () => number;
+  getDoorstepCharge: () => number;
   getFinalTotal: () => number;
 }
 
@@ -176,7 +176,7 @@ export const useBookingStore = create<BookingStore>((set, get) => ({
     return total;
   },
 
-  getDoortepCharge: () => {
+  getDoorstepCharge: () => {
     const state = get();
     const subtotal = state.getSubtotal();
     
@@ -187,7 +187,7 @@ export const useBookingStore = create<BookingStore>((set, get) => ({
   getFinalTotal: () => {
     const state = get();
     const subtotal = state.getSubtotal();
-    const doorstepCharge = state.getDoortepCharge();
+    const doorstepCharge = state.getDoorstepCharge();
     
     return subtotal + doorstepCharge;
   }
