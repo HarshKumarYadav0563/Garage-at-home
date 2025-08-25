@@ -5,6 +5,9 @@ import { useQuery } from '@tanstack/react-query';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { useToast } from '@/hooks/use-toast';
 import { 
   CheckCircle, 
   Clock, 
@@ -15,7 +18,8 @@ import {
   Car,
   Bike,
   ArrowLeft,
-  RefreshCw
+  RefreshCw,
+  Search
 } from 'lucide-react';
 
 interface TrackingData {
@@ -51,8 +55,15 @@ const statusSteps = [
 ];
 
 export default function TrackPage() {
-  const [, params] = useRoute('/track/:trackingId');
+  const [, params] = useRoute('/track/:trackingId?');
   const trackingId = params?.trackingId;
+  const { toast } = useToast();
+  
+  // State for customer lookup form
+  const [customerName, setCustomerName] = useState('');
+  const [customerPhone, setCustomerPhone] = useState('');
+  const [isSearching, setIsSearching] = useState(false);
+  const [searchResult, setSearchResult] = useState<TrackingData | null>(null);
 
   const { data: trackingData, isLoading, error, refetch } = useQuery({
     queryKey: ['/api/track', trackingId],
@@ -66,19 +77,145 @@ export default function TrackPage() {
     enabled: !!trackingId,
     refetchInterval: 30000, // Refresh every 30 seconds
   });
+  
+  // Handle customer lookup
+  const handleCustomerSearch = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!customerName.trim() || !customerPhone.trim()) {
+      toast({
+        title: 'Missing Information',
+        description: 'Please enter both name and phone number',
+        variant: 'destructive'
+      });
+      return;
+    }
+    
+    setIsSearching(true);
+    try {
+      const response = await fetch('/api/track/customer', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: customerName.trim(),
+          phone: customerPhone.trim()
+        })
+      });
+      
+      if (!response.ok) {
+        throw new Error('Booking not found');
+      }
+      
+      const data = await response.json();
+      setSearchResult(data);
+    } catch (error) {
+      toast({
+        title: 'Booking Not Found',
+        description: 'No booking found with the provided name and phone number. Please check your details and try again.',
+        variant: 'destructive'
+      });
+    } finally {
+      setIsSearching(false);
+    }
+  };
 
-  if (!trackingId) {
+  // Use search result if available, otherwise use tracking data
+  const displayData = searchResult || trackingData;
+  const isLoadingData = isLoading || isSearching;
+  
+  if (!trackingId && !searchResult) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4">Invalid Tracking ID</h1>
-          <p className="text-gray-400">Please check your tracking ID and try again.</p>
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white">
+        <div className="container mx-auto px-4 py-8 max-w-md">
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-8"
+          >
+            <Button
+              variant="ghost"
+              onClick={() => window.location.href = '/services'}
+              className="text-gray-300 hover:text-white mb-4"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Book A Service
+            </Button>
+            
+            <div className="text-center mb-6">
+              <h1 className="text-3xl font-bold mb-2">Track Your Service</h1>
+              <p className="text-gray-400">Enter your details to track your booking</p>
+            </div>
+          </motion.div>
+          
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+          >
+            <Card className="bg-white/5 border-white/10 backdrop-blur-xl">
+              <CardHeader>
+                <CardTitle className="text-white flex items-center">
+                  <Search className="w-5 h-5 mr-2 text-emerald-400" />
+                  Find Your Booking
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <form onSubmit={handleCustomerSearch} className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="name" className="text-white">Full Name</Label>
+                    <Input
+                      id="name"
+                      type="text"
+                      placeholder="Enter your full name"
+                      value={customerName}
+                      onChange={(e) => setCustomerName(e.target.value)}
+                      className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-emerald-500/50"
+                      data-testid="input-customer-name"
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="phone" className="text-white">Phone Number</Label>
+                    <Input
+                      id="phone"
+                      type="tel"
+                      placeholder="Enter your phone number"
+                      value={customerPhone}
+                      onChange={(e) => setCustomerPhone(e.target.value)}
+                      className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-emerald-500/50"
+                      data-testid="input-customer-phone"
+                    />
+                  </div>
+                  
+                  <Button
+                    type="submit"
+                    disabled={isSearching}
+                    className="w-full bg-gradient-to-r from-emerald-500 via-sky-500 to-indigo-600 hover:from-emerald-600 hover:via-sky-600 hover:to-indigo-700 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-300"
+                    data-testid="button-track-booking"
+                  >
+                    {isSearching ? (
+                      <>
+                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                        Searching...
+                      </>
+                    ) : (
+                      <>
+                        <Search className="w-4 h-4 mr-2" />
+                        Track My Booking
+                      </>
+                    )}
+                  </Button>
+                </form>
+              </CardContent>
+            </Card>
+          </motion.div>
         </div>
       </div>
     );
   }
 
-  if (isLoading) {
+  if (isLoadingData) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white flex items-center justify-center">
         <div className="text-center">
@@ -89,12 +226,12 @@ export default function TrackPage() {
     );
   }
 
-  if (error || !trackingData) {
+  if (error || !displayData) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold mb-4">Booking Not Found</h1>
-          <p className="text-gray-400 mb-6">We couldn't find a booking with ID: {trackingId}</p>
+          <p className="text-gray-400 mb-6">We couldn't find a booking with the provided details</p>
           <Button 
             onClick={() => window.location.href = '/services'}
             className="bg-gradient-to-r from-emerald-500 via-sky-500 to-indigo-600"
@@ -106,8 +243,8 @@ export default function TrackPage() {
     );
   }
 
-  const currentStepIndex = statusSteps.findIndex(step => step.key === trackingData.status);
-  const VehicleIcon = trackingData.vehicleType === 'car' ? Car : Bike;
+  const currentStepIndex = statusSteps.findIndex(step => step.key === displayData.status);
+  const VehicleIcon = displayData.vehicleType === 'car' ? Car : Bike;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white">
@@ -130,7 +267,7 @@ export default function TrackPage() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-bold mb-2">Track Your Service</h1>
-              <p className="text-gray-400">Booking ID: {trackingData.trackingId}</p>
+              <p className="text-gray-400">Booking ID: {displayData.trackingId}</p>
             </div>
             <Button
               variant="outline"
@@ -226,13 +363,13 @@ export default function TrackPage() {
               <CardContent className="space-y-4">
                 <div>
                   <p className="text-gray-400 text-sm">Vehicle</p>
-                  <p className="text-white capitalize">{trackingData.vehicleType}</p>
+                  <p className="text-white capitalize">{displayData.vehicleType}</p>
                 </div>
                 
                 <div>
                   <p className="text-gray-400 text-sm">Services</p>
                   <div className="space-y-1">
-                    {trackingData.services.map(service => (
+                    {displayData.services.map(service => (
                       <p key={service.id} className="text-white text-sm">
                         {service.name} - ₹{service.price}
                       </p>
@@ -242,7 +379,7 @@ export default function TrackPage() {
                 
                 <div className="border-t border-gray-700 pt-2">
                   <p className="text-gray-400 text-sm">Total Amount</p>
-                  <p className="text-white font-bold">₹{trackingData.totalAmount.toLocaleString()}</p>
+                  <p className="text-white font-bold">₹{displayData.totalAmount.toLocaleString()}</p>
                 </div>
               </CardContent>
             </Card>
@@ -255,26 +392,26 @@ export default function TrackPage() {
               <CardContent className="space-y-4">
                 <div>
                   <p className="text-gray-400 text-sm">Customer</p>
-                  <p className="text-white">{trackingData.customerName}</p>
-                  <p className="text-gray-400 text-sm">{trackingData.customerPhone}</p>
+                  <p className="text-white">{displayData.customerName}</p>
+                  <p className="text-gray-400 text-sm">{displayData.customerPhone}</p>
                 </div>
                 
                 <div>
                   <p className="text-gray-400 text-sm">Service Address</p>
-                  <p className="text-white text-sm">{trackingData.address}</p>
+                  <p className="text-white text-sm">{displayData.address}</p>
                 </div>
                 
-                {trackingData.mechanic && (
+                {displayData.mechanic && (
                   <div className="border-t border-gray-700 pt-4">
                     <p className="text-gray-400 text-sm">Assigned Mechanic</p>
-                    <p className="text-white">{trackingData.mechanic.name}</p>
+                    <p className="text-white">{displayData.mechanic.name}</p>
                     <div className="flex items-center space-x-2 mt-1">
                       <div className="flex">
                         {[...Array(5)].map((_, i) => (
                           <span
                             key={i}
                             className={`text-xs ${
-                              i < trackingData.mechanic!.rating ? 'text-yellow-400' : 'text-gray-600'
+                              i < displayData.mechanic!.rating ? 'text-yellow-400' : 'text-gray-600'
                             }`}
                           >
                             ★
@@ -282,7 +419,7 @@ export default function TrackPage() {
                         ))}
                       </div>
                       <span className="text-gray-400 text-xs">
-                        {trackingData.mechanic.rating}/5
+                        {displayData.mechanic.rating}/5
                       </span>
                     </div>
                     <Button

@@ -229,12 +229,70 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const mechanic = lead.mechanicId ? await storage.getMechanicById(lead.mechanicId) : null;
 
       res.json({
-        lead,
-        statusUpdates,
-        mechanic
+        id: lead.id,
+        trackingId: lead.trackingId,
+        status: lead.status,
+        customerName: lead.customerName,
+        customerPhone: lead.customerPhone,
+        address: lead.address,
+        vehicleType: lead.vehicleType,
+        services: [{ id: lead.serviceId, name: "Service", price: lead.totalAmount }],
+        mechanic: mechanic ? {
+          name: mechanic.name,
+          phone: mechanic.phone,
+          rating: mechanic.rating
+        } : undefined,
+        totalAmount: lead.totalAmount,
+        createdAt: lead.createdAt
       });
     } catch (error) {
       res.status(500).json({ error: "Failed to fetch tracking information" });
+    }
+  });
+
+  // Track lead by customer details
+  app.post("/api/track/customer", async (req, res) => {
+    try {
+      const { name, phone } = req.body;
+      
+      if (!name || !phone) {
+        res.status(400).json({ error: "Name and phone are required" });
+        return;
+      }
+
+      const leads = await storage.getAllLeads();
+      const matchingLead = leads.find(lead => 
+        lead.customerName.toLowerCase().includes(name.toLowerCase()) && 
+        lead.customerPhone.includes(phone)
+      );
+      
+      if (!matchingLead) {
+        res.status(404).json({ error: "No booking found with provided details" });
+        return;
+      }
+
+      const statusUpdates = await storage.getStatusUpdatesByLeadId(matchingLead.id);
+      const mechanic = matchingLead.mechanicId ? await storage.getMechanicById(matchingLead.mechanicId) : null;
+
+      res.json({
+        id: matchingLead.id,
+        trackingId: matchingLead.trackingId,
+        status: matchingLead.status,
+        customerName: matchingLead.customerName,
+        customerPhone: matchingLead.customerPhone,
+        address: matchingLead.address,
+        vehicleType: matchingLead.vehicleType,
+        services: [{ id: matchingLead.serviceId, name: "Service", price: matchingLead.totalAmount }],
+        mechanic: mechanic ? {
+          name: mechanic.name,
+          phone: mechanic.phone,
+          rating: mechanic.rating
+        } : undefined,
+        totalAmount: matchingLead.totalAmount,
+        createdAt: matchingLead.createdAt
+      });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to search for booking" });
     }
   });
 
