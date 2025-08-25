@@ -512,22 +512,24 @@ export function Header() {
             <SheetContent side="right" className="w-[50vw] bg-gray-950 border-white/10 overflow-y-auto">
               <div className="flex flex-col space-y-3 sm:space-y-4 mt-3 sm:mt-4 pb-4 sm:pb-6">
                 {/* Mobile Logo */}
-                <div className="flex items-center space-x-2 sm:space-x-3 pb-3 sm:pb-4 border-b border-white/20">
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 bg-emerald-500 rounded-xl sm:rounded-2xl flex items-center justify-center">
-                    <Wrench className="text-white text-xl sm:text-2xl" />
-                  </div>
-                  <div>
-                    <div className="flex items-center space-x-1">
-                      <span className="text-2xl sm:text-3xl font-bold text-emerald-400">Garage</span>
-                      <span className="text-2xl sm:text-3xl font-bold text-white">@</span>
-                      <span className="text-2xl sm:text-3xl font-bold text-white">Home</span>
+                <div className="flex items-center justify-center py-4 border-b border-white/20">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 via-blue-600 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg border border-white/20">
+                      <Wrench className="text-white text-lg" />
                     </div>
-                    <div className="flex items-center space-x-1 text-sm sm:text-base">
-                      <span className="text-gray-400">Premium</span>
-                      <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
-                      <span className="text-emerald-400">Doorstep</span>
-                      <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
-                      <span className="text-emerald-400">Service</span>
+                    <div className="flex flex-col">
+                      <div className="flex items-center space-x-1">
+                        <span className="text-xl font-bold text-emerald-400">Garage</span>
+                        <span className="text-xl font-bold text-white">@</span>
+                        <span className="text-xl font-bold text-white">Home</span>
+                      </div>
+                      <div className="flex items-center space-x-1 text-xs mt-0.5">
+                        <span className="text-gray-400">Premium</span>
+                        <div className="w-1 h-1 bg-emerald-400 rounded-full"></div>
+                        <span className="text-emerald-400">Doorstep</span>
+                        <div className="w-1 h-1 bg-emerald-400 rounded-full"></div>
+                        <span className="text-emerald-400">Service</span>
+                      </div>
                     </div>
                   </div>
                 </div>
