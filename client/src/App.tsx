@@ -6,7 +6,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { HelmetProvider } from "react-helmet-async";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { ProfessionalHeader } from "@/components/ProfessionalHeader";
+import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Toast } from "@/components/Toast";
 
@@ -49,8 +49,8 @@ function Router() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <ProfessionalHeader />
-      <main className="flex-1 pt-28 lg:pt-32">
+      <Header />
+      <main className="flex-1 pt-24 lg:pt-28">
         <Switch>
           <Route path="/" component={Home} />
           <Route path="/services/:vehicle/:city" component={ServicesDynamic} />

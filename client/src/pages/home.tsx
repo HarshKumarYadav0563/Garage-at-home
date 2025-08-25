@@ -1,19 +1,19 @@
-import { ProfessionalHero } from '@/components/ProfessionalHero';
-import { CorporateTrustBar } from '@/components/CorporateTrustBar';
-import { ProfessionalHowItWorks } from '@/components/ProfessionalHowItWorks';
+import { Hero } from '@/components/Hero';
+import { HowItWorks } from '@/components/HowItWorks';
 import { WhyChooseGarageAtHome } from '@/components/WhyChooseGarageAtHome';
 import { ServicesSection } from '@/components/ServicesSection';
-import { CorporateBackground } from '@/components/CorporateBackground';
+import { AnimatedBackground } from '@/components/AnimatedBackground';
 import { EnhancedTestimonials } from '@/components/EnhancedTestimonials';
 import { EnhancedFAQ } from '@/components/EnhancedFAQ';
+import { EnhancedTrustBar } from '@/components/EnhancedTrustBar';
 
 export default function Home() {
   return (
     <div className="min-h-screen relative">
-      <CorporateBackground />
-      <ProfessionalHero />
-      <CorporateTrustBar />
-      <ProfessionalHowItWorks />
+      <AnimatedBackground />
+      <Hero />
+      <EnhancedTrustBar />
+      <HowItWorks />
       <WhyChooseGarageAtHome />
       <ServicesSection />
       <EnhancedTestimonials />
