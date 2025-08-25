@@ -6,7 +6,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { HelmetProvider } from "react-helmet-async";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { Header } from "@/components/Header";
+import { MobileAppShell } from "@/components/MobileAppShell";
 import { Footer } from "@/components/Footer";
 import { Toast } from "@/components/Toast";
 
@@ -48,36 +48,35 @@ function Router() {
   }, [location]);
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
-      <main className="flex-1 pt-24 lg:pt-28">
-        <Switch>
-          <Route path="/" component={Home} />
-          <Route path="/services/:vehicle/:city" component={ServicesDynamic} />
-          <Route path="/services" component={Services} />
-          <Route path="/location" component={LocationStep} />
-          <Route path="/mechanic" component={MechanicStep} />
-          <Route path="/details" component={DetailsStep} />
-          <Route path="/otp" component={OTPStep} />
-          <Route path="/pricing" component={Pricing} />
-          <Route path="/track/:trackingId?" component={Track} />
-          <Route path="/contact" component={Contact} />
-          <Route path="/how-it-works" component={HowItWorks} />
-          <Route path="/bike-service/:city" component={CityLanding} />
-          <Route path="/admin" component={Admin} />
-          <Route path="/privacy" component={Privacy} />
-          <Route path="/terms" component={Terms} />
-          <Route path="/refund" component={Refund} />
-          <Route path="/blog" component={Blog} />
-          <Route path="/blog/:slug" component={BlogPost} />
-          <Route path="/videos" component={Videos} />
-          <Route path="/testimonials" component={Testimonials} />
-          <Route component={NotFound} />
-        </Switch>
-      </main>
-      <Footer />
+    <MobileAppShell>
+      <Switch>
+        <Route path="/" component={Home} />
+        <Route path="/services/:vehicle/:city" component={ServicesDynamic} />
+        <Route path="/services" component={Services} />
+        <Route path="/location" component={LocationStep} />
+        <Route path="/mechanic" component={MechanicStep} />
+        <Route path="/details" component={DetailsStep} />
+        <Route path="/otp" component={OTPStep} />
+        <Route path="/pricing" component={Pricing} />
+        <Route path="/track/:trackingId?" component={Track} />
+        <Route path="/contact" component={Contact} />
+        <Route path="/how-it-works" component={HowItWorks} />
+        <Route path="/bike-service/:city" component={CityLanding} />
+        <Route path="/admin" component={Admin} />
+        <Route path="/privacy" component={Privacy} />
+        <Route path="/terms" component={Terms} />
+        <Route path="/refund" component={Refund} />
+        <Route path="/blog" component={Blog} />
+        <Route path="/blog/:slug" component={BlogPost} />
+        <Route path="/videos" component={Videos} />
+        <Route path="/testimonials" component={Testimonials} />
+        <Route component={NotFound} />
+      </Switch>
+      <div className="hidden lg:block">
+        <Footer />
+      </div>
       <Toast />
-    </div>
+    </MobileAppShell>
   );
 }
 
