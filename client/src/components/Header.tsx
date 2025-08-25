@@ -512,21 +512,21 @@ export function Header() {
               <div className="flex flex-col space-y-4 sm:space-y-6 mt-4 sm:mt-6 pb-6">
                 {/* Mobile Logo */}
                 <div className="flex items-center space-x-3 pb-4 sm:pb-6 border-b border-white/20">
-                  <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-sky-600 rounded-xl flex items-center justify-center">
+                  <div className="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center">
                     <Wrench className="text-white text-lg" />
                   </div>
                   <div>
                     <div className="flex items-center space-x-1">
-                      <span className="text-xl font-bold bg-gradient-to-r from-emerald-400 to-sky-400 bg-clip-text text-transparent">Garage</span>
+                      <span className="text-xl font-bold text-emerald-400">Garage</span>
                       <span className="text-xl font-bold text-white">@</span>
-                      <span className="text-xl font-bold bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent">Home</span>
+                      <span className="text-xl font-bold text-white">Home</span>
                     </div>
                     <div className="flex items-center space-x-1 text-sm">
                       <span className="text-gray-400">Premium</span>
                       <div className="w-1 h-1 bg-emerald-400 rounded-full"></div>
                       <span className="text-emerald-400">Doorstep</span>
-                      <div className="w-1 h-1 bg-orange-400 rounded-full"></div>
-                      <span className="text-orange-400">Service</span>
+                      <div className="w-1 h-1 bg-emerald-400 rounded-full"></div>
+                      <span className="text-emerald-400">Service</span>
                     </div>
                   </div>
                 </div>
@@ -678,7 +678,7 @@ export function Header() {
                       }}
                       whileTap={{ scale: 0.98 }}
                     >
-                      <Button className="w-full bg-gradient-to-r from-emerald-500 to-sky-600 text-white py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300">
+                      <Button className="w-full bg-emerald-500 hover:bg-emerald-600 text-white py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300">
                         <motion.div
                           animate={{ rotate: [0, 360] }}
                           transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
