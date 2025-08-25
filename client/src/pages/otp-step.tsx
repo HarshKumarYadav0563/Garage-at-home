@@ -32,15 +32,27 @@ export default function OTPStep() {
 
   // Auto-send OTP on component mount
   useEffect(() => {
-    // Initialize reCAPTCHA for Firebase Auth
-    phoneAuthService.initializeRecaptcha('recaptcha-container');
-    
-    if (!otp.sessionId) {
-      sendOTP();
-    }
+    // Initialize reCAPTCHA for Firebase Auth after a short delay
+    const timer = setTimeout(() => {
+      try {
+        phoneAuthService.initializeRecaptcha('recaptcha-container');
+        
+        if (!otp.sessionId) {
+          sendOTP();
+        }
+      } catch (error) {
+        console.error('Error during initialization:', error);
+        toast({
+          title: "Initialization Error",
+          description: "Please refresh the page and try again",
+          variant: "destructive"
+        });
+      }
+    }, 500);
     
     // Cleanup on unmount
     return () => {
+      clearTimeout(timer);
       phoneAuthService.cleanup();
     };
   }, []);
@@ -281,7 +293,7 @@ export default function OTPStep() {
         </motion.div>
         
         {/* Hidden reCAPTCHA container for Firebase Auth */}
-        <div id="recaptcha-container" style={{ display: 'none' }}></div>
+        <div id="recaptcha-container"></div>
       </div>
     </div>
   );

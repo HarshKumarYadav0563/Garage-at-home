@@ -12,19 +12,24 @@ class PhoneAuthService {
 
   // Initialize reCAPTCHA verifier
   initializeRecaptcha(containerId: string): void {
-    if (this.recaptchaVerifier) {
-      this.recaptchaVerifier.clear();
-    }
-
-    this.recaptchaVerifier = new RecaptchaVerifier(auth, containerId, {
-      size: 'invisible',
-      callback: () => {
-        console.log('reCAPTCHA solved');
-      },
-      'expired-callback': () => {
-        console.log('reCAPTCHA expired');
+    try {
+      if (this.recaptchaVerifier) {
+        this.recaptchaVerifier.clear();
       }
-    });
+
+      this.recaptchaVerifier = new RecaptchaVerifier(auth, containerId, {
+        size: 'invisible',
+        callback: () => {
+          console.log('reCAPTCHA solved');
+        },
+        'expired-callback': () => {
+          console.log('reCAPTCHA expired');
+          this.initializeRecaptcha(containerId); // Reinitialize on expiry
+        }
+      });
+    } catch (error) {
+      console.error('Error initializing reCAPTCHA:', error);
+    }
   }
 
   // Send OTP to phone number
