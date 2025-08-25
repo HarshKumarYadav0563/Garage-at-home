@@ -636,8 +636,8 @@ export default function Services() {
 
         {/* Optimized Mobile Bottom Summary */}
         {currentStep === 'services' && selectedServices.length > 0 && showSummary && (
-          <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 p-2 bg-gradient-to-t from-black/95 to-transparent backdrop-blur-xl">
-            <BookingSummary isMobile={true} className="max-h-[65vh] overflow-y-auto rounded-xl" />
+          <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 pb-16 p-2 bg-gradient-to-t from-black/95 to-transparent backdrop-blur-xl">
+            <BookingSummary isMobile={true} className="max-h-[60vh] overflow-y-auto rounded-xl mb-2" />
           </div>
         )}
 
