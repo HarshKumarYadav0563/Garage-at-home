@@ -481,11 +481,6 @@ export function EnhancedTrustBar() {
                     initial={{ scale: 0 }}
                     whileInView={{ scale: 1 }}
                     viewport={{ once: true }}
-                    transition={{ 
-                      delay: item.delay + 0.3, 
-                      type: "spring", 
-                      stiffness: 300 
-                    }}
                     whileHover={{ 
                       scale: 1.1,
                       textShadow: "0 0 15px rgba(255,255,255,0.8)"
