@@ -169,7 +169,7 @@ export function Header() {
                 {/* Main Logo Container */}
                 <motion.div 
                   className={`bg-gradient-to-br from-emerald-500 via-blue-600 to-indigo-600 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-xl border border-white/20 backdrop-blur-sm transition-all duration-300 ${
-                    isScrolled ? 'w-8 h-8 sm:w-10 sm:h-10' : 'w-10 h-10 sm:w-12 sm:h-12'
+                    isScrolled ? 'w-10 h-10 sm:w-12 sm:h-12' : 'w-12 h-12 sm:w-14 sm:h-14'
                   }`}
                   whileHover={{ 
                     scale: 1.1,
@@ -187,7 +187,7 @@ export function Header() {
                     
                     {/* Main Wrench Icon */}
                     <Wrench className={`relative z-10 text-white transition-all duration-300 ${
-                      isScrolled ? 'text-xs sm:text-sm' : 'text-sm sm:text-base'
+                      isScrolled ? 'text-base sm:text-lg' : 'text-lg sm:text-xl'
                     }`} />
                     
                     {/* Small Home Icon Overlay */}
@@ -231,7 +231,7 @@ export function Header() {
                 <motion.div className="flex items-center space-x-1">
                   <motion.span 
                     className={`font-bold text-emerald-400 transition-all duration-300 ${
-                      isScrolled ? 'text-base sm:text-lg lg:text-xl' : 'text-lg sm:text-xl lg:text-2xl'
+                      isScrolled ? 'text-xl sm:text-2xl lg:text-3xl' : 'text-2xl sm:text-3xl lg:text-4xl'
                     }`}
                     whileHover={{ 
                       scale: 1.05,
@@ -242,7 +242,7 @@ export function Header() {
                   </motion.span>
                   <motion.span 
                     className={`font-bold text-white transition-all duration-300 ${
-                      isScrolled ? 'text-base sm:text-lg lg:text-xl' : 'text-lg sm:text-xl lg:text-2xl'
+                      isScrolled ? 'text-xl sm:text-2xl lg:text-3xl' : 'text-2xl sm:text-3xl lg:text-4xl'
                     }`}
                     whileHover={{ 
                       scale: 1.05,
@@ -253,7 +253,7 @@ export function Header() {
                   </motion.span>
                   <motion.span 
                     className={`font-bold text-white transition-all duration-300 ${
-                      isScrolled ? 'text-base sm:text-lg lg:text-xl' : 'text-lg sm:text-xl lg:text-2xl'
+                      isScrolled ? 'text-xl sm:text-2xl lg:text-3xl' : 'text-2xl sm:text-3xl lg:text-4xl'
                     }`}
                     whileHover={{ 
                       scale: 1.05,
