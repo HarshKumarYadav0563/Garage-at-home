@@ -231,7 +231,7 @@ export function Header() {
                 <motion.div className="flex items-center space-x-1">
                   <motion.span 
                     className={`font-bold text-emerald-400 transition-all duration-300 ${
-                      isScrolled ? 'text-sm sm:text-base lg:text-lg' : 'text-base sm:text-lg lg:text-xl'
+                      isScrolled ? 'text-base sm:text-lg lg:text-xl' : 'text-lg sm:text-xl lg:text-2xl'
                     }`}
                     whileHover={{ 
                       scale: 1.05,
@@ -242,7 +242,7 @@ export function Header() {
                   </motion.span>
                   <motion.span 
                     className={`font-bold text-white transition-all duration-300 ${
-                      isScrolled ? 'text-sm sm:text-base lg:text-lg' : 'text-base sm:text-lg lg:text-xl'
+                      isScrolled ? 'text-base sm:text-lg lg:text-xl' : 'text-lg sm:text-xl lg:text-2xl'
                     }`}
                     whileHover={{ 
                       scale: 1.05,
@@ -253,7 +253,7 @@ export function Header() {
                   </motion.span>
                   <motion.span 
                     className={`font-bold text-white transition-all duration-300 ${
-                      isScrolled ? 'text-sm sm:text-base lg:text-lg' : 'text-base sm:text-lg lg:text-xl'
+                      isScrolled ? 'text-base sm:text-lg lg:text-xl' : 'text-lg sm:text-xl lg:text-2xl'
                     }`}
                     whileHover={{ 
                       scale: 1.05,
@@ -518,9 +518,9 @@ export function Header() {
                   </div>
                   <div>
                     <div className="flex items-center space-x-1">
-                      <span className="text-lg sm:text-xl font-bold text-emerald-400">Garage</span>
-                      <span className="text-lg sm:text-xl font-bold text-white">@</span>
-                      <span className="text-lg sm:text-xl font-bold text-white">Home</span>
+                      <span className="text-xl sm:text-2xl font-bold text-emerald-400">Garage</span>
+                      <span className="text-xl sm:text-2xl font-bold text-white">@</span>
+                      <span className="text-xl sm:text-2xl font-bold text-white">Home</span>
                     </div>
                     <div className="flex items-center space-x-1 text-xs sm:text-sm">
                       <span className="text-gray-400">Premium</span>
