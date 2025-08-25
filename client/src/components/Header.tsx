@@ -36,6 +36,7 @@ export function Header() {
       hasDropdown: true,
       dropdownItems: [
         { name: 'All Services', href: '/services' },
+        { name: 'Pricing', href: '/pricing' },
         ...VEHICLES.flatMap(vehicle => 
           NCR_CITIES.map(city => ({
             name: `${VEHICLE_DISPLAY_NAMES[vehicle]} • ${CITY_DISPLAY_NAMES[city]}`,
@@ -46,8 +47,30 @@ export function Header() {
         )
       ]
     },
-    { name: 'How It Works', href: '/how-it-works' },
+    {
+      name: 'Learn',
+      href: '#',
+      hasDropdown: true,
+      dropdownItems: [
+        { name: 'Blog', href: '/blog' },
+        { name: 'How It Works', href: '/how-it-works' },
+        { name: 'Videos', href: '/videos' },
+        { name: 'Testimonials', href: '/testimonials' }
+      ]
+    },
+    { name: 'Track Order', href: '/track' },
     { name: 'Contact', href: '/contact' },
+    {
+      name: 'More',
+      href: '#',
+      hasDropdown: true,
+      dropdownItems: [
+        { name: 'Privacy Policy', href: '/privacy' },
+        { name: 'Terms of Service', href: '/terms' },
+        { name: 'Refund Policy', href: '/refund' },
+        { name: 'Admin', href: '/admin' }
+      ]
+    }
   ] as Array<{ 
     name: string; 
     href: string; 
