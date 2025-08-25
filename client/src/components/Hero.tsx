@@ -146,74 +146,126 @@ export function Hero() {
   };
 
   return (
-    <section className="relative min-h-[70vh] lg:min-h-auto flex items-start justify-center overflow-hidden pt-16 sm:pt-20 lg:pt-8 lg:pb-12">
-      {/* Dark Gradient Background with Diagonal Pattern */}
+    <section className="relative min-h-[75vh] lg:min-h-auto flex items-start justify-center overflow-hidden pt-6 sm:pt-8 lg:pt-8 lg:pb-12">
+      {/* Enhanced Decorative Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-gray-950 via-gray-900 to-slate-950">
-        <div className="absolute inset-0 bg-gradient-to-t from-emerald-950/15 via-transparent to-violet-950/10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-emerald-950/20 via-transparent to-violet-950/15" />
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-emerald-950/10 to-transparent" />
       </div>
       
-      {/* Subtle glow effects */}
+      {/* Enhanced glow effects */}
       <div className="absolute inset-0">
-        <div className="absolute top-1/3 left-1/4 w-80 h-80 bg-emerald-500/6 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/3 right-1/4 w-64 h-64 bg-teal-500/4 rounded-full blur-3xl" />
+        <div className="absolute top-1/4 left-1/6 w-64 h-64 bg-emerald-500/8 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/6 w-48 h-48 bg-teal-500/6 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-violet-500/4 rounded-full blur-3xl" />
       </div>
       
-      {/* Diagonal Subtle Pattern */}
-      <div className="absolute inset-0 opacity-[0.02]">
+      {/* Subtle Pattern Background */}
+      <div className="absolute inset-0 opacity-[0.03]">
         <div
           className="absolute inset-0"
           style={{
-            backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(255,255,255,0.03) 40px, rgba(255,255,255,0.03) 42px)',
+            backgroundImage: 'radial-gradient(circle at 25% 25%, rgba(16, 185, 129, 0.1) 0%, transparent 50%), radial-gradient(circle at 75% 75%, rgba(139, 92, 246, 0.1) 0%, transparent 50%)',
           }}
         />
       </div>
+      
+      {/* Floating Background Icons */}
+      <div className="absolute inset-0 pointer-events-none">
+        <motion.div
+          animate={{
+            y: [-10, 10, -10],
+            rotate: [0, 5, 0, -5, 0],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="absolute top-20 left-8 w-8 h-8 text-emerald-500/20"
+        >
+          <Wrench className="w-full h-full" />
+        </motion.div>
+        
+        <motion.div
+          animate={{
+            y: [10, -10, 10],
+            rotate: [0, -10, 0, 10, 0],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 2,
+          }}
+          className="absolute top-32 right-12 w-6 h-6 text-violet-500/20"
+        >
+          <Zap className="w-full h-full" />
+        </motion.div>
+        
+        <motion.div
+          animate={{
+            y: [-8, 8, -8],
+            x: [-5, 5, -5],
+          }}
+          transition={{
+            duration: 12,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 4,
+          }}
+          className="absolute bottom-32 left-6 w-7 h-7 text-teal-500/20"
+        >
+          <Car className="w-full h-full" />
+        </motion.div>
+      </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        {/* Mobile: Compact Conversion-Driven Layout */}
+        {/* Mobile: Compact Engaging Layout */}
         <div className="block lg:hidden">
           <motion.div
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="text-center px-4 py-2 space-y-4 max-w-sm mx-auto"
+            className="text-center px-4 py-3 space-y-3 max-w-sm mx-auto"
           >
-            {/* 1. Headline - Value Proposition */}
+            {/* 1. Headline - At Top */}
             <motion.h1
               variants={headlineVariants}
-              className="text-lg sm:text-xl font-bold leading-tight text-white tracking-tight"
+              className="text-lg sm:text-xl font-bold leading-tight text-white tracking-tight max-w-xs mx-auto pt-4"
             >
               Doorstep Vehicle Service in Delhi NCR
             </motion.h1>
 
-            {/* 2. Subtext */}
+            {/* 2. Subtext - Compact */}
             <motion.p
               variants={subtextVariants}
-              className="text-sm text-gray-300 leading-relaxed font-normal"
+              className="text-sm text-gray-300 leading-snug font-normal max-w-xs mx-auto"
             >
               Certified mechanics with genuine parts and transparent pricing.
             </motion.p>
 
-            {/* 3. Image Section with Reduced Padding */}
+            {/* 3. Hero Image - Immediately Under Text */}
             <motion.div
               variants={imageVariants}
-              className="relative mx-auto max-w-[300px] my-2"
+              className="relative mx-auto max-w-[280px] mt-3"
             >
               <div className="relative overflow-hidden rounded-xl shadow-2xl">
                 <img
                   src={heroImage}
                   alt="Professional vehicle service"
-                  className="w-full h-[160px] object-cover"
+                  className="w-full h-[150px] object-cover"
                 />
-                {/* Soft Gradient Overlay at Bottom */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-gray-950 to-transparent" />
+                {/* Enhanced Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 h-6 bg-gradient-to-t from-gray-950 to-transparent" />
               </div>
               
-              {/* Floating Service Icons with Pulse Animation */}
+              {/* Floating Service Icons */}
               <motion.div
                 variants={floatingVariants}
                 animate="float1"
-                className="absolute -top-2 -right-2 w-10 h-10 bg-gradient-to-br from-sky-400 to-indigo-500 rounded-lg shadow-lg shadow-sky-500/40 flex items-center justify-center backdrop-blur-sm border border-white/20"
+                className="absolute -top-2 -right-2 w-9 h-9 bg-gradient-to-br from-sky-400 to-indigo-500 rounded-lg shadow-lg shadow-sky-500/50 flex items-center justify-center backdrop-blur-sm border border-white/30"
               >
                 <Car className="text-white w-4 h-4" />
               </motion.div>
@@ -221,7 +273,7 @@ export function Hero() {
               <motion.div
                 variants={floatingVariants}
                 animate="float2"
-                className="absolute top-1/4 -left-2 w-9 h-9 bg-gradient-to-br from-emerald-400 to-green-500 rounded-lg shadow-lg shadow-emerald-500/40 flex items-center justify-center backdrop-blur-sm border border-white/20"
+                className="absolute top-1/4 -left-2 w-8 h-8 bg-gradient-to-br from-emerald-400 to-green-500 rounded-lg shadow-lg shadow-emerald-500/50 flex items-center justify-center backdrop-blur-sm border border-white/30"
               >
                 <Bike className="text-white w-3.5 h-3.5" />
               </motion.div>
@@ -229,35 +281,35 @@ export function Hero() {
               <motion.div
                 variants={floatingVariants}
                 animate="float3"
-                className="absolute -bottom-2 right-1/4 w-9 h-9 bg-gradient-to-br from-orange-400 to-red-500 rounded-lg shadow-lg shadow-orange-500/40 flex items-center justify-center backdrop-blur-sm border border-white/20"
+                className="absolute -bottom-2 right-1/4 w-8 h-8 bg-gradient-to-br from-orange-400 to-red-500 rounded-lg shadow-lg shadow-orange-500/50 flex items-center justify-center backdrop-blur-sm border border-white/30"
               >
                 <Wrench className="text-white w-3.5 h-3.5" />
               </motion.div>
             </motion.div>
 
-            {/* 4. Trust Badges Row - Staggered Animation */}
+            {/* 4. Trust Badges - Staggered Animation */}
             <motion.div
               variants={badgeContainerVariants}
-              className="overflow-x-auto scrollbar-hide pb-1 -mt-2"
+              className="overflow-x-auto scrollbar-hide pb-1 mt-3"
             >
               <div className="flex items-center gap-2 min-w-max px-2 mx-auto justify-center">
                 <motion.div
                   variants={badgeVariants}
-                  className="flex items-center gap-1.5 bg-gradient-to-r from-emerald-500/25 to-green-500/25 border border-emerald-400/40 rounded-full px-3 py-2 backdrop-blur-sm shadow-lg"
+                  className="flex items-center gap-1.5 bg-gradient-to-r from-emerald-500/30 to-green-500/30 border border-emerald-400/50 rounded-full px-3 py-1.5 backdrop-blur-sm shadow-lg"
                 >
                   <Star className="text-emerald-300 w-3.5 h-3.5" />
                   <span className="font-bold text-white text-sm">4.9</span>
                 </motion.div>
                 <motion.div
                   variants={badgeVariants}
-                  className="flex items-center gap-1.5 bg-gradient-to-r from-blue-500/25 to-cyan-500/25 border border-blue-400/40 rounded-full px-3 py-2 backdrop-blur-sm shadow-lg"
+                  className="flex items-center gap-1.5 bg-gradient-to-r from-blue-500/30 to-cyan-500/30 border border-blue-400/50 rounded-full px-3 py-1.5 backdrop-blur-sm shadow-lg"
                 >
                   <Users className="text-blue-300 w-3.5 h-3.5" />
                   <span className="font-bold text-white text-sm">25K+</span>
                 </motion.div>
                 <motion.div
                   variants={badgeVariants}
-                  className="flex items-center gap-1.5 bg-gradient-to-r from-violet-500/25 to-purple-500/25 border border-violet-400/40 rounded-full px-3 py-2 backdrop-blur-sm shadow-lg"
+                  className="flex items-center gap-1.5 bg-gradient-to-r from-violet-500/30 to-purple-500/30 border border-violet-400/50 rounded-full px-3 py-1.5 backdrop-blur-sm shadow-lg"
                 >
                   <Zap className="text-violet-300 w-3.5 h-3.5" />
                   <span className="font-bold text-white text-sm">Same Day</span>
@@ -265,18 +317,18 @@ export function Hero() {
               </div>
             </motion.div>
 
-            {/* 5. Primary CTA Button with Glowing Animation */}
+            {/* 5. Primary CTA Button */}
             <motion.div
               variants={buttonVariants}
-              className="px-2 pt-2"
+              className="px-2 pt-3"
             >
               <motion.div
                 animate={{
                   boxShadow: [
-                    "0 0 20px rgba(16, 185, 129, 0.3)",
-                    "0 0 30px rgba(20, 184, 166, 0.4)", 
-                    "0 0 25px rgba(56, 189, 248, 0.3)",
-                    "0 0 20px rgba(16, 185, 129, 0.3)"
+                    "0 0 20px rgba(16, 185, 129, 0.4)",
+                    "0 0 30px rgba(20, 184, 166, 0.5)", 
+                    "0 0 25px rgba(56, 189, 248, 0.4)",
+                    "0 0 20px rgba(16, 185, 129, 0.4)"
                   ]
                 }}
                 transition={{
@@ -288,7 +340,7 @@ export function Hero() {
               >
                 <Button
                   onClick={() => setLocation('/services')}
-                  className="w-full bg-gradient-to-r from-emerald-600 via-teal-500 to-sky-500 hover:from-emerald-700 hover:via-teal-600 hover:to-sky-600 text-white px-6 py-4 rounded-xl font-bold text-base shadow-xl transition-all duration-300 cursor-pointer relative z-10 border border-emerald-300/30"
+                  className="w-full bg-gradient-to-r from-emerald-600 via-teal-500 to-sky-500 hover:from-emerald-700 hover:via-teal-600 hover:to-sky-600 text-white px-6 py-4 rounded-xl font-bold text-base shadow-xl transition-all duration-300 cursor-pointer relative z-10 border border-emerald-300/40"
                   data-testid="button-book-now"
                 >
                   <Wrench className="mr-2 w-5 h-5" />
@@ -300,7 +352,7 @@ export function Hero() {
             {/* 6. Secondary CTA */}
             <motion.div
               variants={secondaryCtaVariants}
-              className="flex items-center justify-center gap-2 text-gray-400 hover:text-emerald-300 transition-colors cursor-pointer py-1"
+              className="flex items-center justify-center gap-2 text-gray-400 hover:text-emerald-300 transition-colors cursor-pointer pb-2"
               onClick={handleHowItWorks}
               data-testid="button-how-it-works"
             >
