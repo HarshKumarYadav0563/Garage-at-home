@@ -66,8 +66,11 @@ export function FAQSection({
               '@type': 'FAQPage',
               mainEntity: faqs.map(faq => ({
                 '@type': 'Question',
-                name: faq.schema.question,
-                acceptedAnswer: faq.schema.answer
+                name: faq.question,
+                acceptedAnswer: {
+                  '@type': 'Answer',
+                  text: faq.answer
+                }
               }))
             })}
           </script>
