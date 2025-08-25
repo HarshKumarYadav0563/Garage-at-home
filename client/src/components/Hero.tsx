@@ -229,26 +229,10 @@ export function Hero() {
             animate="visible"
             className="text-center px-4 py-3 space-y-3 max-w-sm mx-auto"
           >
-            {/* 1. Headline - At Top */}
-            <motion.h1
-              variants={headlineVariants}
-              className="text-lg sm:text-xl font-bold leading-tight text-white tracking-tight max-w-xs mx-auto pt-4"
-            >
-              Doorstep Vehicle Service in Delhi NCR
-            </motion.h1>
-
-            {/* 2. Subtext - Compact */}
-            <motion.p
-              variants={subtextVariants}
-              className="text-sm text-gray-300 leading-snug font-normal max-w-xs mx-auto"
-            >
-              Certified mechanics with genuine parts and transparent pricing.
-            </motion.p>
-
-            {/* 3. Hero Image - Immediately Under Text */}
+            {/* 1. Hero Image - At Top (No text above) */}
             <motion.div
               variants={imageVariants}
-              className="relative mx-auto max-w-[280px] mt-3"
+              className="relative mx-auto max-w-[280px] mt-2"
             >
               <div className="relative overflow-hidden rounded-xl shadow-2xl">
                 <img
@@ -286,6 +270,22 @@ export function Hero() {
                 <Wrench className="text-white w-3.5 h-3.5" />
               </motion.div>
             </motion.div>
+
+            {/* 2. Headline - Below Image */}
+            <motion.h1
+              variants={headlineVariants}
+              className="text-lg sm:text-xl font-bold leading-tight text-white tracking-tight max-w-xs mx-auto"
+            >
+              Doorstep Vehicle Service in Delhi NCR
+            </motion.h1>
+
+            {/* 3. Subtext - Compact */}
+            <motion.p
+              variants={subtextVariants}
+              className="text-sm text-gray-300 leading-snug font-normal max-w-xs mx-auto"
+            >
+              Certified mechanics with genuine parts and transparent pricing.
+            </motion.p>
 
             {/* 4. Trust Badges - Staggered Animation */}
             <motion.div
