@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'wouter';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Wrench, Phone, MapPin, Zap, Shield, Star, ChevronDown } from 'lucide-react';
+import { Menu, X, Wrench, Phone, MapPin, Zap, Shield, Star, ChevronDown, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Badge } from '@/components/ui/badge';
@@ -27,6 +27,7 @@ export function Header() {
   }, []);
 
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [mobileActiveDropdown, setMobileActiveDropdown] = useState<string | null>(null);
 
   const navigation = [
     { 
@@ -508,12 +509,12 @@ export function Header() {
                 </Button>
               </motion.div>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[85vw] sm:w-[400px] max-w-[400px] bg-gray-950 border-white/10 overflow-y-auto">
-              <div className="flex flex-col space-y-4 sm:space-y-6 mt-4 sm:mt-6 pb-6">
+            <SheetContent side="right" className="w-[90vw] xs:w-[85vw] sm:w-[400px] max-w-[400px] bg-gray-950 border-white/10 overflow-y-auto">
+              <div className="flex flex-col space-y-3 sm:space-y-4 mt-3 sm:mt-4 pb-4 sm:pb-6">
                 {/* Mobile Logo */}
-                <div className="flex items-center space-x-3 pb-4 sm:pb-6 border-b border-white/20">
-                  <div className="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center">
-                    <Wrench className="text-white text-lg" />
+                <div className="flex items-center space-x-2 sm:space-x-3 pb-3 sm:pb-4 border-b border-white/20">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-emerald-500 rounded-lg sm:rounded-xl flex items-center justify-center">
+                    <Wrench className="text-white text-base sm:text-lg" />
                   </div>
                   <div>
                     <div className="flex items-center space-x-1">
@@ -606,47 +607,123 @@ export function Header() {
                       stiffness: 300,
                       damping: 25
                     }}
+                    className="space-y-1"
                   >
-                    <Link
-                      href={item.href}
-                      onClick={() => {
-                        setMobileMenuOpen(false);
-                        if (item.scrollTo) {
-                          setTimeout(() => {
-                            const element = document.getElementById(item.scrollTo!);
-                            if (element) {
-                              element.scrollIntoView({ 
-                                behavior: 'smooth',
-                                block: 'start'
-                              });
-                            }
-                          }, 300);
-                        }
-                      }}
-                    >
-                      <motion.div
-                        whileHover={{ 
-                          scale: 1.02,
-                          x: 5,
-                          transition: { type: "spring", stiffness: 400 }
-                        }}
-                        whileTap={{ scale: 0.98 }}
-                        className={`flex items-center justify-between p-3 sm:p-4 rounded-lg sm:rounded-xl transition-all duration-300 ${
-                          location === item.href
-                            ? 'bg-emerald-500/20 text-emerald-400 shadow-lg'
-                            : 'text-gray-300 hover:bg-white/10 hover:shadow-md'
-                        }`}
-                        data-testid={`nav-mobile-${item.name.toLowerCase().replace(/\s+/g, '-')}`}
-                      >
-                        <motion.span 
-                          className="text-base sm:text-lg font-medium"
-                          whileHover={{ x: 5 }}
-                          transition={{ type: "spring", stiffness: 400 }}
+                    {item.hasDropdown ? (
+                      <div>
+                        <motion.div
+                          whileHover={{ 
+                            scale: 1.02,
+                            x: 5,
+                            transition: { type: "spring", stiffness: 400 }
+                          }}
+                          whileTap={{ scale: 0.98 }}
+                          className={`flex items-center justify-between p-3 sm:p-4 rounded-lg sm:rounded-xl transition-all duration-300 cursor-pointer ${
+                            mobileActiveDropdown === item.name
+                              ? 'bg-emerald-500/20 text-emerald-400 shadow-lg'
+                              : 'text-gray-300 hover:bg-white/10 hover:shadow-md'
+                          }`}
+                          onClick={() => setMobileActiveDropdown(mobileActiveDropdown === item.name ? null : item.name)}
+                          data-testid={`nav-mobile-${item.name.toLowerCase().replace(/\s+/g, '-')}`}
                         >
-                          {item.name}
-                        </motion.span>
-                      </motion.div>
-                    </Link>
+                          <motion.span 
+                            className="text-base sm:text-lg font-medium"
+                            whileHover={{ x: 5 }}
+                            transition={{ type: "spring", stiffness: 400 }}
+                          >
+                            {item.name}
+                          </motion.span>
+                          <motion.div
+                            animate={{ 
+                              rotate: mobileActiveDropdown === item.name ? 90 : 0 
+                            }}
+                            transition={{ duration: 0.2 }}
+                          >
+                            <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                          </motion.div>
+                        </motion.div>
+                        
+                        <AnimatePresence>
+                          {mobileActiveDropdown === item.name && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: "auto", opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.3, ease: "easeInOut" }}
+                              className="overflow-hidden"
+                            >
+                              <div className="ml-4 mt-2 space-y-1">
+                                {item.dropdownItems?.map((dropdownItem, idx) => (
+                                  <Link 
+                                    key={idx} 
+                                    href={dropdownItem.href}
+                                    onClick={() => {
+                                      setMobileMenuOpen(false);
+                                      setMobileActiveDropdown(null);
+                                    }}
+                                  >
+                                    <motion.div
+                                      whileHover={{ 
+                                        x: 5,
+                                        backgroundColor: "rgba(16, 185, 129, 0.1)"
+                                      }}
+                                      whileTap={{ scale: 0.98 }}
+                                      className="p-2 sm:p-3 rounded-lg text-sm sm:text-base text-gray-400 hover:text-emerald-400 transition-all duration-200"
+                                      initial={{ x: -20, opacity: 0 }}
+                                      animate={{ x: 0, opacity: 1 }}
+                                      transition={{ delay: idx * 0.05 }}
+                                    >
+                                      {dropdownItem.name}
+                                    </motion.div>
+                                  </Link>
+                                ))}
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    ) : (
+                      <Link
+                        href={item.href}
+                        onClick={() => {
+                          setMobileMenuOpen(false);
+                          if (item.scrollTo) {
+                            setTimeout(() => {
+                              const element = document.getElementById(item.scrollTo!);
+                              if (element) {
+                                element.scrollIntoView({ 
+                                  behavior: 'smooth',
+                                  block: 'start'
+                                });
+                              }
+                            }, 300);
+                          }
+                        }}
+                      >
+                        <motion.div
+                          whileHover={{ 
+                            scale: 1.02,
+                            x: 5,
+                            transition: { type: "spring", stiffness: 400 }
+                          }}
+                          whileTap={{ scale: 0.98 }}
+                          className={`flex items-center justify-between p-3 sm:p-4 rounded-lg sm:rounded-xl transition-all duration-300 ${
+                            location === item.href
+                              ? 'bg-emerald-500/20 text-emerald-400 shadow-lg'
+                              : 'text-gray-300 hover:bg-white/10 hover:shadow-md'
+                          }`}
+                          data-testid={`nav-mobile-${item.name.toLowerCase().replace(/\s+/g, '-')}`}
+                        >
+                          <motion.span 
+                            className="text-base sm:text-lg font-medium"
+                            whileHover={{ x: 5 }}
+                            transition={{ type: "spring", stiffness: 400 }}
+                          >
+                            {item.name}
+                          </motion.span>
+                        </motion.div>
+                      </Link>
+                    )}
                   </motion.div>
                 ))}
 
