@@ -1,0 +1,51 @@
+You are a mobile-first UI/UX designer and React + Tailwind developer.
+Redesign and improve the Garage @ Home mobile hero section based on the current design.
+
+Goals:
+- Make the hero section more engaging, compact, and conversion-driven.
+- Highlight trust factors (ratings, customers, same-day service) without clutter.
+- Ensure clear hierarchy: 1) Value proposition → 2) Trust badges → 3) CTA.
+
+Improvements Required:
+
+1. Headline & Subtext
+- Add back a **short headline** above the image:
+  "Doorstep Vehicle Service in Delhi NCR"
+- One-line subtext: "Certified mechanics with genuine parts and transparent pricing."
+- Keep text size mobile-friendly (headline ~18–20px, subtext ~14px).
+
+2. Image Section
+- Keep the bike mechanic image but **reduce vertical padding**.
+- Add **soft gradient overlay at bottom** of image to transition into badges.
+- Floating icons (bike, car, wrench) should animate slowly (pulse/float).
+
+3. Trust Badges Row
+- Show ⭐ 4.9 | 👥 25K+ | ⚡ Same Day Service in a single **scrollable pill row**.
+- Each badge should have subtle gradient background (green, blue, purple).
+- Use **Framer Motion stagger animation** so each badge appears one after another.
+
+4. CTA Button
+- `Schedule Service` button: full width, gradient (emerald → teal → sky).
+- Add subtle glowing border animation to draw attention.
+- Secondary CTA: small text button “Learn More” below.
+
+5. Background & Spacing
+- Dark gradient background with diagonal subtle pattern.
+- Compact spacing (avoid large empty gaps).
+- Keep total hero section height within **70–75% of viewport**.
+
+6. Animation
+- Fade-in headline and subtext from top.
+- Image zoom-in slightly on load.
+- Badges slide-up one by one.
+- CTA button bounce-in.
+
+7. Responsiveness
+- Test at **360px width** (Pixel / iPhone SE).
+- Ensure floating icons don’t overlap text/buttons.
+- Optimize tap area for Schedule Service.
+
+Deliverables:
+- Updated mobile hero section (React + Tailwind + Framer Motion).
+- Improved headline, image overlay, animated trust badges, glowing CTA.
+- Must look premium and compact, like a high-quality mobile-first startup landing page.
