@@ -559,8 +559,8 @@ export default function Services() {
                     setSelectedBrand(value);
                   }}
                 >
-                  <SelectTrigger className="w-40 bg-white/10 border-white/20 text-white h-9">
-                    <SelectValue placeholder="Select Brand" />
+                  <SelectTrigger className="w-40 bg-white/10 border-white/20 text-white h-9 [&>span]:text-white">
+                    <SelectValue placeholder="Select Brand" className="text-white" />
                   </SelectTrigger>
                   <SelectContent className="bg-gray-900 border-gray-700">
                     {getBrandsForVehicleType(selectedVehicle).map((brand) => (
@@ -579,8 +579,8 @@ export default function Services() {
                   onValueChange={setSelectedModel}
                   disabled={!selectedBrand}
                 >
-                  <SelectTrigger className="w-48 bg-white/10 border-white/20 text-white h-9">
-                    <SelectValue placeholder="Select Model" />
+                  <SelectTrigger className="w-48 bg-white/10 border-white/20 text-white h-9 [&>span]:text-white">
+                    <SelectValue placeholder="Select Model" className="text-white" />
                   </SelectTrigger>
                   <SelectContent className="bg-gray-900 border-gray-700">
                     {getModelsForBrand(selectedBrand, selectedVehicle).map((model) => (
