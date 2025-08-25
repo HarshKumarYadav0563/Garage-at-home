@@ -29,9 +29,9 @@ export function Hero() {
       opacity: 1, 
       y: 0,
       transition: {
-        duration: 0.6,
+        duration: 0.8,
         ease: "easeOut",
-        delay: 0.1
+        delay: 0
       }
     },
   };
@@ -42,9 +42,9 @@ export function Hero() {
       opacity: 1, 
       y: 0,
       transition: {
-        duration: 0.6,
+        duration: 0.8,
         ease: "easeOut",
-        delay: 0.3
+        delay: 0.2
       }
     },
   };
@@ -376,7 +376,7 @@ export function Hero() {
             {/* Heading - Max 2 lines */}
             <motion.h1
               variants={headlineVariants}
-              className="text-5xl xl:text-6xl font-bold leading-tight mb-6 text-white tracking-tight"
+              className="text-5xl xl:text-6xl font-bold leading-tight mb-6 text-white tracking-tight relative z-20"
             >
               Professional Vehicle Services{' '}
               <span className="text-emerald-400">
@@ -387,7 +387,7 @@ export function Hero() {
             {/* Shorter Subheading */}
             <motion.p
               variants={subtextVariants}
-              className="text-xl text-gray-300 mb-8 leading-relaxed font-medium"
+              className="text-xl text-gray-300 mb-8 leading-relaxed font-medium relative z-20"
             >
               Certified technicians deliver comprehensive vehicle maintenance and repair services directly to your location across Delhi NCR.
             </motion.p>
