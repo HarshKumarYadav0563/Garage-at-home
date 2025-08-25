@@ -149,7 +149,7 @@ export function Hero() {
   };
 
   return (
-    <section className="relative min-h-[75vh] lg:min-h-auto flex items-start justify-center overflow-hidden pt-6 sm:pt-8 lg:pt-8 lg:pb-12">
+    <section className="relative min-h-[70vh] xs:min-h-[75vh] sm:min-h-[80vh] lg:min-h-auto flex items-start justify-center overflow-hidden pt-4 xs:pt-6 sm:pt-8 lg:pt-8 lg:pb-12">
       {/* Enhanced Decorative Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-gray-950 via-gray-900 to-slate-950">
         <div className="absolute inset-0 bg-gradient-to-t from-emerald-950/20 via-transparent to-violet-950/15" />
@@ -224,18 +224,18 @@ export function Hero() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        {/* Mobile: Compact Engaging Layout */}
+        {/* Mobile: Responsive Layout */}
         <div className="block lg:hidden">
           <motion.div
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="text-center px-4 py-3 space-y-3 max-w-sm mx-auto"
+            className="text-center px-3 sm:px-4 py-3 space-y-3 sm:space-y-4 w-full max-w-md mx-auto"
           >
             {/* 1. Headline - Above Image */}
             <motion.h1
               variants={headlineVariants}
-              className="text-lg sm:text-xl font-bold leading-tight text-white tracking-tight max-w-xs mx-auto relative z-20"
+              className="text-base xs:text-lg sm:text-xl md:text-2xl font-bold leading-tight text-white tracking-tight w-full px-2 relative z-20"
             >
               Doorstep Vehicle Service in Delhi NCR
             </motion.h1>
@@ -243,7 +243,7 @@ export function Hero() {
             {/* 2. Subtext - Above Image */}
             <motion.p
               variants={subtextVariants}
-              className="text-sm text-gray-300 leading-snug font-normal max-w-xs mx-auto relative z-20"
+              className="text-sm sm:text-base text-gray-300 leading-snug font-normal w-full px-2 relative z-20"
             >
               Certified mechanics with genuine parts and transparent pricing.
             </motion.p>
@@ -251,13 +251,13 @@ export function Hero() {
             {/* 3. Hero Image - Below Text */}
             <motion.div
               variants={imageVariants}
-              className="relative mx-auto max-w-[280px] mt-3"
+              className="relative mx-auto w-full max-w-[280px] sm:max-w-[320px] mt-3"
             >
               <div className="relative overflow-hidden rounded-xl shadow-2xl">
                 <img
                   src={heroImage}
                   alt="Professional vehicle service"
-                  className="w-full h-[150px] object-cover"
+                  className="w-full h-[140px] xs:h-[150px] sm:h-[160px] md:h-[180px] object-cover"
                 />
                 {/* Enhanced Gradient Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
@@ -293,29 +293,29 @@ export function Hero() {
             {/* 4. Trust Badges - Staggered Animation */}
             <motion.div
               variants={badgeContainerVariants}
-              className="overflow-x-auto scrollbar-hide pb-1 mt-3"
+              className="overflow-x-auto scrollbar-hide pb-1 mt-3 sm:mt-4"
             >
-              <div className="flex items-center gap-2 min-w-max px-2 mx-auto justify-center">
+              <div className="flex items-center gap-1.5 sm:gap-2 min-w-max px-2 mx-auto justify-center">
                 <motion.div
                   variants={badgeVariants}
-                  className="flex items-center gap-1.5 bg-gradient-to-r from-emerald-500/30 to-green-500/30 border border-emerald-400/50 rounded-full px-3 py-1.5 backdrop-blur-sm shadow-lg"
+                  className="flex items-center gap-1 sm:gap-1.5 bg-gradient-to-r from-emerald-500/30 to-green-500/30 border border-emerald-400/50 rounded-full px-2 sm:px-3 py-1 sm:py-1.5 backdrop-blur-sm shadow-lg"
                 >
-                  <Star className="text-emerald-300 w-3.5 h-3.5" />
-                  <span className="font-bold text-white text-sm">4.9</span>
+                  <Star className="text-emerald-300 w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                  <span className="font-bold text-white text-xs sm:text-sm">4.9</span>
                 </motion.div>
                 <motion.div
                   variants={badgeVariants}
-                  className="flex items-center gap-1.5 bg-gradient-to-r from-blue-500/30 to-cyan-500/30 border border-blue-400/50 rounded-full px-3 py-1.5 backdrop-blur-sm shadow-lg"
+                  className="flex items-center gap-1 sm:gap-1.5 bg-gradient-to-r from-blue-500/30 to-cyan-500/30 border border-blue-400/50 rounded-full px-2 sm:px-3 py-1 sm:py-1.5 backdrop-blur-sm shadow-lg"
                 >
-                  <Users className="text-blue-300 w-3.5 h-3.5" />
-                  <span className="font-bold text-white text-sm">25K+</span>
+                  <Users className="text-blue-300 w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                  <span className="font-bold text-white text-xs sm:text-sm">25K+</span>
                 </motion.div>
                 <motion.div
                   variants={badgeVariants}
-                  className="flex items-center gap-1.5 bg-gradient-to-r from-violet-500/30 to-purple-500/30 border border-violet-400/50 rounded-full px-3 py-1.5 backdrop-blur-sm shadow-lg"
+                  className="flex items-center gap-1 sm:gap-1.5 bg-gradient-to-r from-violet-500/30 to-purple-500/30 border border-violet-400/50 rounded-full px-2 sm:px-3 py-1 sm:py-1.5 backdrop-blur-sm shadow-lg"
                 >
-                  <Zap className="text-violet-300 w-3.5 h-3.5" />
-                  <span className="font-bold text-white text-sm">Same Day</span>
+                  <Zap className="text-violet-300 w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                  <span className="font-bold text-white text-xs sm:text-sm">Same Day</span>
                 </motion.div>
               </div>
             </motion.div>
@@ -323,7 +323,7 @@ export function Hero() {
             {/* 5. Primary CTA Button */}
             <motion.div
               variants={buttonVariants}
-              className="px-2 pt-3"
+              className="px-3 sm:px-4 pt-3 sm:pt-4"
             >
               <motion.div
                 animate={{
@@ -343,10 +343,10 @@ export function Hero() {
               >
                 <Button
                   onClick={() => setLocation('/services')}
-                  className="w-full bg-gradient-to-r from-emerald-600 via-teal-500 to-sky-500 hover:from-emerald-700 hover:via-teal-600 hover:to-sky-600 text-white px-6 py-4 rounded-xl font-bold text-base shadow-xl transition-all duration-300 cursor-pointer relative z-10 border border-emerald-300/40"
+                  className="w-full bg-gradient-to-r from-emerald-600 via-teal-500 to-sky-500 hover:from-emerald-700 hover:via-teal-600 hover:to-sky-600 text-white px-4 sm:px-6 py-3 sm:py-4 rounded-xl font-bold text-sm sm:text-base shadow-xl transition-all duration-300 cursor-pointer relative z-10 border border-emerald-300/40"
                   data-testid="button-book-now"
                 >
-                  <Wrench className="mr-2 w-5 h-5" />
+                  <Wrench className="mr-1.5 sm:mr-2 w-4 h-4 sm:w-5 sm:h-5" />
                   Schedule Service
                 </Button>
               </motion.div>
@@ -355,11 +355,11 @@ export function Hero() {
             {/* 6. Secondary CTA - Learn More */}
             <motion.div
               variants={secondaryCtaVariants}
-              className="flex items-center justify-center gap-2 text-gray-300 hover:text-emerald-300 transition-colors cursor-pointer pb-2 relative z-30"
+              className="flex items-center justify-center gap-2 text-gray-300 hover:text-emerald-300 transition-colors cursor-pointer pb-2 sm:pb-3 relative z-30"
               onClick={handleHowItWorks}
               data-testid="button-how-it-works"
             >
-              <span className="text-sm font-medium underline decoration-dotted underline-offset-4 text-gray-300">Learn More</span>
+              <span className="text-xs sm:text-sm font-medium underline decoration-dotted underline-offset-4 text-gray-300">Learn More</span>
             </motion.div>
           </motion.div>
         </div>
