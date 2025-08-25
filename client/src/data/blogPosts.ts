@@ -132,7 +132,7 @@ Doorstep bike service in Delhi NCR offers unmatched convenience, quality, and va
     category: 'Bike Service',
     tags: ['bike service', 'Delhi NCR', 'doorstep service', 'maintenance'],
     city: 'Delhi NCR',
-    image: '/api/placeholder/800/400',
+    image: '@assets/generated_images/Professional_doorstep_bike_service_01db0203.png',
     metaTitle: 'Best Bike Service at Home in Delhi NCR 2024 | Garage At Home',
     metaDescription: 'Get professional bike service at home in Delhi NCR. Certified mechanics, genuine parts, transparent pricing. Book doorstep bike maintenance today!',
     schema: {
@@ -350,7 +350,7 @@ Maintaining your car battery in Noida's extreme heat requires proactive care and
     category: 'Car Maintenance',
     tags: ['car battery', 'Noida', 'summer maintenance', 'heat protection'],
     city: 'Noida',
-    image: '/api/placeholder/800/400',
+    image: '@assets/generated_images/Car_battery_maintenance_summer_heat_83d21067.png',
     metaTitle: 'Car Battery Maintenance in Noida Heat | Expert Tips 2024',
     metaDescription: 'Learn how to maintain your car battery in Noida\'s extreme heat. Professional tips to prevent battery failure and extend battery life. Expert advice!',
     schema: {
@@ -715,7 +715,7 @@ Gurugram's challenging riding conditions require proactive maintenance and quick
     category: 'Problem Solving',
     tags: ['bike problems', 'Gurugram', 'doorstep repair', 'maintenance'],
     city: 'Gurugram',
-    image: '/api/placeholder/800/400',
+    image: '@assets/generated_images/Motorcycle_problems_and_repairs_87695499.png',
     metaTitle: 'Top 10 Bike Problems in Gurugram | Doorstep Solutions 2024',
     metaDescription: 'Common bike problems in Gurugram and professional doorstep fixes. Expert solutions for traffic, dust, and weather challenges. Quick repairs at your location!',
     schema: {
