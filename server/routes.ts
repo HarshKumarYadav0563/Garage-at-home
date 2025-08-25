@@ -4,6 +4,7 @@ import { storage } from "./storage";
 import { insertLeadSchema } from "@shared/schema";
 import { generateSitemap, generateRobotsTxt } from "./seo";
 import { z } from "zod";
+import { auth as adminAuth } from "./firebase-admin";
 
 const mechanicSearchSchema = z.object({
   lat: z.number(),
@@ -69,7 +70,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // OTP endpoints
+  // OTP endpoints - Firebase phone auth integration
   app.post("/api/otp/send", async (req, res) => {
     const { phone } = req.body;
     
@@ -78,33 +79,37 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
     
     try {
-      // Generate session ID and OTP
+      // Generate session ID for tracking
       const sessionId = Math.random().toString(36).substring(2, 15);
-      const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
+      const fullPhoneNumber = `+91${phone}`;
       
-      // Store OTP in memory (in production, use Redis or similar)
+      // Store session info in memory for backup verification
       (global as any).otpStore = (global as any).otpStore || {};
       (global as any).otpStore[sessionId] = {
-        phone,
-        code: otpCode,
+        phone: fullPhoneNumber,
         timestamp: Date.now(),
-        verified: false
+        verified: false,
+        useFirebase: true
       };
       
-      // In production, send SMS via Twilio/SMS service
-      console.log(`OTP for ${phone}: ${otpCode}`);
+      console.log(`Firebase Auth SMS initiated for ${fullPhoneNumber}`);
       
-      res.json({ sessionId, message: 'OTP sent successfully' });
+      res.json({ 
+        sessionId, 
+        message: 'Ready for Firebase OTP',
+        phoneNumber: fullPhoneNumber,
+        useFirebase: true
+      });
     } catch (error) {
-      console.error('Error sending OTP:', error);
-      res.status(500).json({ error: 'Failed to send OTP' });
+      console.error('Error preparing Firebase OTP:', error);
+      res.status(500).json({ error: 'Failed to prepare OTP' });
     }
   });
 
   app.post("/api/otp/verify", async (req, res) => {
-    const { phone, sessionId, code } = req.body;
+    const { phone, sessionId, code, firebaseToken } = req.body;
     
-    if (!phone || !sessionId || !code) {
+    if (!phone || !sessionId) {
       return res.status(400).json({ error: 'Missing required fields' });
     }
     
@@ -116,26 +121,38 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: 'Invalid session' });
       }
       
-      if (otpData.phone !== phone) {
-        return res.status(400).json({ error: 'Phone number mismatch' });
-      }
-      
       // Check if OTP expired (5 minutes)
       if (Date.now() - otpData.timestamp > 5 * 60 * 1000) {
         delete (global as any).otpStore[sessionId];
         return res.status(400).json({ error: 'OTP expired' });
       }
       
-      if (otpData.code !== code) {
-        return res.status(400).json({ error: 'Invalid OTP' });
+      // If Firebase token is provided, verify it
+      if (firebaseToken) {
+        try {
+          const decodedToken = await adminAuth.verifyIdToken(firebaseToken);
+          if (decodedToken.phone_number === otpData.phone) {
+            // Mark as verified and generate token
+            otpData.verified = true;
+            const otpToken = Math.random().toString(36).substring(2, 15);
+            (global as any).otpStore[`token_${otpToken}`] = { 
+              phone: otpData.phone, 
+              verified: true, 
+              timestamp: Date.now(),
+              firebaseUid: decodedToken.uid
+            };
+            
+            res.json({ verified: true, otpToken, firebaseVerified: true });
+            return;
+          }
+        } catch (firebaseError) {
+          console.error('Firebase token verification failed:', firebaseError);
+        }
       }
       
-      // Mark as verified and generate token
-      otpData.verified = true;
-      const otpToken = Math.random().toString(36).substring(2, 15);
-      (global as any).otpStore[`token_${otpToken}`] = { phone, verified: true, timestamp: Date.now() };
+      // Fallback: if no Firebase token or verification failed
+      res.status(400).json({ error: 'Firebase verification required' });
       
-      res.json({ verified: true, otpToken });
     } catch (error) {
       console.error('Error verifying OTP:', error);
       res.status(500).json({ error: 'Failed to verify OTP' });
@@ -240,7 +257,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         mechanic: mechanic ? {
           name: mechanic.name,
           phone: mechanic.phone,
-          rating: mechanic.rating
+          rating: parseFloat(mechanic.ratingAvg || '0')
         } : undefined,
         totalAmount: lead.totalAmount,
         createdAt: lead.createdAt
@@ -260,8 +277,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return;
       }
 
-      const leads = await storage.getAllLeads();
-      const matchingLead = leads.find(lead => 
+      const leads = await storage.getLeads();
+      const matchingLead = leads.find((lead: any) => 
         lead.customerName.toLowerCase().includes(name.toLowerCase()) && 
         lead.customerPhone.includes(phone)
       );
@@ -286,7 +303,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         mechanic: mechanic ? {
           name: mechanic.name,
           phone: mechanic.phone,
-          rating: mechanic.rating
+          rating: parseFloat(mechanic.ratingAvg || '0')
         } : undefined,
         totalAmount: matchingLead.totalAmount,
         createdAt: matchingLead.createdAt
