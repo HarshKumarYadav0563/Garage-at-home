@@ -166,6 +166,14 @@ export default function BlogPostPage() {
             
             {/* Hero Image */}
             <div className="aspect-video bg-gradient-to-br from-emerald-500/20 to-sky-500/20 relative">
+              <img 
+                src={post.image} 
+                alt={post.title}
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                }}
+              />
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
               <div className="absolute bottom-6 left-6 right-6">
                 <Badge className={`${

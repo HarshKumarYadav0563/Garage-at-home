@@ -237,6 +237,14 @@ export default function Blog() {
               >
                 <Card className="h-full bg-white/5 backdrop-blur-xl border border-white/10 hover:border-emerald-500/30 transition-all duration-300 group-hover:shadow-[0_20px_50px_rgba(16,185,129,0.1)]">
                   <div className="aspect-video bg-gradient-to-br from-emerald-500/20 to-sky-500/20 rounded-t-lg relative overflow-hidden">
+                    <img 
+                      src={post.image} 
+                      alt={post.title}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                      }}
+                    />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                     <div className="absolute bottom-4 left-4 right-4">
                       <Badge className={`${
