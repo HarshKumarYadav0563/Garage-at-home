@@ -509,7 +509,7 @@ export function Header() {
                 </Button>
               </motion.div>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[90vw] xs:w-[85vw] sm:w-[400px] max-w-[400px] bg-gray-950 border-white/10 overflow-y-auto">
+            <SheetContent side="right" className="w-[50vw] bg-gray-950 border-white/10 overflow-y-auto">
               <div className="flex flex-col space-y-3 sm:space-y-4 mt-3 sm:mt-4 pb-4 sm:pb-6">
                 {/* Mobile Logo */}
                 <div className="flex items-center space-x-2 sm:space-x-3 pb-3 sm:pb-4 border-b border-white/20">
