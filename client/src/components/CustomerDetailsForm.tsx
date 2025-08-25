@@ -29,11 +29,14 @@ export function CustomerDetailsForm({ onSubmit }: CustomerDetailsFormProps) {
   };
 
   const cityName = {
-    mumbai: 'Mumbai',
+    ncr: 'NCR',
     delhi: 'Delhi',
-    bangalore: 'Bangalore', 
+    gurgaon: 'Gurgaon',
+    noida: 'Noida',
+    faridabad: 'Faridabad',
+    ghaziabad: 'Ghaziabad',
     other: 'Other'
-  }[city];
+  }[city] || 'NCR';
 
   return (
     <div className="space-y-6">
