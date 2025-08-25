@@ -24,26 +24,27 @@ export function Hero() {
   };
 
   const headlineVariants = {
-    hidden: { opacity: 0, y: -30 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: "easeOut"
-      }
-    },
-  };
-
-  const subtextVariants = {
     hidden: { opacity: 0, y: -20 },
     visible: { 
       opacity: 1, 
       y: 0,
       transition: {
-        duration: 0.8,
+        duration: 0.6,
         ease: "easeOut",
-        delay: 0.2
+        delay: 0.1
+      }
+    },
+  };
+
+  const subtextVariants = {
+    hidden: { opacity: 0, y: -15 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut",
+        delay: 0.3
       }
     },
   };
@@ -229,10 +230,26 @@ export function Hero() {
             animate="visible"
             className="text-center px-4 py-3 space-y-3 max-w-sm mx-auto"
           >
-            {/* 1. Hero Image - At Top (No text above) */}
+            {/* 1. Headline - Above Image */}
+            <motion.h1
+              variants={headlineVariants}
+              className="text-lg sm:text-xl font-bold leading-tight text-white tracking-tight max-w-xs mx-auto relative z-20"
+            >
+              Doorstep Vehicle Service in Delhi NCR
+            </motion.h1>
+
+            {/* 2. Subtext - Above Image */}
+            <motion.p
+              variants={subtextVariants}
+              className="text-sm text-gray-300 leading-snug font-normal max-w-xs mx-auto relative z-20"
+            >
+              Certified mechanics with genuine parts and transparent pricing.
+            </motion.p>
+
+            {/* 3. Hero Image - Below Text */}
             <motion.div
               variants={imageVariants}
-              className="relative mx-auto max-w-[280px] mt-2"
+              className="relative mx-auto max-w-[280px] mt-3"
             >
               <div className="relative overflow-hidden rounded-xl shadow-2xl">
                 <img
@@ -270,22 +287,6 @@ export function Hero() {
                 <Wrench className="text-white w-3.5 h-3.5" />
               </motion.div>
             </motion.div>
-
-            {/* 2. Headline - Below Image */}
-            <motion.h1
-              variants={headlineVariants}
-              className="text-lg sm:text-xl font-bold leading-tight text-white tracking-tight max-w-xs mx-auto"
-            >
-              Doorstep Vehicle Service in Delhi NCR
-            </motion.h1>
-
-            {/* 3. Subtext - Compact */}
-            <motion.p
-              variants={subtextVariants}
-              className="text-sm text-gray-300 leading-snug font-normal max-w-xs mx-auto"
-            >
-              Certified mechanics with genuine parts and transparent pricing.
-            </motion.p>
 
             {/* 4. Trust Badges - Staggered Animation */}
             <motion.div
