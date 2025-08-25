@@ -273,8 +273,9 @@ export default function LocationStep() {
       });
       return;
     }
-    setCurrentStep('details');
-    setLocationRoute('/details');
+    // Always go to mechanic selection after location
+    setCurrentStep('mechanic');
+    setLocationRoute('/mechanic');
   };
 
   return (
@@ -426,10 +427,10 @@ export default function LocationStep() {
             onClick={handleContinue}
             disabled={!address.text}
             className="w-full bg-gradient-to-r from-emerald-500 via-sky-500 to-indigo-600 hover:from-emerald-600 hover:via-sky-600 hover:to-indigo-700 py-3"
-            data-testid="button-continue-details"
+            data-testid="button-continue-mechanic"
           >
             <span className="flex items-center justify-center space-x-2">
-              <span>Continue to Details</span>
+              <span>Find Nearby Mechanics</span>
               <ArrowRight className="w-4 h-4" />
             </span>
           </Button>
