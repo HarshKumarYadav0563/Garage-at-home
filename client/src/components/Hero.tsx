@@ -101,14 +101,14 @@ export function Hero() {
   };
 
   const secondaryCtaVariants = {
-    hidden: { opacity: 0, y: 15 },
+    hidden: { opacity: 0, y: 10 },
     visible: { 
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.8,
+        duration: 0.6,
         ease: "easeOut",
-        delay: 1.0
+        delay: 0.5
       }
     },
   };
@@ -355,11 +355,11 @@ export function Hero() {
             {/* 6. Secondary CTA - Learn More */}
             <motion.div
               variants={secondaryCtaVariants}
-              className="flex items-center justify-center gap-2 text-gray-400 hover:text-emerald-300 transition-colors cursor-pointer pb-2 relative z-10"
+              className="flex items-center justify-center gap-2 text-gray-300 hover:text-emerald-300 transition-colors cursor-pointer pb-2 relative z-30"
               onClick={handleHowItWorks}
               data-testid="button-how-it-works"
             >
-              <span className="text-sm font-medium underline decoration-dotted underline-offset-4">Learn More</span>
+              <span className="text-sm font-medium underline decoration-dotted underline-offset-4 text-gray-300">Learn More</span>
             </motion.div>
           </motion.div>
         </div>
@@ -412,7 +412,7 @@ export function Hero() {
                 <Button
                   onClick={handleHowItWorks}
                   variant="outline"
-                  className="bg-transparent border border-gray-600 text-gray-200 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-800 hover:border-gray-500 transition-all duration-300 cursor-pointer relative z-10"
+                  className="bg-transparent border-2 border-gray-500 text-gray-100 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-700 hover:border-gray-400 hover:text-white transition-all duration-300 cursor-pointer relative z-30"
                   data-testid="button-how-it-works"
                 >
                   <HelpCircle className="mr-2 w-5 h-5" />
