@@ -76,13 +76,6 @@ export function Footer() {
                         
                         {/* Main Icon */}
                         <Wrench className="relative z-10 text-white text-lg" />
-                        
-                        {/* Home Indicator */}
-                        <div className="absolute -bottom-1 -right-1 bg-white rounded-full p-1 w-4 h-4">
-                          <div className="bg-emerald-500 rounded-full flex items-center justify-center w-full h-full">
-                            <div className="w-1.5 h-1.5 bg-white rounded-sm"></div>
-                          </div>
-                        </div>
                       </div>
                     </motion.div>
                     

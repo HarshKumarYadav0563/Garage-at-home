@@ -128,44 +128,12 @@ export function HowItWorks() {
     <section 
       id="how-it-works" 
       aria-labelledby="how-heading" 
-      className="relative px-4 pt-8 pb-16 md:px-10 md:pt-12 md:pb-20 overflow-hidden"
-      style={{
-        background: `
-          radial-gradient(circle at 20% 20%, rgba(34, 197, 94, 0.15) 0%, transparent 50%),
-          radial-gradient(circle at 80% 30%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
-          radial-gradient(circle at 40% 70%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
-          radial-gradient(circle at 90% 80%, rgba(236, 72, 153, 0.15) 0%, transparent 50%),
-          linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)
-        `
-      }}
+      className="relative px-4 pt-8 pb-16 md:px-10 md:pt-12 md:pb-20 overflow-hidden bg-gray-950"
     >
-      {/* Floating Particles */}
+      {/* Simple background accent */}
       <div className="absolute inset-0 overflow-hidden">
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-full opacity-60"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, -30, 0],
-              opacity: [0.3, 0.8, 0.3],
-              scale: [1, 1.5, 1],
-            }}
-            transition={{
-              duration: 3 + Math.random() * 2,
-              repeat: Infinity,
-              delay: Math.random() * 2,
-              ease: "easeInOut"
-            }}
-          />
-        ))}
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-500/5 rounded-full blur-3xl" />
       </div>
-
-      {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-slate-900/20" />
       
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Header */}
@@ -178,17 +146,17 @@ export function HowItWorks() {
         >
           <motion.h2 
             id="how-heading" 
-            className="text-3xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-emerald-400 via-cyan-400 to-purple-400 bg-clip-text text-transparent mb-6"
+            className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-6"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2, duration: 0.8 }}
           >
-            How Garage At Home Works
+            Our Service Process
           </motion.h2>
           
           <motion.div
-            className="h-1 bg-gradient-to-r from-emerald-500 via-cyan-500 to-purple-500 rounded-full mx-auto mb-6"
+            className="h-1 bg-emerald-500 rounded-full mx-auto mb-6"
             initial={{ width: 0, opacity: 0 }}
             whileInView={{ width: 120, opacity: 1 }}
             viewport={{ once: true }}
@@ -196,13 +164,13 @@ export function HowItWorks() {
           />
           
           <motion.p 
-            className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed"
+            className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed font-medium"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.7, duration: 0.8 }}
           >
-            Experience premium vehicle service at your doorstep in 4 seamless steps
+            Experience professional vehicle servicing with our streamlined four-step process designed for efficiency and transparency
           </motion.p>
         </motion.div>
 
@@ -232,9 +200,9 @@ export function HowItWorks() {
                       transition: { type: "spring", stiffness: 300, damping: 20 }
                     }}
                   >
-                    {/* Glow Effect */}
+                    {/* Hover Effect */}
                     <motion.div 
-                      className={`absolute inset-0 bg-gradient-to-br ${step.gradient} opacity-0 group-hover:opacity-20 blur-2xl transition-opacity duration-500`}
+                      className="absolute inset-0 bg-emerald-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                     />
                     
                     {/* Card Content */}
@@ -251,18 +219,6 @@ export function HowItWorks() {
                             alt={`${step.title} illustration`}
                             className="w-32 h-32 md:w-40 md:h-40 object-contain drop-shadow-2xl"
                             loading="lazy"
-                          />
-                          <motion.div 
-                            className={`absolute inset-0 bg-${step.glowColor} opacity-20 blur-xl rounded-full scale-125`}
-                            animate={shouldReduceMotion ? {} : {
-                              scale: [1.25, 1.5, 1.25],
-                              opacity: [0.2, 0.4, 0.2]
-                            }}
-                            transition={{
-                              duration: 2,
-                              repeat: Infinity,
-                              ease: "easeInOut"
-                            }}
                           />
                         </div>
                       </motion.div>
@@ -307,10 +263,7 @@ export function HowItWorks() {
             transition={{ delay: 1 }}
           >
             <motion.div
-              className="h-full bg-gradient-to-r from-emerald-400 via-cyan-400 to-purple-400 rounded-full shadow-lg"
-              style={{
-                filter: "drop-shadow(0 0 8px rgba(34, 197, 94, 0.5))"
-              }}
+              className="h-full bg-emerald-500 rounded-full"
               variants={lineVariants}
               initial="hidden"
               whileInView="show"

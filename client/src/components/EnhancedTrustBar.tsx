@@ -132,57 +132,10 @@ export function EnhancedTrustBar() {
   };
 
   return (
-    <section className="relative py-4 md:py-8 bg-gradient-to-br from-gray-900 via-slate-900 to-black overflow-hidden">
-      {/* Magical floating particles */}
+    <section className="relative py-4 md:py-8 bg-gray-950 overflow-hidden">
+      {/* Simple background */}
       <div className="absolute inset-0 overflow-hidden">
-        {Array.from({ length: 15 }).map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-white/20 rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            variants={particleVariants}
-            animate="float"
-            transition={{
-              delay: Math.random() * 4,
-              duration: 3 + Math.random() * 2,
-            }}
-          />
-        ))}
-        
-        {/* Morphing gradient waves */}
-        <motion.div
-          className="absolute inset-0 bg-gradient-to-r from-emerald-500/5 via-transparent to-blue-500/5"
-          animate={{
-            background: [
-              'linear-gradient(90deg, rgba(16,185,129,0.05) 0%, transparent 50%, rgba(59,130,246,0.05) 100%)',
-              'linear-gradient(90deg, rgba(147,51,234,0.05) 0%, transparent 50%, rgba(236,72,153,0.05) 100%)',
-              'linear-gradient(90deg, rgba(251,146,60,0.05) 0%, transparent 50%, rgba(34,197,94,0.05) 100%)',
-              'linear-gradient(90deg, rgba(16,185,129,0.05) 0%, transparent 50%, rgba(59,130,246,0.05) 100%)'
-            ]
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-        
-        {/* Radial gradient pulse */}
-        <motion.div
-          className="absolute inset-0 bg-gradient-radial from-white/1 via-transparent to-transparent"
-          animate={{
-            scale: [1, 1.5, 1],
-            opacity: [0.3, 0.1, 0.3]
-          }}
-          transition={{
-            duration: 6,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-500/5 rounded-full blur-3xl" />
       </div>
 
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 relative">

@@ -64,81 +64,49 @@ export function ServicesSection() {
 
   const services = [
     {
-      title: "Premium Bike Services",
-      description: "Complete motorcycle and scooter maintenance with professional care",
+      title: "Professional Motorcycle Services",
+      description: "Comprehensive maintenance and repair for motorcycles and scooters",
       icon: Bike,
-      gradient: "from-emerald-400 to-teal-500",
       priceFrom: "₹499",
       originalPrice: "₹699", 
       features: [
-        "Engine Oil & Filter Change",
+        "Engine Oil & Filter Replacement",
         "Chain Lubrication & Adjustment", 
         "Brake System Inspection",
-        "Tire Pressure Check",
-        "Battery Terminal Cleaning",
-        "Basic Electrical Check",
-        "FREE Doorstep Service"
+        "Tire Pressure & Condition Check",
+        "Battery Terminal Maintenance",
+        "Electrical System Diagnostics",
+        "Complimentary On-Site Service"
       ],
-      popular: true,
-      glowColor: "emerald"
+      popular: true
     },
     {
-      title: "Premium Car Services", 
-      description: "Professional automotive care with certified mechanics", 
+      title: "Professional Automotive Services", 
+      description: "Complete vehicle maintenance with certified automotive technicians", 
       icon: Car,
-      gradient: "from-blue-400 to-indigo-500",
       priceFrom: "₹1,399",
       originalPrice: "₹1,799",
       features: [
-        "Engine Oil & Filter Change",
-        "Brake Fluid Check",
-        "Battery Inspection", 
-        "Tire Pressure & Tread Check",
-        "Lights & Indicators Test",
-        "Fluid Level Checks",
-        "FREE Doorstep Service"
+        "Engine Oil & Filter Replacement",
+        "Brake Fluid Inspection",
+        "Battery & Charging System Check", 
+        "Tire Pressure & Tread Assessment",
+        "Lighting & Signal System Test",
+        "Fluid Level Monitoring",
+        "Complimentary On-Site Service"
       ],
-      popular: false,
-      glowColor: "blue"
+      popular: false
     }
   ];
 
   return (
     <section 
       id="services" 
-      className="relative py-16 md:py-20 lg:py-28 overflow-hidden bg-gradient-to-b from-gray-950 via-gray-900 to-black"
+      className="relative py-16 md:py-20 lg:py-28 overflow-hidden bg-gray-950"
     >
-      {/* Enhanced Particle Background */}
+      {/* Simple background accent */}
       <div className="absolute inset-0 overflow-hidden">
-        {/* Floating gradient blobs */}
-        <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-emerald-500/12 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-1/3 left-1/4 w-80 h-80 bg-blue-500/12 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
-        <div className="absolute top-1/2 right-1/3 w-72 h-72 bg-orange-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
-        <div className="absolute bottom-1/4 left-1/3 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '3s' }} />
-        
-        {/* Floating particles */}
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-gradient-to-r from-blue-400 to-emerald-400 rounded-full opacity-30"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, -15, 0],
-              x: [0, Math.random() * 8 - 4, 0],
-              opacity: [0.1, 0.6, 0.1],
-              scale: [1, 1.3, 1],
-            }}
-            transition={{
-              duration: 3 + Math.random() * 2,
-              repeat: Infinity,
-              delay: Math.random() * 4,
-              ease: "easeInOut"
-            }}
-          />
-        ))}
+        <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-emerald-500/5 rounded-full blur-3xl" />
       </div>
       
       {/* Enhanced grid pattern */}
@@ -166,41 +134,26 @@ export function ServicesSection() {
             viewport={{ once: true }}
             transition={{ delay: 0.2, duration: 0.8 }}
           >
-            Our Premium Services
+            Professional Vehicle Services
           </motion.h2>
           
-          {/* Enhanced Gradient Divider Line */}
           <motion.div
-            className="relative h-1 bg-gradient-to-r from-emerald-400 via-blue-400 to-orange-500 rounded-full mx-auto mb-6 overflow-hidden"
+            className="h-1 bg-emerald-500 rounded-full mx-auto mb-6"
             style={{ width: '140px' }}
             variants={gradientLineVariants}
             initial="hidden"
             whileInView="show"
             viewport={{ once: true }}
-          >
-            {/* Animated sweep effect */}
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent"
-              animate={{
-                x: ['-100%', '100%']
-              }}
-              transition={{
-                duration: 2.5,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 1.2
-              }}
-            />
-          </motion.div>
+          />
           
           <motion.p 
-            className="text-base md:text-lg text-gray-400 max-w-3xl mx-auto leading-relaxed"
+            className="text-base md:text-lg text-gray-400 max-w-3xl mx-auto leading-relaxed font-medium"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.6, duration: 0.8 }}
           >
-            Professional vehicle maintenance and repair services delivered right to your doorstep with transparent pricing and guaranteed satisfaction
+            Comprehensive vehicle maintenance and repair services delivered at your location with certified technicians, transparent pricing, and quality assurance
           </motion.p>
         </motion.div>
 

@@ -60,88 +60,43 @@ export function WhyChooseGarageAtHome() {
 
   const features = [
     {
-      title: "True Doorstep Service",
-      description: "No need to visit garages. Our mechanics come fully equipped to your location with all tools and parts.",
-      icon: Home,
-      gradient: "from-emerald-400 to-sky-500",
-      glowColor: "emerald",
-      shadowGlow: "shadow-[0_0_40px_rgba(34,197,94,0.4)]"
+      title: "On-Site Service Delivery",
+      description: "Professional technicians arrive at your location with comprehensive tools and genuine parts for efficient service completion.",
+      icon: Home
     },
     {
-      title: "Professional Mechanics",
-      description: "Trained, uniformed professionals with verified experience and background checks for your safety.",
-      icon: UserCheck,
-      gradient: "from-sky-400 to-indigo-500",
-      glowColor: "sky",
-      shadowGlow: "shadow-[0_0_40px_rgba(56,189,248,0.4)]"
+      title: "Certified Technicians",
+      description: "Fully trained and certified professionals with verified credentials and extensive experience in vehicle maintenance.",
+      icon: UserCheck
     },
     {
       title: "Transparent Pricing",
-      description: "Upfront, fixed pricing with no hidden charges. What you see is what you pay.",
-      icon: DollarSign,
-      gradient: "from-amber-400 to-orange-500",
-      glowColor: "amber",
-      shadowGlow: "shadow-[0_0_40px_rgba(245,158,11,0.4)]"
+      description: "Fixed upfront pricing with detailed breakdowns and no hidden charges, ensuring complete cost transparency.",
+      icon: DollarSign
     },
     {
-      title: "Real-time Tracking",
-      description: "Track your service progress live, from booking confirmation to completion with photo updates.",
-      icon: MapPin,
-      gradient: "from-violet-400 to-purple-500",
-      glowColor: "violet",
-      shadowGlow: "shadow-[0_0_40px_rgba(139,92,246,0.4)]"
+      title: "Service Tracking",
+      description: "Real-time progress monitoring from initial booking through service completion with regular status updates.",
+      icon: MapPin
     },
     {
-      title: "Quality Guarantee",
-      description: "30-day warranty on all services with satisfaction guarantee or money back.",
-      icon: Shield,
-      gradient: "from-teal-400 to-cyan-500",
-      glowColor: "teal",
-      shadowGlow: "shadow-[0_0_40px_rgba(20,184,166,0.4)]"
+      title: "Quality Assurance",
+      description: "Comprehensive 30-day warranty coverage with satisfaction guarantee and quality-backed service standards.",
+      icon: Shield
     },
     {
-      title: "Same Day Service",
-      description: "Book and get service the same day. Emergency services available 24/7 across all cities.",
-      icon: Zap,
-      gradient: "from-pink-400 to-rose-500",
-      glowColor: "pink",
-      shadowGlow: "shadow-[0_0_40px_rgba(244,114,182,0.4)]"
+      title: "Flexible Scheduling",
+      description: "Same-day service availability with convenient appointment scheduling to fit your timeline and preferences.",
+      icon: Zap
     }
   ];
 
   return (
-    <section className="relative py-16 md:py-20 lg:py-28 overflow-hidden bg-gradient-to-b from-gray-950 via-gray-900 to-black">
-      {/* Enhanced Particle Background */}
+    <section className="relative py-16 md:py-20 lg:py-28 overflow-hidden bg-gray-900">
+      {/* Simple background accent */}
       <div className="absolute inset-0 overflow-hidden">
-        {/* Floating gradient blobs */}
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-500/15 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-sky-500/15 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
-        <div className="absolute top-1/2 right-1/3 w-72 h-72 bg-violet-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
-        <div className="absolute bottom-1/4 left-1/3 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '3s' }} />
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-500/5 rounded-full blur-3xl" />
         
-        {/* Floating particles */}
-        {[...Array(25)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-gradient-to-r from-emerald-400 to-sky-400 rounded-full opacity-40"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, -20, 0],
-              x: [0, Math.random() * 10 - 5, 0],
-              opacity: [0.2, 0.8, 0.2],
-              scale: [1, 1.5, 1],
-            }}
-            transition={{
-              duration: 4 + Math.random() * 2,
-              repeat: Infinity,
-              delay: Math.random() * 3,
-              ease: "easeInOut"
-            }}
-          />
-        ))}
       </div>
       
       {/* Subtle grid pattern */}
@@ -169,41 +124,26 @@ export function WhyChooseGarageAtHome() {
             viewport={{ once: true }}
             transition={{ delay: 0.2, duration: 0.8 }}
           >
-            Why Choose Garage At Home
+            Why Choose Our Services
           </motion.h2>
           
-          {/* Enhanced Gradient Divider Line */}
           <motion.div
-            className="relative h-1 bg-gradient-to-r from-emerald-400 via-sky-400 to-violet-500 rounded-full mx-auto mb-6 overflow-hidden"
+            className="h-1 bg-emerald-500 rounded-full mx-auto mb-6"
             style={{ width: '120px' }}
             variants={gradientLineVariants}
             initial="hidden"
             whileInView="show"
             viewport={{ once: true }}
-          >
-            {/* Animated sweep effect */}
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-              animate={{
-                x: ['-100%', '100%']
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 1
-              }}
-            />
-          </motion.div>
+          />
           
           <motion.p 
-            className="text-base md:text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed"
+            className="text-base md:text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed font-medium"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.6, duration: 0.8 }}
           >
-            Unlike traditional garage visits, we bring premium service to your doorstep
+            Professional vehicle services delivered with quality, transparency, and convenience
           </motion.p>
         </motion.div>
 
