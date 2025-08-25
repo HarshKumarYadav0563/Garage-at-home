@@ -268,59 +268,58 @@ export default function Services() {
       </div>
       
       
-      {/* Sticky Mobile Controls */}
+      {/* Compact Mobile Controls */}
       <motion.div 
-        className="lg:hidden sticky top-0 z-40 bg-gray-900/90 backdrop-blur-xl border-b border-white/20"
+        className="lg:hidden sticky top-0 z-40 bg-gray-900/95 backdrop-blur-xl border-b border-white/10"
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.5, duration: 0.6 }}
       >
-        <div className="max-w-7xl mx-auto px-4 py-3">
-          <div className="space-y-3">
-            {/* First Row: Vehicle Toggle & Search */}
-            <div className="flex items-center justify-between gap-3">
-              {/* Vehicle Toggle */}
-              <div className="flex bg-white/15 rounded-xl p-1">
+        <div className="max-w-7xl mx-auto px-3 py-2">
+          <div className="space-y-2">
+            {/* Compact Row: Vehicle Toggle & Search */}
+            <div className="flex items-center gap-2">
+              {/* Compact Vehicle Toggle */}
+              <div className="flex bg-white/10 rounded-lg p-0.5">
                 <button
                   onClick={() => setSelectedVehicle('bike')}
-                  className={`px-3 py-2 rounded-lg text-sm font-semibold transition-all ${
+                  className={`px-2 py-1.5 rounded-md text-xs font-medium transition-all ${
                     selectedVehicle === 'bike'
-                      ? 'bg-emerald-500 text-white shadow-lg'
+                      ? 'bg-emerald-500 text-white shadow-md'
                       : 'text-white/90 hover:text-white hover:bg-white/10'
                   }`}
                 >
-                  <Bike className="w-4 h-4 inline mr-1" />
+                  <Bike className="w-3 h-3 inline mr-1" />
                   Bike
                 </button>
                 <button
                   onClick={() => setSelectedVehicle('car')}
-                  className={`px-3 py-2 rounded-lg text-sm font-semibold transition-all ${
+                  className={`px-2 py-1.5 rounded-md text-xs font-medium transition-all ${
                     selectedVehicle === 'car'
-                      ? 'bg-emerald-500 text-white shadow-lg'
+                      ? 'bg-emerald-500 text-white shadow-md'
                       : 'text-white/90 hover:text-white hover:bg-white/10'
                   }`}
                 >
-                  <Car className="w-4 h-4 inline mr-1" />
+                  <Car className="w-3 h-3 inline mr-1" />
                   Car
                 </button>
               </div>
 
-              {/* Search */}
+              {/* Compact Search */}
               <div className="flex-1 relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-300" />
+                <Search className="absolute left-2.5 top-1/2 transform -translate-y-1/2 w-3.5 h-3.5 text-gray-400" />
                 <Input
                   type="text"
-                  placeholder={`Search ${selectedVehicle} services...`}
+                  placeholder={`Search ${selectedVehicle} services`}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 bg-white/15 border-white/30 text-white placeholder:text-gray-300 focus:border-emerald-500/50 rounded-lg h-10 font-medium"
+                  className="pl-8 pr-3 bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-emerald-500/50 rounded-lg h-8 text-sm"
                 />
               </div>
             </div>
 
-            {/* Second Row: Brand & Model Selection */}
-            <div className="flex items-center gap-3">
-              {/* Brand Selection */}
+            {/* Compact Brand & Model Selection */}
+            <div className="flex items-center gap-2">
               <div className="flex-1">
                 <Select 
                   value={selectedBrand} 
@@ -328,32 +327,30 @@ export default function Services() {
                     setSelectedBrand(value);
                   }}
                 >
-                  <SelectTrigger className="w-full bg-white/15 border-white/30 text-white h-10 font-medium [&>span]:text-white [&>span]:font-medium">
-                    <SelectValue placeholder="Select Brand" className="text-white" />
+                  <SelectTrigger className="w-full bg-white/10 border-white/20 text-white h-8 text-sm [&>span]:text-white [&>span]:text-sm">
+                    <SelectValue placeholder="Brand" className="text-white" />
                   </SelectTrigger>
                   <SelectContent className="bg-gray-900 border-gray-700">
                     {getBrandsForVehicleType(selectedVehicle).map((brand) => (
-                      <SelectItem key={brand.id} value={brand.id} className="text-white focus:bg-gray-800 focus:text-white">
+                      <SelectItem key={brand.id} value={brand.id} className="text-white focus:bg-gray-800 focus:text-white text-sm">
                         {brand.name}
                       </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
               </div>
-
-              {/* Model Selection */}
               <div className="flex-1">
                 <Select 
                   value={selectedModel} 
                   onValueChange={setSelectedModel}
                   disabled={!selectedBrand}
                 >
-                  <SelectTrigger className="w-full bg-white/15 border-white/30 text-white h-10 font-medium [&>span]:text-white [&>span]:font-medium disabled:opacity-50">
-                    <SelectValue placeholder="Select Model" className="text-white" />
+                  <SelectTrigger className="w-full bg-white/10 border-white/20 text-white h-8 text-sm [&>span]:text-white [&>span]:text-sm disabled:opacity-50">
+                    <SelectValue placeholder="Model" className="text-white" />
                   </SelectTrigger>
                   <SelectContent className="bg-gray-900 border-gray-700">
                     {getModelsForBrand(selectedBrand, selectedVehicle).map((model) => (
-                      <SelectItem key={model.id} value={model.id} className="text-white focus:bg-gray-800 focus:text-white">
+                      <SelectItem key={model.id} value={model.id} className="text-white focus:bg-gray-800 focus:text-white text-sm">
                         {model.name}
                       </SelectItem>
                     ))}
@@ -365,7 +362,7 @@ export default function Services() {
         </div>
       </motion.div>
 
-      <div className="relative max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8 py-2 md:py-4">
+      <div className="relative max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-1 sm:py-2 md:py-4">
         
 
         {/* Vehicle Selector & Search - Desktop Inline */}
@@ -483,14 +480,14 @@ export default function Services() {
                 <div className="flex items-center justify-between mb-3">
                   <div>
                     <motion.h2 
-                      className="text-xl md:text-2xl font-bold text-white mb-1"
+                      className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-1"
                     >
-                      Professional {selectedVehicle === 'bike' ? 'Bike' : 'Car'} Service Packages
+                      {selectedVehicle === 'bike' ? 'Bike' : 'Car'} Service Packages
                     </motion.h2>
                     <motion.p 
-                      className="text-gray-300 text-sm md:text-base"
+                      className="text-gray-400 text-xs sm:text-sm md:text-base"
                     >
-                      Complete maintenance solutions designed for optimal vehicle performance
+                      Complete maintenance solutions for optimal performance
                     </motion.p>
                   </div>
                   <Badge className="bg-emerald-500 text-white px-3 py-1.5">
@@ -499,10 +496,10 @@ export default function Services() {
                 </div>
                 
                 
-                {/* Mobile: Horizontal scroll with snap */}
+                {/* Mobile: Optimized scroll with better touch targets */}
                 <div className="lg:hidden">
                   <motion.div
-                    className="flex gap-3 overflow-x-auto snap-x snap-mandatory py-1 px-1 scrollbar-hide"
+                    className="flex gap-2 overflow-x-auto snap-x snap-mandatory py-0.5 px-0.5 scrollbar-hide"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.2, staggerChildren: 0.05 }}
@@ -513,7 +510,7 @@ export default function Services() {
                       return (
                         <motion.div
                           key={service.id}
-                          className="min-w-[280px] max-w-[280px] snap-start"
+                          className="min-w-[260px] max-w-[260px] snap-start"
                           initial={{ opacity: 0, x: 20 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: 0.1 + (index * 0.05) }}
@@ -571,11 +568,11 @@ export default function Services() {
                 className="flex flex-col sm:flex-row sm:items-center justify-between mb-3 gap-2"
               >
                 <div>
-                  <h3 className="text-xl md:text-2xl font-bold text-white mb-1">
+                  <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-1">
                     Individual Services
                   </h3>
-                  <p className="text-gray-300 text-sm md:text-base">
-                    Precision services for specific maintenance needs
+                  <p className="text-gray-400 text-xs sm:text-sm md:text-base">
+                    Precision services for specific needs
                   </p>
                 </div>
                 <Badge variant="outline" className="text-emerald-400 border-emerald-500/30 self-start sm:self-auto text-xs">
@@ -584,15 +581,15 @@ export default function Services() {
               </motion.div>
               
               <motion.div 
-                className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-2 mb-3"
+                className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-2 mb-2"
               >
-                <p className="text-blue-300 text-sm">
-                  <span className="font-medium">Mix & Match:</span> Individual services can be combined. Orders below ₹999 include ₹99 doorstep charge.
+                <p className="text-blue-300 text-xs sm:text-sm">
+                  <span className="font-medium">Mix & Match:</span> Combine services. Orders below ₹999 include ₹99 doorstep charge.
                 </p>
               </motion.div>
               
               <motion.div
-                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-3"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.3, staggerChildren: 0.03 }}
@@ -637,10 +634,10 @@ export default function Services() {
           </motion.div>
         )}
 
-        {/* Mobile Bottom Summary */}
+        {/* Optimized Mobile Bottom Summary */}
         {currentStep === 'services' && selectedServices.length > 0 && showSummary && (
-          <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 p-4 bg-gradient-to-t from-black/90 to-transparent backdrop-blur-xl">
-            <BookingSummary isMobile={true} className="max-h-[60vh] overflow-y-auto" />
+          <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 p-2 bg-gradient-to-t from-black/95 to-transparent backdrop-blur-xl">
+            <BookingSummary isMobile={true} className="max-h-[65vh] overflow-y-auto rounded-xl" />
           </div>
         )}
 
