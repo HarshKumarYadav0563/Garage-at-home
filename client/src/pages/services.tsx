@@ -193,76 +193,18 @@ export default function Services() {
 
 
   return (
-    <div ref={containerRef} className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-black relative overflow-hidden">
+    <div ref={containerRef} className="min-h-screen bg-gray-950 relative overflow-hidden">
       
       {/* Scroll Progress Indicator */}
       <motion.div
-        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 via-sky-500 to-purple-500 z-50 origin-left"
+        className="fixed top-0 left-0 right-0 h-1 bg-emerald-500 z-50 origin-left"
         style={{ scaleX: smoothProgress }}
       />
       
-      {/* Floating Scroll Indicator */}
-      <motion.div
-        className="fixed right-4 sm:right-8 top-1/2 transform -translate-y-1/2 z-40"
-        initial={{ opacity: 0, x: 20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 2 }}
-      >
-        <motion.div
-          className="w-1 h-20 sm:h-32 bg-white/10 rounded-full overflow-hidden backdrop-blur-sm"
-          whileHover={{ scale: 1.2, backgroundColor: 'rgba(255, 255, 255, 0.2)' }}
-        >
-          <motion.div
-            className="w-full bg-gradient-to-b from-emerald-400 to-sky-400 rounded-full"
-            style={{ 
-              height: smoothProgress,
-              boxShadow: '0 0 10px rgba(16, 185, 129, 0.5)'
-            }}
-          />
-        </motion.div>
-      </motion.div>
       
-      {/* Enhanced Background Effects with Parallax */}
-      <motion.div 
-        className="absolute inset-0 overflow-hidden"
-        style={{ y: backgroundY }}
-      >
-        {/* Dynamic gradient overlays */}
-        <motion.div 
-          className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-purple-900/40 via-transparent to-transparent"
-          animate={{
-            opacity: [0.4, 0.7, 0.4]
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-        <motion.div 
-          className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-blue-900/35 via-transparent to-transparent"
-          animate={{
-            opacity: [0.3, 0.6, 0.3]
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 2
-          }}
-        />
-        <motion.div 
-          className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-emerald-900/25 via-transparent to-transparent"
-          animate={{
-            opacity: [0.2, 0.5, 0.2]
-          }}
-          transition={{
-            duration: 12,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 4
-          }}
-        />
+      {/* Simple background */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-500/5 rounded-full blur-3xl" />
         
         {/* Enhanced floating orbs with parallax and scroll effects */}
         <motion.div
@@ -323,93 +265,8 @@ export default function Services() {
           }}
         />
         
-        {/* Floating particles */}
-        {Array.from({ length: 25 }).map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-emerald-400/40 rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, -100, 0],
-              opacity: [0, 1, 0],
-              scale: [0, 1, 0]
-            }}
-            transition={{
-              duration: 4 + Math.random() * 4,
-              repeat: Infinity,
-              delay: Math.random() * 4,
-              ease: "easeInOut"
-            }}
-          />
-        ))}
-        
-        {/* Animated flowing lines */}
-        {Array.from({ length: 8 }).map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute h-px bg-gradient-to-r from-transparent via-emerald-500/30 to-transparent"
-            style={{
-              top: `${15 + i * 12}%`,
-              width: '200%',
-              left: '-50%'
-            }}
-            animate={{
-              x: ['-100%', '50%'],
-              opacity: [0, 1, 0]
-            }}
-            transition={{
-              duration: 8 + i * 1.5,
-              repeat: Infinity,
-              delay: i * 1.2,
-              ease: "easeInOut"
-            }}
-          />
-        ))}
-      </motion.div>
+      </div>
       
-      {/* Enhanced Animated Grid Pattern */}
-      <motion.div
-        className="absolute inset-0 opacity-[0.04]"
-        animate={{
-          backgroundPosition: ['0% 0%', '100% 100%'],
-        }}
-        transition={{
-          duration: 40,
-          repeat: Infinity,
-          repeatType: 'reverse',
-          ease: "linear"
-        }}
-        style={{
-          backgroundImage: `
-            radial-gradient(circle at 2px 2px, rgba(59, 130, 246, 0.3) 1px, transparent 0),
-            radial-gradient(circle at 30px 30px, rgba(16, 185, 129, 0.2) 1px, transparent 0),
-            linear-gradient(45deg, transparent 49%, rgba(255,255,255,0.05) 50%, transparent 51%)
-          `,
-          backgroundSize: '60px 60px, 90px 90px, 120px 120px',
-        }}
-      />
-      
-      {/* Parallax Hexagon Pattern */}
-      <motion.div
-        className="absolute inset-0 opacity-[0.02]"
-        animate={{
-          backgroundPosition: ['0% 0%', '50% 50%'],
-        }}
-        transition={{
-          duration: 60,
-          repeat: Infinity,
-          ease: "linear"
-        }}
-        style={{
-          backgroundImage: `
-            url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2310b981' fill-opacity='0.1'%3E%3Cpath d='m36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")
-          `,
-          backgroundSize: '60px 60px',
-        }}
-      />
       
       {/* Sticky Mobile Controls */}
       <motion.div 
@@ -628,16 +485,16 @@ export default function Services() {
                     <motion.h2 
                       className="text-xl md:text-2xl font-bold text-white mb-1"
                     >
-                      {selectedVehicle === 'bike' ? 'Bike' : 'Car'} Service Packages
+                      Professional {selectedVehicle === 'bike' ? 'Bike' : 'Car'} Service Packages
                     </motion.h2>
                     <motion.p 
                       className="text-gray-300 text-sm md:text-base"
                     >
-                      Comprehensive care bundles with maximum savings
+                      Complete maintenance solutions designed for optimal vehicle performance
                     </motion.p>
                   </div>
-                  <Badge className="bg-gradient-to-r from-emerald-500 to-sky-500 text-white px-3 py-1.5">
-                    Best Value
+                  <Badge className="bg-emerald-500 text-white px-3 py-1.5">
+                    Recommended
                   </Badge>
                 </div>
                 
@@ -829,7 +686,7 @@ export default function Services() {
                   >
                     <Button
                       onClick={handleBookingSubmit}
-                      className="bg-gradient-to-r from-emerald-500 to-sky-600 hover:from-emerald-600 hover:to-sky-700 text-white px-8 py-4 text-lg font-semibold rounded-xl shadow-xl"
+                      className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-4 text-lg font-semibold rounded-xl shadow-lg"
                       data-testid="submit-booking"
                     >
                       <Calendar className="w-5 h-5 mr-2" />
@@ -853,7 +710,7 @@ export default function Services() {
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ delay: 0.2, type: "spring" }}
-                  className="w-16 h-16 bg-gradient-to-r from-emerald-500 to-sky-600 rounded-full flex items-center justify-center mx-auto mb-6"
+                  className="w-16 h-16 bg-emerald-500 rounded-full flex items-center justify-center mx-auto mb-6"
                 >
                   <CheckCircle className="w-8 h-8 text-white" />
                 </motion.div>

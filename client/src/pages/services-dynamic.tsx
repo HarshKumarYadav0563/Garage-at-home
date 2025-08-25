@@ -246,44 +246,18 @@ export default function ServicesDynamic() {
   }
 
   return (
-    <div ref={containerRef} className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-black relative overflow-hidden">
+    <div ref={containerRef} className="min-h-screen bg-gray-950 relative overflow-hidden">
       
       {/* Scroll Progress Indicator */}
       <motion.div
-        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 via-sky-500 to-purple-500 z-50 origin-left"
+        className="fixed top-0 left-0 right-0 h-1 bg-emerald-500 z-50 origin-left"
         style={{ scaleX: smoothProgress }}
       />
       
-      {/* Enhanced Background Effects with Parallax */}
-      <motion.div 
-        className="absolute inset-0 overflow-hidden"
-        style={{ y: backgroundY }}
-      >
-        {/* Dynamic gradient overlays */}
-        <motion.div 
-          className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-purple-900/40 via-transparent to-transparent"
-          animate={{
-            opacity: [0.4, 0.7, 0.4]
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-        <motion.div 
-          className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-blue-900/35 via-transparent to-transparent"
-          animate={{
-            opacity: [0.3, 0.6, 0.3]
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 2
-          }}
-        />
-      </motion.div>
+      {/* Simple background */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-500/5 rounded-full blur-3xl" />
+      </div>
 
       <div className="relative max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8 py-4 md:py-8">
         
@@ -410,14 +384,14 @@ export default function ServicesDynamic() {
                 <div className="flex items-center justify-between mb-4">
                   <div>
                     <motion.h2 className="text-xl md:text-2xl font-bold text-white mb-1">
-                      {VEHICLE_DISPLAY_NAMES[currentVehicle]} Service Packages
+                      Professional {VEHICLE_DISPLAY_NAMES[currentVehicle]} Service Packages
                     </motion.h2>
                     <motion.p className="text-gray-300 text-sm md:text-base">
-                      Comprehensive care bundles with maximum savings • Available in {CITY_DISPLAY_NAMES[currentCity]}
+                      Complete maintenance solutions for optimal vehicle performance • Available in {CITY_DISPLAY_NAMES[currentCity]}
                     </motion.p>
                   </div>
-                  <Badge className="bg-gradient-to-r from-emerald-500 to-sky-500 text-white px-3 py-1.5">
-                    Best Value
+                  <Badge className="bg-emerald-500 text-white px-3 py-1.5">
+                    Recommended
                   </Badge>
                 </div>
                 
@@ -492,10 +466,10 @@ export default function ServicesDynamic() {
               <motion.div className="flex items-center justify-between mb-4">
                 <div>
                   <motion.h2 className="text-xl md:text-2xl font-bold text-white mb-1">
-                    Individual {VEHICLE_DISPLAY_NAMES[currentVehicle]} Services
+                    Specialized {VEHICLE_DISPLAY_NAMES[currentVehicle]} Services
                   </motion.h2>
                   <motion.p className="text-gray-300 text-sm md:text-base">
-                    Choose specific services as per your {currentVehicle}'s needs • {CITY_DISPLAY_NAMES[currentCity]}
+                    Select individual services tailored to your {currentVehicle}'s requirements • {CITY_DISPLAY_NAMES[currentCity]}
                   </motion.p>
                 </div>
               </motion.div>
