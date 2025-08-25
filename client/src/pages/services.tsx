@@ -562,9 +562,9 @@ export default function Services() {
                   <SelectTrigger className="w-40 bg-white/10 border-white/20 text-white h-9">
                     <SelectValue placeholder="Select Brand" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-gray-900 border-gray-700">
                     {getBrandsForVehicleType(selectedVehicle).map((brand) => (
-                      <SelectItem key={brand.id} value={brand.id}>
+                      <SelectItem key={brand.id} value={brand.id} className="text-white focus:bg-gray-800 focus:text-white">
                         {brand.name}
                       </SelectItem>
                     ))}
@@ -582,9 +582,9 @@ export default function Services() {
                   <SelectTrigger className="w-48 bg-white/10 border-white/20 text-white h-9">
                     <SelectValue placeholder="Select Model" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-gray-900 border-gray-700">
                     {getModelsForBrand(selectedBrand, selectedVehicle).map((model) => (
-                      <SelectItem key={model.id} value={model.id}>
+                      <SelectItem key={model.id} value={model.id} className="text-white focus:bg-gray-800 focus:text-white">
                         {model.name}
                       </SelectItem>
                     ))}
