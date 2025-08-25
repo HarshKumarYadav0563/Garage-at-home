@@ -471,12 +471,12 @@ export default function Services() {
                     setSelectedBrand(value);
                   }}
                 >
-                  <SelectTrigger className="w-full bg-white/15 border-white/30 text-white h-10 font-medium">
-                    <SelectValue placeholder="Select Brand" />
+                  <SelectTrigger className="w-full bg-white/15 border-white/30 text-white h-10 font-medium [&>span]:text-white [&>span]:font-medium">
+                    <SelectValue placeholder="Select Brand" className="text-white" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-gray-900 border-gray-700">
                     {getBrandsForVehicleType(selectedVehicle).map((brand) => (
-                      <SelectItem key={brand.id} value={brand.id}>
+                      <SelectItem key={brand.id} value={brand.id} className="text-white focus:bg-gray-800 focus:text-white">
                         {brand.name}
                       </SelectItem>
                     ))}
@@ -491,12 +491,12 @@ export default function Services() {
                   onValueChange={setSelectedModel}
                   disabled={!selectedBrand}
                 >
-                  <SelectTrigger className="w-full bg-white/15 border-white/30 text-white h-10 font-medium">
-                    <SelectValue placeholder="Select Model" />
+                  <SelectTrigger className="w-full bg-white/15 border-white/30 text-white h-10 font-medium [&>span]:text-white [&>span]:font-medium disabled:opacity-50">
+                    <SelectValue placeholder="Select Model" className="text-white" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-gray-900 border-gray-700">
                     {getModelsForBrand(selectedBrand, selectedVehicle).map((model) => (
-                      <SelectItem key={model.id} value={model.id}>
+                      <SelectItem key={model.id} value={model.id} className="text-white focus:bg-gray-800 focus:text-white">
                         {model.name}
                       </SelectItem>
                     ))}
