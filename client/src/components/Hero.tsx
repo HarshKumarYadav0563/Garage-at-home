@@ -101,12 +101,14 @@ export function Hero() {
   };
 
   const secondaryCtaVariants = {
-    hidden: { opacity: 0 },
+    hidden: { opacity: 0, y: 15 },
     visible: { 
       opacity: 1,
+      y: 0,
       transition: {
-        duration: 0.5,
-        delay: 1.5
+        duration: 0.8,
+        ease: "easeOut",
+        delay: 1.0
       }
     },
   };
@@ -350,10 +352,10 @@ export function Hero() {
               </motion.div>
             </motion.div>
 
-            {/* 6. Secondary CTA */}
+            {/* 6. Secondary CTA - Learn More */}
             <motion.div
               variants={secondaryCtaVariants}
-              className="flex items-center justify-center gap-2 text-gray-400 hover:text-emerald-300 transition-colors cursor-pointer pb-2"
+              className="flex items-center justify-center gap-2 text-gray-400 hover:text-emerald-300 transition-colors cursor-pointer pb-2 relative z-10"
               onClick={handleHowItWorks}
               data-testid="button-how-it-works"
             >
