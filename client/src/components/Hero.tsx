@@ -397,7 +397,7 @@ export function Hero() {
               variants={containerVariants}
               className="flex gap-4 mb-8"
             >
-              <div>
+              <motion.div variants={buttonVariants}>
                 <Button
                   onClick={() => setLocation('/services')}
                   className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 rounded-lg font-semibold text-lg shadow-xl transition-all duration-300 cursor-pointer relative z-10"
@@ -406,9 +406,9 @@ export function Hero() {
                   <Wrench className="mr-2 w-5 h-5" />
                   Schedule Service
                 </Button>
-              </div>
+              </motion.div>
               
-              <div>
+              <motion.div variants={secondaryCtaVariants}>
                 <Button
                   onClick={handleHowItWorks}
                   variant="outline"
@@ -418,7 +418,7 @@ export function Hero() {
                   <HelpCircle className="mr-2 w-5 h-5" />
                   Learn More
                 </Button>
-              </div>
+              </motion.div>
             </motion.div>
 
             {/* Trust Badges - Glass Pills */}
