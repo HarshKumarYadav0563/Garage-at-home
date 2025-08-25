@@ -249,9 +249,8 @@ export default function BlogPostPage() {
             
             {/* Article Content */}
             <div className="p-6">
-              <div className="prose prose-invert prose-lg max-w-none">
+              <div className="prose prose-invert prose-lg max-w-none text-gray-300 leading-relaxed">
                 <ReactMarkdown 
-                  className="text-gray-300 leading-relaxed"
                   components={{
                     h1: ({children}) => <h1 className="text-3xl font-bold text-white mb-6 mt-8">{children}</h1>,
                     h2: ({children}) => <h2 className="text-2xl font-bold text-white mb-4 mt-8">{children}</h2>,
