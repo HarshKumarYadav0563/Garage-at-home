@@ -517,11 +517,11 @@ export function Header() {
                   </div>
                   <div>
                     <div className="flex items-center space-x-1">
-                      <span className="text-xl font-bold text-emerald-400">Garage</span>
-                      <span className="text-xl font-bold text-white">@</span>
-                      <span className="text-xl font-bold text-white">Home</span>
+                      <span className="text-lg sm:text-xl font-bold text-emerald-400">Garage</span>
+                      <span className="text-lg sm:text-xl font-bold text-white">@</span>
+                      <span className="text-lg sm:text-xl font-bold text-white">Home</span>
                     </div>
-                    <div className="flex items-center space-x-1 text-sm">
+                    <div className="flex items-center space-x-1 text-xs sm:text-sm">
                       <span className="text-gray-400">Premium</span>
                       <div className="w-1 h-1 bg-emerald-400 rounded-full"></div>
                       <span className="text-emerald-400">Doorstep</span>
