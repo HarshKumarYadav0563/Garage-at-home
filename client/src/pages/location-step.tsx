@@ -27,22 +27,35 @@ export default function LocationStep() {
   // Load Google Maps
   useEffect(() => {
     const loadGoogleMaps = async () => {
-      if (!import.meta.env.VITE_GOOGLE_MAPS_API_KEY) {
-        console.error('Google Maps API key not found');
+      const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+      
+      if (!apiKey) {
+        console.error('Google Maps API key not found. Please set VITE_GOOGLE_MAPS_API_KEY environment variable.');
+        toast({
+          title: "Configuration Error",
+          description: "Google Maps API key is missing. Location autocomplete won't work.",
+          variant: "destructive"
+        });
         return;
       }
 
       try {
         const loader = new Loader({
-          apiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
+          apiKey: apiKey,
           version: 'weekly',
           libraries: ['places', 'geocoding']
         });
 
         await loader.load();
         setGoogleMapsLoaded(true);
+        console.log('Google Maps loaded successfully');
       } catch (error) {
         console.error('Error loading Google Maps:', error);
+        toast({
+          title: "Maps Loading Error",
+          description: "Failed to load Google Maps. Please check your internet connection.",
+          variant: "destructive"
+        });
       }
     };
 
