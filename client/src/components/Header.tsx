@@ -29,7 +29,6 @@ export function Header() {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
 
   const navigation = [
-    { name: 'Home', href: '/' },
     { 
       name: 'Services', 
       href: '/services', 
@@ -58,7 +57,7 @@ export function Header() {
         { name: 'Testimonials', href: '/testimonials' }
       ]
     },
-    { name: 'Track Order', href: '/track' },
+    { name: 'Track', href: '/track' },
     { name: 'Contact', href: '/contact' },
     {
       name: 'More',
@@ -282,7 +281,7 @@ export function Header() {
 
           {/* Desktop Navigation */}
           <motion.div 
-            className="hidden lg:flex items-center space-x-8"
+            className="hidden lg:flex items-center space-x-6"
             initial={{ x: 50, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ delay: 0.4, type: "spring", stiffness: 200 }}
