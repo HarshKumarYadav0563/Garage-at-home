@@ -26,7 +26,7 @@ export function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const [showServicesDropdown, setShowServicesDropdown] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
 
   const navigation = [
     { name: 'Home', href: '/' },
@@ -299,8 +299,8 @@ export function Header() {
                       type: "spring",
                       stiffness: 200
                     }}
-                    onMouseEnter={() => setShowServicesDropdown(true)}
-                    onMouseLeave={() => setShowServicesDropdown(false)}
+                    onMouseEnter={() => setActiveDropdown(item.name)}
+                    onMouseLeave={() => setActiveDropdown(null)}
                   >
                     <motion.div
                       whileHover={{ 
@@ -317,45 +317,54 @@ export function Header() {
                     </motion.div>
                     
                     <AnimatePresence>
-                      {showServicesDropdown && (
+                      {activeDropdown === item.name && (
                         <motion.div
                           initial={{ opacity: 0, y: 10, scale: 0.95 }}
                           animate={{ opacity: 1, y: 0, scale: 1 }}
                           exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                          className="absolute top-8 left-0 w-80 bg-gray-900 rounded-2xl shadow-2xl border border-white/10 overflow-hidden z-50"
+                          className={`absolute top-8 left-0 ${item.name === 'Services' ? 'w-80' : 'w-60'} bg-gray-900 rounded-2xl shadow-2xl border border-white/10 overflow-hidden z-50`}
                         >
-                          <div className="p-4 bg-gradient-to-r from-emerald-500/10 to-sky-500/10 border-b border-white/10">
-                            <h3 className="font-semibold text-white">Service Areas</h3>
-                            <p className="text-sm text-gray-300 mt-1">Choose your vehicle and location</p>
-                          </div>
-                          <div className="max-h-80 overflow-y-auto p-2">
-                            <Link href="/services">
-                              <motion.div
-                                whileHover={{ backgroundColor: 'rgba(255,255,255,0.1)' }}
-                                className="p-3 rounded-lg text-emerald-400 font-medium border-b border-white/10 mb-2"
-                              >
-                                All Services
-                              </motion.div>
-                            </Link>
-                            
-                            {VEHICLES.map(vehicle => (
-                              <div key={vehicle} className="mb-3">
-                                <div className="text-xs font-semibold text-gray-400 uppercase tracking-wide px-3 py-1">
-                                  {VEHICLE_DISPLAY_NAMES[vehicle]} Services
-                                </div>
-                                {NCR_CITIES.map(city => (
-                                  <Link key={`${vehicle}-${city}`} href={`/services/${vehicle}/${city}`}>
+                          {item.name === 'Services' ? (
+                            <>
+                              <div className="p-4 bg-gradient-to-r from-emerald-500/10 to-sky-500/10 border-b border-white/10">
+                                <h3 className="font-semibold text-white">Service Areas</h3>
+                                <p className="text-sm text-gray-300 mt-1">Choose your vehicle and location</p>
+                              </div>
+                              <div className="max-h-80 overflow-y-auto p-2">
+                                {item.dropdownItems?.map((dropdownItem, idx) => (
+                                  <Link key={idx} href={dropdownItem.href}>
                                     <motion.div
-                                      whileHover={{ backgroundColor: 'rgba(16, 185, 129, 0.1)' }}
-                                      className="px-3 py-2 text-sm text-gray-300 hover:text-emerald-400 transition-colors rounded-lg mx-1"
+                                      whileHover={{ backgroundColor: idx === 0 ? 'rgba(255,255,255,0.1)' : 'rgba(16, 185, 129, 0.1)' }}
+                                      className={`p-3 rounded-lg transition-colors ${idx === 0 ? 'text-emerald-400 font-medium border-b border-white/10 mb-2' : 'px-3 py-2 text-sm text-gray-300 hover:text-emerald-400 mx-1'}`}
                                     >
-                                      {CITY_DISPLAY_NAMES[city]}
+                                      {dropdownItem.name}
                                     </motion.div>
                                   </Link>
                                 ))}
                               </div>
-                            ))}
-                          </div>
+                            </>
+                          ) : (
+                            <>
+                              <div className="p-4 bg-gradient-to-r from-emerald-500/10 to-sky-500/10 border-b border-white/10">
+                                <h3 className="font-semibold text-white">{item.name}</h3>
+                                <p className="text-sm text-gray-300 mt-1">
+                                  {item.name === 'Learn' ? 'Educational resources and guides' : 'Additional information and policies'}
+                                </p>
+                              </div>
+                              <div className="p-2">
+                                {item.dropdownItems?.map((dropdownItem, idx) => (
+                                  <Link key={idx} href={dropdownItem.href}>
+                                    <motion.div
+                                      whileHover={{ backgroundColor: 'rgba(16, 185, 129, 0.1)' }}
+                                      className="px-3 py-2 text-sm text-gray-300 hover:text-emerald-400 transition-colors rounded-lg"
+                                    >
+                                      {dropdownItem.name}
+                                    </motion.div>
+                                  </Link>
+                                ))}
+                              </div>
+                            </>
+                          )}
                         </motion.div>
                       )}
                     </AnimatePresence>
