@@ -1,0 +1,96 @@
+You are an SEO & full-stack engineer. 
+Enhance the Garage At Home website with the following **advanced SEO features** across content, schema, technical setup, and engagement. 
+The site is built with React/Next.js (or React + Express) and TailwindCSS.
+
+────────────────────────
+2. Content Marketing
+────────────────────────
+- Create a `/blog` section with SEO-friendly slugs and metadata.
+- Write localized posts that target “near me” searches:
+  - “Best Bike Service at Home in Delhi NCR”
+  - “How to maintain your car battery in Noida heat”
+  - “Top 10 common bike problems & doorstep fixes in Gurugram”
+- Add FAQ sections (accordion UI) to each service/city page. 
+  - Example: “How long does doorstep service take in Ghaziabad?”
+  - Inject FAQ schema (`@type: FAQPage`) for each FAQ block.
+- Add `/videos` page embedding YouTube tutorials (“How Garage At Home works”) with transcript text for SEO. 
+  - Inject Video Schema (`@type: VideoObject`).
+
+────────────────────────
+3. Reviews & Ratings SEO
+────────────────────────
+- Implement Review Schema + AggregateRating on each service/city page:
+  - ratingValue: 4.9, reviewCount: 25000, bestRating: 5
+- Build `/testimonials` page with real customer stories grouped by city. 
+  - Example: “Delhi Testimonials”, “Noida Testimonials”
+  - Include Review Schema for each story.
+- Add CTA to encourage customers to leave Google reviews (link to Google Business Profile).
+
+────────────────────────
+4. Technical SEO Extras
+────────────────────────
+- Auto-generate sitemap.xml with all service/city routes (e.g. `/services/bike/delhi`).
+- Configure robots.txt to allow only NCR routes; disallow others.
+- Add `<link rel="canonical">` per page to avoid duplicate city content.
+- Optimize Core Web Vitals:
+  - Lazy load images
+  - Use next-gen formats (WebP/AVIF)
+  - Use CDN for static assets
+  - Preload critical CSS
+- Add Breadcrumb schema (`@type: BreadcrumbList`) on all service/city pages.
+
+────────────────────────
+5. Internal & External Linking
+────────────────────────
+- Add contextual links:
+  - From Bike Delhi → Car Delhi → All Delhi Services
+- Add footer quick links: all 5 NCR cities for bike + car
+- Build backlinks:
+  - Local auto blogs
+  - Influencers writing about bike/car maintenance in India
+  - Guest posts on Quora/Medium with anchor text “doorstep bike service in Delhi NCR”
+
+────────────────────────
+6. Social & Engagement Signals
+────────────────────────
+- Add social sharing buttons on booking confirmation and tracking pages: WhatsApp, Facebook, Twitter.
+- Generate Open Graph + Twitter meta tags with service name, city, image.
+- Post Instagram/Facebook reels: before/after service at home, embed on site.
+- WhatsApp sharing button with UTM link: 
+  - Example: `https://wa.me/?text=Track%20your%20service%20here:%20{{link}}&utm_source=whatsapp&utm_medium=share`.
+
+────────────────────────
+7. Advanced Schema & Rich Snippets
+────────────────────────
+- Add Service schema for each service card (`@type: Service`).
+- Add FAQ schema for FAQs on service/city pages.
+- Add Video schema for explainer videos.
+- Add Event schema if “Free checkup camps” are hosted in Delhi NCR.
+
+────────────────────────
+8. Analytics & Tracking
+────────────────────────
+- Integrate Google Analytics 4; define funnel:
+  keyword → service page → add to cart → booking → confirmation.
+- Set up Google Search Console for site verification and sitemap submission.
+- Add heatmap/tracking (Hotjar or Microsoft Clarity) to study clicks & scroll depth.
+- Add custom events:
+  - `service_selected`, `faq_opened`, `review_submitted`, `booking_completed`.
+
+────────────────────────
+Deliverables
+────────────────────────
+- `/blog` pages with SEO metadata + FAQ schema
+- `/testimonials` page with Review schema
+- Dynamic sitemap + robots.txt + canonical tags
+- Breadcrumb schema on service/city routes
+- Social sharing buttons + OG/Twitter meta
+- Structured data: Service, FAQ, Video, Review, Event
+- GA4 + Search Console setup
+- Heatmaps integrated
+
+Acceptance
+- Service pages rank for “[bike service at home in {city}]”
+- Rich snippets (FAQ, Reviews, Breadcrumbs) visible in SERPs
+- Confirmation/tracking pages have social sharing
+- Analytics funnel shows keyword → booking conversions

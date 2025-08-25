@@ -61,7 +61,7 @@ export function Hero() {
   };
 
   return (
-    <section className="relative min-h-[45vh] sm:min-h-[50vh] lg:min-h-auto flex items-center overflow-hidden bg-gradient-to-br from-gray-950 via-gray-900 to-black pt-16 sm:pt-18 lg:pt-8 lg:pb-12">
+    <section className="relative min-h-[50vh] sm:min-h-[55vh] lg:min-h-auto flex items-center overflow-hidden bg-gradient-to-br from-gray-950 via-gray-900 to-black pt-20 sm:pt-24 lg:pt-8 lg:pb-12">
       {/* Radial Accent Glows */}
       <div className="absolute inset-0">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl" />
@@ -86,12 +86,12 @@ export function Hero() {
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="text-center space-y-4"
+            className="text-center space-y-6 sm:space-y-8 px-2"
           >
             {/* Heading */}
             <motion.h1
               variants={itemVariants}
-              className="text-3xl font-bold leading-tight text-white"
+              className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight text-white"
             >
               India's First{' '}
               <span className="bg-gradient-to-r from-emerald-400 to-sky-500 bg-clip-text text-transparent">
@@ -103,7 +103,7 @@ export function Hero() {
             {/* Subheading */}
             <motion.p
               variants={itemVariants}
-              className="text-sm text-gray-400 leading-relaxed px-4"
+              className="text-sm sm:text-base text-gray-400 leading-relaxed px-4 max-w-md mx-auto"
             >
               Skip the garage visits! Professional mechanics come to your location with all tools & parts.
             </motion.p>
@@ -111,27 +111,27 @@ export function Hero() {
             {/* CTAs - Side by Side */}
             <motion.div
               variants={itemVariants}
-              className="flex gap-3 justify-center px-4"
+              className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4 max-w-sm sm:max-w-md mx-auto"
             >
-              <div className="flex-1">
+              <div className="w-full sm:flex-1">
                 <Button
                   onClick={() => setLocation('/services')}
-                  className="w-full bg-gradient-to-r from-emerald-500 via-sky-500 to-indigo-500 hover:shadow-[0_0_20px_rgba(16,185,129,0.4)] text-white px-4 py-3 rounded-xl font-semibold text-sm shadow-lg transition-all duration-300 cursor-pointer relative z-10"
+                  className="w-full bg-gradient-to-r from-emerald-500 via-sky-500 to-indigo-500 hover:shadow-[0_0_20px_rgba(16,185,129,0.4)] text-white px-6 py-4 rounded-xl font-semibold text-base shadow-lg transition-all duration-300 cursor-pointer relative z-10"
                   data-testid="button-book-now"
                 >
-                  <Zap className="mr-2 w-4 h-4" />
+                  <Zap className="mr-2 w-5 h-5" />
                   Book Now
                 </Button>
               </div>
               
-              <div className="flex-1">
+              <div className="w-full sm:flex-1">
                 <Button
                   onClick={handleHowItWorks}
                   variant="outline"
-                  className="w-full bg-white/5 border border-white/10 text-gray-200 px-4 py-3 rounded-xl font-semibold text-sm hover:bg-white/10 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 cursor-pointer relative z-10"
+                  className="w-full bg-white/5 border border-white/10 text-gray-200 px-6 py-4 rounded-xl font-semibold text-base hover:bg-white/10 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 cursor-pointer relative z-10"
                   data-testid="button-how-it-works"
                 >
-                  <HelpCircle className="mr-2 w-4 h-4" />
+                  <HelpCircle className="mr-2 w-5 h-5" />
                   How it Works
                 </Button>
               </div>
@@ -140,7 +140,7 @@ export function Hero() {
             {/* Trust Row - Glass Pills */}
             <motion.div
               variants={itemVariants}
-              className="flex items-center justify-center gap-2 text-xs"
+              className="flex items-center justify-center gap-2 sm:gap-3 text-xs flex-wrap"
             >
               <div className="flex items-center space-x-1 bg-white/5 text-gray-300 border border-white/10 rounded-full px-3 py-1">
                 <Star className="text-yellow-400 w-3 h-3" />

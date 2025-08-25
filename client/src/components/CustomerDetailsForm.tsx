@@ -39,16 +39,16 @@ export function CustomerDetailsForm({ onSubmit }: CustomerDetailsFormProps) {
   }[city] || 'NCR';
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       <div>
-        <h3 className="text-white font-semibold text-lg mb-2">Customer Details</h3>
+        <h3 className="text-white font-semibold text-base sm:text-lg mb-2">Customer Details</h3>
         <p className="text-gray-400 text-sm">
           Provide your details so our mechanic can reach you
         </p>
       </div>
 
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
+        <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4 sm:space-y-6">
           {/* Name Field */}
           <FormField
             control={form.control}
@@ -129,7 +129,7 @@ export function CustomerDetailsForm({ onSubmit }: CustomerDetailsFormProps) {
             )}
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             {/* City (auto-filled) */}
             <div>
               <label className="text-gray-300 text-sm font-medium flex items-center space-x-2 mb-2">
@@ -180,7 +180,7 @@ export function CustomerDetailsForm({ onSubmit }: CustomerDetailsFormProps) {
             <Button
               type="submit"
               disabled={!form.formState.isValid}
-              className="w-full bg-gradient-to-r from-emerald-500 to-sky-600 hover:from-emerald-600 hover:to-sky-700 text-white py-3 rounded-xl font-semibold shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-gradient-to-r from-emerald-500 to-sky-600 hover:from-emerald-600 hover:to-sky-700 text-white py-4 sm:py-3 rounded-xl font-semibold shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed text-base"
             >
               <span className="flex items-center justify-center space-x-2">
                 <span>Continue to Slot Selection</span>

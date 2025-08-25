@@ -31,16 +31,16 @@ export function TrustBar() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8"
+          className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 lg:gap-8"
         >
           {stats.map((stat, index) => (
             <motion.div
               key={index}
               variants={itemVariants}
-              className="text-center bg-gray-50 dark:bg-gray-800 rounded-xl p-3 sm:p-4 lg:p-6 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
+              className="text-center bg-gray-50 dark:bg-gray-800 rounded-lg sm:rounded-xl p-3 sm:p-4 lg:p-6 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
             >
               <div
-                className={`text-2xl sm:text-3xl lg:text-4xl font-bold mb-1 sm:mb-2 ${stat.color}`}
+                className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-1 sm:mb-2 ${stat.color}`}
                 data-testid={`stat-number-${index}`}
               >
                 {stat.number}

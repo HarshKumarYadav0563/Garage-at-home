@@ -477,10 +477,10 @@ export function Header() {
                 </Button>
               </motion.div>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[350px] sm:w-[400px] bg-gray-950 border-white/10 overflow-y-auto">
-              <div className="flex flex-col space-y-6 mt-6 pb-6">
+            <SheetContent side="right" className="w-[85vw] sm:w-[400px] max-w-[400px] bg-gray-950 border-white/10 overflow-y-auto">
+              <div className="flex flex-col space-y-4 sm:space-y-6 mt-4 sm:mt-6 pb-6">
                 {/* Mobile Logo */}
-                <div className="flex items-center space-x-3 pb-6 border-b border-white/20">
+                <div className="flex items-center space-x-3 pb-4 sm:pb-6 border-b border-white/20">
                   <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-sky-600 rounded-xl flex items-center justify-center">
                     <Wrench className="text-white text-lg" />
                   </div>
@@ -503,13 +503,13 @@ export function Header() {
 
                 {/* Quick Stats */}
                 <motion.div 
-                  className="grid grid-cols-2 gap-4"
+                  className="grid grid-cols-2 gap-3 sm:gap-4"
                   initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.1, type: "spring", stiffness: 300 }}
                 >
                   <motion.div 
-                    className="bg-emerald-500/10 rounded-xl p-4 text-center"
+                    className="bg-emerald-500/10 rounded-lg sm:rounded-xl p-3 sm:p-4 text-center"
                     whileHover={{ 
                       scale: 1.05
                     }}
@@ -536,7 +536,7 @@ export function Header() {
                     <p className="text-xs text-gray-300">Rating</p>
                   </motion.div>
                   <motion.div 
-                    className="bg-green-500/10 rounded-xl p-4 text-center"
+                    className="bg-green-500/10 rounded-lg sm:rounded-xl p-3 sm:p-4 text-center"
                     whileHover={{ 
                       scale: 1.05
                     }}
@@ -600,7 +600,7 @@ export function Header() {
                           transition: { type: "spring", stiffness: 400 }
                         }}
                         whileTap={{ scale: 0.98 }}
-                        className={`flex items-center justify-between p-4 rounded-xl transition-all duration-300 ${
+                        className={`flex items-center justify-between p-3 sm:p-4 rounded-lg sm:rounded-xl transition-all duration-300 ${
                           location === item.href
                             ? 'bg-emerald-500/20 text-emerald-400 shadow-lg'
                             : 'text-gray-300 hover:bg-white/10 hover:shadow-md'
@@ -608,7 +608,7 @@ export function Header() {
                         data-testid={`nav-mobile-${item.name.toLowerCase().replace(/\s+/g, '-')}`}
                       >
                         <motion.span 
-                          className="text-lg font-medium"
+                          className="text-base sm:text-lg font-medium"
                           whileHover={{ x: 5 }}
                           transition={{ type: "spring", stiffness: 400 }}
                         >
@@ -620,7 +620,7 @@ export function Header() {
                 ))}
 
                 <motion.div 
-                  className="space-y-3 pt-4 border-t border-white/20"
+                  className="space-y-2 sm:space-y-3 pt-3 sm:pt-4 border-t border-white/20"
                   initial={{ y: 30, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ 

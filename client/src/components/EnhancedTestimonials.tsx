@@ -147,7 +147,7 @@ export function EnhancedTestimonials() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.2 }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
+          className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8"
         >
           {testimonials.map((testimonial, index) => (
             <motion.div
@@ -161,7 +161,7 @@ export function EnhancedTestimonials() {
               }}
               onHoverStart={() => setHoveredCard(testimonial.id)}
               onHoverEnd={() => setHoveredCard(null)}
-              className="group relative bg-white/5 backdrop-blur-xl rounded-2xl p-6 shadow-[0_8px_30px_rgba(0,0,0,0.3)] border border-white/10 hover:shadow-[0_20px_50px_rgba(0,0,0,0.4)] transition-all duration-500"
+              className="group relative bg-white/5 backdrop-blur-xl rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-[0_8px_30px_rgba(0,0,0,0.3)] border border-white/10 hover:shadow-[0_20px_50px_rgba(0,0,0,0.4)] transition-all duration-500"
             >
               {/* Background glow effect */}
               <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-white/10 to-white/5 pointer-events-none" />
