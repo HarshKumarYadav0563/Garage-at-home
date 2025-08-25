@@ -61,7 +61,7 @@ export function Hero() {
   };
 
   return (
-    <section className="relative min-h-[50vh] sm:min-h-[55vh] lg:min-h-auto flex items-center overflow-hidden bg-gray-950 pt-20 sm:pt-24 lg:pt-8 lg:pb-12">
+    <section className="relative min-h-[60vh] sm:min-h-[65vh] lg:min-h-auto flex items-center overflow-hidden bg-gray-950 pt-16 sm:pt-20 lg:pt-8 lg:pb-12">
       {/* Subtle Corporate Glow */}
       <div className="absolute inset-0">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl" />
@@ -85,12 +85,12 @@ export function Hero() {
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="text-center space-y-6 sm:space-y-8 px-2"
+            className="text-center space-y-4 sm:space-y-6 px-4"
           >
             {/* Heading */}
             <motion.h1
               variants={itemVariants}
-              className="hero-title text-3xl sm:text-4xl md:text-5xl font-bold leading-tight text-white tracking-tight"
+              className="hero-title text-2xl sm:text-3xl md:text-4xl font-bold leading-tight text-white tracking-tight"
             >
               Professional Vehicle Services{' '}
               <span className="text-emerald-400">
@@ -101,7 +101,7 @@ export function Hero() {
             {/* Subheading */}
             <motion.p
               variants={itemVariants}
-              className="hero-description text-base sm:text-lg text-gray-300 leading-relaxed px-4 max-w-lg mx-auto font-medium"
+              className="hero-description text-sm sm:text-base text-gray-300 leading-relaxed px-2 max-w-md mx-auto font-normal"
             >
               Certified technicians deliver comprehensive vehicle maintenance and repair services directly to your location across Delhi NCR.
             </motion.p>
@@ -109,12 +109,12 @@ export function Hero() {
             {/* CTAs - Side by Side */}
             <motion.div
               variants={itemVariants}
-              className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4 max-w-sm sm:max-w-md mx-auto"
+              className="flex flex-col sm:flex-row gap-2 sm:gap-3 justify-center px-2 max-w-xs sm:max-w-sm mx-auto"
             >
               <div className="w-full sm:flex-1">
                 <Button
                   onClick={() => setLocation('/services')}
-                  className="w-full bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-4 rounded-lg font-semibold text-base shadow-lg transition-all duration-300 cursor-pointer relative z-10"
+                  className="w-full bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-3 rounded-lg font-semibold text-sm shadow-lg transition-all duration-300 cursor-pointer relative z-10"
                   data-testid="button-book-now"
                 >
                   <Wrench className="mr-2 w-5 h-5" />
@@ -126,7 +126,7 @@ export function Hero() {
                 <Button
                   onClick={handleHowItWorks}
                   variant="outline"
-                  className="w-full bg-transparent border border-gray-600 text-gray-200 px-6 py-4 rounded-lg font-semibold text-base hover:bg-gray-800 hover:border-gray-500 transition-all duration-300 cursor-pointer relative z-10"
+                  className="w-full bg-transparent border border-gray-600 text-gray-200 px-4 py-3 rounded-lg font-semibold text-sm hover:bg-gray-800 hover:border-gray-500 transition-all duration-300 cursor-pointer relative z-10"
                   data-testid="button-how-it-works"
                 >
                   <HelpCircle className="mr-2 w-5 h-5" />
@@ -138,35 +138,35 @@ export function Hero() {
             {/* Trust Row - Glass Pills */}
             <motion.div
               variants={itemVariants}
-              className="flex items-center justify-center gap-2 sm:gap-3 text-xs flex-wrap"
+              className="flex items-center justify-center gap-1 sm:gap-2 text-xs flex-wrap px-2"
             >
-              <div className="flex items-center space-x-1 bg-gray-800/50 text-gray-300 border border-gray-700 rounded-lg px-4 py-2">
-                <Star className="text-emerald-400 w-4 h-4" />
-                <span className="font-semibold text-white">4.9</span>
-                <span className="text-gray-400 text-xs">Rating</span>
+              <div className="flex items-center space-x-1 bg-gray-800/50 text-gray-300 border border-gray-700 rounded-lg px-3 py-1.5">
+                <Star className="text-emerald-400 w-3 h-3" />
+                <span className="font-semibold text-white text-xs">4.9</span>
+                <span className="text-gray-400 text-[10px]">Rating</span>
               </div>
-              <div className="flex items-center space-x-1 bg-gray-800/50 text-gray-300 border border-gray-700 rounded-lg px-4 py-2">
-                <Users className="text-emerald-400 w-4 h-4" />
-                <span className="font-semibold text-white">25,000+</span>
-                <span className="text-gray-400 text-xs">Customers</span>
+              <div className="flex items-center space-x-1 bg-gray-800/50 text-gray-300 border border-gray-700 rounded-lg px-3 py-1.5">
+                <Users className="text-emerald-400 w-3 h-3" />
+                <span className="font-semibold text-white text-xs">25K+</span>
+                <span className="text-gray-400 text-[10px]">Customers</span>
               </div>
-              <div className="flex items-center space-x-1 bg-gray-800/50 text-gray-300 border border-gray-700 rounded-lg px-4 py-2">
-                <Clock className="text-emerald-400 w-4 h-4" />
-                <span className="font-semibold text-white">Same Day</span>
-                <span className="text-gray-400 text-xs">Service</span>
+              <div className="flex items-center space-x-1 bg-gray-800/50 text-gray-300 border border-gray-700 rounded-lg px-3 py-1.5">
+                <Clock className="text-emerald-400 w-3 h-3" />
+                <span className="font-semibold text-white text-xs">Same Day</span>
+                <span className="text-gray-400 text-[10px]">Service</span>
               </div>
             </motion.div>
 
             {/* Small Image */}
             <motion.div
               variants={imageVariants}
-              className="relative mx-auto max-w-sm"
+              className="relative mx-auto max-w-xs"
             >
               <div className="relative overflow-hidden rounded-2xl shadow-lg border border-white/10">
                 <img
                   src={heroImage}
                   alt="Professional vehicle service"
-                  className="w-full h-48 object-cover"
+                  className="w-full h-40 object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
               </div>
