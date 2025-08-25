@@ -1,5 +1,6 @@
 import { Switch, Route, useLocation } from "wouter";
 import { useEffect } from "react";
+import { initializeAnalytics, trackPageView } from "@/lib/analytics";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
@@ -25,14 +26,24 @@ import Admin from "@/pages/admin";
 import Privacy from "@/pages/privacy";
 import Terms from "@/pages/terms";
 import Refund from "@/pages/refund";
+import Blog from "@/pages/blog";
+import BlogPost from "@/pages/blog-post";
+import Videos from "@/pages/videos";
+import Testimonials from "@/pages/testimonials";
 import NotFound from "@/pages/not-found";
 
 function Router() {
   const [location] = useLocation();
 
-  // Scroll to top when route changes
+  // Initialize analytics on app start
+  useEffect(() => {
+    initializeAnalytics();
+  }, []);
+
+  // Scroll to top when route changes and track page view
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    trackPageView(location, document.title);
   }, [location]);
 
   return (
@@ -56,6 +67,10 @@ function Router() {
           <Route path="/privacy" component={Privacy} />
           <Route path="/terms" component={Terms} />
           <Route path="/refund" component={Refund} />
+          <Route path="/blog" component={Blog} />
+          <Route path="/blog/:slug" component={BlogPost} />
+          <Route path="/videos" component={Videos} />
+          <Route path="/testimonials" component={Testimonials} />
           <Route component={NotFound} />
         </Switch>
       </main>

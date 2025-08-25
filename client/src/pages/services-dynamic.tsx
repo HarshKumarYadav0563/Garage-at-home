@@ -19,6 +19,8 @@ import { ComboServiceCard } from '@/components/ComboServiceCard';
 import { BookingSummary } from '@/components/BookingSummary';
 import { SlotPicker } from '@/components/SlotPicker';
 import { CustomerDetailsForm } from '@/components/CustomerDetailsForm';
+import { FAQSection } from '@/components/FAQSection';
+import ReviewsSection from '@/components/ReviewsSection';
 
 // Data & Store
 import { BIKE_SERVICES, CAR_SERVICES, ServiceData } from '@/data/bookingServices';
@@ -841,6 +843,23 @@ export default function ServicesDynamic() {
             </div>
           </div>
         </motion.div>
+        
+        {/* FAQ Section */}
+        <FAQSection 
+          city={CITY_DISPLAY_NAMES[currentCity]}
+          vehicle={currentVehicle}
+          title={`Frequently Asked Questions - ${VEHICLE_DISPLAY_NAMES[currentVehicle]} Service in ${CITY_DISPLAY_NAMES[currentCity]}`}
+          subtitle={`Get answers to common questions about doorstep ${VEHICLE_DISPLAY_NAMES[currentVehicle]} service in ${CITY_DISPLAY_NAMES[currentCity]}.`}
+        />
+        
+        {/* Reviews Section */}
+        <ReviewsSection 
+          city={CITY_DISPLAY_NAMES[currentCity]}
+          vehicle={currentVehicle}
+          title={`Customer Reviews - ${VEHICLE_DISPLAY_NAMES[currentVehicle]} Service in ${CITY_DISPLAY_NAMES[currentCity]}`}
+          subtitle={`Real experiences from our customers who've used our ${VEHICLE_DISPLAY_NAMES[currentVehicle]} service in ${CITY_DISPLAY_NAMES[currentCity]}.`}
+          limit={6}
+        />
       </div>
     </div>
   );

@@ -2,6 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertLeadSchema } from "@shared/schema";
+import { generateSitemap, generateRobotsTxt } from "./seo";
 import { z } from "zod";
 
 const mechanicSearchSchema = z.object({
@@ -13,6 +14,25 @@ const mechanicSearchSchema = z.object({
 });
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // SEO Routes
+  app.get('/sitemap.xml', (req, res) => {
+    try {
+      res.setHeader('Content-Type', 'application/xml');
+      res.send(generateSitemap());
+    } catch (error) {
+      res.status(500).send('Error generating sitemap');
+    }
+  });
+
+  app.get('/robots.txt', (req, res) => {
+    try {
+      res.setHeader('Content-Type', 'text/plain');
+      res.send(generateRobotsTxt());
+    } catch (error) {
+      res.status(500).send('Error generating robots.txt');
+    }
+  });
+
   // Get all services
   app.get("/api/services", async (req, res) => {
     try {
