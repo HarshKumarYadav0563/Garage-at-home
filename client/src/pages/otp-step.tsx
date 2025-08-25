@@ -7,6 +7,7 @@ import { useToast } from '@/hooks/use-toast';
 import { ArrowLeft, Shield, Clock, Phone } from 'lucide-react';
 import { useBookingStore } from '@/store/booking';
 import { useLocation } from 'wouter';
+import { phoneAuthService } from '@/lib/phoneAuth';
 
 export default function OTPStep() {
   const { toast } = useToast();
@@ -31,9 +32,17 @@ export default function OTPStep() {
 
   // Auto-send OTP on component mount
   useEffect(() => {
+    // Initialize reCAPTCHA for Firebase Auth
+    phoneAuthService.initializeRecaptcha('recaptcha-container');
+    
     if (!otp.sessionId) {
       sendOTP();
     }
+    
+    // Cleanup on unmount
+    return () => {
+      phoneAuthService.cleanup();
+    };
   }, []);
 
   // Resend timer
@@ -47,27 +56,22 @@ export default function OTPStep() {
   const sendOTP = async () => {
     setIsSending(true);
     try {
-      const response = await fetch('/api/otp/send', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ phone: customer.phone })
-      });
-
-      const data = await response.json();
+      // Use Firebase to send OTP
+      const result = await phoneAuthService.sendOTP(customer.phone);
       
-      if (response.ok) {
+      if (result.success) {
         setOTP({
           phone: customer.phone,
-          sessionId: data.sessionId,
+          sessionId: result.sessionId || '',
           verified: false
         });
         setResendTimer(60); // 60 second cooldown
         toast({
           title: "OTP Sent",
-          description: `Verification code sent to ${customer.phone}`
+          description: `Verification code sent to +91${customer.phone} via SMS`
         });
       } else {
-        throw new Error(data.error || 'Failed to send OTP');
+        throw new Error(result.error || 'Failed to send OTP');
       }
     } catch (error) {
       toast({
@@ -92,26 +96,15 @@ export default function OTPStep() {
 
     setIsLoading(true);
     try {
-      // Verify OTP
-      const verifyResponse = await fetch('/api/otp/verify', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          phone: customer.phone,
-          sessionId: otp.sessionId,
-          code: otpValue
-        })
-      });
-
-      const verifyData = await verifyResponse.json();
+      // Verify OTP with Firebase
+      const result = await phoneAuthService.verifyOTP(otpValue);
       
-      if (!verifyResponse.ok) {
-        throw new Error(verifyData.error || 'Invalid OTP');
+      if (!result.success) {
+        throw new Error(result.error || 'Invalid OTP');
       }
-
-      if (!verifyData.verified) {
-        throw new Error('OTP verification failed');
-      }
+      
+      // Get Firebase ID token for server verification
+      const firebaseToken = await result.user?.getIdToken();
 
       // Create booking
       const bookingResponse = await fetch('/api/leads', {
@@ -125,7 +118,7 @@ export default function OTPStep() {
           estTotal: { min: getFinalTotal(), max: getFinalTotal() },
           customer: customer,
           address: address,
-          otpToken: verifyData.otpToken
+          firebaseToken: firebaseToken
         })
       });
 
@@ -286,6 +279,9 @@ export default function OTPStep() {
             This helps us confirm your identity and secure your booking.
           </p>
         </motion.div>
+        
+        {/* Hidden reCAPTCHA container for Firebase Auth */}
+        <div id="recaptcha-container" style={{ display: 'none' }}></div>
       </div>
     </div>
   );
