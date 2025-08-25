@@ -509,21 +509,21 @@ export function Header() {
                 </Button>
               </motion.div>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[50vw] bg-gray-950 border-white/10 overflow-y-auto">
-              <div className="flex flex-col space-y-3 sm:space-y-4 mt-3 sm:mt-4 pb-4 sm:pb-6">
+            <SheetContent side="right" className="w-[85vw] xs:w-[75vw] sm:w-[60vw] md:w-[50vw] bg-gray-950 border-white/10 overflow-y-auto">
+              <div className="flex flex-col space-y-2 xs:space-y-3 sm:space-y-4 mt-2 xs:mt-3 sm:mt-4 pb-3 xs:pb-4 sm:pb-6">
                 {/* Mobile Logo */}
-                <div className="flex items-center justify-center py-4 border-b border-white/20">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 via-blue-600 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg border border-white/20">
-                      <Wrench className="text-white text-lg" />
+                <div className="flex items-center justify-center py-3 xs:py-4 sm:py-5 border-b border-white/20">
+                  <div className="flex items-center space-x-2 xs:space-x-3 sm:space-x-4">
+                    <div className="w-10 h-10 xs:w-12 xs:h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-emerald-500 via-blue-600 to-indigo-600 rounded-lg xs:rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg border border-white/20">
+                      <Wrench className="text-white text-base xs:text-lg sm:text-xl" />
                     </div>
                     <div className="flex flex-col">
-                      <div className="flex items-center space-x-1">
-                        <span className="text-xl font-bold text-emerald-400">Garage</span>
-                        <span className="text-xl font-bold text-white">@</span>
-                        <span className="text-xl font-bold text-white">Home</span>
+                      <div className="flex items-center space-x-0.5 xs:space-x-1">
+                        <span className="text-lg xs:text-xl sm:text-2xl font-bold text-emerald-400">Garage</span>
+                        <span className="text-lg xs:text-xl sm:text-2xl font-bold text-white">@</span>
+                        <span className="text-lg xs:text-xl sm:text-2xl font-bold text-white">Home</span>
                       </div>
-                      <div className="flex items-center space-x-1 text-xs mt-0.5">
+                      <div className="flex items-center space-x-1 text-xs xs:text-sm mt-0.5">
                         <span className="text-gray-400">Premium</span>
                         <div className="w-1 h-1 bg-emerald-400 rounded-full"></div>
                         <span className="text-emerald-400">Doorstep</span>
@@ -537,13 +537,13 @@ export function Header() {
 
                 {/* Quick Stats */}
                 <motion.div 
-                  className="grid grid-cols-2 gap-3 sm:gap-4"
+                  className="grid grid-cols-2 gap-2 xs:gap-3 sm:gap-4"
                   initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.1, type: "spring", stiffness: 300 }}
                 >
                   <motion.div 
-                    className="bg-emerald-500/10 rounded-lg sm:rounded-xl p-3 sm:p-4 text-center"
+                    className="bg-emerald-500/10 rounded-md xs:rounded-lg sm:rounded-xl p-2 xs:p-3 sm:p-4 text-center"
                     whileHover={{ 
                       scale: 1.05
                     }}
@@ -557,20 +557,20 @@ export function Header() {
                       animate={{ rotate: [0, 360] }}
                       transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
                     >
-                      <Star className="w-6 h-6 text-emerald-400 mx-auto mb-2" />
+                      <Star className="w-4 h-4 xs:w-5 xs:h-5 sm:w-6 sm:h-6 text-emerald-400 mx-auto mb-1 xs:mb-2" />
                     </motion.div>
                     <motion.p 
-                      className="text-lg font-bold text-emerald-400"
+                      className="text-sm xs:text-base sm:text-lg font-bold text-emerald-400"
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       transition={{ delay: 0.2, type: "spring", stiffness: 400 }}
                     >
                       4.9★
                     </motion.p>
-                    <p className="text-xs text-gray-300">Rating</p>
+                    <p className="text-xs xs:text-xs sm:text-sm text-gray-300">Rating</p>
                   </motion.div>
                   <motion.div 
-                    className="bg-green-500/10 rounded-lg sm:rounded-xl p-3 sm:p-4 text-center"
+                    className="bg-green-500/10 rounded-md xs:rounded-lg sm:rounded-xl p-2 xs:p-3 sm:p-4 text-center"
                     whileHover={{ 
                       scale: 1.05
                     }}
@@ -584,17 +584,17 @@ export function Header() {
                       animate={{ scale: [1, 1.1, 1] }}
                       transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
                     >
-                      <Shield className="w-6 h-6 text-green-400 mx-auto mb-2" />
+                      <Shield className="w-4 h-4 xs:w-5 xs:h-5 sm:w-6 sm:h-6 text-green-400 mx-auto mb-1 xs:mb-2" />
                     </motion.div>
                     <motion.p 
-                      className="text-lg font-bold text-green-400"
+                      className="text-sm xs:text-base sm:text-lg font-bold text-green-400"
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       transition={{ delay: 0.2, type: "spring", stiffness: 400 }}
                     >
                       100%
                     </motion.p>
-                    <p className="text-xs text-gray-300">Quality</p>
+                    <p className="text-xs xs:text-xs sm:text-sm text-gray-300">Quality</p>
                   </motion.div>
                 </motion.div>
 
