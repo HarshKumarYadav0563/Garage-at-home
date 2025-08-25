@@ -93,10 +93,10 @@ export function Header() {
         damping: 30,
         scale: { duration: 0.2 }
       }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-out ${
         isScrolled
-          ? 'bg-gray-950/95 backdrop-blur-xl border-b border-white/10 shadow-2xl transform'
-          : 'bg-gray-950/90 backdrop-blur-lg'
+          ? 'bg-gray-950/98 backdrop-blur-xl border-b border-gray-800 shadow-lg'
+          : 'bg-gray-950/95 backdrop-blur-lg'
       }`}
       style={{
         transform: `translateY(${Math.min(scrollY * -0.5, -10)}px)` 

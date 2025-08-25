@@ -7,42 +7,42 @@ const trustItems = [
     icon: Star,
     value: "4.9/5",
     label: "Customer Rating",
-    color: "from-yellow-400 to-orange-500",
+    color: "text-emerald-400",
     delay: 0
   },
   {
     icon: Users,
     value: "25,000+",
-    label: "Happy Customers",
-    color: "from-emerald-400 to-teal-600",
+    label: "Satisfied Customers",
+    color: "text-emerald-400",
     delay: 0.1
   },
   {
     icon: Clock,
-    value: "2 Hours",
-    label: "Average Service Time",
-    color: "from-blue-400 to-indigo-600",
+    value: "Same Day",
+    label: "Service Delivery",
+    color: "text-emerald-400",
     delay: 0.2
   },
   {
     icon: Shield,
     value: "100%",
     label: "Service Guarantee",
-    color: "from-purple-400 to-pink-600",
+    color: "text-emerald-400",
     delay: 0.3
   },
   {
     icon: Award,
     value: "15+",
-    label: "Cities Covered",
-    color: "from-rose-400 to-red-600",
+    label: "Service Locations",
+    color: "text-emerald-400",
     delay: 0.4
   },
   {
     icon: Zap,
     value: "500+",
-    label: "Expert Mechanics",
-    color: "from-cyan-400 to-blue-600",
+    label: "Certified Technicians",
+    color: "text-emerald-400",
     delay: 0.5
   }
 ];
@@ -294,96 +294,29 @@ export function EnhancedTrustBar() {
                     <div className="relative">
                       {/* Magical Icon container - Smaller with advanced effects */}
                       <motion.div
-                        className={`relative mx-auto w-14 h-14 rounded-xl bg-gradient-to-br ${item.color} flex items-center justify-center shadow-lg mb-3 border border-white/30 group-hover:shadow-2xl`}
+                        className={`relative mx-auto w-14 h-14 rounded-lg bg-gray-800 flex items-center justify-center shadow-lg mb-3 border border-gray-700 group-hover:bg-gray-700`}
                         whileHover={{
-                          scale: 1.1,
-                          rotate: [0, 5, -5, 0],
-                          boxShadow: "0 20px 40px rgba(0,0,0,0.3)"
-                        }}
-                        animate={{
-                          boxShadow: [
-                            "0 4px 15px rgba(0,0,0,0.2)",
-                            "0 8px 25px rgba(0,0,0,0.3)", 
-                            "0 4px 15px rgba(0,0,0,0.2)"
-                          ]
+                          scale: 1.05
                         }}
                         transition={{ 
-                          duration: 3, 
-                          repeat: Infinity,
-                          delay: index * 0.2
+                          duration: 0.2
                         }}
                       >
-                        <IconComponent className="w-6 h-6 text-white relative z-10" />
+                        <IconComponent className={`w-6 h-6 ${item.color} relative z-10`} />
                         
-                        {/* Spinning magical ring */}
-                        <motion.div
-                          className="absolute inset-0 rounded-xl border-2 border-white/40"
-                          animate={{ rotate: [0, 360] }}
-                          transition={{
-                            duration: 8,
-                            repeat: Infinity,
-                            ease: "linear"
-                          }}
-                        />
-                        
-                        {/* Inner glow pulse */}
-                        <motion.div
-                          className="absolute inset-1 rounded-lg bg-white/10"
-                          animate={{
-                            opacity: [0.1, 0.3, 0.1],
-                            scale: [0.9, 1.1, 0.9]
-                          }}
-                          transition={{
-                            duration: 2,
-                            repeat: Infinity,
-                            delay: index * 0.3
-                          }}
-                        />
+                        {/* Simple ring */}
+                        <div className="absolute inset-0 rounded-lg border border-gray-600" />
                       </motion.div>
 
-                      {/* Compact Value with counter effect */}
-                      <motion.div 
-                        className="text-2xl font-bold text-white mb-1"
-                        whileHover={{ scale: 1.1 }}
-                        animate={{
-                          textShadow: [
-                            "0 0 5px rgba(255,255,255,0.3)",
-                            "0 0 10px rgba(255,255,255,0.5)",
-                            "0 0 5px rgba(255,255,255,0.3)"
-                          ]
-                        }}
-                        transition={{
-                          duration: 2,
-                          repeat: Infinity,
-                          delay: index * 0.4
-                        }}
-                      >
+                      {/* Professional Value Display */}
+                      <div className="text-2xl font-bold text-white mb-1">
                         {item.value}
-                      </motion.div>
+                      </div>
 
-                      {/* Compact Label */}
-                      <p className="text-xs text-gray-300 font-medium leading-tight">
+                      {/* Professional Label */}
+                      <p className="text-xs text-gray-400 font-medium leading-tight">
                         {item.label}
                       </p>
-
-                      {/* Animated magical underline */}
-                      <motion.div
-                        className={`mx-auto mt-1 h-0.5 bg-gradient-to-r ${item.color} rounded-full`}
-                        initial={{ width: 0 }}
-                        whileInView={{ width: "60%" }}
-                        whileHover={{ width: "80%" }}
-                        animate={{
-                          boxShadow: [
-                            "0 0 5px rgba(255,255,255,0.3)",
-                            "0 0 10px rgba(255,255,255,0.6)",
-                            "0 0 5px rgba(255,255,255,0.3)"
-                          ]
-                        }}
-                        transition={{
-                          width: { delay: index * 0.1, duration: 0.8 },
-                          boxShadow: { duration: 2, repeat: Infinity, delay: index * 0.5 }
-                        }}
-                      />
                     </div>
                   </motion.div>
                 );

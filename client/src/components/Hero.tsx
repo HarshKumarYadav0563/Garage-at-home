@@ -61,11 +61,10 @@ export function Hero() {
   };
 
   return (
-    <section className="relative min-h-[50vh] sm:min-h-[55vh] lg:min-h-auto flex items-center overflow-hidden bg-gradient-to-br from-gray-950 via-gray-900 to-black pt-20 sm:pt-24 lg:pt-8 lg:pb-12">
-      {/* Radial Accent Glows */}
+    <section className="relative min-h-[50vh] sm:min-h-[55vh] lg:min-h-auto flex items-center overflow-hidden bg-gray-950 pt-20 sm:pt-24 lg:pt-8 lg:pb-12">
+      {/* Subtle Corporate Glow */}
       <div className="absolute inset-0">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-sky-500/20 rounded-full blur-3xl" />
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl" />
       </div>
       
       {/* Subtle Background Pattern */}
@@ -91,21 +90,20 @@ export function Hero() {
             {/* Heading */}
             <motion.h1
               variants={itemVariants}
-              className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight text-white"
+              className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight text-white tracking-tight"
             >
-              India's First{' '}
-              <span className="bg-gradient-to-r from-emerald-400 to-sky-500 bg-clip-text text-transparent">
-                Premium Doorstep
-              </span>{' '}
-              Vehicle Service
+              Professional Vehicle Services{' '}
+              <span className="text-emerald-400">
+                At Your Doorstep
+              </span>
             </motion.h1>
 
             {/* Subheading */}
             <motion.p
               variants={itemVariants}
-              className="text-sm sm:text-base text-gray-400 leading-relaxed px-4 max-w-md mx-auto"
+              className="text-base sm:text-lg text-gray-300 leading-relaxed px-4 max-w-lg mx-auto font-medium"
             >
-              Skip the garage visits! Professional mechanics come to your location with all tools & parts.
+              Certified technicians deliver comprehensive vehicle maintenance and repair services directly to your location across Delhi NCR.
             </motion.p>
 
             {/* CTAs - Side by Side */}
@@ -116,11 +114,11 @@ export function Hero() {
               <div className="w-full sm:flex-1">
                 <Button
                   onClick={() => setLocation('/services')}
-                  className="w-full bg-gradient-to-r from-emerald-500 via-sky-500 to-indigo-500 hover:shadow-[0_0_20px_rgba(16,185,129,0.4)] text-white px-6 py-4 rounded-xl font-semibold text-base shadow-lg transition-all duration-300 cursor-pointer relative z-10"
+                  className="w-full bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-4 rounded-lg font-semibold text-base shadow-lg transition-all duration-300 cursor-pointer relative z-10"
                   data-testid="button-book-now"
                 >
-                  <Zap className="mr-2 w-5 h-5" />
-                  Book Now
+                  <Wrench className="mr-2 w-5 h-5" />
+                  Schedule Service
                 </Button>
               </div>
               
@@ -128,11 +126,11 @@ export function Hero() {
                 <Button
                   onClick={handleHowItWorks}
                   variant="outline"
-                  className="w-full bg-white/5 border border-white/10 text-gray-200 px-6 py-4 rounded-xl font-semibold text-base hover:bg-white/10 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 cursor-pointer relative z-10"
+                  className="w-full bg-transparent border border-gray-600 text-gray-200 px-6 py-4 rounded-lg font-semibold text-base hover:bg-gray-800 hover:border-gray-500 transition-all duration-300 cursor-pointer relative z-10"
                   data-testid="button-how-it-works"
                 >
                   <HelpCircle className="mr-2 w-5 h-5" />
-                  How it Works
+                  Learn More
                 </Button>
               </div>
             </motion.div>
@@ -142,17 +140,20 @@ export function Hero() {
               variants={itemVariants}
               className="flex items-center justify-center gap-2 sm:gap-3 text-xs flex-wrap"
             >
-              <div className="flex items-center space-x-1 bg-white/5 text-gray-300 border border-white/10 rounded-full px-3 py-1">
-                <Star className="text-yellow-400 w-3 h-3" />
-                <span className="font-medium">4.9/5</span>
+              <div className="flex items-center space-x-1 bg-gray-800/50 text-gray-300 border border-gray-700 rounded-lg px-4 py-2">
+                <Star className="text-emerald-400 w-4 h-4" />
+                <span className="font-semibold text-white">4.9</span>
+                <span className="text-gray-400 text-xs">Rating</span>
               </div>
-              <div className="flex items-center space-x-1 bg-white/5 text-gray-300 border border-white/10 rounded-full px-3 py-1">
-                <Users className="text-emerald-400 w-3 h-3" />
-                <span className="font-medium">25,000+</span>
+              <div className="flex items-center space-x-1 bg-gray-800/50 text-gray-300 border border-gray-700 rounded-lg px-4 py-2">
+                <Users className="text-emerald-400 w-4 h-4" />
+                <span className="font-semibold text-white">25,000+</span>
+                <span className="text-gray-400 text-xs">Customers</span>
               </div>
-              <div className="flex items-center space-x-1 bg-white/5 text-gray-300 border border-white/10 rounded-full px-3 py-1">
-                <Clock className="text-sky-400 w-3 h-3" />
-                <span className="font-medium">2 Hours</span>
+              <div className="flex items-center space-x-1 bg-gray-800/50 text-gray-300 border border-gray-700 rounded-lg px-4 py-2">
+                <Clock className="text-emerald-400 w-4 h-4" />
+                <span className="font-semibold text-white">Same Day</span>
+                <span className="text-gray-400 text-xs">Service</span>
               </div>
             </motion.div>
 
@@ -203,21 +204,20 @@ export function Hero() {
             {/* Heading - Max 2 lines */}
             <motion.h1
               variants={itemVariants}
-              className="text-5xl xl:text-6xl font-bold leading-tight mb-6 text-white"
+              className="text-5xl xl:text-6xl font-bold leading-tight mb-6 text-white tracking-tight"
             >
-              India's First{' '}
-              <span className="bg-gradient-to-r from-emerald-400 to-sky-500 bg-clip-text text-transparent">
-                Premium Doorstep
-              </span>{' '}
-              Vehicle Service
+              Professional Vehicle Services{' '}
+              <span className="text-emerald-400">
+                At Your Doorstep
+              </span>
             </motion.h1>
 
             {/* Shorter Subheading */}
             <motion.p
               variants={itemVariants}
-              className="text-xl text-gray-400 mb-8 leading-relaxed"
+              className="text-xl text-gray-300 mb-8 leading-relaxed font-medium"
             >
-              Skip the garage visits! Professional mechanics come to your location with all tools & parts. Available across NCR - Delhi, Gurgaon, Noida, Faridabad & Ghaziabad.
+              Certified technicians deliver comprehensive vehicle maintenance and repair services directly to your location across Delhi NCR.
             </motion.p>
 
             {/* CTAs Side by Side with Staggered Animation */}
@@ -228,11 +228,11 @@ export function Hero() {
               <div>
                 <Button
                   onClick={() => setLocation('/services')}
-                  className="bg-gradient-to-r from-emerald-500 via-sky-500 to-indigo-500 hover:shadow-[0_0_30px_rgba(16,185,129,0.5)] text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-xl transition-all duration-300 cursor-pointer relative z-10"
+                  className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 rounded-lg font-semibold text-lg shadow-xl transition-all duration-300 cursor-pointer relative z-10"
                   data-testid="button-book-now"
                 >
-                  <Zap className="mr-2 w-5 h-5" />
-                  Book Service Now
+                  <Wrench className="mr-2 w-5 h-5" />
+                  Schedule Service
                 </Button>
               </div>
               
@@ -240,11 +240,11 @@ export function Hero() {
                 <Button
                   onClick={handleHowItWorks}
                   variant="outline"
-                  className="bg-white/5 border border-white/10 text-gray-200 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all duration-300 cursor-pointer relative z-10"
+                  className="bg-transparent border border-gray-600 text-gray-200 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-800 hover:border-gray-500 transition-all duration-300 cursor-pointer relative z-10"
                   data-testid="button-how-it-works"
                 >
                   <HelpCircle className="mr-2 w-5 h-5" />
-                  How it Works
+                  Learn More
                 </Button>
               </div>
             </motion.div>
@@ -254,17 +254,20 @@ export function Hero() {
               variants={itemVariants}
               className="flex items-center space-x-4 text-sm"
             >
-              <div className="flex items-center space-x-2 bg-white/5 text-gray-300 border border-white/10 rounded-full px-3 py-1">
-                <Star className="text-yellow-400 w-4 h-4" />
-                <span className="font-medium" data-testid="text-rating">4.9/5 Rating</span>
+              <div className="flex items-center space-x-2 bg-gray-800/50 text-gray-300 border border-gray-700 rounded-lg px-4 py-3">
+                <Star className="text-emerald-400 w-4 h-4" />
+                <span className="font-semibold text-white" data-testid="text-rating">4.9</span>
+                <span className="text-gray-400 text-sm">Rating</span>
               </div>
-              <div className="flex items-center space-x-2 bg-white/5 text-gray-300 border border-white/10 rounded-full px-3 py-1">
+              <div className="flex items-center space-x-2 bg-gray-800/50 text-gray-300 border border-gray-700 rounded-lg px-4 py-3">
                 <Users className="text-emerald-400 w-4 h-4" />
-                <span className="font-medium" data-testid="text-customers">25,000+ Services</span>
+                <span className="font-semibold text-white" data-testid="text-customers">25,000+</span>
+                <span className="text-gray-400 text-sm">Customers</span>
               </div>
-              <div className="flex items-center space-x-2 bg-white/5 text-gray-300 border border-white/10 rounded-full px-3 py-1">
-                <Clock className="text-sky-400 w-4 h-4" />
-                <span className="font-medium" data-testid="text-service-time">2 Hour Service</span>
+              <div className="flex items-center space-x-2 bg-gray-800/50 text-gray-300 border border-gray-700 rounded-lg px-4 py-3">
+                <Clock className="text-emerald-400 w-4 h-4" />
+                <span className="font-semibold text-white" data-testid="text-service-time">Same Day</span>
+                <span className="text-gray-400 text-sm">Service</span>
               </div>
             </motion.div>
           </motion.div>
