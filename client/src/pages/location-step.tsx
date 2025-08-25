@@ -22,7 +22,7 @@ export default function LocationStep() {
   const [pincode, setPincode] = useState(address.pincode || '');
   const [googleMapsLoaded, setGoogleMapsLoaded] = useState(false);
   const autocompleteInputRef = useRef<HTMLInputElement>(null);
-  const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
+  const autocompleteRef = useRef<any>(null);
 
   // Load Google Maps
   useEffect(() => {
@@ -52,7 +52,7 @@ export default function LocationStep() {
   // Initialize autocomplete when Google Maps is loaded
   useEffect(() => {
     if (googleMapsLoaded && autocompleteInputRef.current && !autocompleteRef.current) {
-      autocompleteRef.current = new google.maps.places.Autocomplete(
+      autocompleteRef.current = new (window as any).google.maps.places.Autocomplete(
         autocompleteInputRef.current,
         {
           componentRestrictions: { country: 'IN' },
@@ -72,7 +72,7 @@ export default function LocationStep() {
           let pincode = '';
           let city = '';
           
-          place.address_components?.forEach((component: google.maps.GeocoderAddressComponent) => {
+          place.address_components?.forEach((component: any) => {
             if (component.types.includes('postal_code')) {
               pincode = component.long_name;
             }
@@ -138,10 +138,10 @@ export default function LocationStep() {
       }
       
       // Use Google Maps Geocoding API for reverse geocoding
-      const geocoder = new google.maps.Geocoder();
+      const geocoder = new (window as any).google.maps.Geocoder();
       const latlng = { lat: latitude, lng: longitude };
       
-      geocoder.geocode({ location: latlng }, (results: google.maps.GeocoderResult[] | null, status: google.maps.GeocoderStatus) => {
+      geocoder.geocode({ location: latlng }, (results: any[] | null, status: any) => {
         if (status === 'OK' && results && results[0]) {
           const result = results[0];
           const formattedAddress = result.formatted_address;
@@ -150,7 +150,7 @@ export default function LocationStep() {
           let city = '';
           let pincode = '';
           
-          result.address_components?.forEach((component: google.maps.GeocoderAddressComponent) => {
+          result.address_components?.forEach((component: any) => {
             if (component.types.includes('postal_code')) {
               pincode = component.long_name;
             }
