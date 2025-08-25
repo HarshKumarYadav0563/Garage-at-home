@@ -64,7 +64,7 @@ export function MobileBottomNav() {
           return (
             <Link key={item.name} href={item.href}>
               <motion.div
-                className="flex flex-col items-center justify-center py-2 px-3 min-w-[60px]"
+                className="flex flex-col items-center justify-center py-1.5 px-2 min-w-[50px]"
                 whileTap={{ scale: 0.9 }}
                 data-testid={`bottom-nav-${item.name.toLowerCase()}`}
               >
@@ -76,7 +76,7 @@ export function MobileBottomNav() {
                   transition={{ type: "spring", stiffness: 300, damping: 25 }}
                 >
                   <Icon
-                    className={`w-6 h-6 ${
+                    className={`w-5 h-5 ${
                       isActive ? item.activeColor : item.inactiveColor
                     } transition-colors duration-200`}
                   />
@@ -86,14 +86,14 @@ export function MobileBottomNav() {
                       animate={{ scale: 1 }}
                       className="absolute -top-1 -right-1 w-5 h-5 bg-emerald-500 rounded-full flex items-center justify-center"
                     >
-                      <span className="text-white text-xs font-bold">
+                      <span className="text-white text-[10px] font-bold">
                         {selectedServices.length}
                       </span>
                     </motion.div>
                   )}
                 </motion.div>
                 <motion.span
-                  className={`text-xs mt-1 font-medium ${
+                  className={`text-[10px] mt-0.5 font-medium ${
                     isActive ? item.activeColor : item.inactiveColor
                   } transition-colors duration-200`}
                   animate={{

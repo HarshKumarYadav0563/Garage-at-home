@@ -229,8 +229,8 @@ export function Header() {
               <div className="flex flex-col">
                 <motion.div className="flex items-center space-x-1">
                   <motion.span 
-                    className={`font-bold bg-gradient-to-r from-emerald-400 via-sky-400 to-indigo-400 bg-clip-text text-transparent transition-all duration-300 ${
-                      isScrolled ? 'text-base sm:text-lg lg:text-xl' : 'text-lg sm:text-xl lg:text-2xl'
+                    className={`font-bold text-emerald-400 transition-all duration-300 ${
+                      isScrolled ? 'text-sm sm:text-base lg:text-lg' : 'text-base sm:text-lg lg:text-xl'
                     }`}
                     whileHover={{ 
                       scale: 1.05,
@@ -241,7 +241,7 @@ export function Header() {
                   </motion.span>
                   <motion.span 
                     className={`font-bold text-white transition-all duration-300 ${
-                      isScrolled ? 'text-base sm:text-lg lg:text-xl' : 'text-lg sm:text-xl lg:text-2xl'
+                      isScrolled ? 'text-sm sm:text-base lg:text-lg' : 'text-base sm:text-lg lg:text-xl'
                     }`}
                     whileHover={{ 
                       scale: 1.05,
@@ -251,8 +251,8 @@ export function Header() {
                     @
                   </motion.span>
                   <motion.span 
-                    className={`font-bold bg-gradient-to-r from-orange-400 via-yellow-400 to-red-400 bg-clip-text text-transparent transition-all duration-300 ${
-                      isScrolled ? 'text-base sm:text-lg lg:text-xl' : 'text-lg sm:text-xl lg:text-2xl'
+                    className={`font-bold text-white transition-all duration-300 ${
+                      isScrolled ? 'text-sm sm:text-base lg:text-lg' : 'text-base sm:text-lg lg:text-xl'
                     }`}
                     whileHover={{ 
                       scale: 1.05,

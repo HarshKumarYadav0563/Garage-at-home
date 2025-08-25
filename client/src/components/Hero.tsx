@@ -90,7 +90,7 @@ export function Hero() {
             {/* Heading */}
             <motion.h1
               variants={itemVariants}
-              className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight text-white tracking-tight"
+              className="hero-title text-3xl sm:text-4xl md:text-5xl font-bold leading-tight text-white tracking-tight"
             >
               Professional Vehicle Services{' '}
               <span className="text-emerald-400">
@@ -101,7 +101,7 @@ export function Hero() {
             {/* Subheading */}
             <motion.p
               variants={itemVariants}
-              className="text-base sm:text-lg text-gray-300 leading-relaxed px-4 max-w-lg mx-auto font-medium"
+              className="hero-description text-base sm:text-lg text-gray-300 leading-relaxed px-4 max-w-lg mx-auto font-medium"
             >
               Certified technicians deliver comprehensive vehicle maintenance and repair services directly to your location across Delhi NCR.
             </motion.p>
